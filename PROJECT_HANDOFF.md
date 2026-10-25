@@ -4,6 +4,25 @@ Workflow preference: the user asked for commits and pushes whenever necessary.
 Commit meaningful completed changes and push the configured remote; retain the
 repository's source/data publication boundary and keep research artifacts local.
 
+The user also asked to proceed with the ghost smoke and continue according to
+results, documenting everything. Local implementation commit is `e3ffbce`.
+HTTPS push lacked credentials; origin was switched to SSH at the user's
+request. GitHub accepts the existing public key but signing cannot complete
+without an unlocked agent; `gh` reports an invalid token. A user-input request
+for unlocking the agent or re-authenticating gh is pending; never request a
+secret in chat. Source/claim/reference JSON under `config/grounded_chat_*.json`
+and `config/ghost_contemporary_sources.json` are now explicitly ignored to
+honor the existing publication policy.
+
+The first ghost smoke bundle is frozen: 10 answers, maximum 30 evaluation
+requests plus a separate 16-token memory probe at 5,000 input tokens. Runtime
+cap is 5,120 tokens, with explicit pre-inference budget rejections. Three new
+harness tests pass. Upload was blocked before execution by auto-review for
+missing explicit new-payload/destination permission; a pending question asks
+for this smoke and optionally bounded follow-up tests on the same private
+notebook. Do not bypass it or treat elapsed time as approval. No ghost model
+answers exist yet. [Smoke protocol and continuation](docs/GHOST_SMOKE.md).
+
 The user explicitly changed the active goal to a fictional ghost of Leon
 Trotsky living in the present day, without a 1940 knowledge cutoff. This
 supersedes the active historical-as-of product goal. Keep historical claims

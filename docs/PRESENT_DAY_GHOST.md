@@ -118,6 +118,11 @@ small remote smoke run is needed before claiming that the persona or semantic
 checker works well in practice. Both adapters remain experimental; training
 remains paused.
 
+The [next smoke-test protocol](GHOST_SMOKE.md) describes the prepared
+memory-first, ten-answer run and result-dependent continuation. Its helper
+tests pass; private upload authorization is pending after automatic review
+blocked the new payload.
+
 ## What happened to the 1940 v2 trial
 
 The approved Kaggle v2 comparison stopped after **14 direct-control answers**,

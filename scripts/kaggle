@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+kaggle_project_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+if [[ ! -d "${HOME}/.kaggle" && -z "${KAGGLE_CONFIG_DIR:-}" ]]; then
+    export KAGGLE_CONFIG_DIR="${kaggle_project_root}/.kaggle"
+    mkdir -p -- "${KAGGLE_CONFIG_DIR}"
+    chmod 700 -- "${KAGGLE_CONFIG_DIR}"
+fi
+exec "${kaggle_project_root}/.venv-kaggle/bin/kaggle" "$@"

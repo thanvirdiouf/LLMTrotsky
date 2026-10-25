@@ -1,0 +1,53 @@
+# Python environments and caches
+__pycache__/
+*.py[cod]
+.venv*/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local credentials and agent configuration
+.env
+.env.*
+!.env.example
+.kaggle/
+kaggle.json
+.aws/
+.agents/
+.codex/
+*.pem
+*.key
+
+# Historical texts and derived data need a separate rights review.
+# Several generated notebooks embed training data or source passages.
+/trotsky_corpus.txt
+/corpus_mia/
+/datasets/*
+!/datasets/README.md
+/reviews/
+/notebooks/
+/evaluation/*
+!/evaluation/README.md
+/training/*
+!/training/README.md
+!/training/PILOT.md
+!/training/NEXT_EXPERIMENT.md
+!/training/kaggle_cli_requirements.txt
+
+# Downloaded model files, checkpoints, and delivery bundles
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.ckpt
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+.cache/
+
+# Editor and operating-system files
+.DS_Store
+*~
+*.swp

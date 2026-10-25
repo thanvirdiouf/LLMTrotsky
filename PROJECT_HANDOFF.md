@@ -8,15 +8,14 @@ result-dependent continuation, proper documentation, and milestone commits/pushe
 
 ## Current experiment
 
-Ghost smokes v1–v5 are complete, downloaded, verified and reviewed. V5 ran as
-saved Kaggle version 8. V6 is a frozen routing-only bundle, **never uploaded or
-executed**. The next bounded regression is v7, frozen locally, combining neutral
-auditing, personal-assumption guidance, study-only scope and intent repair.
-Same ten v5 questions: four singles and six conversation turns; now inspected
-regressions. Maximum thirty evaluation calls plus one short probe, no training,
-adapters or paid compute. Submit v7 under standing approval, download its exact
-saved version, then verify and review. Reference dates: v1–v4 25 October;
-v5 onward 26 October. All executed on 26 October.
+Ghost smokes v1–v5 and v7 are complete, downloaded, verified and reviewed.
+V7 is saved Kaggle version 9. V6 remains a frozen, never-uploaded/unrun bundle.
+V8 is frozen locally: current request/mode and prospective display are explicit
+in audit input; depth/shorter drafting adapts; metadata-only social/direct
+identity replies are included. Same v5/v7 inspected cases and source/profile
+payloads. Submit under standing approval, then verify/review the exact saved
+version. Maximum thirty evaluation calls plus one probe, no training/adapters
+or paid compute. References: v1–v4 25 October; v5 onward 26 October.
 
 - v1 / saved v4: 16 evaluation generations; eight structural blocks, one correct
   refusal and one substantive answer with errors incorrectly approved by the
@@ -40,21 +39,26 @@ v5 onward 26 October. All executed on 26 October.
   later depth/shortening requests repeat facts. All checks wrongly approve.
 - v6 unrun: only the intent rule differs from v5. Preserved as a prepared bundle,
   replaced by v7 after the broader v5 audit-design failure was inspected.
-- v7 prepared: neutral checker instead of persona roleplay, conditional personal
-  reasoning, study-only context exclusions and opinion intent repair. Combined
-  intervention, not an ablation. Source/profile/model settings stay fixed.
+- v7 / saved v9: 22 generations, eight approved/one partial/one identity. Six
+  useful factual/scope/identity replies. Opinion source overreach persists;
+  full-view audit partly imports the earlier facts-only constraint and does not
+  see the actual rendered fictional label. Shorter request yields longer text.
+- v8 prepared: current request/mode plus prospective display in audit, explicit
+  adoption/displacement distinction, adaptive depth/shorter instructions, and
+  metadata social/direct identity replies. Source/profile/cases remain fixed;
+  combined intervention, not an ablation.
 
-Local run directories `evaluation/runs/ghost_smoke_v{1,2,3,4,5,6,7}/` retain journals,
+Local run directories `evaluation/runs/ghost_smoke_v{1,2,3,4,5,6,7,8}/` retain journals,
 source payloads, model calls, verification and unblinded same-agent reviews.
 Checker approval is not a quality score or independent historical validation.
 Verify the next result with `.venv-tokenizer/bin/python
-scripts/verify_ghost_smoke.py --version ghost_smoke_v7 --tokenizer
+scripts/verify_ghost_smoke.py --version ghost_smoke_v8 --tokenizer
 training/data_revision_v2/tokenizer_assets`. Download the specific saved
 version, not whichever notebook version is latest later. The verifier replays
 frozen helper code and reconstructs every prompt/output without model inference.
 
-Twenty-four ghost, four source-provenance and four harness tests pass (32).
-The full suite ran 305 tests with the same two pre-existing historical pilot
+Twenty-seven ghost, four source-provenance and four harness tests pass (35).
+The full suite ran 308 tests with the same two pre-existing historical pilot
 snapshot errors for `evaluation/README.md`. Do not rewrite historical locks to conceal this.
 Each smoke separately verifies the preserved helpers and both adapter hashes.
 
@@ -116,7 +120,7 @@ Origin remains SSH at the user's request. SSH signing needs an unlocked agent,
 but the user's re-authenticated `gh` works with network access. Publish using
 `git -c credential.helper='!gh auth git-credential' push
 https://github.com/thanvirdiouf/LLMTrotsky.git main`, retaining SSH origin. Do not
-print or request credentials. Source-expansion milestone `0aec137` and v4 milestone `b38eb11` are pushed. Routing/transcript milestone `68655ea` is pushed. Commit/push the completed neutral-audit/scope fixes before submitting v7. Earlier
+print or request credentials. Source-expansion milestone `0aec137` and v4 milestone `b38eb11` are pushed. Routing/transcript milestone `68655ea` is pushed. Neutral-audit/scope milestone `d08a56f` is pushed. Commit/push the current-request/depth/social fixes before submitting v8. Earlier
 byte-identical API-published equivalents `14576a3` / `cfbce01` replaced local
 unpublished `e3ffbce` / `033c720` through normal rebase; do not resurrect them.
 
@@ -406,3 +410,5 @@ Technical references already checked: [Qwen3.5-9B](https://huggingface.co/Qwen/Q
 - 2026-10-22 19:52 IST: Prepared the paired six-question provided-source Kaggle notebook, separate run identity, input preview and condition-blinded review exports; 97 tests and corpus integrity checks passed. Source-conditioned GPU run remains pending.
 
 - 2026-10-23 20:11 IST: Consolidated the smoke failures/fixes, completed one-epoch pilot, local archive/hash verification, provisional quality failures and proposed next steps in `docs/PROGRESS_LOG.md`; corrected stale pending-training summaries. No additional GPU run launched.
+
+[Failure boundaries and compute/training decision](docs/GHOST_FAILURE_ANALYSIS.md).

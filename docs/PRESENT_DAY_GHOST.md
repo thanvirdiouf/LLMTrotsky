@@ -7,7 +7,7 @@ The old experiments remain archived and reproducible.
 
 ## Measured progress — 26 October 2026
 
-Five ghost smokes are complete and verified. V1–v4 use the same inspected
+Six ghost smokes are complete and verified. V1–v4 use the same inspected
 ten-turn set; v5 evaluates four new questions and a six-turn conversation,
 which are now inspected regressions. All passed the separate 5,000-token probe at 11.32 GiB, without
 truncation or input-budget rejection. These establish compact T4 feasibility,
@@ -20,6 +20,7 @@ not conversational readiness.
 | v3 / 6 | 19 | Selection ambiguity fixed; five drafts omit an empty quote field; useful conversation still fails |
 | v4 / 7 | 19 | No schema blocks; useful factual/identity answers; unsupported opinion premises still pass the checker |
 | v5 / 8 | 20 | Four new factual cases preserve source limits; conversation invents personal circumstances and misses mode transitions |
+| v7 / 9 | 22 | Study-only scope and draft routing fixed; audit still confuses prior constraints and accepts faulty source inferences |
 
 Local source-based reviews are in `evaluation/runs/ghost_smoke_vN/QUALITY_REVIEW.md`.
 V3 fulfills only the modern factual question, identity clarification and scoped
@@ -35,16 +36,18 @@ ILO AI/work article. Opinions require a retrieved historical basis; application
 basis additions are logged. Facts-only follow-ups retain their topic and
 suppress opinion drafting. Date kinds and context boundaries enter model input.
 
-Twenty-four ghost tests, four source-provenance tests and four harness tests
+Twenty-seven ghost tests, four source-provenance tests and four harness tests
 pass. V5's four single questions and identity clarification are useful, but
 its views make unsupported personal assumptions; facts-only mode includes an
 unrequested historical argument, and later turns repeat facts. All model checks
 pass despite these failures. No conversation reliability is claimed.
 
-The next combined regression gives auditing a neutral role, tightens study-only
-scope, discourages personal assumptions, and fixes return-to-opinion routing.
-The prepared routing-only v6 is preserved **unrun**. V7 uses the exact v5
-questions as inspected regressions; model approval remains fallible.
+V7 fixes study-only scope and skipped drafting, but the fuller view remains
+partial and its audit reason wrongly applies a prior facts-only instruction.
+It also judges the raw candidate without the actual displayed fictional label.
+The next v8 regression supplies current request/mode and candidate display,
+distinguishes adoption from displacement, and adapts depth and shorter replies.
+V6 remains **unrun**. V7/v8 use the v5 questions as inspected regressions.
 [Evidence and case design](GHOST_SOURCE_EXPANSION.md).
 
 The persona can discuss later history, contemporary technology and current
@@ -146,7 +149,7 @@ are explicitly counted. No qualifying source paragraph is silently cropped.
 
 ## Verification and next evaluation
 
-Twenty-three ghost-specific local tests cover the active profile, use of post-1940
+Twenty-seven ghost-specific local tests cover the active profile, use of post-1940
 evidence, source domains/dates, fictional-interpretation labeling, exact modern
 quotation rendering, compact-context fidelity, insufficient evidence and
 rejection of unsupported factual premises hidden inside an opinion. The
@@ -159,7 +162,7 @@ historically correct reference answer; assess its coherence, documentary basis,
 transparency and usefulness separately. Do not score a post-1940 date as a
 failure merely because of its date.
 
-The five real ghost smokes are verified, with the limitations described
+The six real ghost smokes are verified, with the limitations described
 above. Local synthetic-backend tests establish implementation behavior, not
 real model quality; the first model results show the checker can be wrong.
 The new source-expansion smoke must be reviewed before claiming practical reliability.
@@ -206,3 +209,13 @@ For a readable transcript of a verified run, use
 `python3 scripts/export_ghost_transcript.py --version ghost_smoke_vN`.
 This exports exact displayed replies and source metadata after checking the
 answer hash and frozen source/case payloads. It assigns no quality score.
+
+The v7 neutral auditor improves neither all factual inference nor all task
+handling: it still approves source overreach and partly rejects a new-view
+request by referring to an earlier facts-only turn. V8 makes the current request
+and candidate display explicit without removing source context or actual
+history. Fuller requests may use 110–180 words; shorter requests 35–60. These
+changes need runtime review, not just structural tests. Greetings, thanks,
+farewells and direct persona-identity questions use application metadata replies
+without model calls; they preserve source state and do not intercept a greeting
+followed by a substantive question.

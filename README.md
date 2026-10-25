@@ -16,12 +16,12 @@ python3 scripts/build_ghost_chat.py
 python3 scripts/ghost_chat.py --dry-run --question "How would you assess renting an A40 on Runpod today?"
 ```
 
-Twenty-four ghost tests, four source tests and four harness tests pass. Five
+Twenty-seven ghost tests, four source tests and four harness tests pass. Six
 real smokes verify compact T4 memory feasibility and source-limit handling;
 conversation still exposes unsupported personal assumptions and routing errors.
 The active collection has ten packets/39 reviewed propositions. The next
-regression separates the auditor from the fictional persona and repairs
-study-only scope and opinion routing. Training remains paused.
+regression makes the current request and displayed fictional label explicit
+to the auditor and adapts explanation depth. Training remains paused.
 [Measured progress](docs/PRESENT_DAY_GHOST.md).
 
 The following describes the preserved historical research archive.

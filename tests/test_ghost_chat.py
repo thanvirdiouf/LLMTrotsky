@@ -274,5 +274,45 @@ class GhostChatTest(unittest.TestCase):
         self.assertNotIn(self.profile['system_prompt'],req['messages'][0]['content'])
         self.assertTrue(all(p['blocks'] for p in json.loads(req['messages'][1]['content'])['source_packets']))
 
+    def test_social_acknowledgments_preserve_source_state_without_model_calls(self):
+        state=initial_state(self.collection,self.ledger)
+        state['active_packet_ids']=['runpod_pricing','newleader']
+        state['accepted_claim_ids']=['runpod_a40_price']
+        state['interpretation_basis_claim_ids']=['newleader_principles']
+        def no_call(_):raise AssertionError('Acknowledgment should not need generation')
+        for question in ['Hello, Trotsky!','Thanks, that helped.','Goodbye.']:
+            with self.subTest(question=question):
+                result=self.bot.answer(question,no_call,state=state)
+                self.assertEqual(result['status'],'application_social_reply')
+                self.assertEqual(result['state_after'],{**state,'turns':state['turns']+1})
+        calls=[]
+        def abstain(messages):
+            calls.append(messages)
+            return {'response':'{"claim_ids":[]}','finish_reason':'stop'}
+        result=self.bot.answer('Hello, what does the Runpod A40 listing say?',abstain,state=state)
+        self.assertTrue(calls)
+        self.assertNotEqual(result['status'],'application_social_reply')
+
+    def test_direct_identity_question_is_explicitly_fictional(self):
+        def no_call(_):raise AssertionError('Application identity needs no generation')
+        result=self.bot.answer('Are you really Leon Trotsky?',no_call)
+        self.assertEqual(result['status'],'application_identity_clarification')
+        self.assertIn('fictional present-day portrayal',result['response'])
+
+    def test_current_view_request_and_actual_label_are_explicit_after_old_facts_only_turn(self):
+        state=initial_state(self.collection,self.ledger)
+        trace=self.bot.retriever.retrieve('Explain your own fictional present-day view more fully.',state)
+        cards=claims_for_trace(self.ledger,trace)
+        history=[{'role':'user','content':'Give only dated facts without political interpretation.'},
+                 {'role':'assistant','content':'A prior factual answer.'}]
+        segments=[{'id':'s1','kind':'interpretation','text':'I would ask how workers could decide the use of these tools.','basis_claim_ids':['newleader_principles']}]
+        req=request('check',self.profile,'Explain your own fictional present-day view more fully.',trace,cards,history,state,segments)
+        data=json.loads(req['messages'][1]['content'])
+        self.assertEqual(data['conversation'],history)
+        self.assertEqual(data['requested_answer_mode'],'fictional_interpretation')
+        self.assertEqual(data['current_user_request'],'Explain your own fictional present-day view more fully.')
+        self.assertIn('My present-day interpretation:',data['candidate_display'])
+        self.assertIn('[newleader]',data['candidate_display'])
+
 
 if __name__=='__main__':unittest.main()

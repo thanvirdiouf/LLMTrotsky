@@ -178,3 +178,21 @@ also identified persona conditioning of the audit. V7 combines the routing fix
 with a neutral audit role, limits on personal assumptions and explicit removal
 of unrelated historical context from study-only answers. It uses the same v5
 questions as inspected regressions, not fresh validation or a causal ablation.
+
+## V7 review and current-request regression
+
+Saved version 9 completed with twenty-two calls, no schema/budget/truncation
+failures, and exact frozen/tokenizer verification. Study-only scope and draft
+routing work; four single answers, study-only findings and identity are useful.
+Opinions still conflate adoption with displacement or add unsupported causal
+claims. The fuller-view audit wrongly invokes a prior facts-only instruction;
+its draft also has weak premises, so it is not established as wholly valid.
+The last reply is longer than the preceding actual display despite approval.
+
+V8 keeps the same source/profile/case payloads. Audit input explicitly repeats
+the current request and mode, and includes the prospective rendered display
+with its fictional label. Depth/shorter instructions adapt to the current turn.
+This remains a combined regression intervention, not fresh validation. Exact
+social/identity application replies make no inference calls. Their local
+post-v7 patch replays all ten v7 answers and requests exactly before subsequent
+audit-input changes; the record is metadata_followup_replay.json.

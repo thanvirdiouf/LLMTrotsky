@@ -7,6 +7,7 @@ import base64
 import hashlib
 import json
 import lzma
+import re
 from pathlib import Path
 import subprocess
 import sys
@@ -17,9 +18,10 @@ from grounded_chat import ROOT,MODEL
 def sha(raw):return hashlib.sha256(raw).hexdigest()
 
 
-def frozen_payloads(root=ROOT):
-    lock=json.loads((root/'evaluation/ghost_smoke_v1/bundle_lock.json').read_text())
-    stage=root/'training/kaggle_cli/ghost_smoke_v1'
+def frozen_payloads(root=ROOT,version='ghost_smoke_v1'):
+    if not re.fullmatch(r'ghost_smoke_v[1-9][0-9]*',version):raise ValueError('Invalid smoke version')
+    lock=json.loads((root/'evaluation'/version/'bundle_lock.json').read_text())
+    stage=root/'training/kaggle_cli'/version
     raw=(stage/'kaggle_ghost_smoke.ipynb').read_bytes()
     if sha(raw)!=lock['notebook_sha256'] or sha((stage/'kernel-metadata.json').read_bytes())!=lock['metadata_sha256']:
         raise ValueError('Frozen ghost submission changed')
@@ -31,8 +33,8 @@ def frozen_payloads(root=ROOT):
     return payloads
 
 
-def verify(download,tokenizer=None):
-    download=Path(download);payloads=frozen_payloads();protocol=json.loads(payloads['protocol.json'])
+def verify(download,tokenizer=None,version='ghost_smoke_v1'):
+    download=Path(download);payloads=frozen_payloads(version=version);protocol=json.loads(payloads['protocol.json'])
     bundle=download/'ghost_smoke_bundle';results=download/'ghost_smoke_results'
     for n,b in payloads.items():
         if (bundle/n).read_bytes()!=b:raise ValueError('Downloaded bundle differs: '+n)
@@ -106,12 +108,16 @@ assert len(a)==len(json.loads((p/'coverage.json').read_text())['answers'])
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--download',type=Path,default=ROOT/'evaluation/runs/ghost_smoke_v1/download')
-    parser.add_argument('--output',type=Path,default=ROOT/'evaluation/runs/ghost_smoke_v1/verification.json')
+    parser.add_argument('--version',default='ghost_smoke_v1')
+    parser.add_argument('--download',type=Path)
+    parser.add_argument('--output',type=Path)
     parser.add_argument('--tokenizer',type=Path)
     args=parser.parse_args();tokenizer=None
     if args.tokenizer:
         from transformers import AutoTokenizer
         tokenizer=AutoTokenizer.from_pretrained(args.tokenizer,trust_remote_code=False,local_files_only=True)
-    result=verify(args.download,tokenizer);args.output.parent.mkdir(parents=True,exist_ok=True)
-    args.output.write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2))
+    if not re.fullmatch(r'ghost_smoke_v[1-9][0-9]*',args.version):parser.error('Invalid smoke version')
+    download=args.download or ROOT/'evaluation/runs'/args.version/'download'
+    output=args.output or ROOT/'evaluation/runs'/args.version/'verification.json'
+    result=verify(download,tokenizer,args.version);output.parent.mkdir(parents=True,exist_ok=True)
+    output.write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2))

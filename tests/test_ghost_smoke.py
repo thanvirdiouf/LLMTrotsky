@@ -43,5 +43,12 @@ class GhostSmokeTest(unittest.TestCase):
         calls={n.func.attr if isinstance(n.func,ast.Attribute) else n.func.id if isinstance(n.func,ast.Name) else '' for n in ast.walk(tree) if isinstance(n,ast.Call)}
         self.assertFalse(calls & {'backward','step','get_peft_model','save_pretrained','load_checkpoint'})
 
+    def test_frozen_bundle_has_no_expected_answers_and_versions_cannot_escape_archive(self):
+        from verify_ghost_smoke import frozen_payloads
+        payload=frozen_payloads();cases=json.loads(payload['model_cases.json'])
+        self.assertFalse(any('checks' in c for c in cases['cases']))
+        self.assertEqual(json.loads(payload['protocol.json'])['answers'],10)
+        with self.assertRaises(ValueError):frozen_payloads(version='../ghost_smoke_v1')
+
 
 if __name__=='__main__':unittest.main()

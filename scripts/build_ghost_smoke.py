@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 """Freeze a ten-answer ghost smoke and a separate 5,000-token memory probe."""
 import ast
+import argparse
 import base64
 from copy import deepcopy
 import hashlib
 import json
 import lzma
+import re
 from pathlib import Path
 from grounded_chat import ROOT
 from ghost_chat import load_active,initial_state,claims_for_trace,request
@@ -15,7 +17,8 @@ def enc(value):return (json.dumps(value,indent=2,sort_keys=True,ensure_ascii=Fal
 def sha(raw):return hashlib.sha256(raw).hexdigest()
 
 
-def build():
+def build(version='ghost_smoke_v1'):
+    if not re.fullmatch(r'ghost_smoke_v[1-9][0-9]*',version):raise ValueError('Invalid smoke version')
     from transformers import AutoTokenizer
     bot=load_active();prior=json.loads((ROOT/'evaluation/grounded_chat_v2/protocol.json').read_text())
     tokenizer=AutoTokenizer.from_pretrained(ROOT/'training/data_revision_v2/tokenizer_assets',trust_remote_code=False,local_files_only=True)
@@ -23,6 +26,8 @@ def build():
     source_spec=json.loads((ROOT/'config/ghost_chat_evaluation.json').read_text())
     model_spec={'cases':[{'id':c['id'],'question':c['question']} for c in source_spec['cases']],
                 'conversation':source_spec['conversation']}
+    if len(model_spec['cases'])+len(model_spec['conversation'])>10:
+        raise ValueError('Standing approval permits at most ten answers/thirty evaluation calls per run')
     state=initial_state(bot.collection,bot.ledger)
     question='Please explain the actual sequence more fully, separating his words from your replies.'
     state['active_packet_ids']=['hearing']
@@ -74,11 +79,11 @@ def build():
     metadata=json.loads((ROOT/'training/kaggle_cli/grounded_chat_v1/kernel-metadata.json').read_text())
     metadata.update(id_no=140792344,code_file='kaggle_ghost_smoke.ipynb')
     lock={'notebook_sha256':sha(notebook),'metadata_sha256':sha(enc(metadata)),'payload_sha256':{n:sha(b) for n,b in payload.items()}}
-    out=ROOT/'evaluation/ghost_smoke_v1';out.mkdir(parents=True,exist_ok=True)
+    out=ROOT/'evaluation'/version;out.mkdir(parents=True,exist_ok=True)
     for name,raw in {'protocol.json':enc(protocol),'evaluation_spec.json':enc(source_spec),'bundle_lock.json':enc(lock)}.items():
         if (out/name).exists() and (out/name).read_bytes()!=raw:raise ValueError('Frozen ghost smoke differs: '+name)
         (out/name).write_bytes(raw)
-    stage=ROOT/'training/kaggle_cli/ghost_smoke_v1';stage.mkdir(parents=True,exist_ok=True)
+    stage=ROOT/'training/kaggle_cli'/version;stage.mkdir(parents=True,exist_ok=True)
     (stage/'kaggle_ghost_smoke.ipynb').write_bytes(notebook);(stage/'kernel-metadata.json').write_bytes(enc(metadata))
     (ROOT/'notebooks/kaggle_ghost_smoke.ipynb').write_bytes(notebook)
     print(json.dumps({'stage':str(stage),'answers':protocol['answers'],'maximum_evaluation_calls':protocol['maximum_model_calls'],
@@ -86,4 +91,7 @@ def build():
     return payload,protocol
 
 
-if __name__=='__main__':build()
+if __name__=='__main__':
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--version',default='ghost_smoke_v1')
+    build(parser.parse_args().version)

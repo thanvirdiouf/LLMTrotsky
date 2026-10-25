@@ -47,11 +47,18 @@ Prepared local artifacts:
 - `scripts/kaggle_ghost_smoke.py`: pinned GPU runtime and memory probe.
 - `scripts/verify_ghost_smoke.py`: frozen-code local replay and tokenizer checks.
 
-The attempted upload was blocked by automatic approval review, which required
-explicit authorization for the new ghost payload and private Kaggle
-destination beyond the general instruction to proceed. A pending question
-offers approval of this smoke alone or bounded follow-up inference iterations
-on the same notebook and payload categories. No ghost inference has run yet.
+After the initial automatic-review block, the user explicitly approved this
+smoke and bounded follow-up iterations on 26 October 2026. This covers the
+same private notebook, project helpers/persona prompts, reviewed public-source
+excerpts/propositions and evaluation questions, with at most thirty evaluation
+calls plus one short memory probe per run. It excludes training, adapters and
+paid compute. The builder rejects case sets exceeding ten answers.
+
+Saved Kaggle version 4 is now running at the original private notebook URL.
+The frozen persona reference date is 25 October; execution is on 26 October.
+Keep that distinction in reports rather than silently changing a running
+experiment. Use `--version ghost_smoke_v2` on the builder and verifier for a
+subsequent changed experiment; previous bundles stay immutable.
 
 ## Verification and decisions after the run
 
@@ -102,3 +109,9 @@ is synchronized and the SSH remote remains configured. An SSH unlock is not
 needed for this completed publication, though future direct SSH pushes still
 need a usable agent. Do not ask for or record passphrases or tokens. Research
 source excerpts and model artifacts remain excluded.
+
+On 26 October the user re-authenticated `gh`. A network-enabled check confirmed
+the account is valid, and documentation commit `af18185` was pushed using the
+`gh` credential helper with an explicit HTTPS push URL. Origin remains SSH.
+Future publishing can use this working helper without copying credentials into
+code, arguments or logs.

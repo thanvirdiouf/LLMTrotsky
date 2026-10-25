@@ -1,5 +1,21 @@
 # Active goal: present-day Trotsky ghost — 25 October 2026
 
+## Continuation — 26 October 2026
+
+The user approved this ghost smoke and bounded follow-up inference iterations
+on the same private Kaggle notebook and payload categories, capped at thirty
+evaluation calls plus one short memory probe per run, with no training,
+adapters or paid compute. The first smoke is submitted as saved version 4.
+Its frozen persona reference date remains 25 October for reproducibility.
+Source/claim payloads stay in the local research archive; do not publish them.
+
+The user re-authenticated gh; checked with network access, authentication works.
+Documentation commit af18185 was pushed using the gh credential helper and an
+explicit HTTPS URL while origin remains SSH. The old auth/approval blockers
+described below are historical and resolved for the current authorized work.
+Main was synchronized with GitHub. Builder/verifier now accept versioned smoke
+archives, and the builder enforces the standing per-run call limit.
+
 Workflow preference: the user asked for commits and pushes whenever necessary.
 Commit meaningful completed changes and push the configured remote; retain the
 repository's source/data publication boundary and keep research artifacts local.

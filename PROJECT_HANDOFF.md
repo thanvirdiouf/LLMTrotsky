@@ -2,6 +2,24 @@
 
 ## Continuation — 26 October 2026
 
+Ghost smoke v1 is complete and locally verified, saved Kaggle version 4.
+5,000-token memory probe peaked at 11.32 GiB; sixteen evaluation calls, no
+truncation/budget rejects. Operational outcomes: eight blocks (four invalid
+selection and four draft structural errors), one correct refusal, one
+substantive answer with factual/interpretive errors incorrectly approved by the
+checker. Read `evaluation/runs/ghost_smoke_v1/QUALITY_REVIEW.md`; do not claim
+conversation reliability from memory success or the checker verdict.
+
+Commit `3832096` is pushed. It adds canonical factual rendering, safe selection
+sanitization, per-segment filtering, shorter drafting and persistence of used
+supporting source IDs. The second bounded iteration is frozen as
+`ghost_smoke_v2` and submitted as saved Kaggle version 5. Its questions are the
+same inspected regressions, not fresh evaluation. Thirteen ghost tests pass;
+all frozen historical helpers/adapters remain unchanged. Next: download v5,
+verify with `verify_ghost_smoke.py --version ghost_smoke_v2`, review displayed
+answers and filtered candidates against sources, and select the next bounded
+change from the results. No training or paid compute.
+
 The user approved this ghost smoke and bounded follow-up inference iterations
 on the same private Kaggle notebook and payload categories, capped at thirty
 evaluation calls plus one short memory probe per run, with no training,

@@ -16,9 +16,10 @@ python3 scripts/build_ghost_chat.py
 python3 scripts/ghost_chat.py --dry-run --question "How would you assess renting an A40 on Runpod today?"
 ```
 
-Nine ghost-specific tests pass. The initial modern evidence set is deliberately
-small; broad live-news retrieval and real ghost-mode inference are still
-pending. Local tests are not a model-quality result.
+Thirteen ghost-specific tests pass. The first real ghost smoke verified memory
+feasibility but exposed blocking and interpretation problems; a targeted second
+iteration is running. The modern evidence set remains deliberately small and
+broad live-news retrieval is pending. [Measured progress](docs/PRESENT_DAY_GHOST.md).
 
 The following describes the preserved historical research archive.
 

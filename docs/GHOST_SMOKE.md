@@ -54,11 +54,29 @@ excerpts/propositions and evaluation questions, with at most thirty evaluation
 calls plus one short memory probe per run. It excludes training, adapters and
 paid compute. The builder rejects case sets exceeding ten answers.
 
-Saved Kaggle version 4 is now running at the original private notebook URL.
+Saved Kaggle version 4 ran at the original private notebook URL.
 The frozen persona reference date is 25 October; execution is on 26 October.
 Keep that distinction in reports rather than silently changing a running
 experiment. Use `--version ghost_smoke_v2` on the builder and verifier for a
 subsequent changed experiment; previous bundles stay immutable.
+
+### Results and bounded follow-up
+
+Version 4 completed: the 5,000-token probe passed at 11.32 GiB peak and all
+journals replay and tokenize exactly. Its sixteen evaluation generations
+produced eight structural blocks, one appropriate missing-evidence refusal and
+one inaccurate substantive answer. Four selection errors and four draft
+structural failures are separated from semantic quality; no memory or token
+budget failure occurred. The model checker incorrectly approved the wrong
+observation date in the substantive answer.
+
+The local report and records are in `evaluation/runs/ghost_smoke_v1/`.
+Targeted fixes are committed/pushed as `3832096`. The second frozen iteration,
+`ghost_smoke_v2`, is submitted as Kaggle version 5 under the standing approval.
+It uses the same cases as inspected development regressions, with canonical
+factual rendering, sanitized references, segment-level filtering and supporting
+source retention. This is a combined targeted intervention, not an ablation
+isolating the effect of each change. Its model-quality review is pending.
 
 ## Verification and decisions after the run
 

@@ -5,6 +5,26 @@ in the present day**, without a 1940 knowledge cutoff. This replaces the active
 product goal of reproducing exactly what he could know on 19 August 1940.
 The old experiments remain archived and reproducible.
 
+## Measured progress — 26 October 2026
+
+The first ghost smoke completed and was verified: ten responses, sixteen
+evaluation generations and a separate 5,000-token probe peaking at 11.32 GiB.
+No generation was truncated or rejected for input budget. Eight answers were
+structurally blocked, one correctly refused missing evidence, and the single
+substantive answer had an incorrect observation date and unsupported additions
+despite checker approval. This established memory feasibility for the compact
+test, not conversational readiness. The complete local review is in
+`evaluation/runs/ghost_smoke_v1/QUALITY_REVIEW.md`.
+
+The resulting fixes are published in commit `3832096`: factual segments render
+immutable reviewed statements rather than new model paraphrases; invalid claim
+references are discarded and logged; validation rejects individual segments;
+unrequested quotes and retrospective historical assertions in interpretation
+are filtered; approved supporting sources persist into follow-ups. Thirteen
+ghost-specific tests pass. The second bounded smoke is running as saved Kaggle
+version 5 on the same inspected development questions; its semantic results
+are not yet established.
+
 The persona can discuss later history, contemporary technology and current
 politics. New views are fictional interpretations, not rediscovered Trotsky
 writings. It keeps conceptual precision and a documented political starting
@@ -99,7 +119,7 @@ are explicitly counted. No qualifying source paragraph is silently cropped.
 
 ## Verification and next evaluation
 
-Nine ghost-specific local tests cover the active profile, use of post-1940
+Thirteen ghost-specific local tests cover the active profile, use of post-1940
 evidence, source domains/dates, fictional-interpretation labeling, exact modern
 quotation rendering, compact-context fidelity, insufficient evidence and
 rejection of unsupported factual premises hidden inside an opinion. The
@@ -112,16 +132,16 @@ historically correct reference answer; assess its coherence, documentary basis,
 transparency and usefulness separately. Do not score a post-1940 date as a
 failure merely because of its date.
 
-**No ghost-mode model responses have been generated.** Local synthetic-backend
-tests establish implementation behavior, not real model quality. A fresh,
-small remote smoke run is needed before claiming that the persona or semantic
-checker works well in practice. Both adapters remain experimental; training
-remains paused.
+The first real ghost smoke is now verified, with the limitations described
+above. Local synthetic-backend tests establish implementation behavior, not
+real model quality; the first model results show the checker can be wrong.
+The next targeted smoke must be reviewed before claiming practical reliability.
+Both adapters remain experimental; training remains paused.
 
 The [next smoke-test protocol](GHOST_SMOKE.md) describes the prepared
-memory-first, ten-answer run and result-dependent continuation. Its helper
-tests pass; private upload authorization is pending after automatic review
-blocked the new payload.
+memory-first, ten-answer runs and result-dependent continuation. Its helper
+tests pass, and the user has explicitly approved bounded follow-up iterations
+on the same private notebook and payload categories.
 
 ## What happened to the 1940 v2 trial
 

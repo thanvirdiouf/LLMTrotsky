@@ -17,6 +17,19 @@ def enc(value):return (json.dumps(value,indent=2,sort_keys=True,ensure_ascii=Fal
 def sha(raw):return hashlib.sha256(raw).hexdigest()
 
 
+def model_cases(source_spec):
+    if 'comparison' not in source_spec:
+        return {'cases':[{'id':c['id'],'question':c['question']} for c in source_spec['cases']],
+                'conversation':source_spec['conversation']}
+    control=source_spec['comparison']
+    if control['arms']!=['direct','checked'] or source_spec['conversation']:
+        raise ValueError('Expected a direct/checked five-turn case sequence')
+    return {'comparison':{'arms':control['arms'],'packet_ids':control['packet_ids']},
+        'conversation':[],
+        'cases':[{'id':arm+'_'+c['id'],'question':c['question'],'arm':arm,'conversation_turn':i}
+                 for arm in control['arms'] for i,c in enumerate(source_spec['cases'],1)]}
+
+
 def build(version='ghost_smoke_v1', evaluation_spec=None):
     if not re.fullmatch(r'ghost_smoke_v[1-9][0-9]*',version):raise ValueError('Invalid smoke version')
     from transformers import AutoTokenizer
@@ -24,8 +37,7 @@ def build(version='ghost_smoke_v1', evaluation_spec=None):
     tokenizer=AutoTokenizer.from_pretrained(ROOT/'training/data_revision_v2/tokenizer_assets',trust_remote_code=False,local_files_only=True)
     if sha(tokenizer.chat_template.encode())!=prior['chat_template_sha256']:raise ValueError('Tokenizer changed')
     source_spec=json.loads((ROOT/(evaluation_spec or 'config/ghost_chat_evaluation.json')).read_text())
-    model_spec={'cases':[{'id':c['id'],'question':c['question']} for c in source_spec['cases']],
-                'conversation':source_spec['conversation']}
+    model_spec=model_cases(source_spec)
     if len(model_spec['cases'])+len(model_spec['conversation'])>10:
         raise ValueError('Standing approval permits at most ten answers/thirty evaluation calls per run')
     state=initial_state(bot.collection,bot.ledger)
@@ -52,6 +64,7 @@ def build(version='ghost_smoke_v1', evaluation_spec=None):
     probe={'messages':messages,'input_token_ids':ids,'purpose':'unscored memory probe; no factual quality inference'}
     names=['ghost_chat.py','grounded_chat.py','grounded_chat_v2.py','evaluate_ghost_smoke.py',
            'evaluate_grounded_chat_v2.py','kaggle_ghost_smoke.py','kaggle_grounding.py','kbit_preparation.py']
+    if 'comparison' in model_spec:names.append('evaluate_ghost_comparison.py')
     payload={n:(ROOT/'scripts'/n).read_bytes() for n in names}
     payload.update({'profile.json':enc(bot.profile),'collection.json':enc(bot.collection),'claims.json':enc(bot.ledger),
                     'model_cases.json':enc(model_spec),'memory_probe.json':enc(probe)})
@@ -62,6 +75,8 @@ def build(version='ghost_smoke_v1', evaluation_spec=None):
         evaluation_spec_sha256=sha(enc(source_spec)),files={n:sha(b) for n,b in payload.items()},
         interpretation_policy='Fictional contemporary opinions are allowed, historical/modern factual premises need sources; no 1940 knowledge cutoff.',
         preserved_files=json.loads((ROOT/'evaluation/grounded_chat_v2/preserved_v1_and_adapters.json').read_text()))
+    if 'comparison' in model_spec:
+        protocol.update(purpose='ghost_direct_checked_comparison',maximum_model_calls=sum(1 if c['arm']=='direct' else 3 for c in model_spec['cases']))
     payload['protocol.json']=enc(protocol)
     cells=[]
     def add(kind,cid,source):
@@ -70,7 +85,10 @@ def build(version='ghost_smoke_v1', evaluation_spec=None):
             item.update(execution_count=None,outputs=[])
             if cid!='install':compile(source,cid,'exec')
         cells.append(item)
-    add('markdown','intro','# Present-day Trotsky ghost smoke\nFictional present-day persona, no 1940 cutoff. Untouched base, no adapters/training. Separate 5,000-token memory probe followed by ten answers, at most thirty evaluation generation calls. Structural checks and model audits are not semantic proof.\n')
+    intro='# Present-day Trotsky ghost smoke\nFictional present-day persona, no 1940 cutoff. Untouched base, no adapters/training. Separate 5,000-token memory probe followed by ten answers, at most thirty evaluation generation calls. Structural checks and model audits are not semantic proof.\n'
+    if 'comparison' in model_spec:
+        intro='# Direct/checked present-day ghost comparison\nSame untouched base and fixed available source context. Two separate five-turn conversations with actual displayed history; ten answers, at most twenty evaluation calls plus one memory probe. Direct replies are unchecked research outputs; no training/adapters. Whole-pipeline comparison, not an ablation or independent historical validation.\n'
+    add('markdown','intro',intro)
     add('code','install','%pip install -q '+' '.join(f'{k}=={v}' for k,v in protocol['packages'].items() if k!='torch')+'\n')
     packed={n:{'sha256':sha(b),'data':base64.b85encode(lzma.compress(b)).decode()} for n,b in payload.items()}
     add('code','unpack','import base64,hashlib,lzma,sys\nfrom pathlib import Path\nbundle=Path("/kaggle/working/ghost_smoke_bundle")\nbundle.mkdir(exist_ok=True)\npacked='+repr(packed)+'\nfor name,value in packed.items():\n    raw=lzma.decompress(base64.b85decode(value["data"]))\n    assert hashlib.sha256(raw).hexdigest()==value["sha256"]\n    (bundle/name).write_bytes(raw)\nsys.path.insert(0,str(bundle))\n')

@@ -196,3 +196,19 @@ This remains a combined regression intervention, not fresh validation. Exact
 social/identity application replies make no inference calls. Their local
 post-v7 patch replays all ten v7 answers and requests exactly before subsequent
 audit-input changes; the record is metadata_followup_replay.json.
+
+## V8 result and fresh comparison
+
+Saved version 10 is verified: twenty-one generations, no input-budget or
+truncation failures, 11.32 GiB probe peak. The fuller view now displays, but its
+semantic premises remain weak. The first two opinions are identical to v7 and
+still wrongly approved; the last draft is removed for raw citation markup
+before any model audit. Its review_rejected status is an application format
+filter in this case, not an auditor verdict. Count actual stages and filters.
+
+The next `ghost_smoke_v9` is a distinct matched-source direct/checked comparison:
+five new dialogue turns in each arm, ten answers and at most twenty requests
+plus one probe. [Protocol and controls](GHOST_COMPARISON.md). The runtime and
+frozen-code verifier explicitly select the comparison evaluator by protocol
+purpose; ordinary frozen smoke verification remains supported. No source,
+model or training changes are introduced by that comparison.

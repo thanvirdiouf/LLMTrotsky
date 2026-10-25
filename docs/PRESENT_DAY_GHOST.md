@@ -7,7 +7,7 @@ The old experiments remain archived and reproducible.
 
 ## Measured progress — 26 October 2026
 
-Six ghost smokes are complete and verified. V1–v4 use the same inspected
+Seven ghost smokes are complete and verified. V1–v4 use the same inspected
 ten-turn set; v5 evaluates four new questions and a six-turn conversation,
 which are now inspected regressions. All passed the separate 5,000-token probe at 11.32 GiB, without
 truncation or input-budget rejection. These establish compact T4 feasibility,
@@ -21,6 +21,7 @@ not conversational readiness.
 | v4 / 7 | 19 | No schema blocks; useful factual/identity answers; unsupported opinion premises still pass the checker |
 | v5 / 8 | 20 | Four new factual cases preserve source limits; conversation invents personal circumstances and misses mode transitions |
 | v7 / 9 | 22 | Study-only scope and draft routing fixed; audit still confuses prior constraints and accepts faulty source inferences |
+| v8 / 10 | 21 | Fuller view now displays; source overreach still passes; shortening is filtered for raw citation markup |
 
 Local source-based reviews are in `evaluation/runs/ghost_smoke_vN/QUALITY_REVIEW.md`.
 V3 fulfills only the modern factual question, identity clarification and scoped
@@ -36,7 +37,7 @@ ILO AI/work article. Opinions require a retrieved historical basis; application
 basis additions are logged. Facts-only follow-ups retain their topic and
 suppress opinion drafting. Date kinds and context boundaries enter model input.
 
-Twenty-seven ghost tests, four source-provenance tests and four harness tests
+Thirty-seven focused ghost, source-provenance, harness and comparison tests
 pass. V5's four single questions and identity clarification are useful, but
 its views make unsupported personal assumptions; facts-only mode includes an
 unrequested historical argument, and later turns repeat facts. All model checks
@@ -45,8 +46,11 @@ pass despite these failures. No conversation reliability is claimed.
 V7 fixes study-only scope and skipped drafting, but the fuller view remains
 partial and its audit reason wrongly applies a prior facts-only instruction.
 It also judges the raw candidate without the actual displayed fictional label.
-The next v8 regression supplies current request/mode and candidate display,
-distinguishes adoption from displacement, and adapts depth and shorter replies.
+V8 supplies current request/mode and candidate display and now displays a
+fuller interpretation. It still approves faulty source inferences; the shorter
+draft supplies raw citations and is filtered. More inspected regression tuning
+is not evidence of general reliability. The next comparison uses five newly
+authored turns in direct and checked arms with identical available sources.
 V6 remains **unrun**. V7/v8 use the v5 questions as inspected regressions.
 [Evidence and case design](GHOST_SOURCE_EXPANSION.md).
 
@@ -162,7 +166,7 @@ historically correct reference answer; assess its coherence, documentary basis,
 transparency and usefulness separately. Do not score a post-1940 date as a
 failure merely because of its date.
 
-The six real ghost smokes are verified, with the limitations described
+The seven real ghost smokes are verified, with the limitations described
 above. Local synthetic-backend tests establish implementation behavior, not
 real model quality; the first model results show the checker can be wrong.
 The new source-expansion smoke must be reviewed before claiming practical reliability.
@@ -219,3 +223,13 @@ changes need runtime review, not just structural tests. Greetings, thanks,
 farewells and direct persona-identity questions use application metadata replies
 without model calls; they preserve source state and do not intercept a greeting
 followed by a substantive question.
+
+### Fresh controlled follow-up
+
+[Direct/checked comparison](GHOST_COMPARISON.md) documents the prepared new
+five-turn dialogue in two arms, ten answers and at most twenty evaluation calls.
+Both use the same pinned base, profile and fixed ILO/radio context; each carries
+its own actual displayed replies. It compares whole pipelines rather than
+individual components, with same-agent unblinded review. Direct replies remain
+explicitly unchecked research outputs. Source data and all transcripts stay
+local; no training or paid GPU is involved.

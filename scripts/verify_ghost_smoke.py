@@ -60,8 +60,11 @@ def verify(download,tokenizer=None,version='ghost_smoke_v1'):
     # this verifier usable even after the active application evolves.
     replay="""import json,contextlib,io
 from pathlib import Path
-from evaluate_ghost_smoke import evaluate
 p=Path('.')
+if json.loads((p/'protocol.json').read_text())['purpose']=='ghost_direct_checked_comparison':
+ from evaluate_ghost_comparison import evaluate
+else:
+ from evaluate_ghost_smoke import evaluate
 def no_inference(_): raise AssertionError('Missing cached call; inference forbidden')
 with contextlib.redirect_stdout(io.StringIO()):
  a,c=evaluate(json.loads((p/'profile.json').read_text()),json.loads((p/'collection.json').read_text()),json.loads((p/'claims.json').read_text()),json.loads((p/'model_cases.json').read_text()),no_inference,p,json.loads((p/'identity.json').read_text()))

@@ -8,14 +8,13 @@ result-dependent continuation, proper documentation, and milestone commits/pushe
 
 ## Current experiment
 
-Ghost smokes v1–v5 and v7 are complete, downloaded, verified and reviewed.
-V7 is saved Kaggle version 9. V6 remains a frozen, never-uploaded/unrun bundle.
-V8 is frozen locally: current request/mode and prospective display are explicit
-in audit input; depth/shorter drafting adapts; metadata-only social/direct
-identity replies are included. Same v5/v7 inspected cases and source/profile
-payloads. Submit under standing approval, then verify/review the exact saved
-version. Maximum thirty evaluation calls plus one probe, no training/adapters
-or paid compute. References: v1–v4 25 October; v5 onward 26 October.
+Ghost smokes v1–v5, v7 and v8 are complete, downloaded, verified and reviewed.
+V8 ran as saved Kaggle version 10. V6 remains never-uploaded/unrun. V9 is frozen
+locally as a fresh direct/checked comparison, not another same-case smoke:
+five new dialogue turns per arm, ten answers, at most twenty evaluation requests
+plus one memory probe. Same base/profile/fixed ILO+radio available context, but
+separate actual histories. Submit under standing approval, then download the
+exact saved version and verify/review. No training, adapters or paid compute.
 
 - v1 / saved v4: 16 evaluation generations; eight structural blocks, one correct
   refusal and one substantive answer with errors incorrectly approved by the
@@ -43,22 +42,26 @@ or paid compute. References: v1–v4 25 October; v5 onward 26 October.
   useful factual/scope/identity replies. Opinion source overreach persists;
   full-view audit partly imports the earlier facts-only constraint and does not
   see the actual rendered fictional label. Shorter request yields longer text.
-- v8 prepared: current request/mode plus prospective display in audit, explicit
-  adoption/displacement distinction, adaptive depth/shorter instructions, and
-  metadata social/direct identity replies. Source/profile/cases remain fixed;
-  combined intervention, not an ablation.
+- v8 / saved v10: 21 generations; eight approved/one identity/one filtered.
+  Six useful factual/scope/identity replies. Fuller view now displays, but first
+  two opinions retain identical source overreach. Shortening prose writes raw
+  citations and packet IDs, so it is filtered before audit. Not reliable.
+- v9 prepared: fresh five-turn direct/checked comparison. `evaluate_ghost_comparison.py`
+  fixes two source packets/six available propositions across arms, separates
+  actual histories and records direct content as unchecked with no verified
+  memory. Whole pipelines differ; not a component ablation or blinded benchmark.
 
-Local run directories `evaluation/runs/ghost_smoke_v{1,2,3,4,5,6,7,8}/` retain journals,
+Local run directories `evaluation/runs/ghost_smoke_v{1,2,3,4,5,6,7,8,9}/` retain journals,
 source payloads, model calls, verification and unblinded same-agent reviews.
 Checker approval is not a quality score or independent historical validation.
 Verify the next result with `.venv-tokenizer/bin/python
-scripts/verify_ghost_smoke.py --version ghost_smoke_v8 --tokenizer
+scripts/verify_ghost_smoke.py --version ghost_smoke_v9 --tokenizer
 training/data_revision_v2/tokenizer_assets`. Download the specific saved
 version, not whichever notebook version is latest later. The verifier replays
 frozen helper code and reconstructs every prompt/output without model inference.
 
-Twenty-seven ghost, four source-provenance and four harness tests pass (35).
-The full suite ran 308 tests with the same two pre-existing historical pilot
+Thirty-seven focused ghost/source/harness/comparison tests pass.
+The full suite ran 310 tests with the same two pre-existing historical pilot
 snapshot errors for `evaluation/README.md`. Do not rewrite historical locks to conceal this.
 Each smoke separately verifies the preserved helpers and both adapter hashes.
 
@@ -120,7 +123,7 @@ Origin remains SSH at the user's request. SSH signing needs an unlocked agent,
 but the user's re-authenticated `gh` works with network access. Publish using
 `git -c credential.helper='!gh auth git-credential' push
 https://github.com/thanvirdiouf/LLMTrotsky.git main`, retaining SSH origin. Do not
-print or request credentials. Source-expansion milestone `0aec137` and v4 milestone `b38eb11` are pushed. Routing/transcript milestone `68655ea` is pushed. Neutral-audit/scope milestone `d08a56f` is pushed. Commit/push the current-request/depth/social fixes before submitting v8. Earlier
+print or request credentials. Source-expansion milestone `0aec137` and v4 milestone `b38eb11` are pushed. Routing/transcript milestone `68655ea` is pushed. Neutral-audit/scope milestone `d08a56f` is pushed. Current-request/depth/social milestone `56b8c06` is pushed. Commit/push the fresh-comparison harness and review docs before submitting v9. Earlier
 byte-identical API-published equivalents `14576a3` / `cfbce01` replaced local
 unpublished `e3ffbce` / `033c720` through normal rebase; do not resurrect them.
 
@@ -412,3 +415,5 @@ Technical references already checked: [Qwen3.5-9B](https://huggingface.co/Qwen/Q
 - 2026-10-23 20:11 IST: Consolidated the smoke failures/fixes, completed one-epoch pilot, local archive/hash verification, provisional quality failures and proposed next steps in `docs/PROGRESS_LOG.md`; corrected stale pending-training summaries. No additional GPU run launched.
 
 [Failure boundaries and compute/training decision](docs/GHOST_FAILURE_ANALYSIS.md).
+
+[Fresh comparison design and reproduction](docs/GHOST_COMPARISON.md).

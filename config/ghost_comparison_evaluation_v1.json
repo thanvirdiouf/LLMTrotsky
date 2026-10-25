@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "mode": "present_day_ghost",
+  "status": "freshly authored; no model answers inspected",
+  "reference_date": "2026-10-26",
+  "freshness": "Five new dialogue turns, each answered in two arms. Sources were already exposed in ghost development; no pretraining novelty or independent historian validation claim.",
+  "comparison": {
+    "arms": ["direct", "checked"],
+    "packet_ids": ["ilo_genai_2025", "radio_science"],
+    "control": "Exact same two source packets and six available propositions throughout both arms. Each arm retains its own actual displayed history. Whole pipelines differ; this is not an ablation of individual components."
+  },
+  "cases": [
+    {"id": "a", "question": "Our reading group saw an ILO AI study. How would you help us distinguish what its numbers establish from what you think workers ought to do?", "checks": ["Estimate versus outcome", "Clearly fictional normative reasoning", "No invented group circumstances"]},
+    {"id": "b", "question": "A friend says the obstacles to adopting AI prove that nobody can lose a job to it. Is that a sound inference, and why?", "checks": ["Adoption barriers do not prove no displacement", "No numerical job-loss claim", "Direct response to disagreement"]},
+    {"id": "c", "question": "For a moment, leave your politics aside and give only the study's dated finding and its uncertainty in two sentences.", "checks": ["Only ILO study findings", "Publication and uncertainty retained", "Two sentences, no historical tangent"]},
+    {"id": "d", "question": "Return to your own imagined outlook and explain it in more depth. Suppose the group can buy technical access but has no say over the rules; keep that scenario conditional.", "checks": ["Switch back from factual mode", "Develop argument rather than repeat facts", "Scenario conditional, no attributed real company events"]},
+    {"id": "e", "question": "Now condense that into a short reply for the group. Keep the limits of the evidence and your new judgment distinct.", "checks": ["Shorter than actual prior reply", "Source limits and new judgment remain distinct", "Consistent voice without historical authorship claim"]}
+  ],
+  "conversation": [],
+  "rubric": {
+    "source": "Check descriptive premises, date, authorship, certainty, exposure/adoption/displacement distinctions and source relevance.",
+    "conversation": "Judge actual displayed replies for disagreement, mode changes, depth, shortening and voice. A refusal is not automatically a success.",
+    "comparison": "Same base revision, generation policy and fixed available sources. Direct is explicitly unchecked; checked includes application selection, canonical facts and fallible review. Do not interpret a whole-pipeline difference as an isolated causal effect.",
+    "review": "Same-agent unblinded source-based judgments. No unique historically correct modern opinion exists. Record ambiguous rhetoric separately. Expected checks are excluded from model cases."
+  }
+}

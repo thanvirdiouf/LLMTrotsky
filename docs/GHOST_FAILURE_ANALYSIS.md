@@ -77,3 +77,11 @@ them as fresh evidence.
 Detailed local records, source hashes and response-bound judgments live in
 `evaluation/runs/ghost_smoke_vN/`. Research payloads and transcripts remain
 excluded from the public source repository.
+
+V8 displays the fuller view after explicit current-task/display metadata, but
+still approves adoption/displacement overreach. A shortening draft is filtered
+for model-authored citation markup before any semantic audit. These inspected
+regressions have reached diminishing diagnostic value. The next fresh
+[matched-source direct/checked comparison](GHOST_COMPARISON.md) keeps base and
+available context fixed while testing whole-pipeline usefulness and faithfulness.
+Do not assume the more elaborate pipeline is better without that comparison.

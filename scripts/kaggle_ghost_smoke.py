@@ -47,6 +47,9 @@ def run(bundle, output):
     collection = json.loads((bundle/'collection.json').read_text())
     profile = json.loads((bundle/'profile.json').read_text())
     spec = json.loads((bundle/'model_cases.json').read_text())
+    evaluator=evaluate
+    if protocol['purpose']=='ghost_direct_checked_comparison':
+        from evaluate_ghost_comparison import evaluate as evaluator
     ledger = json.loads((bundle/'claims.json').read_text())
     config = AutoConfig.from_pretrained(snapshot, trust_remote_code=False, local_files_only=True)
     generation = GenerationConfig.from_model_config(config.get_text_config(decoder=True))
@@ -60,7 +63,7 @@ def run(bundle, output):
                 'gpu': torch.cuda.get_device_name(0), 'gpu_ids_used': [0], 'seed': 42,
                 'quantization': 'NF4 double quantization; float16 compute; sdpa',
                 'adapters_loaded': [], 'optimizer_updates': 0, 'enable_thinking': False,
-                'purpose': 'present_day_ghost_smoke'}
+                'purpose': protocol['purpose']}
     manifest_path = output/'run_manifest.json'
     if manifest_path.exists() and json.loads(manifest_path.read_text())['identity'] != identity:
         raise ValueError('Resume identity changed')
@@ -111,7 +114,7 @@ def run(bundle, output):
             raise ValueError('Memory probe tokenizer reconstruction differs')
         print('Memory probe passed',len(result['input_token_ids']),'input tokens',flush=True)
     try:
-        rows, calls = evaluate(profile, collection, ledger, spec, generate, output, identity)
+        rows, calls = evaluator(profile, collection, ledger, spec, generate, output, identity)
     except Exception as exc:
         atomic_json(manifest_path, {'status': 'incomplete', 'identity': identity, 'error': str(exc)})
         raise

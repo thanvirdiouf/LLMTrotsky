@@ -8,7 +8,7 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'scripts'))
 from build_ghost_chat import build
 from ghost_chat import (GhostChat, initial_state, request, claims_for_trace,
-                        validate_segments, render, EvidenceError)
+                        validate_segments, render, EvidenceError,sanitize_selection,filter_segments)
 from grounded_chat_v2 import CHECKS
 
 
@@ -127,6 +127,38 @@ class GhostChatTest(unittest.TestCase):
         self.assertEqual(result['status'],'review_rejected')
         self.assertFalse(result['state_after']['accepted_claim_ids'])
         self.assertFalse(result['state_after']['interpretation_basis_claim_ids'])
+
+    def test_bad_selection_references_are_removed_not_promoted(self):
+        available={'runpod_a40_price':self.cards['runpod_a40_price']}
+        plan,rejected=sanitize_selection({'answerable':True,'claim_ids':['runpod_a40_price','runpod_pricing','eastman_donation']},available)
+        self.assertEqual(plan['claim_ids'],['runpod_a40_price'])
+        self.assertEqual(rejected,['runpod_pricing','eastman_donation'])
+        plan,_=sanitize_selection({'answerable':False,'claim_ids':['runpod_a40_price']},available)
+        self.assertEqual(plan,{'answerable':False,'claim_ids':[]})
+
+    def test_factual_prose_is_materialized_from_canonical_record(self):
+        selected={'runpod_a40_price':self.cards['runpod_a40_price']}
+        valid=validate_segments({'segments':[{'id':'s1','kind':'fact','text':'The observation happened on October 8, 2026.','claim_ids':['runpod_a40_price']}]},selected)
+        rendered,_,_=render(valid,{'s1'},selected)
+        self.assertIn('25 October 2026',rendered)
+        self.assertNotIn('observation happened on October 8',rendered)
+
+    def test_one_bad_segment_does_not_discard_valid_fact_and_no_unsolicited_quote(self):
+        selected={'rakovsky_limit':self.cards['rakovsky_limit']}
+        draft={'segments':[
+            {'id':'s1','kind':'fact','claim_ids':['rakovsky_limit']},
+            {'id':'s2','kind':'interpretation','text':'The refusal is now a historical certainty.','basis_claim_ids':['rakovsky_limit']},
+            {'id':'s3','kind':'quote','quote':{'claim_id':'rakovsky_limit','anchor_index':0}}]}
+        valid,rejected=filter_segments(draft,selected,'Does the article prove the refusal?',3)
+        self.assertEqual([s['id'] for s in valid],['s1'])
+        self.assertEqual(len(rejected),2)
+
+    def test_approved_basis_source_persists_into_shortening_followup(self):
+        state=initial_state(self.collection,self.ledger)
+        state['active_packet_ids']=['runpod_pricing','newleader']
+        state['interpretation_basis_claim_ids']=['newleader_principles']
+        trace=self.bot.retriever.retrieve('Now make that shorter without dropping the distinction.',state)
+        self.assertEqual({m['packet']['id'] for m in trace['matches']},{'runpod_pricing','newleader'})
 
 
 if __name__=='__main__':unittest.main()

@@ -1,4 +1,46 @@
-# Historical Trotsky chatbot
+# Trotsky’s ghost — present-day chatbot
+
+The active goal is a **clearly fictional Leon Trotsky ghost living in the present
+day**, with no 1940 knowledge cutoff. The chatbot distinguishes historical
+record, dated contemporary evidence and newly imagined interpretations. Its
+active profile is selected in `config/active_chat.json`; archived historical
+experiments and both adapters remain preserved. **Training stays paused.**
+[Active ghost guide](docs/PRESENT_DAY_GHOST.md).
+
+These build commands require the complete local research archive. A fresh
+clone contains the code and persona configuration; restore the reviewed source
+inputs as described in [the distribution guide](docs/GITHUB.md).
+
+```bash
+python3 scripts/build_ghost_chat.py
+python3 scripts/ghost_chat.py --dry-run --question "How would you assess renting an A40 on Runpod today?"
+```
+
+Nine ghost-specific tests pass. The initial modern evidence set is deliberately
+small; broad live-news retrieval and real ghost-mode inference are still
+pending. Local tests are not a model-quality result.
+
+The following describes the preserved historical research archive.
+
+**Historical V2 was implemented, but its Kaggle comparison ran out of memory
+after 14 direct-control answers, before the checked arm.** It adds
+persistent source state, reviewed claim records, exact quotation/citation
+rendering and a select/draft/check pipeline. All 21 grounded-chat tests pass;
+the offline source-recall regression is 21/21. Semantic quality is still under
+evaluation. V1 artifacts and both saved adapters are preserved; training stays
+paused. [V2 guide and comparison](docs/GROUNDED_CHATBOT_V2.md).
+
+The prototype connects the **untouched base model to bounded
+retrieval**, preserving source context, dates, speakers and uncertainty. Seven
+source packets, eight new single questions with oracle diagnostics, and four
+sustained conversations completed **32 verified inference-only responses** on
+private Kaggle version 1. A same-agent, unblinded review finds interpretation
+and conversation failures despite relevant evidence, alongside one follow-up
+retrieval miss. The strict review flags 14 critical answers, including three
+quotation-fidelity cases; 11 have other substantive failures.
+Both adapters remain experimental and further training remains paused.
+[Prototype and commands](docs/GROUNDED_CHATBOT.md),
+[results and limitations](evaluation/runs/kaggle_grounded_chat_v1/QUALITY_REVIEW.md).
 
 Source-grounded historical persona experiments: corpus preparation, reviewed
 training data workflows, QLoRA training tools, and controlled comparisons of
@@ -20,7 +62,7 @@ fresh clone and how to publish the repository.
 All **96 answers on24 fresh cases** completed on Kaggle without retraining. A separate clean-context coding agent scored randomized answers and locked scores before unblinding. Passages improve **19/24 base** and **22/24 saved1e-4** cases; critical failures fall **13→3** and **9→1**. Both grounded models retain12/14 positive controls at score≥3 and correct3/4 negative premises. Grounded adapter versus grounded base:7 improved/6 degraded/11 tied, with1 versus3 critical cases. **Prioritize grounding; use grounded base as the simpler reference, retaining the adapter as an experimental challenger.** Both still accept the Rakovsky proof premise despite explicit uncertainty; inspect this before any targeted training. Both adapters remain unchanged and experimental; no extra epoch, LR sweep or promotion. [Results](evaluation/runs/kaggle_grounding_v1/QUALITY_REVIEW.md), [decision](evaluation/runs/kaggle_grounding_v1/DECISION.md), [failure inspection](evaluation/runs/kaggle_grounding_v1/FAILURE_INSPECTION.md). These24 are now development evidence; six source clusters and one coding-agent scorer limit generalization.
 
 
-This project prepares a source-grounded late-life Leon Trotsky persona for an eventual Qwen3.5-9B fine-tuning experiment. The working historical date is **19 August 1940**, configurable in `config/persona.json`. GPU-intensive work will run elsewhere.
+The archived experiments prepared a source-grounded late-life Leon Trotsky persona for Qwen3.5-9B. Their historical date is **19 August 1940**, retained in `config/persona.json` for reproducibility. The active application now uses `config/persona_ghost.json` without that knowledge cutoff. GPU-intensive work runs elsewhere.
 
 Start with [PROJECT_HANDOFF.md](PROJECT_HANDOFF.md) for current status and decisions, [the experiment plan](docs/TRAINING_PLAN.md) for LoRA/RAG choices, and [the readable seed examples](datasets/seed_preview.md) for concrete conversational data.
 

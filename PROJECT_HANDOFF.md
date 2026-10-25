@@ -1,3 +1,131 @@
+# Active goal: present-day Trotsky ghost — 25 October 2026
+
+Workflow preference: the user asked for commits and pushes whenever necessary.
+Commit meaningful completed changes and push the configured remote; retain the
+repository's source/data publication boundary and keep research artifacts local.
+
+The user explicitly changed the active goal to a fictional ghost of Leon
+Trotsky living in the present day, without a 1940 knowledge cutoff. This
+supersedes the active historical-as-of product goal. Keep historical claims
+grounded, use dated contemporary evidence for modern facts, and clearly
+distinguish fictional new interpretations from authentic Trotsky writings.
+
+Implemented: `config/active_chat.json` selects `config/persona_ghost.json`;
+`scripts/build_ghost_chat.py` builds eight packets/33 reviewed propositions;
+`scripts/ghost_chat.py` is the active CLI. It carries forward topic state,
+source-rendered quotes/citations, and select/draft/check/render. Fact, quote
+and fictional-interpretation segments are distinct; generated opinions never
+become verified-fact memory. Compact prompts reference anchors by offsets
+rather than duplicating source spans. No frozen v1/v2 code was changed.
+
+Modern coverage is one dated official Runpod pricing example, observed
+25 October 2026 with a separately recorded page-update date. Broad current
+affairs and automatic live-news retrieval remain unimplemented. New modern
+sources can be reviewed/versioned through `config/ghost_contemporary_sources.json`.
+Nine ghost tests and 21 grounded-chat tests pass. The full suite runs 282 tests
+with the same two pre-existing historical README snapshot errors. No ghost
+model responses have been generated; semantic quality and GPU memory are not
+yet validated. [Active guide](docs/PRESENT_DAY_GHOST.md).
+
+The previous approved Kaggle v2 trial failed after 14 direct-control answers
+and before any checked-arm answers. A 6,546-token prompt exhausted T4 memory
+during attention prefill. Downloaded payloads and completed journal prefix are
+verified and preserved in `evaluation/runs/kaggle_grounded_chat_v2/`; no quality
+comparison is claimed and the superseded historical trial was not retried.
+The original notebook title/URL was restored by a no-run save (version 3),
+preserving versions 1 and 2. No GPU run remains active and no paid GPU was rented.
+
+Next: review the ghost evaluation specification, prepare a small real-model
+smoke with a tested memory budget, and validate source/interpretation separation
+and conversational usefulness. A tokenizer-length check alone is insufficient
+to establish T4 capacity. Keep both adapters experimental and training paused;
+the persona change does not authorize retraining or reinterpret old scores.
+
+# Historical grounded base chatbot v2 — 25 October 2026
+
+The user requested implementation of the proposed fixes and explicitly
+approved the new v2 payload's upload plus a 32-answer, maximum-64-call base-only
+comparison on the same private Kaggle notebook. V2 is implemented in separate
+files; v1 helpers, source collection, protocol, notebook lock, scores and both
+saved adapter hashes remain unchanged. All 21 grounded-chat tests pass. The full
+suite runs 273 tests with the same two historical README snapshot errors.
+
+Core code: `scripts/grounded_chat_v2.py`; 31 reviewed propositions in
+`config/grounded_chat_claims_v2.json`; fresh development prompts in
+`config/grounded_chat_evaluation_v2.json`. Topic state fixes the lost-source
+follow-up, yielding 21/21 source-backed v1 regression turns. Source quotations
+and citations are rendered in code. Evidence selection, drafting and semantic
+audit use the unchanged base. Only approved segments enter display and accepted
+claim memory; checker output remains fallible and is not an independent score.
+
+Saved Kaggle version 2 failed with CUDA OOM after 14 direct-control answers.
+Adding v2 to its title renamed the existing
+notebook to `thanvirdiouf/trotsky-grounded-base-chatbot-v2` (id_no 140792344).
+Both saved versions' remote source payloads match their local locks and it
+remains private. The original title was restored using a no-run save, version 3;
+no extra inference was launched. The frozen submitted v2 metadata
+must remain preserved for verification.
+
+The comparison holds retrieved packets and reviewed propositions identical in
+both arms: direct single-pass versus select/draft/check/render. Sixteen fresh
+development turns per arm, 32 displayed answers, at most 64 generation calls;
+both use a 1024-token per-call cap. Same exposed source collection, not a claim
+of source-held-out generalization. Review actual drafts, rejected segments,
+displayed answers, usefulness and refusal rate; do not equate a checker approval
+or structural block with semantic success. Keep training paused and adapters
+experimental. [V2 guide](docs/GROUNDED_CHATBOT_V2.md).
+
+The partial run is archived with `partial_verification.json`; the complete-run
+verifier correctly cannot accept it as a complete comparison. The active user
+goal has moved to the present-day ghost version described above. Local archive:
+`evaluation/runs/kaggle_grounded_chat_v2/`.
+
+# Grounded base chatbot prototype — 25 October 2026
+
+The current task is an end-to-end grounded chatbot using the untouched base,
+with further training paused and both adapters experimental. The local CLI,
+seven source-locked context packets, citation/provenance traces, certainty
+instructions and 32-response Kaggle evaluation are complete and verified. Eight
+new single questions have oracle diagnostics; four four-turn conversations use
+actual generated replies as history. Prompts are fresh, but sources were
+previously exposed. The same continuing coding agent reviewed all 32 replies
+unblinded and locked exact response/source evidence. Response score ≥3:
+retrieved 4/8, oracle 4/8, conversation 5/16. Strict critical count is 14/32,
+including three reconstructed-quotation fidelity cases; eleven other answers
+have substantive evidence-boundary failures. No independent historian review.
+
+Nine focused tests pass. The prior full suite ran 259 tests with two pre-existing
+historical snapshot errors involving unchanged `evaluation/README.md`. Offline
+retrieval recalls all seven expected source-backed single-question packets and
+13/14 source-backed conversation turns; the fourth Rakovsky follow-up loses its
+source. Lexical distractions on unsupported questions remain visible as tests
+of abstention. Do not call these model-quality findings.
+
+After automatic approval review initially blocked the external transfer, the
+user explicitly approved that payload/destination and bounded base-only run.
+Private `thanvirdiouf/trotsky-grounded-base-chatbot` version 1 completed all 32
+answers without truncation. Exact bundle, every prompt token list and decoded
+answer were locally verified; max input 4,919/8,192 tokens. Zero updates and no
+adapter attached; both saved adapter hashes remain unchanged. Submission folder:
+`training/kaggle_cli/grounded_chat_v1/`. Follow
+[the prototype guide](docs/GROUNDED_CHATBOT.md) for commands and limits and
+[complete review](evaluation/runs/kaggle_grounded_chat_v1/QUALITY_REVIEW.md) for
+results. `scripts/review_grounded_chat.py` verifies the downloaded bundle,
+runtime, request/history replay, tokens and locked scores. Artifacts are in
+`evaluation/runs/kaggle_grounded_chat_v1/`, with all replies/source anchors in
+`CASE_AUDIT.md` and locked score hashes in `review/score_lock.json`.
+
+The lost Rakovsky packet still yields a reply preserving uncertainty, so do not
+claim a demonstrated certainty failure caused by that retrieval miss. More
+substantive failures occur with adequate evidence: denied predictions become
+facts; unsupported Einstein history contaminates refusals; the hearing thread
+expands an invented hostile motive and wrong sequence across turns. All four
+disagreement turns reject the central trap, but whole-answer grounding remains
+weak. Keep this as development evidence. Next diagnostic interventions are
+topic resolution and a separately tested claim/status/citation check on fresh
+questions and additional source families; no additional run was launched.
+Preserve all original adapters, scores, training data and prior locks.
+
 # Source-based second review completed — 25 October 2026
 
 ## Source-grounding comparison complete — 25 October 2026

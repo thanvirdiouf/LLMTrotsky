@@ -20,6 +20,14 @@ work in a workspace that has them. A clone alone cannot reproduce the archived
 experiment results or regenerate the reviewed seed and its evidence locks.
 Downloading source HTML does not recreate the curated reviews.
 
+The grounded-chat and ghost implementations also require the local
+`config/grounded_chat_*.json` review/source specifications,
+`config/ghost_contemporary_sources.json`, and generated evidence under
+`evaluation/`. These contain source excerpts, reviewed propositions or reference
+checks and are excluded along with the research archive. The active persona,
+application pointers, original ghost evaluation design, code and guides are
+published. Restore the reviewed inputs before running the evidence builders.
+
 ## Local setup
 
 ```bash

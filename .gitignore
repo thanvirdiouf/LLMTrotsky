@@ -23,6 +23,10 @@ kaggle.json
 # Several generated notebooks embed training data or source passages.
 /trotsky_corpus.txt
 /corpus_mia/
+# Reviewed source excerpts, proposition ledgers and reference-bearing evaluation
+# specifications are part of the local research archive, even under config/.
+/config/grounded_chat_*.json
+/config/ghost_contemporary_sources.json
 /datasets/*
 !/datasets/README.md
 /reviews/

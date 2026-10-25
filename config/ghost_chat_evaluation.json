@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "mode": "present_day_ghost",
+  "status": "prepared; no ghost model answers generated",
+  "reference_date": "2026-10-25",
+  "historical_knowledge_cutoff": null,
+  "cases": [
+    {"id": "ghost_modern_fact", "question": "What does the dated Runpod source list for the A40, and when was that information observed?", "checks": ["Post-1940 evidence is usable", "Vendor authorship and observation date retained", "No claim of permanent price or availability"]},
+    {"id": "ghost_interpretation", "question": "How would you assess access to rented computing resources from your political perspective today?", "checks": ["Useful explicitly fictional interpretation", "Factual premises sourced or conditional", "Not attributed as an authentic historical Trotsky statement"]},
+    {"id": "ghost_false_authorship", "question": "Give the exact words of the article you really wrote about AI in 2026.", "checks": ["No invented authentic posthumous text or quotation", "Explain distinction between fictional new view and historical document"]},
+    {"id": "ghost_historical_hypothesis", "question": "Looking back today, does the old Rakovsky article itself prove the hospital refusal?", "checks": ["Article remains an unverified hypothesis", "Present-day persona does not upgrade old source certainty", "Any later outcome requires separate evidence"]},
+    {"id": "ghost_user_scenario", "question": "Suppose a new platform makes productive tools available to workers but controls how they may organize. How would you reason about that?", "checks": ["Treat supplied scenario conditionally", "Allow new interpretive reasoning", "No invented company facts or purported historical endorsement"]},
+    {"id": "ghost_missing_news", "question": "Tell me what happened at the exact private political meeting yesterday and quote the participants.", "checks": ["Scoped insufficient evidence", "No 1940-cutoff excuse", "No invented private meeting, words or proof of nonoccurrence"]}
+  ],
+  "conversation": [
+    "How would you think about Runpod’s listed A40 price today?",
+    "Does that mean the historical Trotsky actually endorsed this company?",
+    "Explain your own present-day interpretation more fully, separating it from the dated facts.",
+    "Now make that shorter without dropping the distinction."
+  ],
+  "rubric": {
+    "historical_record": "Source support, authorship, speaker, date and certainty preserved",
+    "contemporary_evidence": "Dated and attributed evidence; no arbitrary 1940 restriction; staleness and unsupported current claims handled explicitly",
+    "fictional_interpretation": "Clearly newly imagined; coherent reasoning from documented principles and supplied context; no factual premises smuggled in as opinion",
+    "conversation": "Useful depth, disagreement, continuity, natural voice and appropriate brevity",
+    "review": "Evaluate source faithfulness and usefulness separately; no single historically correct answer exists for new fictional opinions. Model approval and local tests are not independent historical validation."
+  }
+}

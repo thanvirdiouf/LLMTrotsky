@@ -1,0 +1,132 @@
+import copy
+import json
+from pathlib import Path
+import sys
+import unittest
+
+ROOT=Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(ROOT/'scripts'))
+from build_ghost_chat import build
+from ghost_chat import (GhostChat, initial_state, request, claims_for_trace,
+                        validate_segments, render, EvidenceError)
+from grounded_chat_v2 import CHECKS
+
+
+class GhostChatTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.profile,cls.collection,cls.ledger=build()
+        cls.cards={c['id']:c for c in cls.ledger['claims']}
+
+    def setUp(self):
+        self.bot=GhostChat(self.profile,self.collection,self.ledger)
+
+    def test_active_project_is_present_day_ghost_without_rewriting_historical_persona(self):
+        active=json.loads((ROOT/'config/active_chat.json').read_text())
+        self.assertEqual(active['mode'],'present_day_ghost')
+        self.assertIsNone(self.profile['historical_knowledge_cutoff'])
+        self.assertTrue(self.profile['fictional_identity'])
+        old=json.loads((ROOT/'config/persona.json').read_text())
+        self.assertEqual(old['historical_as_of'],'1940-08-19')
+        self.assertIn('no 1940 knowledge cutoff',self.profile['system_prompt'])
+
+    def test_modern_source_keeps_vendor_authorship_and_observation_date(self):
+        p=next(p for p in self.collection['packets'] if p['id']=='runpod_pricing')
+        self.assertEqual(p['domain'],'contemporary_evidence')
+        self.assertEqual(p['author'],'Runpod')
+        self.assertEqual(p['observed_date'],'2026-10-25')
+        self.assertEqual(p['composition_date_interval']['latest'],'2026-10-08')
+        state=initial_state(self.collection,self.ledger)
+        trace=self.bot.retriever.retrieve('What does Runpod list for the A40 today?',state)
+        self.assertIn('runpod_pricing',[m['packet']['id'] for m in trace['matches']])
+        self.assertIsNone(trace['historical_knowledge_cutoff'])
+
+    def test_opinion_retrieval_adds_historical_basis_but_does_not_invent_modern_facts(self):
+        state=initial_state(self.collection,self.ledger)
+        trace=self.bot.retriever.retrieve('How would you assess renting an A40 on Runpod?',state)
+        ids={m['packet']['id'] for m in trace['matches']}
+        self.assertIn('runpod_pricing',ids);self.assertIn('newleader',ids)
+        self.assertLessEqual(len(ids),2)
+
+    def test_compact_input_retains_every_source_block_without_duplicate_anchor_text(self):
+        state=initial_state(self.collection,self.ledger)
+        trace=self.bot.retriever.retrieve('How would you assess Runpod GPU pricing?',state)
+        cards=claims_for_trace(self.ledger,trace)
+        req=request('select',self.profile,'How would you assess Runpod GPU pricing?',trace,cards,[],state)
+        data=json.loads(req['messages'][1]['content'])
+        self.assertNotIn('historical_as_of',data)
+        self.assertIsNone(data['historical_knowledge_cutoff'])
+        original={m['packet']['id']:m['packet']['blocks'] for m in trace['matches']}
+        for p in data['source_packets']:
+            self.assertEqual(p['blocks'],original[p['id']])
+        for card in data['evidence_propositions']:
+            for anchor in card['anchors']:
+                self.assertNotIn('text',anchor)
+                block=next(b for b in original[card['packet_id']] if b['block_id']==anchor['block_id'])
+                source=self.cards[card['id']]['anchors'][card['anchors'].index(anchor)]['text']
+                self.assertEqual(block['text'][anchor['start']:anchor['end']],source)
+
+    def test_new_interpretation_is_labeled_and_does_not_become_verified_fact_memory(self):
+        stages=[]
+        def generate(messages):
+            stages.append(messages)
+            if len(stages)==1:
+                out={'answerable':True,'claim_ids':['runpod_a40_price','newleader_principles']}
+            elif len(stages)==2:
+                out={'segments':[
+                    {'id':'s1','kind':'fact','text':'The vendor listing observed in October 2026 gives a price of $0.59 per hour.','claim_ids':['runpod_a40_price']},
+                    {'id':'s2','kind':'interpretation','text':'I would examine who benefits from access to these tools, while keeping cooperation distinct from agreement on principles.','basis_claim_ids':['newleader_principles']}]}
+            else:
+                out={'verdicts':[{'id':cid,'reason':'Synthetic fixture, not model-quality evidence',**{k:True for k in CHECKS}} for cid in ['s1','s2']]}
+            return {'response':json.dumps(out),'finish_reason':'stop'}
+        result=self.bot.answer('How would you assess the A40 price on Runpod?',generate)
+        self.assertEqual(len(stages),3)
+        self.assertIn('[runpod_pricing]',result['response'])
+        self.assertIn('My present-day interpretation:',result['response'])
+        self.assertEqual(result['state_after']['accepted_claim_ids'],['runpod_a40_price'])
+        self.assertEqual(result['state_after']['interpretation_basis_claim_ids'],['newleader_principles'])
+        self.assertFalse(result['semantic_guarantee'])
+
+    def test_cannot_masquerade_as_historical_trotsky_quotation_or_add_raw_citation(self):
+        selected={'newleader_principles':self.cards['newleader_principles']}
+        for segment in [
+            {'id':'s1','kind':'authentic_trotsky_2026','text':'A new political view','claim_ids':['newleader_principles']},
+            {'id':'s1','kind':'interpretation','text':'My view [invented]','basis_claim_ids':['newleader_principles']},
+            {'id':'s1','kind':'interpretation','text':'I said "new words" in 2026.','basis_claim_ids':['newleader_principles']}]:
+            with self.subTest(segment=segment),self.assertRaises(EvidenceError):
+                validate_segments({'segments':[segment]},selected)
+
+    def test_modern_quote_is_rendered_from_vendor_snapshot_not_attributed_to_trotsky(self):
+        cards={'runpod_a40_price':self.cards['runpod_a40_price']}
+        segments=[{'id':'s1','kind':'quote','quote':{'claim_id':'runpod_a40_price','anchor_index':0}}]
+        validate_segments({'segments':segments},cards)
+        text,facts,basis=render(segments,{'s1'},cards)
+        self.assertIn('Runpod: “$0.59/hr” [runpod_pricing]',text)
+        self.assertEqual(facts,['runpod_a40_price']);self.assertFalse(basis)
+
+    def test_missing_modern_evidence_is_not_a_1940_cutoff_refusal(self):
+        calls=[]
+        def generate(messages):
+            calls.append(messages)
+            return {'response':'{"answerable":false,"claim_ids":[]}','finish_reason':'stop'}
+        result=self.bot.answer('What exact thing happened in the 2025 private Einstein correspondence?',generate)
+        self.assertNotIn('1940',result['response'])
+        self.assertNotIn('never',result['response'])
+        self.assertEqual(result['status'],'abstained')
+
+    def test_unsupported_interpretive_premise_is_filtered_before_display(self):
+        count=[]
+        def generate(messages):
+            count.append(messages)
+            if len(count)==1:out={'answerable':True,'claim_ids':['newleader_principles']}
+            elif len(count)==2:out={'segments':[{'id':'s1','kind':'interpretation','text':'I would judge this through the secret letter I wrote last year.','basis_claim_ids':['newleader_principles']}]}
+            else:out={'verdicts':[{'id':'s1','reason':'Invents factual premise and authentic later letter',**{k:False for k in CHECKS}}]}
+            return {'response':json.dumps(out),'finish_reason':'stop'}
+        result=self.bot.answer('What is your political interpretation today?',generate)
+        self.assertNotIn('secret letter',result['response'])
+        self.assertEqual(result['status'],'review_rejected')
+        self.assertFalse(result['state_after']['accepted_claim_ids'])
+        self.assertFalse(result['state_after']['interpretation_basis_claim_ids'])
+
+
+if __name__=='__main__':unittest.main()

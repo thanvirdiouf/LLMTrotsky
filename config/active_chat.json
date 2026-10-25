@@ -1,0 +1,8 @@
+{
+  "mode": "present_day_ghost",
+  "persona_file": "config/persona_ghost.json",
+  "collection_file": "evaluation/ghost_chat_v1/collection.json",
+  "ledger_file": "evaluation/ghost_chat_v1/claims.json",
+  "historical_persona_archive": "config/persona.json",
+  "training_status": "paused; both adapters experimental"
+}

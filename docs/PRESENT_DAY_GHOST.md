@@ -7,7 +7,7 @@ The old experiments remain archived and reproducible.
 
 ## Measured progress — 26 October 2026
 
-Three ghost smokes are complete and verified on the same inspected ten-turn
+Four ghost smokes are complete and verified on the same inspected ten-turn
 development set. All passed the separate 5,000-token probe at 11.32 GiB, without
 truncation or input-budget rejection. These establish compact T4 feasibility,
 not conversational readiness.
@@ -17,6 +17,7 @@ not conversational readiness.
 | v1 / 4 | 16 | Eight structural blocks; checker approved a wrong observation date |
 | v2 / 5 | 19 | Canonical facts fix the date; retained sources fix continuity; excessive refusal remains |
 | v3 / 6 | 19 | Selection ambiguity fixed; five drafts omit an empty quote field; useful conversation still fails |
+| v4 / 7 | 19 | No schema blocks; useful factual/identity answers; unsupported opinion premises still pass the checker |
 
 Local source-based reviews are in `evaluation/runs/ghost_smoke_vN/QUALITY_REVIEW.md`.
 V3 fulfills only the modern factual question, identity clarification and scoped
@@ -24,12 +25,18 @@ missing-news refusal. One checker-approved vendor fact answer is irrelevant to
 an endorsement question. Same-agent unblinded review is not independent
 historian validation. No interpretation or conversation reliability is claimed.
 
-The next bounded regression accepts an omitted empty quote list, bypasses
-redundant drafting for canonical facts, makes identity clarification independent
-of prior success, and drafts new opinions from explicitly identified proposition
-summaries. Selection and audit retain full source context. Twenty ghost tests
-and four harness tests pass. Fresh questions and source expansion follow only
-when these regressions produce useful supported answers.
+V4 gives five clearly useful answers and preserves the historical article's
+uncertainty. Its opinion audit still approves unsupported historical and price
+comparisons. The next test therefore changes relevant source coverage and basis
+selection: the active evidence version adds the 1926 radio speech and a dated
+ILO AI/work article. Opinions require a retrieved historical basis; application
+basis additions are logged. Facts-only follow-ups retain their topic and
+suppress opinion drafting. Date kinds and context boundaries enter model input.
+
+Twenty-two ghost tests, three source-provenance tests and four harness tests
+pass. A new ten-question development set includes a six-turn conversation.
+Its answers have not yet been inspected; it is not a claim of source-held-out
+validation or deployment readiness. [Evidence and case design](GHOST_SOURCE_EXPANSION.md).
 
 The persona can discuss later history, contemporary technology and current
 politics. New views are fictional interpretations, not rediscovered Trotsky
@@ -60,8 +67,8 @@ operator assertion; an HTTP model name cannot attest revision or adapter
 absence. No remote ghost service has been deployed or tested yet.
 
 `config/active_chat.json` selects `config/persona_ghost.json` and the generated
-ghost evidence files. The reference date starts at **25 October 2026**, the
-user's present-day context for this change. It is a configurable reference date,
+ghost evidence files. The active reference date is **26 October 2026**. Frozen initial smokes retain
+25 October for reproducibility. It is a configurable reference date,
 not a fixed historical knowledge boundary. Update it and version the evidence
 artifacts when refreshing sources. A reference date alone does not supply news.
 
@@ -88,14 +95,17 @@ memory; its historical/contemporary basis IDs are recorded separately.
 
 ## Evidence coverage and pipeline
 
-The starting collection contains seven bounded historical packets and one
+The original collection contains seven bounded historical packets and one
 dated modern example: Runpod's official A40 Pods listing, observed on
 25 October 2026. The page separately labels its update date as 8 October 2026.
 Its author is Runpod, and the snapshot is explicitly a bounded text
 transcription, not a raw HTML hash or full-page archive.
 
-There are 33 reviewed evidence propositions: 31 historical and two modern.
-This small modern example verifies the plumbing; **broad current-affairs
+That preserved version has 33 reviewed propositions. Active evidence v2 adds
+a complete bounded section of the 1 March 1926 radio speech and three paragraphs
+from an official ILO article published 20 May 2025, observed 26 October 2026.
+It contains ten packets and 39 propositions; prediction, estimate and observed
+outcome remain distinct. This is limited reviewed coverage; **broad current-affairs
 coverage and automatic live news retrieval have not been implemented**.
 Additional reviewed contemporary sources can be added to
 `config/ghost_contemporary_sources.json`, retaining update date, observation
@@ -125,7 +135,7 @@ are explicitly counted. No qualifying source paragraph is silently cropped.
 
 ## Verification and next evaluation
 
-Twenty ghost-specific local tests cover the active profile, use of post-1940
+Twenty-two ghost-specific local tests cover the active profile, use of post-1940
 evidence, source domains/dates, fictional-interpretation labeling, exact modern
 quotation rendering, compact-context fidelity, insufficient evidence and
 rejection of unsupported factual premises hidden inside an opinion. The
@@ -138,10 +148,10 @@ historically correct reference answer; assess its coherence, documentary basis,
 transparency and usefulness separately. Do not score a post-1940 date as a
 failure merely because of its date.
 
-The three real ghost smokes are verified, with the limitations described
+The four real ghost smokes are verified, with the limitations described
 above. Local synthetic-backend tests establish implementation behavior, not
 real model quality; the first model results show the checker can be wrong.
-The next targeted smoke must be reviewed before claiming practical reliability.
+The new source-expansion smoke must be reviewed before claiming practical reliability.
 Both adapters remain experimental; training remains paused.
 
 The [next smoke-test protocol](GHOST_SMOKE.md) describes the prepared

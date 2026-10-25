@@ -1,0 +1,6 @@
+{
+  "status": "preserved initial ghost evidence plan",
+  "persona_file": "config/persona_ghost.json",
+  "contemporary_sources_file": "config/ghost_contemporary_sources.json",
+  "reflection_basis_claim_ids": ["newleader_principles", "weisbord_propaganda"]
+}

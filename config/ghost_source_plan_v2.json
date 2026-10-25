@@ -1,0 +1,10 @@
+{
+  "status": "active development evidence after v4 review; not quality promotion",
+  "persona_file": "config/persona_ghost_expansion.json",
+  "historical_sources_file": "config/ghost_historical_sources_v2.json",
+  "contemporary_sources_file": "config/ghost_contemporary_sources_v2.json",
+  "reflection_basis_claim_ids": [
+    "radio_social_control",
+    "radio_no_automatic_peace"
+  ]
+}

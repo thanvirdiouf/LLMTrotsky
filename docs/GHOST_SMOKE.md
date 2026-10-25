@@ -8,8 +8,9 @@ It makes no training updates and attaches neither experimental adapter.
 The bundle contains six single questions and one four-turn conversation from
 `config/ghost_chat_evaluation.json`: ten displayed answers, at most thirty
 evaluation-stage requests, and one separate memory probe. Source checks and
-rubrics are withheld from model cases. The same seven historical packets,
-dated Runpod vendor excerpt and 33 reviewed propositions are used. The model,
+rubrics are withheld from model cases. Smokes v1–v4 use the same seven historical packets, dated Runpod vendor excerpt
+and 33 reviewed propositions. V5 uses active evidence v2 (ten packets/39
+propositions) and a separately frozen four-single/six-conversation case set. The model,
 revision, NF4 stack and nonthinking greedy policy remain pinned.
 
 Before evaluation, an unscored 5,000-token synthetic request generates at most
@@ -85,7 +86,14 @@ fact materialization, identity clarification without a prior-success dependency,
 and explicitly summary-only drafting. Selection/audit retain full blocks and
 all traces preserve the original retrieval. The same ten inspected cases remain
 development regressions. These are combined interventions, not ablations or
-fresh generalization measurements. New source coverage remains deferred.
+fresh generalization measurements. V4 completes with nineteen calls and no schema blocks: five clearly useful
+factual/identity/refusal answers, but source/interpretation failures persist.
+The checker correctly catches one unsupported VRAM-history claim and wrongly
+approves other cost/history comparisons. V5 targets coverage and basis selection
+with reviewed radio/ILO sources, explicit historical basis membership and
+facts-only routing. Its four single questions and six-turn conversation are
+newly authored development cases, not pretraining/source-held-out validation.
+[Source expansion](GHOST_SOURCE_EXPANSION.md).
 
 ## Verification and decisions after the run
 

@@ -17,13 +17,13 @@ def enc(value):return (json.dumps(value,indent=2,sort_keys=True,ensure_ascii=Fal
 def sha(raw):return hashlib.sha256(raw).hexdigest()
 
 
-def build(version='ghost_smoke_v1'):
+def build(version='ghost_smoke_v1', evaluation_spec=None):
     if not re.fullmatch(r'ghost_smoke_v[1-9][0-9]*',version):raise ValueError('Invalid smoke version')
     from transformers import AutoTokenizer
     bot=load_active();prior=json.loads((ROOT/'evaluation/grounded_chat_v2/protocol.json').read_text())
     tokenizer=AutoTokenizer.from_pretrained(ROOT/'training/data_revision_v2/tokenizer_assets',trust_remote_code=False,local_files_only=True)
     if sha(tokenizer.chat_template.encode())!=prior['chat_template_sha256']:raise ValueError('Tokenizer changed')
-    source_spec=json.loads((ROOT/'config/ghost_chat_evaluation.json').read_text())
+    source_spec=json.loads((ROOT/(evaluation_spec or 'config/ghost_chat_evaluation.json')).read_text())
     model_spec={'cases':[{'id':c['id'],'question':c['question']} for c in source_spec['cases']],
                 'conversation':source_spec['conversation']}
     if len(model_spec['cases'])+len(model_spec['conversation'])>10:
@@ -94,4 +94,6 @@ def build(version='ghost_smoke_v1'):
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--version',default='ghost_smoke_v1')
-    build(parser.parse_args().version)
+    parser.add_argument('--evaluation-spec',type=Path,help='Explicit new case set; default preserves the inspected regressions')
+    args=parser.parse_args()
+    build(args.version,args.evaluation_spec)

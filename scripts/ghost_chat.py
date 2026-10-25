@@ -15,8 +15,17 @@ except ImportError:
         claims_for_trace, validate_plan, validate_draft, validate_review, render_segments, parse_object, REFUSAL, REVIEW_FAILURE)
 
 
+def facts_only_requested(question):
+    return bool(re.search(r'\b(?:facts?[- ]only|(?:only|just) (?:the )?(?:dated )?(?:facts|study findings|source findings))\b|\bwithout (?:your |any |a )?(?:political |fictional |present-day )?(?:interpretation|opinion)\b',question,re.I))
+
+
 def reflection_requested(question):
+    if facts_only_requested(question):return False
     return bool(re.search(r'\b(what do you think|your (?:(?:own|present-day|political) )*(?:view|opinion|interpretation)|how would you|would you|assess|judge|interpret|principles?|political|should we)\b', question, re.I))
+
+
+def interpretation_requested(question,state):
+    return not facts_only_requested(question) and (reflection_requested(question) or bool(state.get('interpretation_basis_claim_ids')))
 
 
 class GhostRetriever:
@@ -28,6 +37,18 @@ class GhostRetriever:
 
     def retrieve(self, question, state, *, top_k=2, max_chars=22000):
         trace = self.base.retrieve(question, state, top_k=top_k, max_chars=max_chars)
+        if (facts_only_requested(question) and re.match(r'\s*(?:now|then)\b',question,re.I)
+                and not trace['explicit_packet_ids'] and not trace['topic_reset'] and state['active_packet_ids']):
+            # A mode change can refer to the prior topic without saying "that".
+            chosen,omitted,used=[],[],0
+            for pid in state['active_packet_ids'][:top_k]:
+                packet=self.base.packets[pid];size=len(json.dumps(packet,ensure_ascii=False))
+                if used+size>max_chars:omitted.append(pid);continue
+                chosen.append({'packet':deepcopy(packet),'score':None,'matched_terms':[],
+                               'selection_reason':'retained_topic_facts_only'});used+=size
+            trace.update(matches=chosen,retained_packet_ids=list(state['active_packet_ids']),
+                         active_packet_ids=[m['packet']['id'] for m in chosen],budget_omitted=omitted,
+                         status='candidates_require_interpretation' if chosen else 'insufficient_evidence')
         trace.pop('historical_as_of', None)
         trace.update(mode='present_day_ghost', reference_date=self.collection['reference_date'], historical_knowledge_cutoff=None)
         anchored=trace['explicit_packet_ids'] or trace['retained_packet_ids']
@@ -56,7 +77,7 @@ class GhostRetriever:
 def compact_evidence(trace, cards):
     """Avoid repeating source spans in both the packet and every claim card."""
     packets = {m['packet']['id']: m['packet'] for m in trace['matches']}
-    source = [{k: p[k] for k in ('id', 'title', 'author', 'domain', 'composition_date_interval', 'blocks')}
+    source = [{k: p[k] for k in ('id', 'title', 'author', 'domain', 'composition_date_interval', 'composition_date_evidence', 'context_boundary', 'blocks')}
               | ({'observed_date': p['observed_date']} if 'observed_date' in p else {}) for p in packets.values()]
     propositions = []
     for card in cards.values():
@@ -108,6 +129,7 @@ def request(stage, profile, question, trace, cards, history, state, segments=Non
         task = ('Audit every segment against source context and selected evidence. For facts/quotes require support, correct attribution/date/status and relevance. '
                 'For interpretation allow new normative or conditional reasoning, but reject unsupported factual premises, invented motives or events, and attribution of the new opinion to the historical person. '
                 'Audit every factual assumption inside an opinion. A hypothetical introduction does not support later unqualified claims. Distinguish page-update dates from observation dates. Reject assertions that later history confirms an old hypothesis without a separate source. '
+                'Inspect each comparison, causal assertion and prediction: a price listing does not establish historical prices, state monopolies, past personal positions or inevitable political outcomes. A fictional label is not evidence for those premises. A normative preference may be new, but descriptive claims still need the supplied source. '
                 'Events after 1940 are allowed when evidenced; 1940 is not a knowledge boundary. Do not upgrade old predictions to fulfilled facts without separate evidence. '
                 'Return {"verdicts":[{"id":"s1","supported":true,"certainty_preserved":true,"attribution_preserved":true,"temporal_safe":true,"relevant":true,"no_extra_claims":true,"reason":"brief explanation"}]} in exact segment order. '
                 'Use true/false booleans for every check. Matching words is not entailment. no_extra_claims means no unsupported factual additions; clearly marked new opinions are allowed.')
@@ -137,8 +159,8 @@ def expand_draft(draft,selected,question,state):
     if set(draft)!={'facts','interpretation','quotes'} or not isinstance(draft['facts'],list) or not isinstance(draft['interpretation'],str) or not isinstance(draft['quotes'],list):
         raise EvidenceError('Invalid compact answer schema')
     facts=list(dict.fromkeys(c for c in draft['facts'] if isinstance(c,str) and c in selected))[:4]
-    interpret=reflection_requested(question) or bool(state.get('interpretation_basis_claim_ids'))
-    source_question=bool(re.search(r'\b(letter|article|historical|record|transcript|wrote|said)\b',question,re.I))
+    interpret=interpretation_requested(question,state)
+    source_question=bool(re.search(r'\b(letter|historical|record|transcript|wrote|said|radio speech|1926)\b',question,re.I))
     if interpret and not source_question:
         facts=[c for c in facts if selected[c]['domain']=='contemporary_evidence']
     segments=[]
@@ -161,6 +183,9 @@ def validate_segments(draft, selected, maximum=3):
             raise EvidenceError('Invalid ghost segment')
         kind = s.get('kind')
         if kind == 'interpretation' and set(s)=={'id','kind','text','basis_claim_ids'}:
+            basis=s['basis_claim_ids']
+            if not isinstance(basis,list) or not any(isinstance(c,str) and c in selected and selected[c]['domain']=='historical_record' for c in basis):
+                raise EvidenceError('Fictional persona reasoning needs a retrieved historical basis')
             normalized.append({'id':s['id'],'text':s['text'],'claim_ids':s['basis_claim_ids']})
         elif kind == 'fact' and set(s) in ({'id','kind','claim_ids'},{'id','kind','text','claim_ids'}):
             ids=s['claim_ids']
@@ -238,7 +263,7 @@ class GhostChat:
                     'validation_error':None,'semantic_guarantee':False,'model':MODEL,'training_steps':0,'adapters_loaded':[]}
         available=claims_for_trace(self.ledger,trace)
         selected,stages,segments,accepted,error={},[],[],set(),None
-        rejected_claim_ids,rejected_segments=[],[]
+        rejected_claim_ids,rejected_segments,added_basis=[],[],[]
         def call(stage,candidate=None):
             req=request(stage,self.profile,question,trace,available if stage=='select' else selected,history,state,candidate)
             out=generate(req['messages']);stages.append({**req,'output':out})
@@ -249,10 +274,19 @@ class GhostChat:
             if available:
                 plan,rejected_claim_ids=sanitize_selection(call('select'),available)
                 selected={c['id']:c for c in validate_plan(plan,available)}
+                if selected and interpretation_requested(question,state):
+                    # The model repeatedly omitted the historical basis and
+                    # invented one from a vendor price. These IDs were already
+                    # reviewed and retrieved; this is explicit application
+                    # selection, never newly inferred documentary evidence.
+                    basis=[c for c in self.ledger['reflection_basis_claim_ids'] if c in available][:2]
+                    added_basis=[c for c in basis if c not in selected]
+                    ids=list(dict.fromkeys(basis+list(selected)))[:4]
+                    selected={c:available[c] for c in ids}
                 if selected:
                     maximum=1 if re.search(r'\bone sentence\b',question,re.I) else 2 if re.search(r'\b(brief|briefly|shorter)\b',question,re.I) else 3
                     quote_requested=bool(re.search(r'\b(quot[ea]|quotation|exact words|verbatim)\b',question,re.I))
-                    interpret=reflection_requested(question) or bool(state.get('interpretation_basis_claim_ids'))
+                    interpret=interpretation_requested(question,state)
                     # Factual wording is already reviewed and immutable. Do not
                     # make a redundant generation a dependency of rendering it.
                     raw=call('draft') if interpret or quote_requested else {'facts':list(selected),'interpretation':'','quotes':[]}
@@ -274,6 +308,7 @@ class GhostChat:
                 'state_before':state,'state_after':next_state,'retrieval':trace,'segments':segments,
                 'accepted_segment_ids':sorted(accepted),'selected_claim_ids':list(selected),'stages':stages,
                 'rejected_claim_ids':rejected_claim_ids,'rejected_segments':rejected_segments,
+                'application_added_basis_claim_ids':added_basis,
                 'status':'blocked' if error else 'review_rejected' if selected and not accepted else 'abstained' if not facts and not basis else 'partial' if len(accepted)<len(segments) or rejected_segments else 'supported_by_model_review',
                 'validation_error':error,'semantic_guarantee':False,'model':MODEL,'training_steps':0,'adapters_loaded':[]}
 

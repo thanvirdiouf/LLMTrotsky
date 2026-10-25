@@ -8,11 +8,13 @@ result-dependent continuation, proper documentation, and milestone commits/pushe
 
 ## Current experiment
 
-Ghost smokes v1–v3 are complete, downloaded, verified and reviewed. V3 ran as
-saved Kaggle version 6. The fourth bounded regression is prepared as
-`ghost_smoke_v4`; it uses the same inspected ten-turn development set, not fresh
-validation. Frozen profile reference: 25 October; actual runs: 26 October.
-Do not update a frozen run's date or payload.
+Ghost smokes v1–v4 are complete, downloaded, verified and reviewed. V4 ran as
+saved Kaggle version 7. V5 is frozen locally as `ghost_smoke_v5`, using active
+evidence v2 and the new `config/ghost_chat_evaluation_v2.json`: four singles and
+six conversation turns, ten answers maximum/thirty evaluation calls plus one
+probe. No model answers on these new questions have been inspected. Submit
+under standing approval, then verify and review. Frozen v1–v4 profile reference:
+25 October; v5 reference and execution date: 26 October.
 
 - v1 / saved v4: 16 evaluation generations; eight structural blocks, one correct
   refusal and one substantive answer with errors incorrectly approved by the
@@ -26,40 +28,52 @@ Do not update a frozen run's date or payload.
   refusal and two approved fact answers (one irrelevant to endorsement). Only
   three responses fulfill the request. Selection boolean ambiguity is fixed,
   but useful conversation still fails.
-- v4 prepared: accept omitted empty quotes, materialize factual cards without
-  redrafting, remove identity-success dependency, use explicit summary-only
-  drafting with full-context selection/audit. Twenty ghost tests plus four
-  smoke-harness tests pass. No source expansion yet.
+- v4 / saved v7: 19 generations; no schema, budget or truncation blocks. Five
+  clearly useful factual/identity/refusal answers. Interpretation still fails:
+  the checker catches one invented VRAM-history premise and approves other
+  unsupported cost/history comparisons. Shortening retains weak premises.
+- v5 prepared: explicitly include retrieved reviewed historical basis for new
+  views; require historical basis membership, expose date kinds/boundaries, fix
+  facts-only mode/topic retention, add relevant radio/ILO sources and six-turn
+  evaluation. This combined intervention does not isolate causal effects.
 
-Local run directories `evaluation/runs/ghost_smoke_v{1,2,3,4}/` retain journals,
+Local run directories `evaluation/runs/ghost_smoke_v{1,2,3,4,5}/` retain journals,
 source payloads, model calls, verification and unblinded same-agent reviews.
 Checker approval is not a quality score or independent historical validation.
-Run `.venv-tokenizer/bin/python scripts/verify_ghost_smoke.py --version
-ghost_smoke_v3 --tokenizer training/data_revision_v2/tokenizer_assets` to reconstruct version 6. The verifier replays frozen helper code and reconstructs
-every prompt/output through the CPU tokenizer, without model inference.
+Verify the next result with `.venv-tokenizer/bin/python
+scripts/verify_ghost_smoke.py --version ghost_smoke_v5 --tokenizer
+training/data_revision_v2/tokenizer_assets`. Download the specific saved
+version, not whichever notebook version is latest later. The verifier replays
+frozen helper code and reconstructs every prompt/output without model inference.
 
-Twenty ghost tests and four smoke-harness tests pass. The full suite ran 293
-tests with the same two pre-existing errors: historical pilot snapshot checks
-reject the already changed `evaluation/README.md`. Do not rewrite historical
-locks to make that failure disappear. Preserved v1 helpers and both adapter
-hashes remain checked separately by each smoke verifier.
+Twenty-two ghost, three source-provenance and four harness tests pass (29).
+The full suite ran 302 tests with the same two pre-existing historical pilot
+snapshot errors for `evaluation/README.md`. Do not rewrite historical locks to conceal this.
+Each smoke separately verifies the preserved helpers and both adapter hashes.
 
 ## Active implementation and source boundary
 
-`config/active_chat.json` selects `config/persona_ghost.json` and the immutable
-`evaluation/ghost_chat_v1/` collection/ledger. Build with
-`python3 scripts/build_ghost_chat.py`; use `scripts/ghost_chat.py --dry-run` or
-an operator-configured remote untouched-base endpoint. No persistent remote
-chat service is deployed. Exact revision/no-adapter attestation applies to the
-Kaggle workflow; endpoint model-name assertions are insufficient by themselves.
+`config/active_chat.json` selects `config/persona_ghost_expansion.json`, the
+`config/ghost_source_plan_v2.json` plan and `evaluation/ghost_chat_v2/`. The
+original profile/evidence remain preserved through source plan v1. The default
+builder now reproduces the active plan/output; an explicit plan requires an
+explicit output path. Building never changes the active pointer.
 
-Eight source packets / 33 reviewed propositions: seven historical excerpts and
-one Runpod vendor listing, observed 25 October with a distinct update date of
-8 October. Modern coverage is narrow; no automatic live-news retrieval exists.
-Conditional user scenarios do not authenticate real-world events. Potential
-next sources are the 1 March 1926 radio/science speech (excluding its later
-publisher introduction) and dated ILO 2025 AI-exposure research. These have not
-yet entered the active collection; stabilize core answers first.
+Active collection: ten packets / 39 propositions. Original seven historical
+packets and the Runpod listing are unchanged (observed 25 October, updated
+8 October). Added: complete contiguous radio-speech blocks 25–28, delivered
+1 March 1926, excluding the later publisher introduction; and three complete
+ILO article paragraphs published 20 May 2025, observed 26 October. Nested
+Marconi attribution and predictions remain distinct from proved later events.
+The ILO exposure estimate is not actual job loss or a 2026 outcome. See
+`docs/GHOST_SOURCE_EXPANSION.md`. Raw source/hash and block fingerprints are
+checked; a preliminary annotation draft is preserved locally separately.
+
+Final synthetic expansion preflight peaks at 3,464 tokens, below 5,120; it is
+not model quality or actual-history evidence. Broad news retrieval remains
+unimplemented. No persistent service is deployed; use the CLI with an
+operator-configured untouched-base endpoint. Endpoint names cannot attest
+revision or absence of adapters. The Kaggle workflow records those explicitly.
 
 Facts render canonical reviewed statements. Quotes render exact source spans
 with recorded speaker. Fictional reasoning is labeled and kept out of verified
@@ -87,7 +101,7 @@ Origin remains SSH at the user's request. SSH signing needs an unlocked agent,
 but the user's re-authenticated `gh` works with network access. Publish using
 `git -c credential.helper='!gh auth git-credential' push
 https://github.com/thanvirdiouf/LLMTrotsky.git main`, retaining SSH origin. Do not
-print or request credentials. Commits through `8689a25` are pushed; commit/push the completed v4 fixes and documentation milestone. Earlier
+print or request credentials. Commit `b38eb11` (v4 fixes/review documentation) is pushed. Commit/push the completed source-expansion milestone before submitting v5. Earlier
 byte-identical API-published equivalents `14576a3` / `cfbce01` replaced local
 unpublished `e3ffbce` / `033c720` through normal rebase; do not resurrect them.
 

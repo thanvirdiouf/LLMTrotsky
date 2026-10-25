@@ -15,7 +15,7 @@ from grounded_chat_v2 import CHECKS
 class GhostChatTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.profile,cls.collection,cls.ledger=build()
+        cls.profile,cls.collection,cls.ledger=build(source_plan=Path('config/ghost_source_plan_v1.json'))
         cls.cards={c['id']:c for c in cls.ledger['claims']}
 
     def setUp(self):
@@ -214,6 +214,37 @@ class GhostChatTest(unittest.TestCase):
         self.assertTrue(all('blocks' not in p for p in draft['source_packets']))
         self.assertTrue(all('blocks' in p for p in audit['source_packets']))
         self.assertTrue(all('anchors' in p for p in audit['evidence_propositions']))
+
+    def test_facts_only_followup_suppresses_prior_opinion_mode(self):
+        state=initial_state(self.collection,self.ledger)
+        state['interpretation_basis_claim_ids']=['newleader_principles']
+        state['active_packet_ids']=['runpod_pricing','newleader']
+        calls=[]
+        def generate(messages):
+            calls.append(messages)
+            out={'claim_ids':['runpod_a40_price']} if len(calls)==1 else {'verdicts':[{'id':'s1','reason':'Synthetic dated fact only',**{k:True for k in CHECKS}}]}
+            return {'response':json.dumps(out),'finish_reason':'stop'}
+        result=self.bot.answer('Now give only the dated facts, without your political interpretation.',generate,state=state)
+        self.assertEqual([s['stage'] for s in result['stages']],['select','check'])
+        self.assertNotIn('My present-day interpretation',result['response'])
+        self.assertFalse(result['state_after']['interpretation_basis_claim_ids'])
+
+    def test_opinion_keeps_reviewed_retrieved_basis_if_model_selects_only_vendor(self):
+        calls=[]
+        def generate(messages):
+            calls.append(messages)
+            if len(calls)==1:out={'claim_ids':['runpod_a40_price']}
+            elif len(calls)==2:
+                data=json.loads(messages[1]['content'])
+                self.assertIn('newleader_principles',[c['id'] for c in data['evidence_propositions']])
+                out={'facts':['runpod_a40_price'],'interpretation':'I would ask whether access helps workers act independently.','quotes':[]}
+            else:out={'verdicts':[{'id':cid,'reason':'Synthetic fixture; not semantic quality evidence',**{k:True for k in CHECKS}} for cid in ['s1','s2']]}
+            return {'response':json.dumps(out),'finish_reason':'stop'}
+        result=self.bot.answer('How would you assess the Runpod A40 listing?',generate)
+        self.assertEqual(result['application_added_basis_claim_ids'],['newleader_principles'])
+        self.assertIn('newleader_principles',result['state_after']['interpretation_basis_claim_ids'])
+        with self.assertRaisesRegex(EvidenceError,'historical basis'):
+            validate_segments({'segments':[{'id':'s1','kind':'interpretation','text':'I would ask who controls access.','basis_claim_ids':['runpod_a40_price']}]}, {'runpod_a40_price':self.cards['runpod_a40_price']})
 
 
 if __name__=='__main__':unittest.main()

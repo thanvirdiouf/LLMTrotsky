@@ -16,11 +16,12 @@ python3 scripts/build_ghost_chat.py
 python3 scripts/ghost_chat.py --dry-run --question "How would you assess renting an A40 on Runpod today?"
 ```
 
-Twenty ghost-specific tests and four harness tests pass. Three real ghost
-smokes verify compact T4 memory feasibility, but still expose schema,
-interpretation and conversational failures. Canonical rendering preserves the
-modern facts; model checker approval remains fallible. A fourth bounded
-regression targets the observed failures. Broad live-news retrieval is pending.
+Twenty-two ghost tests, three source tests and four harness tests pass. Four
+real smokes verify compact T4 memory feasibility and improve factual answers,
+but interpretation and conversation remain unreliable. A fifth test uses a
+more relevant historical technology source, dated ILO research and a six-turn
+conversation. The active collection has ten packets/39 reviewed propositions.
+Model checker approval remains fallible; broad live-news retrieval is pending.
 [Measured progress](docs/PRESENT_DAY_GHOST.md).
 
 The following describes the preserved historical research archive.

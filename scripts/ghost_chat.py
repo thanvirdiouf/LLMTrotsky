@@ -21,7 +21,7 @@ def facts_only_requested(question):
 
 def reflection_requested(question):
     if facts_only_requested(question):return False
-    return bool(re.search(r'\b(what do you think|your (?:(?:own|present-day|political) )*(?:view|opinion|interpretation)|how would you|would you|assess|judge|interpret|principles?|political|should we)\b', question, re.I))
+    return bool(re.search(r'\b(what do you think|your (?:(?:own|present-day|political|fictional) )*(?:view|opinion|interpretation|reasoning)|how would you|would you|assess|judge|interpret|principles?|political|should we|I disagree|address my objection)\b', question, re.I))
 
 
 def interpretation_requested(question,state):

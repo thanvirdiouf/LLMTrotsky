@@ -16,7 +16,7 @@ python3 scripts/build_ghost_chat.py
 python3 scripts/ghost_chat.py --dry-run --question "How would you assess renting an A40 on Runpod today?"
 ```
 
-Twenty-two ghost tests, three source tests and four harness tests pass. Four
+Twenty-three ghost tests, three source tests and four harness tests pass. Four
 real smokes verify compact T4 memory feasibility and improve factual answers,
 but interpretation and conversation remain unreliable. A fifth test uses a
 more relevant historical technology source, dated ILO research and a six-turn

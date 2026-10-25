@@ -9,11 +9,10 @@ result-dependent continuation, proper documentation, and milestone commits/pushe
 ## Current experiment
 
 Ghost smokes v1–v4 are complete, downloaded, verified and reviewed. V4 ran as
-saved Kaggle version 7. V5 is frozen locally as `ghost_smoke_v5`, using active
+saved Kaggle version 7. V5 is submitted/running as saved Kaggle version 8 (`ghost_smoke_v5`), using active
 evidence v2 and the new `config/ghost_chat_evaluation_v2.json`: four singles and
 six conversation turns, ten answers maximum/thirty evaluation calls plus one
-probe. No model answers on these new questions have been inspected. Submit
-under standing approval, then verify and review. Frozen v1–v4 profile reference:
+probe. No model answers on these new questions have been inspected. After completion, download saved version 8, then verify and review. Frozen v1–v4 profile reference:
 25 October; v5 reference and execution date: 26 October.
 
 - v1 / saved v4: 16 evaluation generations; eight structural blocks, one correct
@@ -46,10 +45,18 @@ training/data_revision_v2/tokenizer_assets`. Download the specific saved
 version, not whichever notebook version is latest later. The verifier replays
 frozen helper code and reconstructs every prompt/output without model inference.
 
-Twenty-two ghost, three source-provenance and four harness tests pass (29).
+Twenty-three ghost, three source-provenance and four harness tests pass (30).
 The full suite ran 302 tests with the same two pre-existing historical pilot
 snapshot errors for `evaluation/README.md`. Do not rewrite historical locks to conceal this.
 Each smoke separately verifies the preserved helpers and both adapter hashes.
+
+After v5 submission, static routing inspection found turn 4 misses opinion mode
+following a facts-only turn; turn 6 own-reasoning wording is also not recognized
+without prior basis. This was recorded before model answer inspection. Local
+patch recognizes fictional views, own reasoning and explicit disagreement; a
+full-pipeline synthetic regression passes. Do not attribute this patch to v5;
+choose a v6 regression after reviewing v5. `export_ghost_transcript.py` exports
+verified exact replies/source links for human review, without inference.
 
 ## Active implementation and source boundary
 
@@ -101,7 +108,7 @@ Origin remains SSH at the user's request. SSH signing needs an unlocked agent,
 but the user's re-authenticated `gh` works with network access. Publish using
 `git -c credential.helper='!gh auth git-credential' push
 https://github.com/thanvirdiouf/LLMTrotsky.git main`, retaining SSH origin. Do not
-print or request credentials. Commit `b38eb11` (v4 fixes/review documentation) is pushed. Commit/push the completed source-expansion milestone before submitting v5. Earlier
+print or request credentials. Source-expansion milestone `0aec137` and v4 milestone `b38eb11` are pushed. Commit/push the completed routing/transcript follow-up; it is outside frozen v5. Earlier
 byte-identical API-published equivalents `14576a3` / `cfbce01` replaced local
 unpublished `e3ffbce` / `033c720` through normal rebase; do not resurrect them.
 

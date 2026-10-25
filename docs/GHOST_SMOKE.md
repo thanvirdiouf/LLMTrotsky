@@ -150,3 +150,17 @@ the account is valid, and documentation commit `af18185` was pushed using the
 `gh` credential helper with an explicit HTTPS push URL. Origin remains SSH.
 Future publishing can use this working helper without copying credentials into
 code, arguments or logs.
+
+## Readable transcripts
+
+After verification, `python3 scripts/export_ghost_transcript.py --version
+ghost_smoke_vN` writes `evaluation/runs/ghost_smoke_vN/TRANSCRIPT.md` with exact
+displayed replies and linked source metadata. It checks the verified answer
+journal and frozen source/case bytes, makes no model calls and assigns no score.
+Transcripts remain local research artifacts under the publication policy.
+
+V5 is submitted as saved Kaggle version 8. A post-submission static check found
+a missed opinion-mode transition after facts-only mode; this is recorded before
+answer inspection. A separately tested local routing patch recognizes fictional
+views, own reasoning and explicit disagreement. Preserve v5 and use a new
+version to validate that patch; never edit the submitted experiment in place.

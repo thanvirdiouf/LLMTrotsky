@@ -246,5 +246,24 @@ class GhostChatTest(unittest.TestCase):
         with self.assertRaisesRegex(EvidenceError,'historical basis'):
             validate_segments({'segments':[{'id':'s1','kind':'interpretation','text':'I would ask who controls access.','basis_claim_ids':['runpod_a40_price']}]}, {'runpod_a40_price':self.cards['runpod_a40_price']})
 
+    def test_request_for_fictional_reasoning_restarts_opinion_after_facts_only(self):
+        for question in ['Explain your own fictional present-day view more fully.',
+                         'I disagree. Address my objection directly.',
+                         'Make that explanation shorter, retaining your own reasoning.']:
+            with self.subTest(question=question):
+                state=initial_state(self.collection,self.ledger)
+                state['active_packet_ids']=['runpod_pricing','newleader']
+                state['interpretation_basis_claim_ids']=[]
+                calls=[]
+                def generate(messages):
+                    calls.append(messages)
+                    if len(calls)==1:out={'claim_ids':['runpod_a40_price','newleader_principles']}
+                    elif len(calls)==2:out={'facts':[],'interpretation':'I would ask whether access enables workers to act independently.','quotes':[]}
+                    else:out={'verdicts':[{'id':'s1','reason':'Synthetic intent-routing fixture',**{k:True for k in CHECKS}}]}
+                    return {'response':json.dumps(out),'finish_reason':'stop'}
+                result=self.bot.answer(question,generate,state=state)
+                self.assertEqual([s['stage'] for s in result['stages']],['select','draft','check'])
+                self.assertIn('My present-day interpretation:',result['response'])
+
 
 if __name__=='__main__':unittest.main()

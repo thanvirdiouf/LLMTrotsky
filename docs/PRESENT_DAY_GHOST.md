@@ -33,9 +33,9 @@ ILO AI/work article. Opinions require a retrieved historical basis; application
 basis additions are logged. Facts-only follow-ups retain their topic and
 suppress opinion drafting. Date kinds and context boundaries enter model input.
 
-Twenty-two ghost tests, three source-provenance tests and four harness tests
+Twenty-three ghost tests, three source-provenance tests and four harness tests
 pass. A new ten-question development set includes a six-turn conversation.
-Its answers have not yet been inspected; it is not a claim of source-held-out
+It is running as saved Kaggle version 8; answers have not yet been inspected; it is not a claim of source-held-out
 validation or deployment readiness. [Evidence and case design](GHOST_SOURCE_EXPANSION.md).
 
 The persona can discuss later history, contemporary technology and current
@@ -135,7 +135,7 @@ are explicitly counted. No qualifying source paragraph is silently cropped.
 
 ## Verification and next evaluation
 
-Twenty-two ghost-specific local tests cover the active profile, use of post-1940
+Twenty-three ghost-specific local tests cover the active profile, use of post-1940
 evidence, source domains/dates, fictional-interpretation labeling, exact modern
 quotation rendering, compact-context fidelity, insufficient evidence and
 rejection of unsupported factual premises hidden inside an opinion. The
@@ -180,3 +180,18 @@ applied to v1's smaller prompts. No paid GPU has been rented or provisioned.
 The historical `config/persona.json`, original seed data, training locks and
 saved adapters remain unchanged. This is an active application/persona change,
 not a silent reinterpretation of the old training or evaluation results.
+
+### Current routing follow-up
+
+After v5 was frozen/submitted, static inspection found that its fourth
+conversation turn requests a fictional view using wording the intent rule
+misses after facts-only mode. That finding is recorded before answer inspection
+in `evaluation/runs/ghost_smoke_v5/routing_preinspection.json`. The local follow-up
+recognizes fictional views, own reasoning and explicit disagreement; a full
+pipeline regression passes after basis reset. Frozen v5 does not contain this
+patch, so its model run cannot validate it.
+
+For a readable transcript of a verified run, use
+`python3 scripts/export_ghost_transcript.py --version ghost_smoke_vN`.
+This exports exact displayed replies and source metadata after checking the
+answer hash and frozen source/case payloads. It assigns no quality score.

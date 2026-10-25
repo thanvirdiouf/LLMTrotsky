@@ -8,7 +8,7 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'scripts'))
 from build_ghost_chat import build
 from ghost_chat import (GhostChat, initial_state, request, claims_for_trace,
-                        validate_segments, render, EvidenceError,sanitize_selection,filter_segments)
+                        validate_segments, render, EvidenceError,sanitize_selection,filter_segments,expand_draft)
 from grounded_chat_v2 import CHECKS
 
 
@@ -134,7 +134,7 @@ class GhostChatTest(unittest.TestCase):
         self.assertEqual(plan['claim_ids'],['runpod_a40_price'])
         self.assertEqual(rejected,['runpod_pricing','eastman_donation'])
         plan,_=sanitize_selection({'answerable':False,'claim_ids':['runpod_a40_price']},available)
-        self.assertEqual(plan,{'answerable':False,'claim_ids':[]})
+        self.assertEqual(plan,{'answerable':True,'claim_ids':['runpod_a40_price']})
 
     def test_factual_prose_is_materialized_from_canonical_record(self):
         selected={'runpod_a40_price':self.cards['runpod_a40_price']}
@@ -159,6 +159,26 @@ class GhostChatTest(unittest.TestCase):
         state['interpretation_basis_claim_ids']=['newleader_principles']
         trace=self.bot.retriever.retrieve('Now make that shorter without dropping the distinction.',state)
         self.assertEqual({m['packet']['id'] for m in trace['matches']},{'runpod_pricing','newleader'})
+
+    def test_negative_answer_can_still_select_supporting_evidence(self):
+        plan,_=sanitize_selection({'claim_ids':['rakovsky_limit']},{'rakovsky_limit':self.cards['rakovsky_limit']})
+        self.assertTrue(plan['answerable'])
+
+    def test_compact_opinion_avoids_unrequested_historical_fact_dump(self):
+        selected={'newleader_principles':self.cards['newleader_principles']}
+        draft=expand_draft({'facts':['newleader_principles'],'interpretation':'I would ask who controls these tools.','quotes':[]},selected,'What is your political interpretation today?',initial_state(self.collection,self.ledger))
+        self.assertEqual(len(draft['segments']),1)
+        self.assertEqual(draft['segments'][0]['kind'],'interpretation')
+
+    def test_authenticity_clarification_is_product_metadata_and_retains_context(self):
+        state=initial_state(self.collection,self.ledger)
+        state['active_packet_ids']=['newleader','runpod_pricing']
+        state['interpretation_basis_claim_ids']=['newleader_principles']
+        def no_call(_):raise AssertionError('No generation needed for product identity')
+        result=self.bot.answer('Does that mean the historical Trotsky actually endorsed this company?',no_call,state=state)
+        self.assertEqual(result['status'],'application_identity_clarification')
+        self.assertEqual(result['state_after']['active_packet_ids'],state['active_packet_ids'])
+        self.assertIn('fictional present-day persona',result['response'])
 
 
 if __name__=='__main__':unittest.main()

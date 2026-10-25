@@ -89,10 +89,16 @@ Do not resume training merely because the application executes successfully.
 
 ## Git milestone
 
-Implementation commit `e3ffbce` is saved locally. HTTPS pushing had no usable
-credentials. At the user's request, `origin` now uses SSH. GitHub accepts the
-existing public key, but signing fails without an unlocked agent in this
-session; `gh` reports an invalid token. A user request to unlock the existing
-agent or re-authenticate `gh` is pending. Do not ask for or record passphrases
-or tokens. Code commits can continue locally; pushing resumes once access is
-available. Research source excerpts and model artifacts remain excluded.
+Implementation commit `14576a3` and smoke-workflow commit `cfbce01` are published
+on GitHub main. HTTPS pushing had no usable credentials. At the user's request,
+`origin` now uses SSH. GitHub accepts the existing public key, but signing fails
+without an unlocked agent in this session; `gh` reports an invalid token.
+
+The connected GitHub account provided a working publication route: the reviewed
+file trees were uploaded and checked against their exact local tree SHAs, then
+committed with expected-head leases. Local unpublished counterparts `e3ffbce`
+and `033c720` were rebased onto the byte-identical published equivalents. Main
+is synchronized and the SSH remote remains configured. An SSH unlock is not
+needed for this completed publication, though future direct SSH pushes still
+need a usable agent. Do not ask for or record passphrases or tokens. Research
+source excerpts and model artifacts remain excluded.

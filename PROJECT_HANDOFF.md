@@ -5,12 +5,17 @@ Commit meaningful completed changes and push the configured remote; retain the
 repository's source/data publication boundary and keep research artifacts local.
 
 The user also asked to proceed with the ghost smoke and continue according to
-results, documenting everything. Local implementation commit is `e3ffbce`.
+results, documenting everything. The implementation and smoke workflow are
+published as `14576a3` and `cfbce01` on GitHub main.
 HTTPS push lacked credentials; origin was switched to SSH at the user's
 request. GitHub accepts the existing public key but signing cannot complete
-without an unlocked agent; `gh` reports an invalid token. A user-input request
-for unlocking the agent or re-authenticating gh is pending; never request a
-secret in chat. Source/claim/reference JSON under `config/grounded_chat_*.json`
+without an unlocked agent; `gh` reports an invalid token. The connected GitHub
+account published the two byte-identical file trees using its Git API. Local
+unpublished counterparts `e3ffbce` and `033c720` were replaced through a normal
+rebase onto their published equivalents; file contents are unchanged and main
+is synchronized. SSH auth remains unavailable for future CLI writes, but no
+unlock is needed for the completed publication. Never request a secret in chat.
+Source/claim/reference JSON under `config/grounded_chat_*.json`
 and `config/ghost_contemporary_sources.json` are now explicitly ignored to
 honor the existing publication policy.
 

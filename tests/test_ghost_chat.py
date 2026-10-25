@@ -180,5 +180,40 @@ class GhostChatTest(unittest.TestCase):
         self.assertEqual(result['state_after']['active_packet_ids'],state['active_packet_ids'])
         self.assertIn('fictional present-day persona',result['response'])
 
+    def test_identity_followup_does_not_require_a_successful_previous_opinion(self):
+        def no_call(_):raise AssertionError('Product identity does not need inference')
+        result=self.bot.answer('Does that mean the historical Trotsky actually endorsed this company?',no_call)
+        self.assertEqual(result['status'],'application_identity_clarification')
+
+    def test_missing_empty_quotes_field_does_not_discard_selected_facts(self):
+        selected={'rakovsky_limit':self.cards['rakovsky_limit']}
+        draft=expand_draft({'facts':['rakovsky_limit'],'interpretation':''},selected,'Does the article prove this?',initial_state(self.collection,self.ledger))
+        valid=validate_segments(draft,selected)
+        self.assertEqual(valid[0]['text'],selected['rakovsky_limit']['statement'])
+        with self.assertRaises(EvidenceError):
+            expand_draft({'facts':['rakovsky_limit'],'interpretation':'','unexpected':[]},selected,'Does it?',{})
+
+    def test_factual_negative_answer_needs_selection_and_audit_without_redrafting(self):
+        calls=[]
+        def generate(messages):
+            calls.append(messages)
+            out={'claim_ids':['rakovsky_limit']} if len(calls)==1 else {'verdicts':[{'id':'s1','reason':'Synthetic source-supported explicit limit',**{k:True for k in CHECKS}}]}
+            return {'response':json.dumps(out),'finish_reason':'stop'}
+        result=self.bot.answer('Does the Rakovsky article prove the hospital refusal?',generate)
+        self.assertEqual([r['stage'] for r in result['stages']],['select','check'])
+        self.assertEqual(len(calls),2)
+        self.assertIn(self.cards['rakovsky_limit']['statement'],result['response'])
+
+    def test_summary_drafting_is_explicit_and_audit_keeps_full_context(self):
+        state=initial_state(self.collection,self.ledger)
+        trace=self.bot.retriever.retrieve('How would you assess Runpod pricing?',state)
+        cards=claims_for_trace(self.ledger,trace)
+        draft=json.loads(request('draft',self.profile,'How would you assess Runpod pricing?',trace,cards,[],state)['messages'][1]['content'])
+        audit=json.loads(request('check',self.profile,'How would you assess Runpod pricing?',trace,cards,[],state,[])['messages'][1]['content'])
+        self.assertIn('summaries only',draft['evidence_view'])
+        self.assertTrue(all('blocks' not in p for p in draft['source_packets']))
+        self.assertTrue(all('blocks' in p for p in audit['source_packets']))
+        self.assertTrue(all('anchors' in p for p in audit['evidence_propositions']))
+
 
 if __name__=='__main__':unittest.main()

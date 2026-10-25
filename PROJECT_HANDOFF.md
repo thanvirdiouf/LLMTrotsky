@@ -1,103 +1,99 @@
-# Active goal: present-day Trotsky ghost — 25 October 2026
+# Active goal: present-day Trotsky ghost — 26 October 2026
 
-## Continuation — 26 October 2026
+The user wants a clearly fictional ghost of Leon Trotsky living in the present
+day, with no 1940 knowledge cutoff. Keep historical records, dated contemporary
+facts and newly imagined interpretations distinct. Training stays paused and
+both adapters remain experimental and unchanged. The user authorized autonomous
+result-dependent continuation, proper documentation, and milestone commits/pushes.
 
-Ghost smoke v1 is complete and locally verified, saved Kaggle version 4.
-5,000-token memory probe peaked at 11.32 GiB; sixteen evaluation calls, no
-truncation/budget rejects. Operational outcomes: eight blocks (four invalid
-selection and four draft structural errors), one correct refusal, one
-substantive answer with factual/interpretive errors incorrectly approved by the
-checker. Read `evaluation/runs/ghost_smoke_v1/QUALITY_REVIEW.md`; do not claim
-conversation reliability from memory success or the checker verdict.
+## Current experiment
 
-Commit `3832096` is pushed. It adds canonical factual rendering, safe selection
-sanitization, per-segment filtering, shorter drafting and persistence of used
-supporting source IDs. The second bounded iteration is frozen as
-`ghost_smoke_v2` and submitted as saved Kaggle version 5. Its questions are the
-same inspected regressions, not fresh evaluation. Thirteen ghost tests pass;
-all frozen historical helpers/adapters remain unchanged. Next: download v5,
-verify with `verify_ghost_smoke.py --version ghost_smoke_v2`, review displayed
-answers and filtered candidates against sources, and select the next bounded
-change from the results. No training or paid compute.
+Ghost smokes v1–v3 are complete, downloaded, verified and reviewed. V3 ran as
+saved Kaggle version 6. The fourth bounded regression is prepared as
+`ghost_smoke_v4`; it uses the same inspected ten-turn development set, not fresh
+validation. Frozen profile reference: 25 October; actual runs: 26 October.
+Do not update a frozen run's date or payload.
 
-The user approved this ghost smoke and bounded follow-up inference iterations
-on the same private Kaggle notebook and payload categories, capped at thirty
-evaluation calls plus one short memory probe per run, with no training,
-adapters or paid compute. The first smoke is submitted as saved version 4.
-Its frozen persona reference date remains 25 October for reproducibility.
-Source/claim payloads stay in the local research archive; do not publish them.
+- v1 / saved v4: 16 evaluation generations; eight structural blocks, one correct
+  refusal and one substantive answer with errors incorrectly approved by the
+  checker. Memory passed: 5,000 tokens, 11.32 GiB peak.
+- v2 / saved v5: 19 generations; three partial, five refusals, one approved and
+  one rejected answer. Canonical rendering fixes the vendor observation date,
+  and supporting source state survives follow-ups. False selection booleans and
+  unnecessarily complex drafting still discard useful answers.
+- v3 / saved v6: 19 generations; five blocks due to omitted empty quotes, one
+  filtered interpretation, one correct identity clarification, one correct
+  refusal and two approved fact answers (one irrelevant to endorsement). Only
+  three responses fulfill the request. Selection boolean ambiguity is fixed,
+  but useful conversation still fails.
+- v4 prepared: accept omitted empty quotes, materialize factual cards without
+  redrafting, remove identity-success dependency, use explicit summary-only
+  drafting with full-context selection/audit. Twenty ghost tests plus four
+  smoke-harness tests pass. No source expansion yet.
 
-The user re-authenticated gh; checked with network access, authentication works.
-Documentation commit af18185 was pushed using the gh credential helper and an
-explicit HTTPS URL while origin remains SSH. The old auth/approval blockers
-described below are historical and resolved for the current authorized work.
-Main was synchronized with GitHub. Builder/verifier now accept versioned smoke
-archives, and the builder enforces the standing per-run call limit.
+Local run directories `evaluation/runs/ghost_smoke_v{1,2,3,4}/` retain journals,
+source payloads, model calls, verification and unblinded same-agent reviews.
+Checker approval is not a quality score or independent historical validation.
+Run `.venv-tokenizer/bin/python scripts/verify_ghost_smoke.py --version
+ghost_smoke_v3 --tokenizer training/data_revision_v2/tokenizer_assets` to reconstruct version 6. The verifier replays frozen helper code and reconstructs
+every prompt/output through the CPU tokenizer, without model inference.
 
-Workflow preference: the user asked for commits and pushes whenever necessary.
-Commit meaningful completed changes and push the configured remote; retain the
-repository's source/data publication boundary and keep research artifacts local.
+Twenty ghost tests and four smoke-harness tests pass. The full suite ran 293
+tests with the same two pre-existing errors: historical pilot snapshot checks
+reject the already changed `evaluation/README.md`. Do not rewrite historical
+locks to make that failure disappear. Preserved v1 helpers and both adapter
+hashes remain checked separately by each smoke verifier.
 
-The user also asked to proceed with the ghost smoke and continue according to
-results, documenting everything. The implementation and smoke workflow are
-published as `14576a3` and `cfbce01` on GitHub main.
-HTTPS push lacked credentials; origin was switched to SSH at the user's
-request. GitHub accepts the existing public key but signing cannot complete
-without an unlocked agent; `gh` reports an invalid token. The connected GitHub
-account published the two byte-identical file trees using its Git API. Local
-unpublished counterparts `e3ffbce` and `033c720` were replaced through a normal
-rebase onto their published equivalents; file contents are unchanged and main
-is synchronized. SSH auth remains unavailable for future CLI writes, but no
-unlock is needed for the completed publication. Never request a secret in chat.
-Source/claim/reference JSON under `config/grounded_chat_*.json`
-and `config/ghost_contemporary_sources.json` are now explicitly ignored to
-honor the existing publication policy.
+## Active implementation and source boundary
 
-The first ghost smoke bundle is frozen: 10 answers, maximum 30 evaluation
-requests plus a separate 16-token memory probe at 5,000 input tokens. Runtime
-cap is 5,120 tokens, with explicit pre-inference budget rejections. Three new
-harness tests pass. Upload was blocked before execution by auto-review for
-missing explicit new-payload/destination permission; a pending question asks
-for this smoke and optionally bounded follow-up tests on the same private
-notebook. Do not bypass it or treat elapsed time as approval. No ghost model
-answers exist yet. [Smoke protocol and continuation](docs/GHOST_SMOKE.md).
+`config/active_chat.json` selects `config/persona_ghost.json` and the immutable
+`evaluation/ghost_chat_v1/` collection/ledger. Build with
+`python3 scripts/build_ghost_chat.py`; use `scripts/ghost_chat.py --dry-run` or
+an operator-configured remote untouched-base endpoint. No persistent remote
+chat service is deployed. Exact revision/no-adapter attestation applies to the
+Kaggle workflow; endpoint model-name assertions are insufficient by themselves.
 
-The user explicitly changed the active goal to a fictional ghost of Leon
-Trotsky living in the present day, without a 1940 knowledge cutoff. This
-supersedes the active historical-as-of product goal. Keep historical claims
-grounded, use dated contemporary evidence for modern facts, and clearly
-distinguish fictional new interpretations from authentic Trotsky writings.
+Eight source packets / 33 reviewed propositions: seven historical excerpts and
+one Runpod vendor listing, observed 25 October with a distinct update date of
+8 October. Modern coverage is narrow; no automatic live-news retrieval exists.
+Conditional user scenarios do not authenticate real-world events. Potential
+next sources are the 1 March 1926 radio/science speech (excluding its later
+publisher introduction) and dated ILO 2025 AI-exposure research. These have not
+yet entered the active collection; stabilize core answers first.
 
-Implemented: `config/active_chat.json` selects `config/persona_ghost.json`;
-`scripts/build_ghost_chat.py` builds eight packets/33 reviewed propositions;
-`scripts/ghost_chat.py` is the active CLI. It carries forward topic state,
-source-rendered quotes/citations, and select/draft/check/render. Fact, quote
-and fictional-interpretation segments are distinct; generated opinions never
-become verified-fact memory. Compact prompts reference anchors by offsets
-rather than duplicating source spans. No frozen v1/v2 code was changed.
+Facts render canonical reviewed statements. Quotes render exact source spans
+with recorded speaker. Fictional reasoning is labeled and kept out of verified
+fact memory. Selection, interpretation and semantic review still use the same
+fallible base model. Topic/basis state and actual displayed replies carry into
+follow-ups. Model prompts remain compact, with explicit input-budget rejection.
 
-Modern coverage is one dated official Runpod pricing example, observed
-25 October 2026 with a separately recorded page-update date. Broad current
-affairs and automatic live-news retrieval remain unimplemented. New modern
-sources can be reviewed/versioned through `config/ghost_contemporary_sources.json`.
-Nine ghost tests and 21 grounded-chat tests pass. The full suite runs 282 tests
-with the same two pre-existing historical README snapshot errors. No ghost
-model responses have been generated; semantic quality and GPU memory are not
-yet validated. [Active guide](docs/PRESENT_DAY_GHOST.md).
+Publish code, persona, evaluation design and documentation only. Corpus,
+excerpts, reviewed propositions, generated notebooks, journals and model files
+remain ignored local research artifacts. Never force-add these to Git.
 
-The previous approved Kaggle v2 trial failed after 14 direct-control answers
-and before any checked-arm answers. A 6,546-token prompt exhausted T4 memory
-during attention prefill. Downloaded payloads and completed journal prefix are
-verified and preserved in `evaluation/runs/kaggle_grounded_chat_v2/`; no quality
-comparison is claimed and the superseded historical trial was not retried.
-The original notebook title/URL was restored by a no-run save (version 3),
-preserving versions 1 and 2. No GPU run remains active and no paid GPU was rented.
+## Standing authorization and publishing
 
-Next: review the ghost evaluation specification, prepare a small real-model
-smoke with a tested memory budget, and validate source/interpretation separation
-and conversational usefulness. A tokenizer-length check alone is insufficient
-to establish T4 capacity. Keep both adapters experimental and training paused;
-the persona change does not authorize retraining or reinterpret old scores.
+The user explicitly approved the ghost smoke and bounded follow-up iterations
+on the existing private Kaggle notebook
+`thanvirdiouf/trotsky-grounded-base-chatbot` (numeric ID 140792344). Scope:
+project helpers/persona prompts, reviewed public historical/contemporary
+excerpts/propositions and evaluation questions; at most ten answers/thirty
+evaluation calls plus one short memory probe per run. No training, adapters or
+paid compute. Do not repeat the resolved initial upload-confirmation request.
+Keep the original notebook title to avoid changing its URL. Builder/verifier
+accept `--version ghost_smoke_vN` and preserve previous frozen experiments.
+
+Origin remains SSH at the user's request. SSH signing needs an unlocked agent,
+but the user's re-authenticated `gh` works with network access. Publish using
+`git -c credential.helper='!gh auth git-credential' push
+https://github.com/thanvirdiouf/LLMTrotsky.git main`, retaining SSH origin. Do not
+print or request credentials. Commits through `8689a25` are pushed; commit/push the completed v4 fixes and documentation milestone. Earlier
+byte-identical API-published equivalents `14576a3` / `cfbce01` replaced local
+unpublished `e3ffbce` / `033c720` through normal rebase; do not resurrect them.
+
+The historical 1940 v2 trial failed before its checked arm: 14 direct answers,
+6,546-token T4 OOM. It remains a separate partial archive and is superseded by
+the active ghost goal. Compact ghost probes fit the free T4. No A40 was rented.
 
 # Historical grounded base chatbot v2 — 25 October 2026
 

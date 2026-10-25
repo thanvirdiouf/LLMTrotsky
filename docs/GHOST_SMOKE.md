@@ -70,13 +70,22 @@ structural failures are separated from semantic quality; no memory or token
 budget failure occurred. The model checker incorrectly approved the wrong
 observation date in the substantive answer.
 
-The local report and records are in `evaluation/runs/ghost_smoke_v1/`.
-Targeted fixes are committed/pushed as `3832096`. The second frozen iteration,
-`ghost_smoke_v2`, is submitted as Kaggle version 5 under the standing approval.
-It uses the same cases as inspected development regressions, with canonical
-factual rendering, sanitized references, segment-level filtering and supporting
-source retention. This is a combined targeted intervention, not an ablation
-isolating the effect of each change. Its model-quality review is pending.
+The local reports and records are in `evaluation/runs/ghost_smoke_vN/`.
+V2 (saved version 5) completed with nineteen calls: three partial answers, five
+refusals, one approved and one rejected. It fixes the canonical observation date
+and source retention but exposes an ambiguous answerable boolean and complex
+drafting failures. V3 (saved version 6) also completed with nineteen calls:
+two approved, one identity clarification, one rejected, five schema blocks and
+one refusal. Five drafts omit only the empty quotes field; opinions still
+retell old disputes and add unsupported premises. Only three responses fulfill
+their request. One approved vendor-fact answer is irrelevant to endorsement.
+
+V4 targets these observed failures with optional empty quotes, direct canonical
+fact materialization, identity clarification without a prior-success dependency,
+and explicitly summary-only drafting. Selection/audit retain full blocks and
+all traces preserve the original retrieval. The same ten inspected cases remain
+development regressions. These are combined interventions, not ablations or
+fresh generalization measurements. New source coverage remains deferred.
 
 ## Verification and decisions after the run
 

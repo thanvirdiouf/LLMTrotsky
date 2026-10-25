@@ -7,23 +7,29 @@ The old experiments remain archived and reproducible.
 
 ## Measured progress — 26 October 2026
 
-The first ghost smoke completed and was verified: ten responses, sixteen
-evaluation generations and a separate 5,000-token probe peaking at 11.32 GiB.
-No generation was truncated or rejected for input budget. Eight answers were
-structurally blocked, one correctly refused missing evidence, and the single
-substantive answer had an incorrect observation date and unsupported additions
-despite checker approval. This established memory feasibility for the compact
-test, not conversational readiness. The complete local review is in
-`evaluation/runs/ghost_smoke_v1/QUALITY_REVIEW.md`.
+Three ghost smokes are complete and verified on the same inspected ten-turn
+development set. All passed the separate 5,000-token probe at 11.32 GiB, without
+truncation or input-budget rejection. These establish compact T4 feasibility,
+not conversational readiness.
 
-The resulting fixes are published in commit `3832096`: factual segments render
-immutable reviewed statements rather than new model paraphrases; invalid claim
-references are discarded and logged; validation rejects individual segments;
-unrequested quotes and retrospective historical assertions in interpretation
-are filtered; approved supporting sources persist into follow-ups. Thirteen
-ghost-specific tests pass. The second bounded smoke is running as saved Kaggle
-version 5 on the same inspected development questions; its semantic results
-are not yet established.
+| Smoke / Kaggle version | Evaluation calls | Main finding |
+|---|---:|---|
+| v1 / 4 | 16 | Eight structural blocks; checker approved a wrong observation date |
+| v2 / 5 | 19 | Canonical facts fix the date; retained sources fix continuity; excessive refusal remains |
+| v3 / 6 | 19 | Selection ambiguity fixed; five drafts omit an empty quote field; useful conversation still fails |
+
+Local source-based reviews are in `evaluation/runs/ghost_smoke_vN/QUALITY_REVIEW.md`.
+V3 fulfills only the modern factual question, identity clarification and scoped
+missing-news refusal. One checker-approved vendor fact answer is irrelevant to
+an endorsement question. Same-agent unblinded review is not independent
+historian validation. No interpretation or conversation reliability is claimed.
+
+The next bounded regression accepts an omitted empty quote list, bypasses
+redundant drafting for canonical facts, makes identity clarification independent
+of prior success, and drafts new opinions from explicitly identified proposition
+summaries. Selection and audit retain full source context. Twenty ghost tests
+and four harness tests pass. Fresh questions and source expansion follow only
+when these regressions produce useful supported answers.
 
 The persona can discuss later history, contemporary technology and current
 politics. New views are fictional interpretations, not rediscovered Trotsky
@@ -119,7 +125,7 @@ are explicitly counted. No qualifying source paragraph is silently cropped.
 
 ## Verification and next evaluation
 
-Thirteen ghost-specific local tests cover the active profile, use of post-1940
+Twenty ghost-specific local tests cover the active profile, use of post-1940
 evidence, source domains/dates, fictional-interpretation labeling, exact modern
 quotation rendering, compact-context fidelity, insufficient evidence and
 rejection of unsupported factual premises hidden inside an opinion. The
@@ -132,7 +138,7 @@ historically correct reference answer; assess its coherence, documentary basis,
 transparency and usefulness separately. Do not score a post-1940 date as a
 failure merely because of its date.
 
-The first real ghost smoke is now verified, with the limitations described
+The three real ghost smokes are verified, with the limitations described
 above. Local synthetic-backend tests establish implementation behavior, not
 real model quality; the first model results show the checker can be wrong.
 The next targeted smoke must be reviewed before claiming practical reliability.
@@ -156,8 +162,8 @@ Kaggle's original notebook title and URL were restored with saved version 3
 using `--no-run`. Version 1's completed run and version 2's failed run remain
 preserved. No extra inference was launched by the title restoration.
 
-The compact ghost inputs address duplicated context, but their GPU memory and
-quality still need a smoke test. An A40's additional memory could help longer
+The compact ghost inputs fit the measured 5,000-token probe; semantic quality
+still fails the development smoke. An A40's additional memory could help longer
 contexts and interactive work; the earlier claim that Kaggle had ample capacity
 applied to v1's smaller prompts. No paid GPU has been rented or provisioned.
 

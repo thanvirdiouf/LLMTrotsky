@@ -7,8 +7,9 @@ The old experiments remain archived and reproducible.
 
 ## Measured progress — 26 October 2026
 
-Four ghost smokes are complete and verified on the same inspected ten-turn
-development set. All passed the separate 5,000-token probe at 11.32 GiB, without
+Five ghost smokes are complete and verified. V1–v4 use the same inspected
+ten-turn set; v5 evaluates four new questions and a six-turn conversation,
+which are now inspected regressions. All passed the separate 5,000-token probe at 11.32 GiB, without
 truncation or input-budget rejection. These establish compact T4 feasibility,
 not conversational readiness.
 
@@ -18,6 +19,7 @@ not conversational readiness.
 | v2 / 5 | 19 | Canonical facts fix the date; retained sources fix continuity; excessive refusal remains |
 | v3 / 6 | 19 | Selection ambiguity fixed; five drafts omit an empty quote field; useful conversation still fails |
 | v4 / 7 | 19 | No schema blocks; useful factual/identity answers; unsupported opinion premises still pass the checker |
+| v5 / 8 | 20 | Four new factual cases preserve source limits; conversation invents personal circumstances and misses mode transitions |
 
 Local source-based reviews are in `evaluation/runs/ghost_smoke_vN/QUALITY_REVIEW.md`.
 V3 fulfills only the modern factual question, identity clarification and scoped
@@ -33,10 +35,17 @@ ILO AI/work article. Opinions require a retrieved historical basis; application
 basis additions are logged. Facts-only follow-ups retain their topic and
 suppress opinion drafting. Date kinds and context boundaries enter model input.
 
-Twenty-three ghost tests, three source-provenance tests and four harness tests
-pass. A new ten-question development set includes a six-turn conversation.
-It is running as saved Kaggle version 8; answers have not yet been inspected; it is not a claim of source-held-out
-validation or deployment readiness. [Evidence and case design](GHOST_SOURCE_EXPANSION.md).
+Twenty-four ghost tests, four source-provenance tests and four harness tests
+pass. V5's four single questions and identity clarification are useful, but
+its views make unsupported personal assumptions; facts-only mode includes an
+unrequested historical argument, and later turns repeat facts. All model checks
+pass despite these failures. No conversation reliability is claimed.
+
+The next combined regression gives auditing a neutral role, tightens study-only
+scope, discourages personal assumptions, and fixes return-to-opinion routing.
+The prepared routing-only v6 is preserved **unrun**. V7 uses the exact v5
+questions as inspected regressions; model approval remains fallible.
+[Evidence and case design](GHOST_SOURCE_EXPANSION.md).
 
 The persona can discuss later history, contemporary technology and current
 politics. New views are fictional interpretations, not rediscovered Trotsky
@@ -66,8 +75,8 @@ No model weights or GPU inference run locally. Endpoint identity remains an
 operator assertion; an HTTP model name cannot attest revision or adapter
 absence. No remote ghost service has been deployed or tested yet.
 
-`config/active_chat.json` selects `config/persona_ghost.json` and the generated
-ghost evidence files. The active reference date is **26 October 2026**. Frozen initial smokes retain
+`config/active_chat.json` selects `config/persona_ghost_expansion.json`, the
+versioned source plan and generated ghost evidence files. The active reference date is **26 October 2026**. Frozen initial smokes retain
 25 October for reproducibility. It is a configurable reference date,
 not a fixed historical knowledge boundary. Update it and version the evidence
 artifacts when refreshing sources. A reference date alone does not supply news.
@@ -107,17 +116,19 @@ from an official ILO article published 20 May 2025, observed 26 October 2026.
 It contains ten packets and 39 propositions; prediction, estimate and observed
 outcome remain distinct. This is limited reviewed coverage; **broad current-affairs
 coverage and automatic live news retrieval have not been implemented**.
-Additional reviewed contemporary sources can be added to
-`config/ghost_contemporary_sources.json`, retaining update date, observation
-date, authorship, exact blocks and supported propositions. Rebuild into a new
+Additional reviewed contemporary sources belong in a new versioned local
+source input selected by `config/ghost_source_plan_v2.json` or its successor.
+Retain the publication or update date, separate observation date, authorship,
+exact blocks and supported propositions. Rebuild into a new
 evidence version and update the active pointer rather than silently overwriting
 an existing source snapshot. User-supplied modern scenarios can be discussed
 conditionally without being authenticated as facts.
 
-The inherited select/draft/check/render pipeline supports separate fact,
-quotation and interpretation segments. The checker now permits clearly
-fictional normative reasoning while still rejecting invented factual premises
-and false historical attribution. It is the same base model and remains
+The select/draft/check/render pipeline supports separate fact,
+quotation and interpretation segments. The current checker has a neutral auditing role and permits clearly fictional
+normative reasoning while requiring support for descriptive premises. Earlier
+checks inherited the character prompt and accepted unsupported premises; the
+neutral-role change requires runtime evaluation. It is the same base model and remains
 fallible. A passing verdict is not proof of semantic faithfulness. Source
 curation is by the continuing coding agent, not an independent historian.
 
@@ -148,7 +159,7 @@ historically correct reference answer; assess its coherence, documentary basis,
 transparency and usefulness separately. Do not score a post-1940 date as a
 failure merely because of its date.
 
-The four real ghost smokes are verified, with the limitations described
+The five real ghost smokes are verified, with the limitations described
 above. Local synthetic-backend tests establish implementation behavior, not
 real model quality; the first model results show the checker can be wrong.
 The new source-expansion smoke must be reviewed before claiming practical reliability.

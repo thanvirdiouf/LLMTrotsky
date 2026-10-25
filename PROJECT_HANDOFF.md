@@ -8,12 +8,15 @@ result-dependent continuation, proper documentation, and milestone commits/pushe
 
 ## Current experiment
 
-Ghost smokes v1–v4 are complete, downloaded, verified and reviewed. V4 ran as
-saved Kaggle version 7. V5 is submitted/running as saved Kaggle version 8 (`ghost_smoke_v5`), using active
-evidence v2 and the new `config/ghost_chat_evaluation_v2.json`: four singles and
-six conversation turns, ten answers maximum/thirty evaluation calls plus one
-probe. No model answers on these new questions have been inspected. After completion, download saved version 8, then verify and review. Frozen v1–v4 profile reference:
-25 October; v5 reference and execution date: 26 October.
+Ghost smokes v1–v5 are complete, downloaded, verified and reviewed. V5 ran as
+saved Kaggle version 8. V6 is a frozen routing-only bundle, **never uploaded or
+executed**. The next bounded regression is v7, frozen locally, combining neutral
+auditing, personal-assumption guidance, study-only scope and intent repair.
+Same ten v5 questions: four singles and six conversation turns; now inspected
+regressions. Maximum thirty evaluation calls plus one short probe, no training,
+adapters or paid compute. Submit v7 under standing approval, download its exact
+saved version, then verify and review. Reference dates: v1–v4 25 October;
+v5 onward 26 October. All executed on 26 October.
 
 - v1 / saved v4: 16 evaluation generations; eight structural blocks, one correct
   refusal and one substantive answer with errors incorrectly approved by the
@@ -31,22 +34,27 @@ probe. No model answers on these new questions have been inspected. After comple
   clearly useful factual/identity/refusal answers. Interpretation still fails:
   the checker catches one invented VRAM-history premise and approves other
   unsupported cost/history comparisons. Shortening retains weak premises.
-- v5 prepared: explicitly include retrieved reviewed historical basis for new
-  views; require historical basis membership, expose date kinds/boundaries, fix
-  facts-only mode/topic retention, add relevant radio/ILO sources and six-turn
-  evaluation. This combined intervention does not isolate causal effects.
+- v5 / saved v8: 20 generations, nine approved/one identity, but only the four
+  single questions and identity clearly fulfill the request. Opinions assume
+  job loss or feelings not supplied; study-only turn adds historical context;
+  later depth/shortening requests repeat facts. All checks wrongly approve.
+- v6 unrun: only the intent rule differs from v5. Preserved as a prepared bundle,
+  replaced by v7 after the broader v5 audit-design failure was inspected.
+- v7 prepared: neutral checker instead of persona roleplay, conditional personal
+  reasoning, study-only context exclusions and opinion intent repair. Combined
+  intervention, not an ablation. Source/profile/model settings stay fixed.
 
-Local run directories `evaluation/runs/ghost_smoke_v{1,2,3,4,5}/` retain journals,
+Local run directories `evaluation/runs/ghost_smoke_v{1,2,3,4,5,6,7}/` retain journals,
 source payloads, model calls, verification and unblinded same-agent reviews.
 Checker approval is not a quality score or independent historical validation.
 Verify the next result with `.venv-tokenizer/bin/python
-scripts/verify_ghost_smoke.py --version ghost_smoke_v5 --tokenizer
+scripts/verify_ghost_smoke.py --version ghost_smoke_v7 --tokenizer
 training/data_revision_v2/tokenizer_assets`. Download the specific saved
 version, not whichever notebook version is latest later. The verifier replays
 frozen helper code and reconstructs every prompt/output without model inference.
 
-Twenty-three ghost, three source-provenance and four harness tests pass (30).
-The full suite ran 302 tests with the same two pre-existing historical pilot
+Twenty-four ghost, four source-provenance and four harness tests pass (32).
+The full suite ran 305 tests with the same two pre-existing historical pilot
 snapshot errors for `evaluation/README.md`. Do not rewrite historical locks to conceal this.
 Each smoke separately verifies the preserved helpers and both adapter hashes.
 
@@ -55,7 +63,7 @@ following a facts-only turn; turn 6 own-reasoning wording is also not recognized
 without prior basis. This was recorded before model answer inspection. Local
 patch recognizes fictional views, own reasoning and explicit disagreement; a
 full-pipeline synthetic regression passes. Do not attribute this patch to v5;
-choose a v6 regression after reviewing v5. `export_ghost_transcript.py` exports
+v6 was prepared but remains unrun; v7 now targets the wider v5 findings. `export_ghost_transcript.py` exports
 verified exact replies/source links for human review, without inference.
 
 ## Active implementation and source boundary
@@ -108,7 +116,7 @@ Origin remains SSH at the user's request. SSH signing needs an unlocked agent,
 but the user's re-authenticated `gh` works with network access. Publish using
 `git -c credential.helper='!gh auth git-credential' push
 https://github.com/thanvirdiouf/LLMTrotsky.git main`, retaining SSH origin. Do not
-print or request credentials. Source-expansion milestone `0aec137` and v4 milestone `b38eb11` are pushed. Commit/push the completed routing/transcript follow-up; it is outside frozen v5. Earlier
+print or request credentials. Source-expansion milestone `0aec137` and v4 milestone `b38eb11` are pushed. Routing/transcript milestone `68655ea` is pushed. Commit/push the completed neutral-audit/scope fixes before submitting v7. Earlier
 byte-identical API-published equivalents `14576a3` / `cfbce01` replaced local
 unpublished `e3ffbce` / `033c720` through normal rebase; do not resurrect them.
 

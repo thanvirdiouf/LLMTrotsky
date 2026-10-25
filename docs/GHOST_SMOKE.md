@@ -164,3 +164,17 @@ a missed opinion-mode transition after facts-only mode; this is recorded before
 answer inspection. A separately tested local routing patch recognizes fictional
 views, own reasoning and explicit disagreement. Preserve v5 and use a new
 version to validate that patch; never edit the submitted experiment in place.
+
+## V5 review and revised continuation
+
+Saved version 8 is complete and verified: twenty calls, no budget/schema/length
+failures, 11.32 GiB probe peak. Four single answers and identity clarification
+fulfill the request; conversation adds unsupported personal circumstances,
+includes an unrelated historical argument in study-only mode, and misses later
+opinion requests. Nine model approvals are not nine successful answers.
+
+The routing-only v6 is frozen locally but **never uploaded or run**. V5 review
+also identified persona conditioning of the audit. V7 combines the routing fix
+with a neutral audit role, limits on personal assumptions and explicit removal
+of unrelated historical context from study-only answers. It uses the same v5
+questions as inspected regressions, not fresh validation or a causal ablation.

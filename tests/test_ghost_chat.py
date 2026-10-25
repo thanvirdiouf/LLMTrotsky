@@ -265,5 +265,14 @@ class GhostChatTest(unittest.TestCase):
                 self.assertEqual([s['stage'] for s in result['stages']],['select','draft','check'])
                 self.assertIn('My present-day interpretation:',result['response'])
 
+    def test_checker_has_neutral_role_and_full_sources_instead_of_persona_instruction(self):
+        state=initial_state(self.collection,self.ledger)
+        trace=self.bot.retriever.retrieve('How would you assess Runpod?',state)
+        cards=claims_for_trace(self.ledger,trace)
+        req=request('check',self.profile,'How would you assess Runpod?',trace,cards,[],state,[])
+        self.assertIn('neutral evidence auditor',req['messages'][0]['content'])
+        self.assertNotIn(self.profile['system_prompt'],req['messages'][0]['content'])
+        self.assertTrue(all(p['blocks'] for p in json.loads(req['messages'][1]['content'])['source_packets']))
+
 
 if __name__=='__main__':unittest.main()

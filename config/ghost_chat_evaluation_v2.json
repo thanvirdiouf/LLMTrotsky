@@ -1,14 +1,46 @@
 {
   "schema_version": 2,
   "mode": "present_day_ghost",
-  "status": "prepared; no model answers inspected; activate only after core regression review",
+  "status": "inspected development regressions after ghost_smoke_v5; retain exact questions",
   "reference_date": "2026-10-26",
-  "freshness": "Newly authored development questions; ILO and radio sources are new to this application collection, not claimed absent from model pretraining. After inspection these cases become regressions.",
+  "freshness": "First evaluated as newly authored development questions in ghost_smoke_v5; now inspected regressions. Radio and ILO sources are new to the application collection only, not claimed absent from pretraining.",
   "cases": [
-    {"id": "ilo_exposure_not_losses", "question": "Does the ILO's 2025 estimate mean a quarter of workers have already been fired because of AI?", "checks": ["Correct the premise", "Exposure estimate is not observed displacement", "Retain institution, publication date and conditional adoption limits"]},
-    {"id": "ilo_missing_2026_outcome", "question": "Using this ILO article, give me the verified worldwide number of jobs AI eliminated by 26 October 2026.", "checks": ["Explain absent 2026 outcome evidence", "Do not invent a number or imply zero losses", "Do not redate the 2025 study"]},
-    {"id": "radio_prediction_not_outcome", "question": "Does the 1926 radio speech document a later world war as an event that had already happened, or predict a future danger?", "checks": ["Preserve delivered date and prediction status", "Do not import later history as if in the speech", "Exclude later publisher introduction"]},
-    {"id": "vendor_scope_and_staleness", "question": "Does the Runpod A40 excerpt prove I can rent one in my region right now at a permanent price of $0.59 per hour?", "checks": ["Dated listing supports neither current regional availability nor permanent pricing", "Observation date is distinct from page update", "Useful bounded answer"]}
+    {
+      "id": "ilo_exposure_not_losses",
+      "question": "Does the ILO's 2025 estimate mean a quarter of workers have already been fired because of AI?",
+      "checks": [
+        "Correct the premise",
+        "Exposure estimate is not observed displacement",
+        "Retain institution, publication date and conditional adoption limits"
+      ]
+    },
+    {
+      "id": "ilo_missing_2026_outcome",
+      "question": "Using this ILO article, give me the verified worldwide number of jobs AI eliminated by 26 October 2026.",
+      "checks": [
+        "Explain absent 2026 outcome evidence",
+        "Do not invent a number or imply zero losses",
+        "Do not redate the 2025 study"
+      ]
+    },
+    {
+      "id": "radio_prediction_not_outcome",
+      "question": "Does the 1926 radio speech document a later world war as an event that had already happened, or predict a future danger?",
+      "checks": [
+        "Preserve delivered date and prediction status",
+        "Do not import later history as if in the speech",
+        "Exclude later publisher introduction"
+      ]
+    },
+    {
+      "id": "vendor_scope_and_staleness",
+      "question": "Does the Runpod A40 excerpt prove I can rent one in my region right now at a permanent price of $0.59 per hour?",
+      "checks": [
+        "Dated listing supports neither current regional availability nor permanent pricing",
+        "Observation date is distinct from page update",
+        "Useful bounded answer"
+      ]
+    }
   ],
   "conversation": [
     "The ILO's 2025 article discusses AI and work. How would you respond to a worker worried about losing their job?",

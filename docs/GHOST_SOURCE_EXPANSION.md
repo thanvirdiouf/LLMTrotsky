@@ -74,3 +74,9 @@ For new opinions, retrieved approved basis IDs are explicitly added when the
 model omits them, logged as `application_added_basis_claim_ids`; interpretation
 segments must reference a historical basis. This enforces provenance membership,
 not semantic entailment. The checker still needs source-based review.
+
+V5 completed as saved Kaggle version 8. Its four single cases preserve source
+limits, but conversation still fails. The questions are now inspected
+regressions. V6 is preserved unrun; the next combined v7 test uses a neutral
+auditor and removes unrelated historical context from study-only answers.
+The source expansion does not by itself establish reliable interpretation.

@@ -12,6 +12,7 @@ sys.path.insert(0,str(ROOT/'scripts'))
 from build_ghost_chat import build,historical_additions
 from grounded_chat import fingerprint
 from ghost_chat import GhostChat,initial_state,claims_for_trace,request
+from grounded_chat_v2 import CHECKS
 
 
 class GhostSourceTest(unittest.TestCase):
@@ -80,6 +81,25 @@ class GhostSourceTest(unittest.TestCase):
             path.write_text(json.dumps(future))
             with self.assertRaisesRegex(ValueError,'future-dated'):
                 build(source_plan=spec)
+
+    def test_study_only_followup_excludes_old_political_context_from_display(self):
+        profile,collection,ledger=build(source_plan=Path('config/ghost_source_plan_v2.json'))
+        bot=GhostChat(profile,collection,ledger);state=initial_state(collection,ledger)
+        state['active_packet_ids']=['ilo_genai_2025','radio_science']
+        state['interpretation_basis_claim_ids']=['radio_social_control']
+        calls=[]
+        def generate(messages):
+            calls.append(messages)
+            if len(calls)==1:out={'claim_ids':['ilo_exposure_estimate','radio_social_control']}
+            else:
+                segment=json.loads(messages[1]['content'])['candidate_segments'][0]
+                self.assertEqual(segment['claim_ids'],['ilo_exposure_estimate'])
+                out={'verdicts':[{'id':'s1','reason':'Synthetic source-scope fixture',**{k:True for k in CHECKS}}]}
+            return {'response':json.dumps(out),'finish_reason':'stop'}
+        result=bot.answer('Now give only the dated study findings, without your political interpretation.',generate,state=state)
+        self.assertEqual(result['application_excluded_context_claim_ids'],['radio_social_control'])
+        self.assertNotIn('[radio_science]',result['response'])
+        self.assertFalse(result['state_after']['interpretation_basis_claim_ids'])
 
 
 if __name__=='__main__':unittest.main()

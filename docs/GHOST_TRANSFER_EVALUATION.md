@@ -86,3 +86,9 @@ focused tests pass. The full suite ran 338 tests with the same two pre-existing
 historical `evaluation/README.md` snapshot errors. Historical locks are unchanged.
 Before claiming improvement, verify the actual V20 model inputs and compare
 masked displayed replies with V19, including possible source-only distraction.
+
+The completed V20 input audit confirms the old scenario and revision were
+supplied at the delayed return, within budget. Displayed usefulness does not
+improve there; see [context results](GHOST_USER_CONTEXT.md). V21/saved23 now
+separately tests the [stage-format candidate](GHOST_STAGE_OUTPUT_FORMAT.md),
+with the exact V20 source/question/memory controls.

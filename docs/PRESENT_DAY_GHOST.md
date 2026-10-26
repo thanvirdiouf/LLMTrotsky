@@ -7,7 +7,7 @@ adapters stay experimental and training stays paused.
 
 ## Current result — 26 October 2026
 
-Seventeen ghost runs are complete, downloaded and verified. The active
+Twenty ghost runs are complete, downloaded and verified. The active
 experimental evidence is now v3: the original ten packets/39 full propositions
 plus four source-reviewed compact forms. V18/saved20 improves the historical
 summary, complete exposure assumptions and actual one-sentence response in a
@@ -17,9 +17,11 @@ unreliable.** No human historian validation or representative success rate is
 claimed. Both adapters remain experimental and training stays paused.
 
 V15/V16 show no new source-first gain (identical replies). V17 fixes JSON shape
-but harms some useful answers and stays opt-in. V19 now freezes new transfer
-questions with an eight-turn conversation. [Iteration review](GHOST_INDEPENDENT_REVIEW.md),
-[compact forms](GHOST_BRIEF_FACT_FORMS.md), [transfer design](GHOST_TRANSFER_EVALUATION.md).
+but harms some useful answers and stays opt-in. V19/V20 complete the eight-turn transfer conversation: missing user conditions
+are now supplied, but the delayed answer remains incomplete. V21 removes two parser blocks but retains task omissions. V22 now isolates
+[source-certainty checking](GHOST_CERTAINTY_CALIBRATION.md). [Iteration review](GHOST_INDEPENDENT_REVIEW.md),
+[compact forms](GHOST_BRIEF_FACT_FORMS.md), [transfer design](GHOST_TRANSFER_EVALUATION.md),
+[context findings](GHOST_USER_CONTEXT.md), [stage formatting](GHOST_STAGE_OUTPUT_FORMAT.md).
 
 | Ghost version / Kaggle version | Evaluation calls | Main finding |
 |---|---:|---|
@@ -41,7 +43,10 @@ questions with an eight-turn conversation. [Iteration review](GHOST_INDEPENDENT_
 | v16 / 18 | 22 | All ten replies equal V15; historical fallback not triggered |
 | v17 / 19 | 24 | Constrained selection valid but mixed usefulness; not promoted |
 | v18 / 20 | 24 | Reviewed short forms preserve assumptions and one-sentence scope; reasoning limits remain |
-| v19 / pending | at most 30 | Two new source/planning cases and eight-turn transfer conversation |
+| v19 / 21 | 25 | New transfer conversation exposes missing context, coverage and parser failures |
+| v20 / 22 | 25 | Original/revised context supplied; delayed displayed reply still incomplete |
+| v21 / 23 | 27 | Two parser blocks removed; task coverage still incomplete |
+| v22 / staged | 10 maximum | Paired checker-only source-certainty diagnostic |
 
 V1–v4 use the same inspected ten-turn development set. V5 introduces four
 single questions and a six-turn conversation; v7/v8 reuse those as regressions.
@@ -126,8 +131,10 @@ A passing review gives no factual guarantee.
 
 Topic/basis state and actual displayed replies carry forward. Stored history
 allows ten previous turns; model input includes only the most recent four
-messages and an explicit omitted-message count. This is not unrestricted
-semantic memory. The selection call now classifies the current request as facts, view or mixed,
+messages and an explicit omitted-message count. V20 adds at most three whole
+unverified user hypothesis/revision messages and 2,500 characters, supplied
+only after leaving that window; it does not retain all objections or ordinary
+conversation. This is not unrestricted semantic memory. The selection call now classifies the current request as facts, view or mixed,
 with brief/normal/expanded detail. It adds no model calls. Legacy outputs fall
 back to the earlier rule and are explicitly logged. New wording is not gated
 solely by a keyword list. Fuller drafting permits 110–180 words, shorter
@@ -137,8 +144,8 @@ model calls, preserving source state.
 
 ## Validation and limits
 
-Sixty-two focused ghost/source/harness/calibration tests pass. The full suite
-runs 335 tests with two pre-existing historical pilot snapshot errors for the
+Sixty-nine focused ghost/source/harness/calibration tests pass. The full suite
+runs 342 tests with two pre-existing historical pilot snapshot errors for the
 already changed `evaluation/README.md`; historical locks remain preserved.
 Kaggle runs verify submitted/downloaded payloads, exact frozen-code replay,
 all input/output token reconstructions, zero optimizer updates, no adapters and

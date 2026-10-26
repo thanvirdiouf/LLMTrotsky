@@ -33,7 +33,9 @@ Kaggle version 11. V10 completed as saved version 12; V11 completed as saved ver
 | ghost_smoke_v17 | 19 | 24 | Finite selection shape succeeds, mixed usefulness |
 | ghost_smoke_v18 | 20 | 24 | Reviewed compact forms; improved coverage/sentence compliance |
 | ghost_smoke_v19 | 21 | 25 | New two-plus-eight transfer study; context omissions and parser failures |
-| ghost_smoke_v20 | pending | at most 30 | Same transfer study with bounded unverified user context |
+| ghost_smoke_v20 | 22 | 25 | Missing user context supplied; delayed displayed answer still incomplete |
+| ghost_smoke_v21 | 23 | 27 | Two parser blocks removed; partial answers still omit task details |
+| ghost_smoke_v22 | staged | 10 maximum | Five paired source-certainty checker contrasts |
 
 V1–v4 retain a frozen reference date of 25 October; later versions use 26 October.
 Execution occurred on 26 October. Do not silently change dates, helpers or

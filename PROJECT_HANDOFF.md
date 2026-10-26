@@ -5,45 +5,54 @@ records, dated modern evidence and newly imagined views. Both adapters remain
 experimental and training stays paused. User authorized autonomous result-
 dependent continuation, proper documentation, milestone commits and pushes.
 
-## Active continuation: V20 running, V21 formatting candidate staged
+## Active continuation: V21 verified; V22 certainty calibration staged
 
-Memory milestone80d5003 pushed. V19/saved21 completed and verified: ten
-replies/25 calls, no truncation/budget rejection, 11.32 GiB; six model-approved,
-two partial/two blocked are not quality scores. Delayed turn7 input lacks the
-original/revised hypothetical. Compute planner calculated $3.54 correctly but
-appended an essay; source-only check appended one backtick. Other issues:
-user-premise quote guard; historical mixed first-card coverage; source facts
-absent from claim catalog. Do not conflate with model arithmetic or retrieval.
+Parser milestone563e91e pushed; subsequent docs/export fix and accepted V22
+design awaiting next commit. V19/saved21 and V20/saved22 verified,25calls each.
+Memory supplies original/revised turns1/4 at delayed return; firstfive model
+inputs/replies exactsame, maximumV20 input4868<5120. No overall quality gain:7
+replies identical, changed finalreply safer17wordfact but loses nearly alltask.
+Masked A/B reviews saved/20 hasheschecked under ghost_user_context_comparison.
+AI reviewer distinctfromQwen, not humanhistorian. application_input_audit.json
+separate from blinded judgments. GHOST_USER_CONTEXT.md has result/limitations.
 
-V20 submitted as saved22, RUNNING. Same V19 inputs, only ghost_chat.py and
-protocol differ. Max3 whole unverified original user messages/2500 chars with
-fingerprints/turns/omissions; no verified facts/summaries. Cues retain original
-and revised hypothetical turns1/4, not disagreementturn2. Current task overrides
-old instructions. 65 focused pass/full338 two known historical README errors.
-V19/context_{focused,full}_tests.log. Do not change frozen V20. Logs follower
-session57924 may still exist. Download exact saved22 and replay/token verify.
+V21/saved23 COMPLETE, frozen replay+tokens verified:10replies/27calls,no budget
+rejection/truncation,11.32GiB. Only helper/protocol differsV20. Parser discards
+selector postface and checktrailingbacktick asplanned; rawoutputs preserved.
+No parserblocks, six model-approved/fourpartial, not qualityscores. Compute
+nowrendersprice/hardware but arithmetic draft filtered (no historicalbasis);
+close-readingrenderscanonicalallegation/prediction butmissesrequestedscopes.
+Review_compact_trial now reviews neutral C, standalone thenagainstB; no pipeline
+statuses/modelverdicts/implementation read. Await C files and verify hashes.
 
-Authorized reviewer review_compact_trial is assessing neutral packet_A in
-evaluation/runs/ghost_user_context_comparison/. It is V19 (do not disclose to
-reviewer). It must save standalone judgments before B arrives. After V20
-verification export neutral packet_B then request separate B assessment/pairwise
-comparison, no statuses/verdicts/private_assignment. It authored fresh questions
-after saving V18 review. AI review, not human historical validation.
+Local export_ghost_transcript.py fix supports source-block date evidence
+without kind key; V19/V20/V21 transcripts export, hearingdate1937-04-10kept.
+No frozenruntime changed.69focused pass/full342same2historicalREADMEerrors.
+No new broadtests needed for later docs/data/manualexportcheck.
 
-V21 is frozen/staged, NOT SUBMITTED. Same V20 inputs and context code; only
-ghost helper/protocol differ. New stage parser keeps strict object validation,
-may discard select-only newline prose postface with no braces/brackets/backticks,
-or a single/triple trailing Markdown delimiter after select/check objects.
-Never promote postface into facts/draft/verdict; substantive checker commentary
-still fails. Raw outputs + normalization fingerprints logged. Legacy helpers
-unchanged. Four tests: 69 focused pass/full342 same two README errors. Logs
-V20/format_{focused,full}_tests.log; GHOST_STAGE_OUTPUT_FORMAT.md. Exact frozen
-V20→V21 payload comparison passed. Decide next execution from V20 results,
-then commit/push before submitting V21 under standing private bounded approval.
+Source_review authored certainty proposal from Eastman/Bessedovsky ONLY, no
+V19–21outputs or otherreviewer reports. Root checked completeblocks/claimIDs/
+dates and accepted config/ghost_certainty_calibration_v1.json. Originalsource
+snapshots remainignored; trackedconfig onlyquestions/candidates/expectations/
+hashbindings/anchorIDs. Five minimalvalid/invalidpairs: accountvsindependent
+confirmation, donationvspersonalretention, sincerityvstheory, retrospective
+pressurevsexternalcorroboration, hearsayvsdirectknowledge. AI labelsnotgold.
+FullEastmanblock7 neededdespitenodedicatedclaimID; actualrequestsincludeit.
 
-Active v3 remains experimental (10 packets/39 original claims+4 reviewed brief
-forms); training/adapters paused, no paid compute/public endpoint. Continue
-source-bound review→choose→execute iterations as user requested.
+V22 FROZEN/STAGED, NOT SUBMITTED. Tenchecker-onlycalls+oneprobe, no drafts/
+selection/training/adapters/paidcompute. Existing standingprivateKaggleapproval
+covers this; do not reask. CPU syntheticpreflight passed10actualrequests, max
+3369tokens, expectations/provenance withheld, no trustedfactmemory. Logs under
+evaluation/runs/ghost_smoke_v22. Builder ranwith .venv-tokenizer/bin/python.
+Commit/push docs/config/exportfix, then submitV22(expected saved24); download
+exact/replay/tokenverify. Report falseaccepts/falserejects/blocksandboth-correct
+pairs separately; inspectrationales. Auditorcalibrationevaluator intentionally
+usesstrictparse_object, no newnormalizer. Blocksarenotcorrectrejections.
+GHOST_CERTAINTY_CALIBRATION.md has preregistereddecisionrules.
+
+Activev3 experimental:10originalpackets/39claims+4reviewedbrief forms. Old
+helpers/locks/adapters untouched, trainingpaused. UserlatestContinue retains
+autonomous result-dependentiteration/commit/pushauthorization.
 
 ## Active continuation: V18 compact forms trial
 

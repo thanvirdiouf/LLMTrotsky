@@ -50,7 +50,8 @@ def export(version,root=ROOT):
             for pid in cited:
                 packet=packets[pid];interval=packet['composition_date_interval']
                 observed='; observed '+packet['observed_date'] if 'observed_date' in packet else ''
-                kinds=', '.join(e['kind'] for e in packet['composition_date_evidence'])
+                kinds=', '.join(e.get('kind') or ('dated source block '+str(e['evidence_block_id'])
+                    if 'evidence_block_id' in e else 'source date evidence') for e in packet['composition_date_evidence'])
                 outside=' **Not in the supplied context.**' if pid not in supplied else ''
                 lines.append(f"- [{pid}]({packet['url']}): {packet['author']}; {interval['earliest']}–{interval['latest']} ({kinds}){observed}.{outside}")
             lines.append('')

@@ -1,0 +1,523 @@
+{
+  "schema_version": 1,
+  "mode": "ghost_audit_calibration",
+  "reference_date": "2026-10-26",
+  "audit_calibration": {
+    "packet_ids": [
+      "eastman",
+      "bessedovsky"
+    ]
+  },
+  "conversation": [],
+  "status": "Accepted preregistered ten-candidate AI-source-reviewed certainty diagnostic; no Qwen execution yet",
+  "cases": [
+    {
+      "question": "In your fictional voice, explain the kind of evidence the 1928 passage provides for Eastman’s donation, then give a cautious rule for assessing motives.",
+      "claim_ids": [
+        "eastman_donation"
+      ],
+      "segments": [
+        {
+          "id": "s1",
+          "kind": "interpretation",
+          "text": "My 11 September 1928 account says Eastman donated the newspaper payment to the French Opposition. This is a documented source account, not independent confirmation. I would keep that evidentiary distinction in view when judging motives.",
+          "claim_ids": [],
+          "basis_claim_ids": [
+            "eastman_donation"
+          ]
+        }
+      ],
+      "expected_approved": true,
+      "local_rationale": "Eastman block 10 records Trotsky’s donation account. No independent transfer record or second-source verification appears in the complete bounded packet. The final evaluative rule is a new cautious preference, not an extra historical fact.",
+      "id": "certainty_01",
+      "reviewer_only": {
+        "pair_id": "p01",
+        "topic": "Documented donation account versus independent confirmation",
+        "judgment_status": "AI-assisted source-review judgment, not human gold",
+        "candidate_text_sha256": "15da2dc1eb35b99238f4bb913dd7334bd5b7fb5da2e6ae473f7037b6b3cb256b",
+        "source_blocks": [
+          {
+            "packet_id": "eastman",
+            "block_id": 10,
+            "speaker": "Leon Trotsky"
+          }
+        ]
+      }
+    },
+    {
+      "question": "In your fictional voice, explain the kind of evidence the 1928 passage provides for Eastman’s donation, then give a cautious rule for assessing motives.",
+      "claim_ids": [
+        "eastman_donation"
+      ],
+      "segments": [
+        {
+          "id": "s1",
+          "kind": "interpretation",
+          "text": "My 11 September 1928 account says Eastman donated the newspaper payment to the French Opposition. This is independent confirmation, not merely a documented source account. I would keep that evidentiary distinction in view when judging motives.",
+          "claim_ids": [],
+          "basis_claim_ids": [
+            "eastman_donation"
+          ]
+        }
+      ],
+      "expected_approved": false,
+      "local_rationale": "Promotes the same single-author account into independent confirmation. Neither confident source wording nor the interpretation label supplies an external financial record.",
+      "id": "certainty_02",
+      "reviewer_only": {
+        "pair_id": "p01",
+        "topic": "Documented donation account versus independent confirmation",
+        "judgment_status": "AI-assisted source-review judgment, not human gold",
+        "candidate_text_sha256": "637ad4b88cec413bd24af93093aa69414a1cf32ad6cbb9595fb9dec2cc8029e1",
+        "source_blocks": [
+          {
+            "packet_id": "eastman",
+            "block_id": 10,
+            "speaker": "Leon Trotsky"
+          }
+        ]
+      }
+    },
+    {
+      "question": "Interpret the 1928 passage’s distinction between newspaper payment and personal enrichment, and state one principle you would use when assessing such a payment.",
+      "claim_ids": [
+        "eastman_payment",
+        "eastman_donation"
+      ],
+      "segments": [
+        {
+          "id": "s1",
+          "kind": "interpretation",
+          "text": "In my 1928 account, the newspaper paid for the material, and Eastman donated the entire payment to the French Opposition. I would distinguish receiving payment from keeping it for oneself.",
+          "claim_ids": [],
+          "basis_claim_ids": [
+            "eastman_payment",
+            "eastman_donation"
+          ]
+        }
+      ],
+      "expected_approved": true,
+      "local_rationale": "Preserves the source’s admission of payment and explicit denial of personal appropriation, while attributing both to the account. The normative distinction is permissible.",
+      "id": "certainty_03",
+      "reviewer_only": {
+        "pair_id": "p02",
+        "topic": "Receiving/donating payment versus retaining it for personal use",
+        "judgment_status": "AI-assisted source-review judgment, not human gold",
+        "candidate_text_sha256": "46eedd95086a3b91425e4a6fcf326129e6495f513e28f3a8480e3c3315279e40",
+        "source_blocks": [
+          {
+            "packet_id": "eastman",
+            "block_id": 10,
+            "speaker": "Leon Trotsky"
+          },
+          {
+            "packet_id": "eastman",
+            "block_id": 10,
+            "speaker": "Leon Trotsky"
+          },
+          {
+            "packet_id": "eastman",
+            "block_id": 10,
+            "speaker": "Leon Trotsky"
+          }
+        ]
+      }
+    },
+    {
+      "question": "Interpret the 1928 passage’s distinction between newspaper payment and personal enrichment, and state one principle you would use when assessing such a payment.",
+      "claim_ids": [
+        "eastman_payment",
+        "eastman_donation"
+      ],
+      "segments": [
+        {
+          "id": "s1",
+          "kind": "interpretation",
+          "text": "In my 1928 account, the newspaper paid for the material, and Eastman retained the entire payment for his personal purposes. I would distinguish receiving payment from keeping it for oneself.",
+          "claim_ids": [],
+          "basis_claim_ids": [
+            "eastman_payment",
+            "eastman_donation"
+          ]
+        }
+      ],
+      "expected_approved": false,
+      "local_rationale": "Reverses the source’s explicit answer about personal appropriation. The identical evaluative sentence cannot repair the false historical premise.",
+      "id": "certainty_04",
+      "reviewer_only": {
+        "pair_id": "p02",
+        "topic": "Receiving/donating payment versus retaining it for personal use",
+        "judgment_status": "AI-assisted source-review judgment, not human gold",
+        "candidate_text_sha256": "e64b9114f02c83e6e519dd2c9327e8da4eb7666154e215e6dcff099437cd87f8",
+        "source_blocks": [
+          {
+            "packet_id": "eastman",
+            "block_id": 10,
+            "speaker": "Leon Trotsky"
+          },
+          {
+            "packet_id": "eastman",
+            "block_id": 10,
+            "speaker": "Leon Trotsky"
+          },
+          {
+            "packet_id": "eastman",
+            "block_id": 10,
+            "speaker": "Leon Trotsky"
+          }
+        ]
+      }
+    },
+    {
+      "question": "In the fictional voice, interpret the relation between the 1928 defense of Eastman’s motives and theoretical agreement with him, then state a principle for separating those judgments.",
+      "claim_ids": [
+        "eastman_donation",
+        "eastman_publicity"
+      ],
+      "segments": [
+        {
+          "id": "s1",
+          "kind": "interpretation",
+          "text": "In my 1928 account, I defend Eastman’s political disinterestedness while acknowledging theoretical differences between him and Marxists. I would not make a judgment of sincerity a substitute for examining theory.",
+          "claim_ids": [],
+          "basis_claim_ids": [
+            "eastman_donation",
+            "eastman_publicity"
+          ]
+        }
+      ],
+      "expected_approved": true,
+      "local_rationale": "Eastman block 7 explicitly combines a defense of political disinterestedness with acknowledgment of theoretical differences. The final principle is permissible new evaluative reasoning. The broader packet, not a newly invented canonical claim, supplies this fact.",
+      "id": "certainty_05",
+      "reviewer_only": {
+        "pair_id": "p03",
+        "topic": "Defended political sincerity versus theoretical agreement",
+        "judgment_status": "AI-assisted source-review judgment, not human gold",
+        "candidate_text_sha256": "27ef2e0d3ab68b7de4a0034e295177646cdec3f7b4e8fc8d308296cf49e811a4",
+        "source_blocks": [
+          {
+            "packet_id": "eastman",
+            "block_id": 7,
+            "speaker": "Leon Trotsky"
+          },
+          {
+            "packet_id": "eastman",
+            "block_id": 7,
+            "speaker": "Leon Trotsky"
+          },
+          {
+            "packet_id": "eastman",
+            "block_id": 10,
+            "speaker": "Leon Trotsky"
+          }
+        ]
+      }
+    },
+    {
+      "question": "In the fictional voice, interpret the relation between the 1928 defense of Eastman’s motives and theoretical agreement with him, then state a principle for separating those judgments.",
+      "claim_ids": [
+        "eastman_donation",
+        "eastman_publicity"
+      ],
+      "segments": [
+        {
+          "id": "s1",
+          "kind": "interpretation",
+          "text": "In my 1928 account, I defend Eastman’s political disinterestedness while asserting complete theoretical agreement between him and Marxists. I would not make a judgment of sincerity a substitute for examining theory.",
+          "claim_ids": [],
+          "basis_claim_ids": [
+            "eastman_donation",
+            "eastman_publicity"
+          ]
+        }
+      ],
+      "expected_approved": false,
+      "local_rationale": "Falsely attributes complete theoretical agreement to an account that expressly acknowledges theoretical differences. Defended sincerity does not establish theoretical identity.",
+      "id": "certainty_06",
+      "reviewer_only": {
+        "pair_id": "p03",
+        "topic": "Defended political sincerity versus theoretical agreement",
+        "judgment_status": "AI-assisted source-review judgment, not human gold",
+        "candidate_text_sha256": "19964f425c309cadac3f2b042a240b09ee21bafa3348f8bc25b6d6a017072219",
+        "source_blocks": [
+          {
+            "packet_id": "eastman",
+            "block_id": 7,
+            "speaker": "Leon Trotsky"
+          },
+          {
+            "packet_id": "eastman",
+            "block_id": 7,
+            "speaker": "Leon Trotsky"
+          },
+          {
+            "packet_id": "eastman",
+            "block_id": 10,
+            "speaker": "Leon Trotsky"
+          }
+        ]
+      }
+    },
+    {
+      "question": "Interpret the evidentiary status of the 1928 explanation for signing the 1925 condemnation, and say how you would weigh that explanation.",
+      "claim_ids": [
+        "eastman_ultimatum",
+        "eastman_retrospect"
+      ],
+      "segments": [
+        {
+          "id": "s1",
+          "kind": "interpretation",
+          "text": "In September 1928, I describe signing the 1925 condemnation under a Political Bureau ultimatum during the Opposition’s conciliatory course. The passage records my retrospective explanation without external corroboration. I would weigh the testimony with its source and context in view.",
+          "claim_ids": [],
+          "basis_claim_ids": [
+            "eastman_ultimatum",
+            "eastman_retrospect"
+          ]
+        }
+      ],
+      "expected_approved": true,
+      "local_rationale": "Blocks 11–12 are Trotsky’s retrospective explanation of the ultimatum and political course. The bounded packet supplies no independent outside corroborating document. This does not claim that no corroboration exists anywhere.",
+      "id": "certainty_07",
+      "reviewer_only": {
+        "pair_id": "p04",
+        "topic": "Retrospective explanation of pressure versus external corroboration",
+        "judgment_status": "AI-assisted source-review judgment, not human gold",
+        "candidate_text_sha256": "0f68c9a7a78f9637b021a91d7c1244a271a42eff652279b838bdb3bc64e158c7",
+        "source_blocks": [
+          {
+            "packet_id": "eastman",
+            "block_id": 11,
+            "speaker": "Leon Trotsky"
+          },
+          {
+            "packet_id": "eastman",
+            "block_id": 11,
+            "speaker": "Leon Trotsky"
+          },
+          {
+            "packet_id": "eastman",
+            "block_id": 12,
+            "speaker": "Leon Trotsky"
+          }
+        ]
+      }
+    },
+    {
+      "question": "Interpret the evidentiary status of the 1928 explanation for signing the 1925 condemnation, and say how you would weigh that explanation.",
+      "claim_ids": [
+        "eastman_ultimatum",
+        "eastman_retrospect"
+      ],
+      "segments": [
+        {
+          "id": "s1",
+          "kind": "interpretation",
+          "text": "In September 1928, I describe signing the 1925 condemnation under a Political Bureau ultimatum during the Opposition’s conciliatory course. The passage independently corroborates my explanation with external evidence. I would weigh the testimony with its source and context in view.",
+          "claim_ids": [],
+          "basis_claim_ids": [
+            "eastman_ultimatum",
+            "eastman_retrospect"
+          ]
+        }
+      ],
+      "expected_approved": false,
+      "local_rationale": "Attributes external corroboration to a passage consisting of Trotsky’s own retrospective account. The dates remain plausible and unchanged; the error is evidentiary promotion rather than chronology.",
+      "id": "certainty_08",
+      "reviewer_only": {
+        "pair_id": "p04",
+        "topic": "Retrospective explanation of pressure versus external corroboration",
+        "judgment_status": "AI-assisted source-review judgment, not human gold",
+        "candidate_text_sha256": "d3464a9ed86c5133b911424d0abcaf487603ca73afc7042bd7094c5598977698",
+        "source_blocks": [
+          {
+            "packet_id": "eastman",
+            "block_id": 11,
+            "speaker": "Leon Trotsky"
+          },
+          {
+            "packet_id": "eastman",
+            "block_id": 11,
+            "speaker": "Leon Trotsky"
+          },
+          {
+            "packet_id": "eastman",
+            "block_id": 12,
+            "speaker": "Leon Trotsky"
+          }
+        ]
+      }
+    },
+    {
+      "question": "In the fictional voice, interpret how the December 1929 letter separates personal acquaintance with some memoir facts from the embassy-purge allegation, and give a cautious rule for weighing the account.",
+      "claim_ids": [
+        "bessedovsky_limit",
+        "bessedovsky_report"
+      ],
+      "segments": [
+        {
+          "id": "s1",
+          "kind": "interpretation",
+          "text": "My December 1929 letter says I personally knew at least a dozen facts recounted by Bessedovsky, but could not verify all his information. I introduce his embassy-purge role as something I was told. I would weigh the rest of his account without erasing those limits.",
+          "claim_ids": [],
+          "basis_claim_ids": [
+            "bessedovsky_limit",
+            "bessedovsky_report"
+          ]
+        }
+      ],
+      "expected_approved": true,
+      "local_rationale": "Block 3 supplies limited acquaintance with at least a dozen facts alongside inability to verify everything. Block 4 introduces this particular allegation as something Trotsky was told. The proposed rule respects both limits without implying all facts were hearsay.",
+      "id": "certainty_09",
+      "reviewer_only": {
+        "pair_id": "p05",
+        "topic": "Limited personal acquaintance and hearsay versus direct knowledge of the purge allegation",
+        "judgment_status": "AI-assisted source-review judgment, not human gold",
+        "candidate_text_sha256": "f8a156b8f7c949a6d8c16eabb1d57fb5fd771102dc50381d1b6390e33c519d1f",
+        "source_blocks": [
+          {
+            "packet_id": "bessedovsky",
+            "block_id": 3,
+            "speaker": "Leon Trotsky"
+          },
+          {
+            "packet_id": "bessedovsky",
+            "block_id": 3,
+            "speaker": "Leon Trotsky"
+          },
+          {
+            "packet_id": "bessedovsky",
+            "block_id": 4,
+            "speaker": "Leon Trotsky"
+          },
+          {
+            "packet_id": "bessedovsky",
+            "block_id": 4,
+            "speaker": "Leon Trotsky"
+          }
+        ]
+      }
+    },
+    {
+      "question": "In the fictional voice, interpret how the December 1929 letter separates personal acquaintance with some memoir facts from the embassy-purge allegation, and give a cautious rule for weighing the account.",
+      "claim_ids": [
+        "bessedovsky_limit",
+        "bessedovsky_report"
+      ],
+      "segments": [
+        {
+          "id": "s1",
+          "kind": "interpretation",
+          "text": "My December 1929 letter says I personally knew at least a dozen facts recounted by Bessedovsky, but could not verify all his information. I establish his embassy-purge role from direct personal knowledge. I would weigh the rest of his account without erasing those limits.",
+          "claim_ids": [],
+          "basis_claim_ids": [
+            "bessedovsky_limit",
+            "bessedovsky_report"
+          ]
+        }
+      ],
+      "expected_approved": false,
+      "local_rationale": "Transfers personal acquaintance with some memoir facts to the distinct embassy-purge allegation, which the letter specifically introduces as reported information. Neither the interpretation label nor acquaintance with other facts establishes direct knowledge here.",
+      "id": "certainty_10",
+      "reviewer_only": {
+        "pair_id": "p05",
+        "topic": "Limited personal acquaintance and hearsay versus direct knowledge of the purge allegation",
+        "judgment_status": "AI-assisted source-review judgment, not human gold",
+        "candidate_text_sha256": "0c0ff3cdec38b2d5d63370f7f8fe2b8fa115b829688372ed5cc0e163ec661162",
+        "source_blocks": [
+          {
+            "packet_id": "bessedovsky",
+            "block_id": 3,
+            "speaker": "Leon Trotsky"
+          },
+          {
+            "packet_id": "bessedovsky",
+            "block_id": 3,
+            "speaker": "Leon Trotsky"
+          },
+          {
+            "packet_id": "bessedovsky",
+            "block_id": 4,
+            "speaker": "Leon Trotsky"
+          },
+          {
+            "packet_id": "bessedovsky",
+            "block_id": 4,
+            "speaker": "Leon Trotsky"
+          }
+        ]
+      }
+    }
+  ],
+  "source_binding": {
+    "collection_file_sha256": "2ebd71d503eef30ef200f050d77dd2730dcd75e8a88eeedbd35a449f5d005e70",
+    "claims_file_sha256": "bc7da3d59495da41c76babd1f8b9fc5a772b8498e2514272961f67e3d3125c9a",
+    "selected_packets_canonical_sha256": "f1bf626e7f7d91a103e5ce408c6c2580af1e9d909776a21ddebedcf685b2ef5c",
+    "selected_claims_canonical_sha256": "5747a9e1a932d558fed45b44c3e6454fcf7ee72bd75a20c7ba934cc765b91803"
+  },
+  "reviewer_only_pairs": [
+    {
+      "pair_id": "p01",
+      "case_ids": [
+        "certainty_01",
+        "certainty_02"
+      ],
+      "topic": "Documented donation account versus independent confirmation",
+      "ledger_coverage_note": null
+    },
+    {
+      "pair_id": "p02",
+      "case_ids": [
+        "certainty_03",
+        "certainty_04"
+      ],
+      "topic": "Receiving/donating payment versus retaining it for personal use",
+      "ledger_coverage_note": null
+    },
+    {
+      "pair_id": "p03",
+      "case_ids": [
+        "certainty_05",
+        "certainty_06"
+      ],
+      "topic": "Defended political sincerity versus theoretical agreement",
+      "ledger_coverage_note": "There is no dedicated sincerity/theoretical-differences claim ID in the selected ledger entries. Existing eastman_donation and eastman_publicity IDs are used as packet-relevant basis IDs; block 7 supplies the direct distinction. Before inference, verify the checker receives the full Eastman packet including block 7, not just selected canonical claim statements. No new ledger ID is proposed."
+    },
+    {
+      "pair_id": "p04",
+      "case_ids": [
+        "certainty_07",
+        "certainty_08"
+      ],
+      "topic": "Retrospective explanation of pressure versus external corroboration",
+      "ledger_coverage_note": null
+    },
+    {
+      "pair_id": "p05",
+      "case_ids": [
+        "certainty_09",
+        "certainty_10"
+      ],
+      "topic": "Limited personal acquaintance and hearsay versus direct knowledge of the purge allegation",
+      "ledger_coverage_note": null
+    }
+  ],
+  "reviewer_only_provenance": {
+    "proposal_raw_sha256": "ec0f98243a0b371560134ce390a897e12ac482974a954045da2c29e906395817",
+    "author": "Separate coding-agent-model AI source reviewer, distinct from tested Qwen; not human gold",
+    "acceptance": "Continuing agent checked complete source blocks, dates, claim IDs and paired contrasts before first Qwen execution. No V19–21 outputs were supplied to proposal author.",
+    "limits": [
+      "Expected labels are AI source-review judgments, not human gold.",
+      "Five pairs are deliberately constructed from inspected bounded source packets and are not held-out historical validation.",
+      "A valid self-account attribution does not prove the underlying event true independently.",
+      "A new cautious evaluative rule is allowed; the interpretation label never exempts descriptive premises.",
+      "Pair p03 depends on Eastman block 7 despite no dedicated ledger claim ID for the sincerity/theory distinction."
+    ]
+  },
+  "protocol": {
+    "purpose": "Ten independent checker-only candidates in five valid/invalid epistemic contrasts; no answer generation or selection, no training/adapters/paid compute.",
+    "withheld": "Expected labels, rationales, paired design and provenance are excluded by model_cases; actual requests contain only source context, selected basis IDs, question and untrusted candidate.",
+    "limits": "Ten checker calls plus one unscored memory probe on the existing approved private Kaggle notebook; covered by standing bounded inference authorization.",
+    "parser": "Existing frozen audit evaluator uses strict raw JSON. Blocks are separate from semantic rejections; never credit an unparsed verdict as a successful rejection.",
+    "reporting": "Report false acceptances, false rejections and blocks separately, plus number of pairs with both decisions matching reviewed expectations. Fixed development diagnostic, not representative reliability."
+  }
+}

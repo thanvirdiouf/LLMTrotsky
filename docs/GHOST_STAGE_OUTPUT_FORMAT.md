@@ -44,3 +44,20 @@ context controls, change only this helper and protocol hash, then verify the
 actual GPU journal and review the displayed replies. Formatting recovery is
 not semantic validation. Reusing these inspected cases measures regression
 behavior; a fresh task study is needed before a general quality claim.
+
+## Executed V21 comparison
+
+Private saved23 completed and passed frozen replay/token verification: ten
+replies/27 calls, no input rejection or truncation, 11.32 GiB peak. Both intended
+normalizations occurred. The compute case now renders dated price/hardware
+facts; its new draft is filtered for lacking a historical basis, so the reply
+still omits the requested arithmetic and update date. The close-reading case
+now renders source-backed allegation/prediction statements, but still omits the
+requested certainty/inference distinction. Neither case is a complete answer.
+
+The two former parser blocks are gone. Pipeline statuses are six model-approved
+and four partial, not a quality score. Five displayed replies differ from V20,
+including downstream histories after a changed reply. Masked source/task review
+of neutral C against B is pending; do not treat parser recovery as semantic
+validation. The next independent diagnostic targets
+[source-certainty checking](GHOST_CERTAINTY_CALIBRATION.md).

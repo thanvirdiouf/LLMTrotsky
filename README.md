@@ -16,15 +16,17 @@ python3 scripts/build_ghost_chat.py
 python3 scripts/ghost_chat.py --dry-run --question "How would you assess renting an A40 on Runpod today?"
 ```
 
-Sixty-two focused ghost/source/harness tests pass. The active collection has
-ten packets/39 propositions plus four reviewed compact forms. A masked second
-AI review finds better source-limit coverage and sentence compliance, while
-reasoning about authority, safeguards and disagreement remains weak. A broad
-JSON constraint caused mixed usefulness and stays opt-in. New eight-turn
-transfer questions are frozen for the next study. Training remains paused;
-this is a research prototype with no persistent service deployed.
+Sixty-nine focused ghost/source/harness tests pass. The active collection has
+ten packets/39 propositions plus four reviewed compact forms. The longer
+transfer study exposed missing user context, incomplete source coverage,
+certainty overstatements and parser failures. Bounded context retention now
+supplies the original/revised scenario, but has not improved the delayed
+answer. A separate parser comparison removed two formatting blocks, while task omissions
+remain. A paired source-certainty checker diagnostic is prepared on free Kaggle.
+Training remains paused; no persistent service is deployed.
 [Measured progress](docs/PRESENT_DAY_GHOST.md),
-[transfer study](docs/GHOST_TRANSFER_EVALUATION.md).
+[transfer study](docs/GHOST_TRANSFER_EVALUATION.md),
+[context results](docs/GHOST_USER_CONTEXT.md).
 
 The following describes the preserved historical research archive.
 

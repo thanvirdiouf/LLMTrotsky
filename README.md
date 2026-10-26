@@ -16,13 +16,14 @@ python3 scripts/build_ghost_chat.py
 python3 scripts/ghost_chat.py --dry-run --question "How would you assess renting an A40 on Runpod today?"
 ```
 
-Sixty-nine focused ghost/source/harness tests pass. The active collection has
+Seventy-two focused ghost/source/harness tests pass. The active collection has
 ten packets/39 propositions plus four reviewed compact forms. The longer
 transfer study exposed missing user context, incomplete source coverage,
 certainty overstatements and parser failures. Bounded context retention now
 supplies the original/revised scenario, but has not improved the delayed
 answer. A separate parser comparison removed two formatting blocks, while task omissions
-remain. A paired source-certainty checker diagnostic is prepared on free Kaggle.
+remain. The paired checker diagnostic reproduced two false corroboration approvals;
+a controlled source-status framing comparison is prepared.
 Training remains paused; no persistent service is deployed.
 [Measured progress](docs/PRESENT_DAY_GHOST.md),
 [transfer study](docs/GHOST_TRANSFER_EVALUATION.md),

@@ -56,8 +56,10 @@ now renders source-backed allegation/prediction statements, but still omits the
 requested certainty/inference distinction. Neither case is a complete answer.
 
 The two former parser blocks are gone. Pipeline statuses are six model-approved
-and four partial, not a quality score. Five displayed replies differ from V20,
-including downstream histories after a changed reply. Masked source/task review
-of neutral C against B is pending; do not treat parser recovery as semantic
-validation. The next independent diagnostic targets
+and four partial, not a quality score. Four displayed replies differ from V20,
+including downstream histories after a changed reply. Masked source/task review of neutral C against B finds partial gains in the
+compute and close-reading cases, a regression in the two-document comparison,
+and no completed closing minute. Six replies are identical. All twenty B/C
+raw-text and legacy response bindings verify. Do not treat parser recovery as
+semantic validation. The next independent diagnostic targets
 [source-certainty checking](GHOST_CERTAINTY_CALIBRATION.md).

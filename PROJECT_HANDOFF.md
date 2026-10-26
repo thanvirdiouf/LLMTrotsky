@@ -5,54 +5,54 @@ records, dated modern evidence and newly imagined views. Both adapters remain
 experimental and training stays paused. User authorized autonomous result-
 dependent continuation, proper documentation, milestone commits and pushes.
 
-## Active continuation: V21 verified; V22 certainty calibration staged
+## Active continuation: V22 baseline verified; V23 framing comparison staged
 
-Parser milestone563e91e pushed; subsequent docs/export fix and accepted V22
-design awaiting next commit. V19/saved21 and V20/saved22 verified,25calls each.
-Memory supplies original/revised turns1/4 at delayed return; firstfive model
-inputs/replies exactsame, maximumV20 input4868<5120. No overall quality gain:7
-replies identical, changed finalreply safer17wordfact but loses nearly alltask.
-Masked A/B reviews saved/20 hasheschecked under ghost_user_context_comparison.
-AI reviewer distinctfromQwen, not humanhistorian. application_input_audit.json
-separate from blinded judgments. GHOST_USER_CONTEXT.md has result/limitations.
+Latest pushed4f6fe21 includes transfer findings, transcript metadata fix and
+certainty design. Working changes now: checker source-status instruction,
+verified C review docs, reusable calibration scorer+3tests and V22/V23 docs.
+V19/saved21,V20/saved22 verified25calls; V21/saved23 verified27calls. Masked
+A/B shows7identical/no overall gain. Memory supplies original/revised1/4 but
+delayed answer stillsame17wordfact. B/C shows6identical, partialgainsR02/R07,
+regressionR08, no closingminute. All A/B/C rawtext+legacy hasheschecked.
+Review_compact_trial blindtoimplementation/statuses/verdicts; nothumangold.
 
-V21/saved23 COMPLETE, frozen replay+tokens verified:10replies/27calls,no budget
-rejection/truncation,11.32GiB. Only helper/protocol differsV20. Parser discards
-selector postface and checktrailingbacktick asplanned; rawoutputs preserved.
-No parserblocks, six model-approved/fourpartial, not qualityscores. Compute
-nowrendersprice/hardware but arithmetic draft filtered (no historicalbasis);
-close-readingrenderscanonicalallegation/prediction butmissesrequestedscopes.
-Review_compact_trial now reviews neutral C, standalone thenagainstB; no pipeline
-statuses/modelverdicts/implementation read. Await C files and verify hashes.
+V22/saved24 COMPLETE/token/frozen verified:10checker calls,no inputbudget
+rejection/truncation,11.32GiB. 5valid approved,3invalid rejected,2invalidapproved
+(independentdonationconfirmation, externalcorroborationofretrospectivepressure).
+3/5pairsbothcorrect. Onefalseacceptance rationale inverseswhatcandidate says;
+other treatsprimaryaccountasindependentcorroboration. Notretrievalfailure.
+Sources/expectedcasesrootcheckedbeforecall; source_review proposal author
+neverreadV19–21outputs. AIexpectedjudgments, nothumanhistorian gold.
 
-Local export_ghost_transcript.py fix supports source-block date evidence
-without kind key; V19/V20/V21 transcripts export, hearingdate1937-04-10kept.
-No frozenruntime changed.69focused pass/full342same2historicalREADMEerrors.
-No new broadtests needed for later docs/data/manualexportcheck.
+V23 FROZEN/STAGED, NOT SUBMITTED. Exact V22source/candidate/question/userpayloads,
+onlycheckersysteminstruction changes toexplain documented_statement vs actual
+independentrecord/corroboration. No expectedlabel edits/keywordban. Probe uses
+new instruction withpaddingadjustedtosame5000tokens. Only ghost_chat.py,
+memory_probe.json,protocol differ; scoredpayloadsequal. CPUpreflight under
+evaluation/runs/ghost_smoke_v23/preflight.json. Commit/push then submitV23
+(expected saved25) under standingprivate boundedapproval:10checkercalls+probe1,
+notraining/adapters/paidcompute. Download/replay/tokenverify thenrun scorer.
 
-Source_review authored certainty proposal from Eastman/Bessedovsky ONLY, no
-V19–21outputs or otherreviewer reports. Root checked completeblocks/claimIDs/
-dates and accepted config/ghost_certainty_calibration_v1.json. Originalsource
-snapshots remainignored; trackedconfig onlyquestions/candidates/expectations/
-hashbindings/anchorIDs. Five minimalvalid/invalidpairs: accountvsindependent
-confirmation, donationvspersonalretention, sincerityvstheory, retrospective
-pressurevsexternalcorroboration, hearsayvsdirectknowledge. AI labelsnotgold.
-FullEastmanblock7 neededdespitenodedicatedclaimID; actualrequestsincludeit.
+New scripts/summarize_ghost_calibration.py binds frozenexpectedhash andexact
+verifiedjournal/candidates, classifiesfalseaccepts/rejects/blocks/unscored
+judgments; missingverdictsarenotcorrectrejections. Bothpairmembersmustmatch.
+3newtests:72focused pass/full345same2historicalREADMEsnapshoterrors. Logs in
+V23/{focused,full}_tests.log. Legacyhelpers/locks unchanged. Reusable reporter
+already produced V22/CALIBRATION_REVIEW.json. Check V23preflight completion
+session3432 ifneeded. Docs GHOST_CERTAINTY_CALIBRATION.md has design/results.
 
-V22 FROZEN/STAGED, NOT SUBMITTED. Tenchecker-onlycalls+oneprobe, no drafts/
-selection/training/adapters/paidcompute. Existing standingprivateKaggleapproval
-covers this; do not reask. CPU syntheticpreflight passed10actualrequests, max
-3369tokens, expectations/provenance withheld, no trustedfactmemory. Logs under
-evaluation/runs/ghost_smoke_v22. Builder ranwith .venv-tokenizer/bin/python.
-Commit/push docs/config/exportfix, then submitV22(expected saved24); download
-exact/replay/tokenverify. Report falseaccepts/falserejects/blocksandboth-correct
-pairs separately; inspectrationales. Auditorcalibrationevaluator intentionally
-usesstrictparse_object, no newnormalizer. Blocksarenotcorrectrejections.
-GHOST_CERTAINTY_CALIBRATION.md has preregistereddecisionrules.
+Remaining separable problems: fixedcatalogcannotrender some full-sourcefacts
+(secretarycount,Eastmantheoreticaldifferences,Marchcareerdate,certainBlumkin
+identification). Othersavailablebutnotselected (BlumkinApparently). Userpremise
+quotescanfilterentireview. Conditionalarithmeticiswronglyroutedtoviewrequiring
+historicalbasis. Selectstage stillinheritsroleplay systemunlikeauditor, a
+possiblelatercontrolledroutingexperiment. Do not train or assume hardwarefixes
+these application limits. Sourcecoverage expansion must preserve certainty/
+full-sourcebindingsandinputbudget, notjust addcardsperinspectedquestion.
 
-Activev3 experimental:10originalpackets/39claims+4reviewedbrief forms. Old
-helpers/locks/adapters untouched, trainingpaused. UserlatestContinue retains
-autonomous result-dependentiteration/commit/pushauthorization.
+Activev3 still10packets/39claims+4reviewedbrief forms; oldstudies/adapters
+preserved; trainingpaused. UserlatestContinue meansautonomousiterationwith
+commits/pushes. Noextrauploadpermissionneeded withinstandinginferencebounds.
 
 ## Active continuation: V18 compact forms trial
 

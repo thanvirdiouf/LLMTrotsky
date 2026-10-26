@@ -57,3 +57,46 @@ and retest against the frozen baseline. If simple contrasts pass but dialogue
 still overclaims, investigate full-pipeline context/generation and coverage
 rather than declaring the checker reliable. Neither outcome justifies more
 training before the application causes are clearer.
+
+## V22 baseline and V23 framing comparison
+
+V22/saved24 completed and passed exact frozen replay/token verification: ten
+checker calls, no input rejection or truncation, peak11.32GiB. All five valid
+candidates were approved. Three false variants were rejected, but two were
+approved: independent confirmation of donation, and external corroboration of
+the retrospective pressure account. Only three of five pairs have both
+decisions matching the reviewed expectations. No output blocked.
+
+The rationales expose two distinct problems. One describes the false candidate
+as though it had retained the source-account limit, reversing what was actually
+written. The other expressly treats a primary account as independent
+corroboration. Those are checker reading/concept failures within the supplied
+context; they are not retrieval failures.
+
+V23 freezes the same ten candidates/questions, source packets, basis IDs,
+expected decisions, model and generation controls. Only the checker system
+instruction adds source-status framing: documented statements record what the
+author asserts, confident wording/citations are not independent evidence, and
+claims of corroboration need an actual independent record or source in the
+supplied material. Attributed accounts can still support explicitly conditional
+or normative reasoning. No keyword rejection list or changed expected labels.
+
+All ten scored user payloads match V22 exactly; only their system instructions
+change. The unscored memory probe also has the new instruction with neutral
+padding adjusted to the same5,000-token target. Frozen payload differences are
+only ghost_chat.py, memory_probe.json and protocol hashes. The candidate is not
+a demonstrated fix before execution.
+
+The reusable reporter binds the exact verified journal, frozen candidate inputs
+and preregistered expectation hash:
+
+```bash
+python3 scripts/summarize_ghost_calibration.py --version ghost_smoke_v22
+```
+
+It reports false approvals, false rejections, blocks and unscored/incomplete
+judgments separately. Neither a block nor an empty verdict counts as a correct
+rejection. It checks both members before crediting a pair. Three new tests cover
+those measurement boundaries and refuse changed expectations or result journals.
+All72 focused tests pass; the full345 suite retains the same two historical
+README snapshot errors. No historical locks are changed.

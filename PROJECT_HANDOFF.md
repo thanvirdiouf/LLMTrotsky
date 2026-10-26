@@ -5,6 +5,26 @@ records, dated modern evidence and newly imagined views. Both adapters remain
 experimental and training stays paused. User authorized autonomous result-
 dependent continuation, proper documentation, milestone commits and pushes.
 
+## Active autonomous iteration after second review
+
+The user requested doing the next review, choosing the next step, executing it
+and repeating. A fresh-context second AI reviewer saved V14 judgments before
+seeing any parent/model scores; hashes bind all ten displayed replies. This is
+not human historian validation. It confirms the unnecessary source refusal,
+unsupported historical universal, repetition and displayed-length failure, while
+recording some political rhetoric as ambiguous rather than simply false.
+Local review/adjudication/new questions: V14 `second_review/`.
+
+V15 baseline is frozen/staged from `config/ghost_second_review_evaluation_v1.json`:
+ten new reviewer-authored replies, fixed reviewed source context, ordinary
+last-four-message model history. V14 engine/profile/evidence retained. New
+controlled-context harness and score-blinded export tested (52 focused pass).
+Commit/push protocol/harness, submit within standing approval. Before inspecting
+outputs, V16 will test retaining a planner-prioritized canonical historical fact
+in mixed source answers when no contemporary factual card applies. No rejected
+prose promoted. Same questions/evidence/evaluator/control policy. See
+`docs/GHOST_INDEPENDENT_REVIEW.md`. Training/adapters/paid compute unchanged.
+
 ## Latest result: rendering regression complete
 
 V14/saved16 is complete, downloaded, frozen/token verified and source-reviewed:
@@ -124,8 +144,7 @@ Origin stays SSH at the user's request. Existing key is accepted but unavailable
 for signing without an unlocked agent. Re-authenticated gh works with network
 access: `git -c credential.helper='!gh auth git-credential' push
 https://github.com/thanvirdiouf/LLMTrotsky.git main`. Do not print/request secrets.
-Commits through `f34390e` are pushed. Current plain-prose draft changes and
-updated reports need a milestone commit/push before V11 submission.
+Commits through `1827305` are pushed; subsequent milestones are committed and pushed as iterations proceed.
 
 The superseded 1940 v2 trial failed after fourteen direct answers, before its
 checked arm, at 6,546 input tokens. Saved version 3 restored the notebook title

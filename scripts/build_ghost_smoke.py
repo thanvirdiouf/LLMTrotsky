@@ -22,8 +22,12 @@ def model_cases(source_spec):
         return {'audit_calibration':{'packet_ids':source_spec['audit_calibration']['packet_ids']},'conversation':[],
             'cases':[{k:c[k] for k in ('id','question','claim_ids','segments','history') if k in c} for c in source_spec['cases']]}
     if 'comparison' not in source_spec:
-        return {'cases':[{'id':c['id'],'question':c['question']} for c in source_spec['cases']],
+        result={'cases':[{'id':c['id'],'question':c['question']} for c in source_spec['cases']],
                 'conversation':source_spec['conversation']}
+        if source_spec.get('controlled_sources'):
+            for case,original in zip(result['cases'],source_spec['cases']):case['source_packet_ids']=original['source_packet_ids']
+            result['conversation_source_packet_ids']=source_spec['conversation_source_packet_ids']
+        return result
     control=source_spec['comparison']
     if control['arms']!=['direct','checked'] or source_spec['conversation']:
         raise ValueError('Expected a direct/checked five-turn case sequence')
@@ -67,7 +71,7 @@ def build(version='ghost_smoke_v1', evaluation_spec=None):
     probe={'messages':messages,'input_token_ids':ids,'purpose':'unscored memory probe; no factual quality inference'}
     names=['ghost_chat.py','grounded_chat.py','grounded_chat_v2.py','evaluate_ghost_smoke.py',
            'evaluate_grounded_chat_v2.py','kaggle_ghost_smoke.py','kaggle_grounding.py','kbit_preparation.py']
-    if 'comparison' in model_spec:names.append('evaluate_ghost_comparison.py')
+    if 'comparison' in model_spec or 'conversation_source_packet_ids' in model_spec:names.append('evaluate_ghost_comparison.py')
     if 'audit_calibration' in model_spec:names.extend(['evaluate_ghost_comparison.py','evaluate_ghost_audit.py'])
     payload={n:(ROOT/'scripts'/n).read_bytes() for n in names}
     payload.update({'profile.json':enc(bot.profile),'collection.json':enc(bot.collection),'claims.json':enc(bot.ledger),

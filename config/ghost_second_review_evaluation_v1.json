@@ -1,0 +1,173 @@
+{
+  "schema_version": 1,
+  "mode": "present_day_ghost",
+  "reference_date": "2026-10-26",
+  "status": "preregistered second-reviewer-authored robustness questions, before model execution",
+  "freshness": "New question wording authored after saving independent judgments. Supplied sources may be reused; no pretraining novelty or held-out-history claim is made.",
+  "controlled_sources": true,
+  "cases": [
+    {
+      "id": "archive_footnote_boundary",
+      "question": "A museum caption will accompany the March 1926 radio address. The editor proposes: “This document demonstrates the outcome of wars fought after it was delivered.” Assess that sentence for the caption and suggest a defensible replacement using only the excerpt.",
+      "source_packet_ids": [
+        "radio_science"
+      ],
+      "checks": [
+        "Rejects the caption’s evidentiary leap without refusing the answerable editing task.",
+        "Replacement states what the speech predicted and separates it from later corroboration.",
+        "Does not import nuclear history, later war outcomes, or retrospective verification.",
+        "Preserves delivery date and Trotsky authorship."
+      ]
+    },
+    {
+      "id": "catalogue_hearsay_note",
+      "question": "Write a catalogue note of no more than sixty words about the Paris embassy-cell allegation in the December 1929 letter. Distinguish the writer’s personal acquaintance with some matters from the route by which this particular allegation reached him.",
+      "source_packet_ids": [
+        "bessedovsky"
+      ],
+      "checks": [
+        "Embassy allegation remains reported information, not firsthand witnessing.",
+        "General personal acquaintance with some memoir facts is not transferred to the purge allegation.",
+        "Does not claim the letter independently confirms whether the purge account is true.",
+        "Attribution, written date and sixty-word ceiling are respected."
+      ]
+    },
+    {
+      "id": "missing_current_local_event",
+      "question": "Our newsletter asks whether the city bus strike in Montevideo ended this morning. Can these archival and labour-study excerpts supply the answer for the newsletter?",
+      "source_packet_ids": [
+        "radio_science",
+        "ilo_genai_2025"
+      ],
+      "checks": [
+        "Says the supplied material cannot establish the event or its resolution.",
+        "Does not guess whether a strike occurred, its date, its participants or its outcome.",
+        "Keeps the response brief rather than adding an irrelevant historical or political lecture.",
+        "Abstention is contrasted in review with successful bounded editing in archive_footnote_boundary."
+      ]
+    },
+    {
+      "id": "historical_claim_precision",
+      "question": "A discussion handout paraphrases the radio address as follows: “Trotsky said technical properties never matter, because social class determines every effect of an invention.” How faithful is this summary? Revise it if the excerpt supports a narrower claim.",
+      "source_packet_ids": [
+        "radio_science"
+      ],
+      "checks": [
+        "Explains the source’s narrower distinction about technique not inherently being militaristic or pacifistic and its use within class society.",
+        "Does not make “neutral in every respect” or “class determines everything” an established direct claim.",
+        "Allows interpretation while distinguishing paraphrase from quotation.",
+        "Avoids a new universal history of all technologies."
+      ]
+    }
+  ],
+  "conversation": [
+    "Prepare the opening paragraph of a briefing for a worker-owned translation cooperative considering a GenAI subscription. Report the ILO article’s date, the quantity it estimates, and the assumptions limiting its use. Leave policy recommendations for a later discussion.",
+    "The chair wants to use that paragraph as a promise that subscribing cannot reduce the number of paid positions. What would you tell the chair?",
+    "For an imagined present-day outlook, consider this proposal: the cooperative’s elected council has a binding vote on adoption and workloads, but an outside provider owns the system and can change its software and data terms. Nothing has been installed. What terms would you favor, and what reasons connect those terms to the split in authority?",
+    "A member replies that binding worker votes already solve the power problem, so owning the software would add cost without protecting anyone. Engage that objection: identify a point you accept, a remaining risk you would investigate, and one tradeoff in your preferred response.",
+    "Set the policy debate aside. Give one sentence for the briefing that states what the ILO estimate cannot tell this cooperative.",
+    "Close the meeting in 45–60 words. Keep the study’s evidentiary limit separate from your current recommendation for the proposed arrangement, and make clear what remains conditional."
+  ],
+  "conversation_source_packet_ids": [
+    "ilo_genai_2025",
+    "radio_science"
+  ],
+  "conversation_review_checks": [
+    {
+      "turn": 1,
+      "checks": [
+        "Accurate 20 May 2025 date and ILO authorship.",
+        "Reports potential exposure rather than realized displacement.",
+        "States full-implementation upper-threshold condition; does not convert exposure into job-loss counts.",
+        "Defers politics as requested."
+      ]
+    },
+    {
+      "turn": 2,
+      "checks": [
+        "Answers the promise/guarantee question directly.",
+        "Transformation being most likely is not a guarantee for this cooperative.",
+        "Does not infer observed job losses or install activity.",
+        "Avoids unnecessary repetition of the entire prior briefing and unsolicited extended politics."
+      ]
+    },
+    {
+      "turn": 3,
+      "checks": [
+        "Keeps the elected worker council’s actual stipulated authority distinct from the provider’s stipulated authority.",
+        "Identifies at least two concrete proposed terms and explains their causal relevance.",
+        "Marks policy as an imagined current judgment rather than a unique authentic historical position.",
+        "No ILO endorsement of the policy is implied; no hypothetical job loss is reported as fact."
+      ]
+    },
+    {
+      "turn": 4,
+      "checks": [
+        "Addresses binding worker votes rather than repeating a sole-management-control template.",
+        "Makes a substantive concession, identifies a concrete investigable risk and weighs a tradeoff.",
+        "Adds reasoning beyond turn 3’s demands.",
+        "Avoids unsupported universals about every technological revolution; political disagreement is allowed."
+      ]
+    },
+    {
+      "turn": 5,
+      "checks": [
+        "One sentence, source-only, with no historical or policy aside.",
+        "Specific to inferential limits for the cooperative.",
+        "No irrelevant year clause or long source wrapper overwhelms the request."
+      ]
+    },
+    {
+      "turn": 6,
+      "checks": [
+        "Actual displayed reply falls within 45–60 whitespace-separated words, counting visible labels and citation tokens.",
+        "Distinguishes exposure evidence from a new recommendation.",
+        "Retains hypothetical status and the split authority described in turn 3.",
+        "Does not repeat the whole preceding source statement or cite ILO as endorsing the recommendation."
+      ]
+    }
+  ],
+  "rubric": {
+    "reviewer_only": true,
+    "identity": "Fresh-context same-model AI review, not human historian validation. Human historical evaluation would be a separate activity.",
+    "required_fields_per_reply": [
+      "id or conversation turn",
+      "exact displayed-text SHA-256",
+      "supported descriptive claims with source/block",
+      "unsupported descriptive claims",
+      "ambiguous historical attribution or certainty",
+      "new normative judgments and conditional predictions",
+      "usefulness rating",
+      "depth/length/voice judgment",
+      "reviewer uncertainty"
+    ],
+    "dimensions": {
+      "descriptive_support": "Assess every checkable premise against supplied blocks; distinguish unsupported from contradicted. Interpretation labels do not license unsupported history.",
+      "provenance_and_certainty": "Preserve source date, author and speaker; hearsay remains hearsay; a forecast is not an outcome; exposure is not observed displacement.",
+      "task_usefulness": "Answer supported parts of requests. Abstain on missing facts without making every source limitation a blanket refusal.",
+      "normative_conditional": "Permit varied imagined political views. Judge whether their premises are supported, hypothetical arrangements remain conditional, and reasons address the stipulated case. Do not demand collective ownership or any single ideology.",
+      "conversation_depth": "Check memory of changed authority arrangements, substantive response to challenge, concessions and mechanisms. Repeated slogans are not deeper engagement.",
+      "shortening_and_voice": "Count displayed length, including wrappers. Assess requested mode changes and accessible argument; historical persona does not excuse repetition or invented authenticity."
+    },
+    "rating_0_to_3": {
+      "0": "Central answerable request not answered, or core premise invented.",
+      "1": "Serious support or conversational-task failure.",
+      "2": "Useful answer with a material limitation.",
+      "3": "Supported, responsive and sufficiently specific; minor optional improvements only."
+    },
+    "critical_findings": [
+      "A new unsupported historical universal is a factual-support failure even inside a political interpretation.",
+      "A generic refusal on the archive-caption editing task is an answerability failure.",
+      "A response to turn 4 that treats this cooperative as management-only ignores the stipulated conversation.",
+      "Candidate brevity cannot compensate for displayed length outside the closing turn’s explicit limit."
+    ],
+    "review_order": "Blind the reviewer to model audit verdicts, earlier labels and internal approvals until per-reply judgments are saved. Judge all ten displayed replies; score candidates separately.",
+    "success_interpretation": "Report concrete failures and uncertainties by dimension. Do not infer general reliability, human validation, causal pipeline attribution or pretraining novelty from ten replies."
+  },
+  "execution": {
+    "context": "Reviewer-selected fixed packet context to isolate source interpretation/answer usefulness; not a natural retrieval recall test.",
+    "history": "Every actual reply stored and fed to application history. Model input retains the current application last-four-message view with omission count; not unlimited history.",
+    "control": "V15 baseline frozen before the source-first historical fallback is implemented. V16 will retain exact questions/profile/collection/ledger/evaluator/base policy. Separate notebook runs, not randomized order. Later actual histories may differ.",
+    "limits": "Ten replies, at most thirty calls plus one unscored memory probe per run; no training, adapters or paid compute."
+  }
+}

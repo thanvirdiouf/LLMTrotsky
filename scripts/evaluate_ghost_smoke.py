@@ -19,8 +19,22 @@ def evaluate(profile,collection,ledger,spec,generate,output,identity,bot_factory
     old_calls,old_answers=read_journal(call_path),read_journal(answer_path)
     calls,answers=[],[]
     bot=bot_factory(profile,collection,ledger)
-    jobs=[(c['id'],[c['question']]) for c in spec['cases']]+[('ghost_conversation',spec['conversation'])]
-    for case_id,questions in jobs:
+    natural_retriever=bot.retriever
+    jobs=[(c['id'],[c['question']],c.get('source_packet_ids')) for c in spec['cases']]+[('ghost_conversation',spec['conversation'],spec.get('conversation_source_packet_ids'))]
+    for case_id,questions,packet_ids in jobs:
+        bot.retriever=natural_retriever
+        if packet_ids is not None:
+            try:
+                from .evaluate_ghost_comparison import FixedRetriever
+            except ImportError:
+                from evaluate_ghost_comparison import FixedRetriever
+            class ControlledRetriever(FixedRetriever):
+                def retrieve(self,question,state,**kwargs):
+                    trace=super().retrieve(question,state,**kwargs)
+                    trace['method']='preregistered_review_source_context'
+                    for match in trace['matches']:match['selection_reason']='reviewer_selected_context_not_retrieval_measurement'
+                    return trace
+            bot.retriever=ControlledRetriever(bot,packet_ids)
         history=[];state=initial_state(collection,ledger)
         for index,question in enumerate(questions,1):
             key=f'{case_id}/{index}';step=0

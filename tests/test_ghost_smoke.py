@@ -50,5 +50,30 @@ class GhostSmokeTest(unittest.TestCase):
         self.assertEqual(json.loads(payload['protocol.json'])['answers'],10)
         with self.assertRaises(ValueError):frozen_payloads(version='../ghost_smoke_v1')
 
+    def test_controlled_review_context_and_restored_natural_retrieval(self):
+        from build_ghost_smoke import model_cases
+        bot=load_active()
+        source={'controlled_sources':True,'cases':[
+            {'id':'r','question':'Assess the supplied excerpt.','source_packet_ids':['radio_science'],'checks':['hidden-review-criterion']},
+            {'id':'i','question':'What can the supplied material establish?','source_packet_ids':['ilo_genai_2025']},
+            {'id':'n','question':'What does Runpod list for the A40?','source_packet_ids':None}],
+            'conversation':['Consider the supplied study.','And its limits?'],
+            'conversation_source_packet_ids':['ilo_genai_2025','radio_science']}
+        spec=model_cases(source);requests=[]
+        self.assertNotIn('hidden-review-criterion',json.dumps(spec))
+        def generate(messages):
+            requests.append(json.loads(messages[1]['content']))
+            return {'response':'{"answer_mode":"facts","detail":"brief","claim_ids":[]}','finish_reason':'stop'}
+        with tempfile.TemporaryDirectory() as temp:
+            answers,_=evaluate(bot.profile,bot.collection,bot.ledger,spec,generate,temp,{})
+            ids=[{m['packet']['id'] for m in a['retrieval']['matches']} for a in answers]
+            self.assertEqual(ids[0],{'radio_science'});self.assertEqual(ids[1],{'ilo_genai_2025'})
+            self.assertIn('runpod_pricing',ids[2]);self.assertNotIn('ilo_genai_2025',ids[2])
+            self.assertEqual(ids[3],{'ilo_genai_2025','radio_science'});self.assertEqual(ids[4],ids[3])
+            self.assertEqual(requests[-1]['conversation'][1]['content'],answers[-2]['response'])
+            self.assertEqual(answers[0]['retrieval']['method'],'preregistered_review_source_context')
+            again,_=evaluate(bot.profile,bot.collection,bot.ledger,spec,lambda _:self.fail('Replay must not infer'),temp,{})
+            self.assertEqual(again,answers)
+
 
 if __name__=='__main__':unittest.main()

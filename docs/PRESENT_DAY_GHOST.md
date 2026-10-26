@@ -194,3 +194,11 @@ universal that the auditor approves. Further semantic prompt tuning on these
 inspected cases is not justified. Independent review remains pending, using the
 source/context worksheet and exact transcript in the local V14 run directory.
 See [response-budget results](GHOST_RESPONSE_BUDGET.md). No new run is queued.
+
+
+The next user request authorizes repeating result-dependent work. A fresh-context
+second AI review is now complete (not human historian validation). It confirms
+key failures while preserving uncertainty around political rhetoric. V15 freezes
+a baseline on ten new reviewer-authored questions with controlled source context;
+V16 will test a narrow canonical historical-fact retention change. See
+[review provenance and preregistered iteration](GHOST_INDEPENDENT_REVIEW.md).

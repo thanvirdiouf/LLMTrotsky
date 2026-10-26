@@ -5,71 +5,62 @@ records, dated modern evidence and newly imagined views. Both adapters remain
 experimental and training stays paused. User authorized autonomous result-
 dependent continuation, proper documentation, milestone commits and pushes.
 
-## Active continuation: V24 verified, V25 fresh tasks staged
+## Active continuation: V25 verified; V26 source-reading comparison staged
 
-Latest pushed3a2e738. Initial push/uploadfailed automaticapproval-reviewusage
-limit (not unsafeaction); no actionexecuted. Afterreported22:22ISTreset,normal
-approvalretry succeeded: commitpushed,V24submittedsaved26. No bypassused.
-V24verified10replies/27calls,nobudget/truncation,11.32GiB. Activepointerstillv3.
+Latest pushed19e0ee0. V24/saved26 verified27calls:sourcev4adds3claims/original39
+unchanged/fullpacketsidentical/selectoroffsetsonlyomitted. Packingdropsselected
+hearingcountandBlumkininferences. MaskedDreviewverified10hashes:Eastmanhalf
+improves,conditionalclose88words,openingengagementlost,4identicalC/D. Nooverall
+qualitypromotion. Activepointerstillv3. Earlierquotaapprovalfailurewasresolved
+afterreportedresetthroughnormalapproval;commitpushes/uploads succeeded.
 
-V24 optionalv4data keepsall10packets/original39claims/4brief forms identical,
-adds3reviewedclaims and dropsselector-onlyoffsetmetadata. Dresultsnewtheory
-claimrenderedonce; otherrequestedfacts SELECTEDbutpackingdrops them: hearing
-selectedcorrection+secretarycountbutmixedfallbackfirstonly; Blumkinselected
-allegation/prediction/disclosure/visitorclaimbutbrief2sentencecapkeepsfirsttwo.
-application_coverage_audit.json proves inputs/selection/packing; notLLMknowledge
-failure. Views stillmisreadownership/author andsourcecertainty. MaskedDpacket
-exported under ghost_user_context_comparison; review_compact_trial saved
-standaloneD thencomparisonC; rootverifiedD10hashes. D improvesEastmanhalfR08
-and88wordconditionalcloseR10, losesopeningengagementR03;4identicalC/D, no
-unqualifiedoverallgain. FreshV2remainsunchanged. No statuses/drafts/code/
-armidentities supplied to reviewer.
+V25/saved27 COMPLETE/token/frozen verified:10replies28calls,no budget/truncation,
+peak11.32GiB. Fresh2+8tasks authoronlyreadfullsources,noledger/code/V24outputs.
+Preflightfound Revise the forum missed, rootgeneralizedexisting-scenario initial
+revise/update/modify/amend beforeinference;questionsexpectationsunchanged. Thus
+fresh-taskdevelopmentdiagnostic,notuntouchedheldout. Late7allstagesgetoriginal
+and revised1/4; modelusesunanimousdeclarationbutomitsotherpowers. Ending82words
+vs40–55. Ereviewunder evaluation/runs/ghost_fresh_transfer_v2_review savedand
+10hashesverified:onefullycoveredopening,majorfactual/role/authority/lengthgaps.
 
-V22/V23calibration verified10callseach: V22twofalsecorroborations pass(3/5pairs),
-V23fixesthosebutnewfalseagreementpasses(4/5pairs). Noreliabilityclaim. Reporter
-summarize_ghost_calibration.py bindsfrozenexpectedhashes and actualjournals, no
-creditforblocks/missingjudgments. Source-basedAIreviewsarenot humangold.
+Rootimplementationauditseparatefromblindreview: ILOdraftcomputes10.4butblocked
+fornohistoricalpoliticalbasis (alsomissesfemale denominator). Revisedforumdraft
+blockedbybroad I once guardon I once argued,despite sourcedpoliticalargument.
+Guardnotfixedyet; keepoldcontrolstableinV26. Potentiallatersmallfixallowdocumented
+argumentwithoutallowingIoncemeet/wrote/privateacts. No source-readingintegration
+intoordinaryconversationexistsyet. No furthertraining/adapters/paidcompute.
 
-Source_review sourcecurationproposal remainsignored, accepted v4sourceinputs
-in ignored config/ghost_historical_sources_v4_supplements.json. Finaldata at
-evaluation/ghost_chat_v4_ready; earlierunsubmittedmaterializationspreserved.
-Buildernowadditionallyvalidatesnewcanonicalfacts withactualrendererguards.
-Guardonlybuilder,notruntimepayload;4boundarytestspass,42claimbuildpasses.
+Workingchanges: new source_reading.py (SourceReadingChat) and evaluate_ghost_
+factual_comparison.py; model_cases/builder/runtime/verifier dispatch newpurpose;
+transcriptexportlabelsreadingcontextnotper-sentenceproof;4tests,newconfig/docs.
+Reading=freshindependentfactualcasesonly,neutralfullsourcewriter(no cards)+same
+auditorparagraphreview.1–4paras/max2000chars; quotationliteraloccurrenceinsource
+orquestionvalidatedwithspeakerorigins,user-onlymatchesunverified. Occurrenceis
+notattribution/truthproof. No generatedfactsbecomeaccepted_claim_idsormemory.
+No politicalbasisrequiredforarith. DefaultGhostChat/activepointer unchanged.
 
-Fresh V2 authoring done by review_compact_trial before readingD. Only fullsource
-collectionread,noledger/code/calibration/curation. Fixeddesign in ignored
-evaluation/ghost_fresh_transfer_v2 and exactcopyconfig/ghost_fresh_transfer_
-evaluation_v2.json. Two singles: Rakovsky/Bessedovsky report/hypothesisroutes;
-ILO5.7+4.7denominator/localoffice limits. Eightturn forumscenario usesfixed
-Weisbord/NewLeaderpool, atmost2sources/call; meaningfulobjection/revision/two
-source-onlypauses/delayedreturn/40–55wordclosing. Questions/checks unchanged.
+V26 FROZEN/STAGED, NOTSUBMITTED: config/ghost_factual_reading_comparison_v1.json,
+5exactreusedquestions(twofromfreshV2,threeolder),eachcanonical/readingarm, reset
+stateeverycase,matchedatmost2fullsourcepackets. Tenreplies,canonical<=15calls+
+reading10calls=25plusprobe1. Samepinnedbase/sourceplanv4. Wholepipelinecomparison,
+notablation/freshvalidation. Readingdiffersrouting/generation/quotechecks/audit
+representation, andstyleonlypartiallyblindsreviewer.
 
-PreflightBEFOREinference found oldretentionmisses Revise the forum (only
-revisehypothetical recognized). Rootgeneralizedinitialrevise/update/modify/
-amend ONLYwhenexistingusercontextstored. No nounlist. Preservewholeunverified
-userrecords andlimits; ordinaryeditingwithoutcontextdoesnotstartmemory.
-Before/afterpreflightfiles showlate7changesfrom[1]to[1,4]. Oneadditionaltest;
-77focusedpass/full350same2historicalREADMEerrors. Thisfixaftercoderreadnew
-questions meansfresh-taskdevelopmentdiagnostic,notuntouchedheld-outvalidation.
+CPUpreflightV26passed20syntheticrequests,max4030tokens, pairedretrievaltraces
+identical,readingsmemoryempty,metadataKEYSwithheld (wordprovenancelegitimatein
+question,donotstring-filterit). Runtimecap5120stillchecksallactualrequests.
+81focusedpass/full354same2historicalREADMEerrors;logs ghost_source_reading_local.
+TriedrecoveroldREADMEasprefix/suffixforlegitfixture,norecovery/noeditsmade;
+do notchangeoldlocks/frozenhelpers. LatestcurrentREADMEhashstill210fa...,old
+lockexpects9cab... Knownhistoricalerrorsremainhonestlyreported.
 
-V25FROZEN/STAGED,NOTSUBMITTED: exactsameV24profile/collection/42claimledger,
-onlyghost_chat.py/model_cases.json/protocolchanged. Neutral/rubricmetadata
-withheld;source/questionhasheschecked. CPU synthetic10selectorsmax3257, late
-context1/4present; notboundonfuturehistories/laterstages. Preflight/testlogs
-under evaluation/runs/ghost_smoke_v25. Commit/pushcurrentcode/tests/config/docs
-then submitV25(expected saved27)standingprivateapproval <=30calls+probe1,
-notraining/adapters/paidcompute. Downloadexact/replay/tokenverify/exportneutral
-review. Docs GHOST_FRESH_TRANSFER_V2.md.
-
-Next probable architecture diagnostic iffreshconfirmsfixedcatalogue limits:
-paired independent factualtasks, canonical compiler vs minimal source-reading
-pipeline (samebase/fullboundedpassages, plain factual draft+sameauditor, no
-newverifiedclaimmemory). Existing math/field questions alreadyprovebase output
-canbe discarded/unrepresentable. Separate experimental runner could expose
-faithfulness/usefulness tradeoff without rewriting activepath. Do not claim
-afalliblechecker orsource-readingdraft guaranteestruth; keep currentcanonical
-control. No such source-readingcode exists yet. Avoid furthertraining/promoting
-adapters while application/interpretation causes remain unresolved.
+Commit/pushnewcode/tests/config/docs,thensubmitV26understandingprivateapproval
+(expected saved28);<=25calls+probe1,nobackbone/adapters/training/paidchanges.
+Exactdownload/replay/tokenverify/exportneutralpairreview. Reviewerexisting
+review_compact_trial authorizedfor5matchedfactualtasks; shareonlyneutralpacket/
+fixedrubric,norunidentities/verdicts/drafts/code. Decideintegrationfromactual
+faithfulness/usefulness; do notautomaticallypromotereadings. Docs
+GHOST_SOURCE_READING_COMPARISON.md hasprecisepolicies/limitations.
 
 ## Active continuation: V18 compact forms trial
 

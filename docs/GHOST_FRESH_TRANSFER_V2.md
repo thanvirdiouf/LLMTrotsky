@@ -63,3 +63,24 @@ the existing private free-Kaggle notebook. No training, adapters or paid compute
 After exact download, token reconstruction and frozen replay, export a neutral
 source/response packet for review in actual displayed histories. Keep pipeline
 statuses and draft/checker outputs out of that semantic review.
+
+## Executed V25 result
+
+V25/saved27 passed frozen replay and token reconstruction: ten replies/28 calls,
+no budget rejection or truncation,11.32GiB. Both original and revised forum
+messages reach all delayed-turn stages as unverified context. The model uses
+unanimous declaration in its delayed reply, but omits several other powers.
+The closing is82 words against40–55.
+
+Masked E review, with all ten exact reply hashes verified, finds a fully covered
+opening participation answer alongside major arithmetic/denominator, close-
+reading, revised-powers and shortening gaps. Support and usefulness remain
+separate. The arithmetic draft produces10.4%, but the application filters it
+for lacking a historical basis; its denominator explanation is also incomplete.
+A revised-forum draft is filtered by the broad I once guard despite citing a
+documented argument. Those causal observations come from a separate implementation
+audit, not the displayed-only reviewer.
+
+The next [matched factual comparison](GHOST_SOURCE_READING_COMPARISON.md) tests
+whether a minimal source-reading pipeline can improve completeness without
+losing source fidelity. It remains experimental; training stays paused.

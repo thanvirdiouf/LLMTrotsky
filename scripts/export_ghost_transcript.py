@@ -46,7 +46,7 @@ def export(version,root=ROOT):
         direct=row.get('arm')=='direct'
         supplied={m['packet']['id'] for m in row['retrieval']['matches']}
         if cited:
-            lines.extend(['Sources supplied for the test candidate (citation does not validate its text):' if audit else 'Source references written by the unchecked model (not verified):' if direct else 'Sources cited by the renderer:',''])
+            lines.extend(['Sources supplied for the test candidate (citation does not validate its text):' if audit else 'Source references written by the unchecked model (not verified):' if direct else 'Supplied source context for generated reading (not sentence-level proof):' if row.get('application_mode')=='experimental_source_reading' else 'Sources cited by the renderer:',''])
             for pid in cited:
                 packet=packets[pid];interval=packet['composition_date_interval']
                 observed='; observed '+packet['observed_date'] if 'observed_date' in packet else ''

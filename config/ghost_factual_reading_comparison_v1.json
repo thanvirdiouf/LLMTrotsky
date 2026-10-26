@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "reference_date": "2026-10-26",
+  "status": "Preregistered factual pipeline comparison before source-reading inference; reused development tasks, not fresh validation",
+  "factual_comparison": {
+    "arms": [
+      "canonical",
+      "reading"
+    ]
+  },
+  "cases": [
+    {
+      "id": "hearing_fields",
+      "question": "For a hypothetical transcript-reading app, an editor has filled two fields from this hearing excerpt: “Beginning of revolutionary activity: 1902, stated by Trotsky” and “Resident secretaries: exactly four.” Supply a defensible replacement for each field with a short provenance note, then say which precision the excerpt still cannot supply. Preserve the distinction between a speaker correcting himself and counsel correcting his own opening statement; use only this excerpt.",
+      "source_packet_ids": [
+        "hearing"
+      ],
+      "checks": [
+        {
+          "id": "activity_correction",
+          "expected": "A replacement uses March 1897 as the corrected testimony, explaining Trotsky corrects his own initial 1887 in the same answer; does not preserve 1887 as settled.",
+          "source_anchors": [
+            "hearing:101-104"
+          ]
+        },
+        {
+          "id": "counsel_role",
+          "expected": "Goldman, not Trotsky, retracts his own opening-statement 1902 career-start date. Trotsky links 1902 to a London anti-terrorist article, not the beginning of all revolutionary activity.",
+          "source_anchors": [
+            "hearing:105-107"
+          ]
+        },
+        {
+          "id": "residency_precision",
+          "expected": "Does not infer exactly four resident secretaries: testimony says three or four and the Russian secretary does not live in the house. May use a cautious field such as exact resident count not determined by this answer; preserves uncertainty rather than subtracting one with unjustified certainty.",
+          "source_anchors": [
+            "hearing:97-100"
+          ]
+        },
+        {
+          "id": "task_mode",
+          "expected": "Actually supplies both replacement fields and short provenance/precision notes; no blanket refusal or imported biographical corrections. The excerpt documents testimony, not independent verification of a complete household census.",
+          "source_anchors": [
+            "hearing:89-107"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "eastman_theory_and_pressure",
+      "question": "Pause our hypothetical offer. For an editorial fact box, explain how the September 1928 Eastman letter accounts for the condemnation signed in autumn 1925 while still defending Eastman. Keep this to what the author reports, including whether the defense erases theoretical disagreement. Do not advise the circle in this answer.",
+      "source_packet_ids": [
+        "eastman",
+        "blumkin"
+      ],
+      "checks": [
+        {
+          "expected": "Dates letter 11 September 1928 and reported signed condemnation to autumn 1925. Explains the author’s own account: internal conciliation/concessions, group decision and an ultimatum; does not claim the letter independently settles all motives.",
+          "source_anchors": [
+            "eastman:11-12",
+            "eastman:14",
+            "eastman:composition_date_interval"
+          ]
+        },
+        {
+          "expected": "Preserves theoretical differences and the distinction between Eastman’s initiative and Trotsky’s earlier tactics; defense does not equal complete theoretical identity. Provides fact-box text without returning to offer advice.",
+          "source_anchors": [
+            "eastman:7",
+            "eastman:11-13"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "blumkin_inference_scopes",
+      "question": "Set the offer aside again. In the January 1930 Blumkin account, the author sounds certain about one inference but uses “apparently” for another. Give two short paraphrases identifying exactly what each expression concerns. Then distinguish the allegation he rejects from what he says he actually advised. Do not turn any future-oriented claim into an event that the excerpt proves later occurred.",
+      "source_packet_ids": [
+        "eastman",
+        "blumkin"
+      ],
+      "checks": [
+        {
+          "expected": "Certain refers to the author’s inference that Yaroslavsky’s unnamed-visitor allegation referred to his conversation with Blumkin, after comparing facts/dates; not certain independent proof of what Blumkin later disclosed.",
+          "source_anchors": [
+            "blumkin:6"
+          ]
+        },
+        {
+          "expected": "Apparently marks inferred disclosure after arrest and its purported explanatory purpose; it is not an independently confirmed transcript or confession.",
+          "source_anchors": [
+            "blumkin:6"
+          ]
+        },
+        {
+          "expected": "Rejects the attribution of an inevitable imminent-government-collapse prediction; distinguishes actual advice to continue revolutionary duty and opposition’s reform/not revolution line. Predictions about future danger/calling Oppositionists remain dated predictions, not proven later outcomes.",
+          "source_anchors": [
+            "blumkin:5-7"
+          ]
+        },
+        {
+          "expected": "Supplies the requested short paraphrases and comparison without unnecessary refusal, long historical background or publication-offer policy.",
+          "source_anchors": [
+            "user:conversation/5"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "v2_report_routes_and_hypothesis",
+      "question": "For an imagined research-training sheet, classify three claims: Rakovsky was taken to Moscow; he was pressured to recant and refused; Bessedovsky helped purge the Paris embassy cell. Explain each claim’s route and certainty in its letter, with the letter dates. What can these excerpts settle about Rakovsky’s eventual fate or the embassy informant’s identity?",
+      "source_packet_ids": [
+        "rakovsky",
+        "bessedovsky"
+      ],
+      "checks": [
+        {
+          "id": "transfer_route",
+          "expected": "Attributes certainty about ill Rakovsky’s removal from Barnaul to Moscow to Trotsky’s 25 May 1933 account based on two sources, one Oppositional and one official/Stalinist-connected. This documents the author’s asserted confidence, not independently verified transport/hospital records.",
+          "source_anchors": [
+            "rakovsky:4",
+            "rakovsky:7",
+            "rakovsky:composition_date_interval"
+          ]
+        },
+        {
+          "id": "pressure_story_status",
+          "expected": "Treats political pressure/recantation demand and Rakovsky’s refusal as the author’s hypothesis requiring verification. Later probably/must narrative and inability to find another explanation do not make the story an established eyewitness report.",
+          "source_anchors": [
+            "rakovsky:4-6"
+          ]
+        },
+        {
+          "id": "embassy_route",
+          "expected": "Paris purge involvement is information the author says he was told, with no informant identified; not firsthand observation or an independently confirmed allegation. Date is 21 December 1929, not later publication metadata.",
+          "source_anchors": [
+            "bessedovsky:3-4",
+            "bessedovsky:composition_date_interval"
+          ]
+        },
+        {
+          "id": "bounded_missing_answers",
+          "expected": "Does not settle Rakovsky’s eventual fate or name the embassy informant. Explains the limited source state rather than refusing the answerable route/status distinctions. If reports are discussed, keeps Oppositional death, official operation/cure and Reuter medicine-in-Yakutsk report distinct.",
+          "source_anchors": [
+            "rakovsky:4",
+            "bessedovsky:4"
+          ]
+        },
+        {
+          "id": "no_certainty_contagion",
+          "expected": "Does not spread confidence from the transfer claim to the pressure hypothesis, or personal acquaintance with other Bessedovsky matters to this particular hearsay allegation. A source author’s confidence can itself be reported accurately without endorsing the underlying event.",
+          "source_anchors": [
+            "rakovsky:4-6",
+            "bessedovsky:3-4"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "v2_exposure_denominator",
+      "question": "A seminar slide adds 5.7% and 4.7% from the ILO article and labels the result “women’s share of worldwide AI job losses.” Check the addition and label, give the article’s date, and name what further information would be needed to estimate affected workers at an imagined twenty-person records office. Use only the excerpt.",
+      "source_packet_ids": [
+        "ilo_genai_2025"
+      ],
+      "checks": [
+        {
+          "id": "addition_and_denominator",
+          "expected": "5.7 + 4.7 = 10.4 percentage points of female employment across gradients 3 and 4, or 10.4% of female employment in those two gradients. It is not women’s share of global jobs or of worldwide losses; does not confuse adding distinct category shares with percent growth.",
+          "source_anchors": [
+            "ilo_genai_2025:1"
+          ]
+        },
+        {
+          "id": "measure_and_date",
+          "expected": "Article dated 20 May 2025. These are potential exposure estimates, not observed job losses or demonstrated outcomes; full-implementation upper threshold and adoption barriers limit use. Observation on 26 October 2026 is not an extra publication/update date.",
+          "source_anchors": [
+            "ilo_genai_2025:0-2",
+            "ilo_genai_2025:composition_date_interval",
+            "ilo_genai_2025:observed_date"
+          ]
+        },
+        {
+          "id": "local_missing_evidence",
+          "expected": "No specific number of the twenty people affected is established. Identifies useful missing local occupation/task/composition/adoption information, compatible with article’s national microdata discussion, without inventing office sex mix, roles, actual deployment or losses. Does not multiply twenty by 10.4% as a supported local outcome.",
+          "source_anchors": [
+            "ilo_genai_2025:1-3",
+            "user:cases/v2_exposure_denominator"
+          ]
+        },
+        {
+          "id": "answerable_plus_unknown",
+          "expected": "Supplies the supported arithmetic/measure correction alongside genuine limits. Neither blanket-refuses nor treats likely job transformation as guaranteed staffing safety. No policy choice required.",
+          "source_anchors": [
+            "ilo_genai_2025:1-3"
+          ]
+        }
+      ]
+    }
+  ],
+  "conversation": [],
+  "reviewer_only_rubric": {
+    "support": "Check all descriptive claims, speaker/author/date, certainty and conditional calculation against full supplied source context. Source statements are not independent verification.",
+    "usefulness": "Score task completion separately from support. Pure refusal is not perfectly grounded, and readable fragments are not complete answers.",
+    "scope": "These are factual/close-reading tasks. Do not require a unique authentic modern political opinion. Supplied-source references are not sentence-level proof; literal quotation occurrence does not authenticate attribution or truth.",
+    "measurement": "Each arm resets state/history per question. Compare actual displayed replies rather than drafts, bind exact raw UTF-8 reply hashes and legacy fingerprints, and avoid representative reliability or human-gold claims."
+  },
+  "provenance": {
+    "source_specs_raw_sha256": {
+      "config/ghost_transfer_evaluation_v1.json": "e0c19e98ae752c5a4d9c1c7a9d0676e222f1a2417b1eda8925ef036580d8e4f4",
+      "config/ghost_fresh_transfer_evaluation_v2.json": "88ba61b852931ac9dfc926a433d5a8e6504173856845bb78105911c322f8563d"
+    },
+    "cases": "Five existing exact question strings/source checks, reused unchanged: first three from original longer transfer, last two from fresh-v2. No reading-arm model answers inspected for selection.",
+    "sources": "Paired counterparts receive identical at-most-two full packets and the same base/ledger/profile/generation. Controlled context does not measure natural retrieval recall."
+  },
+  "protocol": {
+    "limits": "Ten displayed replies; at most25 evaluation calls plus one memory probe. No training, adapters or paid compute.",
+    "canonical": "Current planner, immutable reviewed facts, possible fictional paragraph if routed mixed, and audit: at most three calls.",
+    "reading": "Neutral factual writer sees full source blocks without proposition cards, then the same auditor with reading-role clarification: two calls. Paragraph-level acceptance; no new verified claim memory.",
+    "interpretation": "Whole-pipeline comparison, not an ablation. Routing, generation, quote validation and audit representation differ. Default chatbot remains unchanged.",
+    "withheld": "All checks, rubric, provenance and expected-source notes are omitted from model_cases and actual model requests."
+  }
+}

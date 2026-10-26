@@ -18,6 +18,16 @@ def sha(raw):return hashlib.sha256(raw).hexdigest()
 
 
 def model_cases(source_spec):
+    if 'factual_comparison' in source_spec:
+        if (source_spec['factual_comparison'].get('arms')!=['canonical','reading']
+                or source_spec.get('conversation') or len(source_spec['cases'])!=5
+                or len({c['id'] for c in source_spec['cases']})!=5
+                or any(not isinstance(c['source_packet_ids'],list) or not 1<=len(c['source_packet_ids'])<=2
+                    or len(set(c['source_packet_ids']))!=len(c['source_packet_ids']) for c in source_spec['cases'])):
+            raise ValueError('Expected five independent matched-source factual cases')
+        return {'factual_comparison':{'arms':['canonical','reading']},'conversation':[],
+            'cases':[{'id':arm+'_'+c['id'],'question':c['question'],'source_packet_ids':c['source_packet_ids'],
+                      'comparison_arm':arm,'paired_case_id':c['id']} for arm in ['canonical','reading'] for c in source_spec['cases']]}
     if 'audit_calibration' in source_spec:
         return {'audit_calibration':{'packet_ids':source_spec['audit_calibration']['packet_ids']},'conversation':[],
             'cases':[{k:c[k] for k in ('id','question','claim_ids','segments','history') if k in c} for c in source_spec['cases']]}
@@ -77,6 +87,7 @@ def build(version='ghost_smoke_v1', evaluation_spec=None, constrain_selection=Fa
            'evaluate_grounded_chat_v2.py','kaggle_ghost_smoke.py','kaggle_grounding.py','kbit_preparation.py']
     if 'comparison' in model_spec or 'conversation_source_packet_ids' in model_spec:names.append('evaluate_ghost_comparison.py')
     if 'audit_calibration' in model_spec:names.extend(['evaluate_ghost_comparison.py','evaluate_ghost_audit.py'])
+    if 'factual_comparison' in model_spec:names.extend(['evaluate_ghost_comparison.py','source_reading.py','evaluate_ghost_factual_comparison.py'])
     if constrain_selection:names.append('selection_constraints.py')
     payload={n:(ROOT/'scripts'/n).read_bytes() for n in names}
     payload.update({'profile.json':enc(bot.profile),'collection.json':enc(bot.collection),'claims.json':enc(bot.ledger),
@@ -92,6 +103,8 @@ def build(version='ghost_smoke_v1', evaluation_spec=None, constrain_selection=Fa
         protocol.update(purpose='ghost_direct_checked_comparison',maximum_model_calls=sum(1 if c['arm']=='direct' else 3 for c in model_spec['cases']))
     if 'audit_calibration' in model_spec:
         protocol.update(purpose='ghost_audit_calibration',maximum_model_calls=len(model_spec['cases']))
+    if 'factual_comparison' in model_spec:
+        protocol.update(purpose='ghost_factual_comparison',maximum_model_calls=25)
     if constrain_selection:
         from selection_constraints import POLICY
         protocol['selection_constraints']=deepcopy(POLICY)
@@ -109,6 +122,8 @@ def build(version='ghost_smoke_v1', evaluation_spec=None, constrain_selection=Fa
         intro='# Direct/checked present-day ghost comparison\nSame untouched base and fixed available source context. Two separate five-turn conversations with actual displayed history; ten answers, at most twenty evaluation calls plus one memory probe. Direct replies are unchecked research outputs; no training/adapters. Whole-pipeline comparison, not an ablation or independent historical validation.\n'
     if 'audit_calibration' in model_spec:
         intro='# Fictional ghost auditor calibration\nTen fixed candidate test inputs, at most ten checker calls plus one memory probe. Candidates include deliberately false assertions and are never displayed as chatbot answers or trusted memory. Expected decisions are withheld from the model. Untouched base, no training/adapters/paid compute. Development diagnostic, not independent validation.\n'
+    if 'factual_comparison' in model_spec:
+        intro='# Matched factual source-reading comparison\nFive independent questions in canonical and source-reading pipelines, ten displayed replies total, at most25 calls plus one unscored memory probe. Same pinned base/full source packets; no training/adapters/paid compute. Generated readings remain fallible and never become verified claim memory.\n'
     add('markdown','intro',intro)
     add('code','install','%pip install -q '+' '.join(f'{k}=={v}' for k,v in protocol['packages'].items() if k!='torch')+'\n')
     packed={n:{'sha256':sha(b),'data':base64.b85encode(lzma.compress(b)).decode()} for n,b in payload.items()}

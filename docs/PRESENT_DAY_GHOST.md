@@ -7,7 +7,7 @@ adapters stay experimental and training stays paused.
 
 ## Current result — 26 October 2026
 
-Twenty-three ghost runs are complete, downloaded and verified. The active
+Twenty-four ghost runs are complete, downloaded and verified. The active
 experimental evidence is now v3: the original ten packets/39 full propositions
 plus four source-reviewed compact forms. V18/saved20 improves the historical
 summary, complete exposure assumptions and actual one-sentence response in a
@@ -49,7 +49,8 @@ are now supplied, but the delayed answer remains incomplete. V21 removes two par
 | v22 / 24 | 10 | All valid approved; two false independent-confirmation variants also approved |
 | v23 / 25 | 10 | Both false corroborations rejected; false theory agreement newly approved |
 | v24 / 26 | 27 | One added fact rendered; packing drops other selected requested facts |
-| v25 / staged | at most 30 | Fresh tasks and natural scenario-revision retention |
+| v25 / 27 | 28 | Revised context supplied; factual gaps/82-word close remain |
+| v26 / staged | at most 25 | Matched independent factual source-reading comparison |
 
 V1–v4 use the same inspected ten-turn development set. V5 introduces four
 single questions and a six-turn conversation; v7/v8 reuse those as regressions.
@@ -147,8 +148,8 @@ model calls, preserving source state.
 
 ## Validation and limits
 
-Seventy-seven focused ghost/source/harness/calibration tests pass. The full suite
-runs 350 tests with two pre-existing historical pilot snapshot errors for the
+Eighty-one focused ghost/source/harness/calibration tests pass. The full suite
+runs 354 tests with two pre-existing historical pilot snapshot errors for the
 already changed `evaluation/README.md`; historical locks remain preserved.
 Kaggle runs verify submitted/downloaded payloads, exact frozen-code replay,
 all input/output token reconstructions, zero optimizer updates, no adapters and

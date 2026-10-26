@@ -52,6 +52,8 @@ def run(bundle, output):
         from evaluate_ghost_comparison import evaluate as evaluator
     elif protocol['purpose']=='ghost_audit_calibration':
         from evaluate_ghost_audit import evaluate as evaluator
+    elif protocol['purpose']=='ghost_factual_comparison':
+        from evaluate_ghost_factual_comparison import evaluate as evaluator
     ledger = json.loads((bundle/'claims.json').read_text())
     config = AutoConfig.from_pretrained(snapshot, trust_remote_code=False, local_files_only=True)
     generation = GenerationConfig.from_model_config(config.get_text_config(decoder=True))

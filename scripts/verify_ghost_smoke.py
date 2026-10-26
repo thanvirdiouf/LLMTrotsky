@@ -63,6 +63,8 @@ from pathlib import Path
 p=Path('.')
 if json.loads((p/'protocol.json').read_text())['purpose']=='ghost_direct_checked_comparison':
  from evaluate_ghost_comparison import evaluate
+elif json.loads((p/'protocol.json').read_text())['purpose']=='ghost_audit_calibration':
+ from evaluate_ghost_audit import evaluate
 else:
  from evaluate_ghost_smoke import evaluate
 def no_inference(_): raise AssertionError('Missing cached call; inference forbidden')

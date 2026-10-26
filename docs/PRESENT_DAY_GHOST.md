@@ -7,14 +7,14 @@ adapters stay experimental and training stays paused.
 
 ## Current result — 26 October 2026
 
-Seven ghost smokes and the fresh matched-source comparison are complete,
-downloaded, source-reviewed and verified.
-They establish bounded T4 memory capacity and several application fixes, but
-**do not establish reliable interpretation or conversation**. The checker still
-accepts faulty source inferences. The fresh direct/checked comparison ran as saved Kaggle version 11; its
-task-classified regression completed as saved version 12. Direct
-engages with the dialogue but invents certainty; checked preserves reviewed
-facts but misses new wording or blocks format. Neither arm is promoted.
+Ten ghost runs are complete, downloaded and verified. They establish bounded
+T4 memory capacity and several application fixes, but **do not establish reliable
+interpretation or conversation**. V11 completes ordinary opinion prose without
+JSON failures, yet its auditor confuses the fictional assistant with the user
+and sometimes treats new opinions as institutional source claims. Canonical
+facts survive. Some rejected premises still have legitimate source concerns.
+Neither pipeline is promoted. V12 prepares a balanced checker-only diagnostic;
+see [speaker/source-role calibration](GHOST_AUDIT_CALIBRATION.md).
 
 | Ghost version / Kaggle version | Evaluation calls | Main finding |
 |---|---:|---|
@@ -28,7 +28,8 @@ facts but misses new wording or blocks format. Neither arm is promoted.
 | v8 / 10 | 21 | Fuller view displays; source overreach passes; shortening filtered for raw citations |
 | v9 / 11 | 16 | Fresh comparison: direct source overreach; checked task/format failures |
 | v10 / 12 | 18 | Valid task labels and dated two-sentence finding; final opinion JSON is incomplete |
-| v11 / pending | at most 20 | Ordinary opinion prose, structured selector/auditor, same regression controls |
+| v11 / 13 | 19 | Prose completes; reviewer confuses speaker and source-support roles |
+| v12 / pending | at most 10 | Five valid/five invalid fixed audit candidates; expected labels withheld |
 
 V1–v4 use the same inspected ten-turn development set. V5 introduces four
 single questions and a six-turn conversation; v7/v8 reuse those as regressions.
@@ -125,8 +126,8 @@ model calls, preserving source state.
 
 ## Validation and limits
 
-Forty-three focused ghost/source/harness/comparison tests pass. The full suite
-runs 316 tests with two pre-existing historical pilot snapshot errors for the
+Forty-six focused ghost/source/harness/calibration tests pass. The full suite
+runs 319 tests with two pre-existing historical pilot snapshot errors for the
 already changed `evaluation/README.md`; historical locks remain preserved.
 Kaggle runs verify submitted/downloaded payloads, exact frozen-code replay,
 all input/output token reconstructions, zero optimizer updates, no adapters and
@@ -175,3 +176,13 @@ source-anchor path. The current request is last in every stage. Known selected
 citation markers, whitespace and short source-matching concept styling are
 normalized/logged; unknown references and invented quotes remain guarded.
 This is a same-question regression, not fresh proof of reliable conversation.
+
+
+V11 is verified as saved version 13: nineteen requests, no budget rejection or
+length truncation, direct messages/replies byte-identical to v10. It displays
+three partial replies, one factual reply and one refusal. Its source-safe
+study-only answer is two sentences (33 words); rejected opinions reveal the
+speaker/support-role errors described above. V12 explicitly identifies those
+roles and tests ten fixed candidates before any further conversation study.
+Candidates are never trusted replies or memory. The same base judge remains
+fallible; a successful calibration would not establish production reliability.

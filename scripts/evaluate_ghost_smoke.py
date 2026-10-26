@@ -13,12 +13,12 @@ except ImportError:
     from kaggle_grounding import atomic_journal
 
 
-def evaluate(profile,collection,ledger,spec,generate,output,identity):
+def evaluate(profile,collection,ledger,spec,generate,output,identity,bot_factory=GhostChat):
     output=Path(output);output.mkdir(parents=True,exist_ok=True)
     call_path,answer_path=output/'model_calls.jsonl',output/'answers.jsonl'
     old_calls,old_answers=read_journal(call_path),read_journal(answer_path)
     calls,answers=[],[]
-    bot=GhostChat(profile,collection,ledger)
+    bot=bot_factory(profile,collection,ledger)
     jobs=[(c['id'],[c['question']]) for c in spec['cases']]+[('ghost_conversation',spec['conversation'])]
     for case_id,questions in jobs:
         history=[];state=initial_state(collection,ledger)

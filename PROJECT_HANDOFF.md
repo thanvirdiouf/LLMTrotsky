@@ -7,43 +7,29 @@ dependent continuation, proper documentation, milestone commits and pushes.
 
 ## Immediate continuation
 
-V9 fresh direct/checked comparison is complete/verified as saved Kaggle version
-11. V10 is complete/verified as saved version 12. V11 is frozen/staged but not
-yet submitted: same inspected five-turn pair, ten answers, maximum twenty
-requests plus one probe. Commit/push the tested prose-generation changes/docs,
-submit V11 under standing approval, then download the exact saved version and
-verify/review. No training, adapters or paid compute.
+V11 completed/verified as saved Kaggle version 13: ten answers, nineteen calls,
+no input rejection/truncation, 11.32 GiB probe peak. Direct messages/replies match
+v10 byte-for-byte. Plain prose fixes draft JSON failures; the dated study-only
+reply remains two sentences. Reviewer role confusion now overrejects fictional
+first person and misattributes new political conclusions to ILO. Some rejected
+premises remain problematic; do not call every rejection false.
 
-V9: sixteen generations. Direct engages but invents certainty; checked preserves
-facts yet skips new viewpoint wording or blocks format/coverage. V10: eighteen
-generations, same direct messages/replies byte-for-byte; checked returns valid
-mixed/normal, mixed/normal, facts/brief, view/expanded, mixed/brief fields. The
-dated finding is now two sentences and a view is drafted. Its final paragraph
-has incomplete JSON despite a stop token, so it is blocked. Source interpretation
-still overstates displacement and the view can continue an older argument.
-Neither pipeline is promoted. Local reports/transcripts and response-bound
-judgments are in the corresponding `evaluation/runs/ghost_smoke_vN/` folders.
-
-V11: ordinary opinion drafting is plain prose, wrapped into internal segments
-by the application. Structured selector and auditor, canonical facts and
-requested exact-quote references remain. Current user request is last in every
-stage. Known selected citation markers and short source-matching concept style
-are normalized/logged; unknown references and invented quotes stay guarded.
-No extra model requests. Source/profile/model-cases/direct-evaluator payloads
-match V10. After execution check regenerated direct equality, actual mode/detail,
-group-scenario relevance, depth/shortening and remaining source overreach.
-
-The natural definite-study retention patch made after V10 freeze is now in V11.
-V10 fixed-context GPU data did not test that local patch; its separately recorded
-before/after source IDs and unit tests do. V11 frozen helper matches current
-code. Do not rebuild older versions with changed helpers.
+V12 is frozen/staged for balanced checker-only calibration: ten cases, five
+valid/five invalid, ten calls plus one memory probe under standing approval.
+Expected decisions/rationales are excluded from model input. Test candidates
+never enter trusted chat output or memory. Explicit candidate speaker and
+historical/modern source-support roles clarify the contract. Submit to the same
+private notebook after committing/pushing; exact-download, frozen/token verify,
+and report false acceptance, false rejection and blocks separately. See
+`docs/GHOST_AUDIT_CALIBRATION.md`. Do not run further broad dialogue loops before
+reviewing this result. No training, adapters or paid compute.
 
 ## Verification and archive
 
-Forty-three focused ghost/source/harness/comparison tests pass. Full suite:
-316 tests, the same two pre-existing pilot snapshot errors for the already
+Forty-six focused ghost/source/harness/calibration tests pass. Full suite:
+319 tests, the same two pre-existing pilot snapshot errors for the already
 changed `evaluation/README.md`. Do not rewrite historical locks to conceal them.
-Current full output: `evaluation/runs/ghost_smoke_v10/prose_full_tests.log`.
+Current full output: `evaluation/runs/ghost_smoke_v11/audit_full_tests.log`.
 
 Verify with `.venv-tokenizer/bin/python scripts/verify_ghost_smoke.py --version
 ghost_smoke_v11 --tokenizer training/data_revision_v2/tokenizer_assets` after
@@ -56,7 +42,7 @@ or model approval with semantic quality. [Protocol](docs/GHOST_SMOKE.md),
 [comparison](docs/GHOST_COMPARISON.md), [failure analysis](docs/GHOST_FAILURE_ANALYSIS.md).
 
 Executed ghost history: v1/saved4 (16 calls), v2/saved5 (19), v3/saved6 (19),
-v4/saved7 (19), v5/saved8 (20), v7/saved9 (22), v8/saved10 (21), v9/saved11 (16), v10/saved12 (18).
+v4/saved7 (19), v5/saved8 (20), v7/saved9 (22), v8/saved10 (21), v9/saved11 (16), v10/saved12 (18), v11/saved13 (19).
 V6 was prepared but never uploaded/run. V1–v4 share initial inspected cases;
 v5 introduces new four singles/six conversation turns, then v7/v8 regress them;
 v9 introduces new five-turn paired questions; v10/v11 regress them. These are

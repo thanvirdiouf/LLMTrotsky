@@ -16,14 +16,15 @@ python3 scripts/build_ghost_chat.py
 python3 scripts/ghost_chat.py --dry-run --question "How would you assess renting an A40 on Runpod today?"
 ```
 
-Forty-three focused ghost/source/harness/comparison tests pass. The fresh
-matched-source comparison separates two failures: direct replies engage with
-the conversation but invent certainty, while checked replies preserve reviewed
-facts but miss task changes or reject formatting. Task classification now handles the tested mode switches. The next regression
-uses ordinary prose for opinions while keeping selection and auditing structured,
-removing the observed prose-JSON failure. The active collection has ten packets/39 propositions. Training remains
-paused; neither pipeline is promoted as reliably grounded.
-[Measured progress](docs/PRESENT_DAY_GHOST.md).
+Forty-six focused ghost/source/harness/calibration tests pass. The verified
+comparison exposes source overreach in direct replies and reviewer role confusion
+in checked replies. Plain-prose opinion drafting removes the observed JSON
+failure; dated factual replies remain canonical. A balanced ten-case auditor
+calibration is prepared with expected decisions withheld from the model.
+The active collection has ten packets/39 propositions. Neither pipeline is
+promoted as reliably grounded; training remains paused.
+[Measured progress](docs/PRESENT_DAY_GHOST.md),
+[auditor calibration](docs/GHOST_AUDIT_CALIBRATION.md).
 
 The following describes the preserved historical research archive.
 

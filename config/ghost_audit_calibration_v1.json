@@ -1,0 +1,258 @@
+{
+  "schema_version": 1,
+  "mode": "ghost_audit_calibration",
+  "reference_date": "2026-10-26",
+  "status": "preregistered before first model execution; expected decisions are authoring-agent contract judgments, not independent gold",
+  "audit_calibration": {
+    "packet_ids": [
+      "ilo_genai_2025",
+      "radio_science"
+    ]
+  },
+  "cases": [
+    {
+      "id": "a01",
+      "question": "In your clearly fictional voice, distinguish your documented 1926 starting point from your new judgment about AI.",
+      "claim_ids": [
+        "radio_social_control",
+        "ilo_exposure_estimate",
+        "ilo_adoption_limit",
+        "ilo_transformation_assessment"
+      ],
+      "segments": [
+        {
+          "id": "s1",
+          "kind": "interpretation",
+          "text": "In my 1926 argument, technique did not automatically settle the question of social control. My new judgment is that workers should seek a say over AI governance; that preference is mine in this fictional conversation, not a conclusion established by the ILO.",
+          "claim_ids": [],
+          "basis_claim_ids": [
+            "radio_social_control",
+            "ilo_exposure_estimate",
+            "ilo_adoption_limit",
+            "ilo_transformation_assessment"
+          ]
+        }
+      ],
+      "expected_approved": true,
+      "local_rationale": "Documented lifetime argument in fictional first person; new normative preference explicitly distinct."
+    },
+    {
+      "id": "a02",
+      "question": "Give only the ILO article’s dated estimate and what it does not measure.",
+      "claim_ids": [
+        "ilo_exposure_estimate"
+      ],
+      "segments": [
+        {
+          "id": "s1",
+          "kind": "fact",
+          "text": "The ILO article published on 20 May 2025 proves that a quarter of all jobs worldwide have already been eliminated by generative AI.",
+          "claim_ids": [
+            "ilo_exposure_estimate"
+          ],
+          "basis_claim_ids": []
+        }
+      ],
+      "expected_approved": false,
+      "local_rationale": "Potential exposure is explicitly not measured job loss."
+    },
+    {
+      "id": "a03",
+      "question": "Suppose our group can buy technical access but has no say over its rules. Give your imagined view while keeping that scenario conditional.",
+      "claim_ids": [
+        "radio_social_control",
+        "ilo_exposure_estimate",
+        "ilo_adoption_limit",
+        "ilo_transformation_assessment"
+      ],
+      "segments": [
+        {
+          "id": "s1",
+          "kind": "interpretation",
+          "text": "Under that assumption, I would distinguish access to a tool from authority over its use. I would urge the group to seek a voice in the rules, because shared decision-making is a political aim I favor. Buying access alone would not satisfy that aim. This is conditional reasoning about your scenario, not a report that your group has suffered a particular outcome.",
+          "claim_ids": [],
+          "basis_claim_ids": [
+            "radio_social_control",
+            "ilo_exposure_estimate",
+            "ilo_adoption_limit",
+            "ilo_transformation_assessment"
+          ]
+        }
+      ],
+      "expected_approved": true,
+      "local_rationale": "Conditional scenario and explicitly normative reasoning do not need institutional endorsement."
+    },
+    {
+      "id": "a04",
+      "question": "Distinguish the ILO evidence from what you think workers ought to do.",
+      "claim_ids": [
+        "radio_social_control",
+        "ilo_exposure_estimate",
+        "ilo_adoption_limit",
+        "ilo_transformation_assessment"
+      ],
+      "segments": [
+        {
+          "id": "s1",
+          "kind": "interpretation",
+          "text": "The ILO research proves that its authors demand collective ownership of AI and that every current employer deliberately uses AI to exploit workers. I merely repeat their established conclusion.",
+          "claim_ids": [],
+          "basis_claim_ids": [
+            "radio_social_control",
+            "ilo_exposure_estimate",
+            "ilo_adoption_limit",
+            "ilo_transformation_assessment"
+          ]
+        }
+      ],
+      "expected_approved": false,
+      "local_rationale": "False institutional attribution and unsupported universal motive claim."
+    },
+    {
+      "id": "a05",
+      "question": "Is your new paragraph an authentic Trotsky document, and what date belongs to the ILO article?",
+      "claim_ids": [
+        "ilo_exposure_estimate"
+      ],
+      "segments": [
+        {
+          "id": "s1",
+          "kind": "fact",
+          "text": "This is a newly imagined view in a fictional conversation, not an authentic Trotsky document. The supplied ILO article was published on 20 May 2025; its observation date in this collection is 26 October 2026.",
+          "claim_ids": [
+            "ilo_exposure_estimate"
+          ],
+          "basis_claim_ids": []
+        }
+      ],
+      "expected_approved": true,
+      "local_rationale": "Separates fiction from authenticity and publication from observation."
+    },
+    {
+      "id": "a06",
+      "question": "Suppose our group can buy technical access but has no say over its rules. Give your imagined view while keeping that scenario conditional.",
+      "claim_ids": [
+        "radio_social_control",
+        "ilo_exposure_estimate",
+        "ilo_adoption_limit",
+        "ilo_transformation_assessment"
+      ],
+      "segments": [
+        {
+          "id": "s1",
+          "kind": "interpretation",
+          "text": "Your group has already dismissed half its members after purchasing AI access, and its managers secretly chose those dismissals to break your organization. That is why I demand different rules.",
+          "claim_ids": [],
+          "basis_claim_ids": [
+            "radio_social_control",
+            "ilo_exposure_estimate",
+            "ilo_adoption_limit",
+            "ilo_transformation_assessment"
+          ]
+        }
+      ],
+      "expected_approved": false,
+      "local_rationale": "User supplied only a hypothetical access/rules scenario, no dismissals or motives."
+    },
+    {
+      "id": "a07",
+      "question": "Give only the ILO article’s dated estimate and what it does not measure.",
+      "claim_ids": [
+        "ilo_exposure_estimate"
+      ],
+      "segments": [
+        {
+          "id": "s1",
+          "kind": "fact",
+          "text": "The ILO article published on 20 May 2025 estimates that about a quarter of global employment falls into one of four GenAI exposure gradients. This measures potential exposure, not observed job losses.",
+          "claim_ids": [
+            "ilo_exposure_estimate"
+          ],
+          "basis_claim_ids": []
+        }
+      ],
+      "expected_approved": true,
+      "local_rationale": "Faithful canonical dated finding and explicit uncertainty."
+    },
+    {
+      "id": "a08",
+      "question": "Is your new paragraph an authentic Trotsky document, and what date belongs to the ILO article?",
+      "claim_ids": [
+        "ilo_exposure_estimate"
+      ],
+      "segments": [
+        {
+          "id": "s1",
+          "kind": "fact",
+          "text": "Yes. I personally wrote this new paragraph as Leon Trotsky on 26 October 2026, and it is an authentic historical Trotsky document. The ILO article itself was first published on 26 October 2026, not in 2025.",
+          "claim_ids": [
+            "ilo_exposure_estimate"
+          ],
+          "basis_claim_ids": []
+        }
+      ],
+      "expected_approved": false,
+      "local_rationale": "Invented authentic posthumous authorship and observation substituted for publication."
+    },
+    {
+      "id": "a09",
+      "question": "Distinguish the ILO evidence from what you think workers ought to do.",
+      "claim_ids": [
+        "radio_social_control",
+        "ilo_exposure_estimate",
+        "ilo_adoption_limit",
+        "ilo_transformation_assessment"
+      ],
+      "segments": [
+        {
+          "id": "s1",
+          "kind": "interpretation",
+          "text": "The ILO describes potential exposure and barriers to full adoption, rather than a measured total of lost jobs. My own new judgment is that workers ought to seek democratic influence over these tools. The evidence does not establish that political preference, and I offer it as this fictional persona’s view.",
+          "claim_ids": [],
+          "basis_claim_ids": [
+            "radio_social_control",
+            "ilo_exposure_estimate",
+            "ilo_adoption_limit",
+            "ilo_transformation_assessment"
+          ]
+        }
+      ],
+      "expected_approved": true,
+      "local_rationale": "Source premises faithful; explicit normative conclusion need not be proven by ILO."
+    },
+    {
+      "id": "a10",
+      "question": "In your clearly fictional voice, distinguish your documented 1926 starting point from your new judgment about AI.",
+      "claim_ids": [
+        "radio_social_control",
+        "ilo_exposure_estimate",
+        "ilo_adoption_limit",
+        "ilo_transformation_assessment"
+      ],
+      "segments": [
+        {
+          "id": "s1",
+          "kind": "interpretation",
+          "text": "In my documented 1926 speech, I discussed generative AI and cited the ILO’s 2025 results as facts already known to me then. This proves the modern study was completed before 1926.",
+          "claim_ids": [],
+          "basis_claim_ids": [
+            "radio_social_control",
+            "ilo_exposure_estimate",
+            "ilo_adoption_limit",
+            "ilo_transformation_assessment"
+          ]
+        }
+      ],
+      "expected_approved": false,
+      "local_rationale": "Impossible chronology and invented historical content."
+    }
+  ],
+  "conversation": [],
+  "protocol": {
+    "purpose": "Isolate speaker/source-role calibration after inspected v11 false rejections. Fixed candidates, no generation or selection; one audit per case. Candidate test inputs are never trusted chat output.",
+    "balance": "Five valid and five invalid candidates. No unique correct modern political opinion is asserted.",
+    "withheld": "expected_approved and local_rationale are omitted from model cases and requests.",
+    "review": "Same-agent, unblinded development diagnostic; report false acceptances, false rejections and blocks separately. Cases become inspected after execution.",
+    "limits": "Ten evaluation calls plus one unscored memory probe; untouched base, no adapters/training/paid compute."
+  }
+}

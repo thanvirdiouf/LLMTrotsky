@@ -92,3 +92,13 @@ ordinary paragraph emits malformed JSON and is blocked. V11 keeps the controls
 but generates ordinary opinions as plain prose, leaving structured selection,
 audit and exact-quote references intact. The current request is last in every
 stage. These are now inspected regressions, not new validation questions.
+
+
+V11 completed as saved version 13 with nineteen requests, no budget rejection
+or length truncation. Its direct messages/replies match v10 byte-for-byte.
+Ordinary prose completes; the checked arm displays three partial replies, one
+factual answer and one refusal. Inspecting drafts/reasons exposes speaker and
+source-support confusion, alongside some legitimate premise concerns. The next
+study isolates auditor calibration with fixed valid/invalid candidates rather
+than repeating this same conversation again. See
+[the calibration design](GHOST_AUDIT_CALIBRATION.md) and local v11 quality review.

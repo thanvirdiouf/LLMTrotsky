@@ -18,6 +18,9 @@ def sha(raw):return hashlib.sha256(raw).hexdigest()
 
 
 def model_cases(source_spec):
+    if 'audit_calibration' in source_spec:
+        return {'audit_calibration':{'packet_ids':source_spec['audit_calibration']['packet_ids']},'conversation':[],
+            'cases':[{k:c[k] for k in ('id','question','claim_ids','segments','history') if k in c} for c in source_spec['cases']]}
     if 'comparison' not in source_spec:
         return {'cases':[{'id':c['id'],'question':c['question']} for c in source_spec['cases']],
                 'conversation':source_spec['conversation']}
@@ -65,6 +68,7 @@ def build(version='ghost_smoke_v1', evaluation_spec=None):
     names=['ghost_chat.py','grounded_chat.py','grounded_chat_v2.py','evaluate_ghost_smoke.py',
            'evaluate_grounded_chat_v2.py','kaggle_ghost_smoke.py','kaggle_grounding.py','kbit_preparation.py']
     if 'comparison' in model_spec:names.append('evaluate_ghost_comparison.py')
+    if 'audit_calibration' in model_spec:names.extend(['evaluate_ghost_comparison.py','evaluate_ghost_audit.py'])
     payload={n:(ROOT/'scripts'/n).read_bytes() for n in names}
     payload.update({'profile.json':enc(bot.profile),'collection.json':enc(bot.collection),'claims.json':enc(bot.ledger),
                     'model_cases.json':enc(model_spec),'memory_probe.json':enc(probe)})
@@ -77,6 +81,8 @@ def build(version='ghost_smoke_v1', evaluation_spec=None):
         preserved_files=json.loads((ROOT/'evaluation/grounded_chat_v2/preserved_v1_and_adapters.json').read_text()))
     if 'comparison' in model_spec:
         protocol.update(purpose='ghost_direct_checked_comparison',maximum_model_calls=sum(1 if c['arm']=='direct' else 3 for c in model_spec['cases']))
+    if 'audit_calibration' in model_spec:
+        protocol.update(purpose='ghost_audit_calibration',maximum_model_calls=len(model_spec['cases']))
     payload['protocol.json']=enc(protocol)
     cells=[]
     def add(kind,cid,source):
@@ -88,6 +94,8 @@ def build(version='ghost_smoke_v1', evaluation_spec=None):
     intro='# Present-day Trotsky ghost smoke\nFictional present-day persona, no 1940 cutoff. Untouched base, no adapters/training. Separate 5,000-token memory probe followed by ten answers, at most thirty evaluation generation calls. Structural checks and model audits are not semantic proof.\n'
     if 'comparison' in model_spec:
         intro='# Direct/checked present-day ghost comparison\nSame untouched base and fixed available source context. Two separate five-turn conversations with actual displayed history; ten answers, at most twenty evaluation calls plus one memory probe. Direct replies are unchecked research outputs; no training/adapters. Whole-pipeline comparison, not an ablation or independent historical validation.\n'
+    if 'audit_calibration' in model_spec:
+        intro='# Fictional ghost auditor calibration\nTen fixed candidate test inputs, at most ten checker calls plus one memory probe. Candidates include deliberately false assertions and are never displayed as chatbot answers or trusted memory. Expected decisions are withheld from the model. Untouched base, no training/adapters/paid compute. Development diagnostic, not independent validation.\n'
     add('markdown','intro',intro)
     add('code','install','%pip install -q '+' '.join(f'{k}=={v}' for k,v in protocol['packages'].items() if k!='torch')+'\n')
     packed={n:{'sha256':sha(b),'data':base64.b85encode(lzma.compress(b)).decode()} for n,b in payload.items()}

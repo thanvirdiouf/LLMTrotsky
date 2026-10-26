@@ -55,3 +55,32 @@ errors and unnecessary refusals; length compliance alone is not usefulness.
 Do not tune political judgments to the coding agent's preferences. Frozen V13
 outputs remain unchanged. Independent source/conversation review is still the
 next quality evidence described in [the review plan](GHOST_NEXT_REVIEW.md).
+
+
+## Verified V14 result — 26 October 2026
+
+Private saved version 16 completed ten replies/23 generations, with zero input
+budget rejection or output truncation and an 11.32 GiB probe peak. Frozen replay,
+all token reconstruction and archived artifact hashes pass. Control profile,
+collection, ledger and questions match V13 exactly.
+
+Bessedovsky now retains both complete cards in 42 words instead of twenty.
+The dated ILO finding stays two sentences/33 words and the study-only limit
+stays two sentences/40 words. The post-V13 enum normalization now also has a
+GPU result: valid ILO evidence renders instead of blocking.
+
+The budget instruction is insufficient. The final display has a forty-word
+fact block, four words of label/citation overhead and a six-word draft allowance.
+The normalized opinion is forty words, giving 84 total instead of about fifty
+requested (previously 97). `over_target` correctly flags it. This is measured
+instrumentation and partial shortening, not a solved word limit. Do not claim
+that passing synthetic fixtures establishes model compliance.
+
+Semantic problems remain separate: the deeper view is longer but repetitive,
+and an unsupported assertion about every previous technological revolution is
+approved. Preserve political preferences as permissible new views while
+checking historical/descriptive claims. Detailed local review and a neutral
+worksheet are under `evaluation/runs/ghost_smoke_v14/`. Independent review has
+not happened. Future brevity designs may need reviewed compact fact variants
+or a separately evaluated bounded rewrite workflow; neither is implemented.
+No more prompt tuning on these inspected cases or training is queued.

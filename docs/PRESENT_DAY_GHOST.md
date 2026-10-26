@@ -7,14 +7,14 @@ adapters stay experimental and training stays paused.
 
 ## Current result — 26 October 2026
 
-Twelve ghost runs are complete, downloaded and verified. The latest fresh study
-(V13, saved Kaggle version 15) uses ordinary retrieval with four standalone
-questions and a six-turn conversation: ten replies, 22 generations. Relevant
-sources are present and several mode changes work, but **interpretation and
-conversation are not reliably grounded**. A real reply confuses exposure
-gradients with adoption barriers despite auditor approval; task classification,
-brief factual coverage, depth and total answer length also fail in specific cases.
-Neither pipeline is promoted. Both adapters stay experimental.
+Thirteen ghost runs are complete, downloaded and verified. The latest rendering
+regression (V14, saved Kaggle version 16) makes ten replies in 23 generations
+on the exact V13 questions and evidence. It fixes brief reported-information
+coverage and recovers the observed invalid task label while preserving dated
+ILO scope. **Whole-answer brevity and semantic reliability remain unresolved.**
+The final reply is 84 words for about fifty requested; the auditor approves an
+unsupported universal claim about past technological revolutions. Neither
+pipeline is promoted. Both adapters stay experimental and training stays paused.
 [Failure boundaries](GHOST_FAILURE_ANALYSIS.md),
 [concrete next review](GHOST_NEXT_REVIEW.md).
 
@@ -33,7 +33,7 @@ Neither pipeline is promoted. Both adapters stay experimental.
 | v11 / 13 | 19 | Prose completes; reviewer confuses speaker and source-support roles |
 | v12 / 14 | 10 | All five valid accepted/five traps rejected; explanations still imperfect |
 | v13 / 15 | 22 | Natural retrieval works; task/schema, source inference, coverage and depth/length still fail |
-| v14 / pending | at most 30 | Same questions/evidence, complete-card and whole-reply budget regression |
+| v14 / 16 | 23 | Brief contrast and task recovery fixed; total length and semantic audit still fail |
 
 V1–v4 use the same inspected ten-turn development set. V5 introduces four
 single questions and a six-turn conversation; v7/v8 reuse those as regressions.
@@ -47,7 +47,7 @@ V12's designed calibration accepts five valid candidates and rejects five
 traps, with expected labels withheld. V13 demonstrates why that is not a
 production success rate. The model judge remains fallible on actual generated
 reasoning. Exact local reports/transcripts and source-bound judgments are in
-`evaluation/runs/ghost_smoke_v12/` and `evaluation/runs/ghost_smoke_v13/`.
+`evaluation/runs/ghost_smoke_v12/` through `evaluation/runs/ghost_smoke_v14/`.
 
 ## Run and reproduce
 
@@ -164,27 +164,33 @@ Natural definite-study retention is tested locally and exercised by V13. The
 older fixed-context comparison does not measure retrieval. V13 also reveals
 that brief first-card rendering can omit a necessary contrast and canonical
 fact blocks can make the overall answer too long even with a short opinion.
-These remain open application issues, separately from source inference errors.
+V14 fixes that brief-card contrast. Whole-answer length remains open, separately
+from source inference errors.
 
 After V13, only the observed task label `premise_corrections` is normalized to
 `facts`, with a logged original value. Other unknown enums still fail closed.
 The regression confirms that valid source IDs reach canonical factual rendering
-without drafting an opinion. This local patch has not been GPU-retested; frozen
+without drafting an opinion. V14 verifies that recovery on the GPU; frozen
 V13 outputs retain the original failure. Do not rebuild earlier versions with
 current helpers or count this as a measured semantic improvement.
 
-The next step is independent source/conversation review of the prepared local
-worksheet, then new preregistered questions. No independent review has yet
+The next step is independent source/conversation review of the latest local
+V14 worksheet, then new preregistered questions. No independent review has yet
 occurred. Stop prompt micro-tuning on inspected cases and retain the untouched
 base reference. The larger corpus, unlimited memory, live news and production
 service remain outside the demonstrated prototype.
 
 
-A subsequent user continuation addresses the two measured rendering issues
-without changing the source interpretation contract. Complete selected cards
-are packed into brief factual replies; drafting receives the exact planned
-fact display and remaining whole-reply word allowance. Diagnostics preserve
-impossible targets and actual overages; no source wording is truncated. V14
-freezes the exact V13 questions/profile/collection/ledger for a GPU regression.
-See [response budget design](GHOST_RESPONSE_BUDGET.md). This does not resolve
-semantic auditing or replace the independent-review plan.
+V14 verifies the rendering intervention on the exact V13 controls. The brief
+Bessedovsky reply now includes both selected claims in 42 words; the ILO finding
+stays 33 words/two sentences and its scope-reset limit stays 40 words/two
+sentences. The observed enum recovery displays supported source limits instead
+of blocking. The whole-reply planner correctly logs a six-word draft allowance,
+but the model writes forty opinion words; the final display is 84 words instead
+of the requested about fifty. It is not a solved length constraint.
+
+The deeper view is longer but repetitive and includes an unsupported historical
+universal that the auditor approves. Further semantic prompt tuning on these
+inspected cases is not justified. Independent review remains pending, using the
+source/context worksheet and exact transcript in the local V14 run directory.
+See [response-budget results](GHOST_RESPONSE_BUDGET.md). No new run is queued.

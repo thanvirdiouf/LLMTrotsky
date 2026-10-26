@@ -121,3 +121,14 @@ study retention work in these cases. The observed enum synonym is now recovered
 locally with logging; no post-fix GPU result is claimed. Stop adapting to these
 inspected questions. [Independent review and next evidence](GHOST_NEXT_REVIEW.md)
 are prepared; no independent review has yet occurred. Training stays paused.
+
+
+V14 regresses the exact V13 questions/evidence with complete-card packing and
+whole-reply budget planning. It fixes the brief report/witness contrast and
+recovers the observed factual task enum, while preserving ILO dated scope.
+The final model draft ignores a six-word allowance and yields 84 displayed words
+for about fifty requested. Budget diagnostics are correct; compliance is not
+established. A deeper but repetitive opinion adds an unsupported universal
+claim about past technological revolutions and is approved. Keep the measured
+application fixes, leave those failures open, and obtain independent review
+before further semantic prompt tuning or training.

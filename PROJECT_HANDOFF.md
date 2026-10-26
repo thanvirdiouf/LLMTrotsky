@@ -5,17 +5,31 @@ records, dated modern evidence and newly imagined views. Both adapters remain
 experimental and training stays paused. User authorized autonomous result-
 dependent continuation, proper documentation, milestone commits and pushes.
 
-## Active continuation: rendering regression
+## Latest result: rendering regression complete
 
-After the latest user continuation, complete-card factual packing and whole-
-reply word budgeting are implemented and locally tested. V14 is frozen/staged
-from `config/ghost_rendering_regression_v1.json`: exact V13 profile, collection,
-ledger and model questions (verified byte equality), ten replies/maximum thirty
-calls plus one probe. Commit/push changes/docs, submit under standing approval,
-exact-download/verify and review actual contrast coverage and total length.
-No extra model stage, no truncated factual wording. Full design:
-`docs/GHOST_RESPONSE_BUDGET.md`. This application work does not establish semantic
-reliability or replace the independent-review packet/plan below.
+V14/saved16 is complete, downloaded, frozen/token verified and source-reviewed:
+ten replies/23 generations, no input rejection/truncation, 11.32 GiB probe peak.
+Exact V13 profile, collection, ledger and model questions match byte-for-byte.
+Complete-card packing fixes the Bessedovsky report/witness contrast (42 words
+versus 20), ILO dated scope remains 33 words/two sentences and its scope-reset
+limit remains 40 words/two sentences. The observed enum normalization now works
+on GPU and displays canonical evidence instead of blocking.
+
+Whole-answer budget compliance is not fixed: accurate forty-word fact block
+plus four-word overhead leaves six draft words; actual opinion is forty words
+and total is 84, versus 97 previously, for about fifty requested. over_target is
+true. Never cut qualifications to manufacture compliance. Deeper reply is longer
+but repetitive and includes an unsupported every-previous-technological-
+revolution historical universal approved by the auditor. Prediction source-status
+misrouting also remains. Eight approvals are not eight quality successes.
+
+Local V14 files: QUALITY_REVIEW.md, TRANSCRIPT.md, case_outcomes.jsonl,
+control_comparison.json, verification.json and REVIEW_WORKSHEET.md. Latest
+neutral worksheet includes source blocks/actual replies/candidates without our
+case labels or audit reasons. No independent review has occurred. That is the
+next quality evidence; no further prompt-tuning/GPU/training run is queued.
+Both adapters remain experimental. No paid GPU or persistent service.
+See `docs/GHOST_RESPONSE_BUDGET.md` and `docs/GHOST_NEXT_REVIEW.md`.
 
 ## Prior result and next quality evidence
 
@@ -45,7 +59,7 @@ After V13 freeze, the exact observed label premise_corrections is normalized to
 facts with a logged original value. Other unknown modes still fail closed;
 validated source IDs and semantic audit are still required, no opinion drafted.
 This fixes the observed interface path in a local regression, not a new GPU
-result. Do not rebuild V13 or older versions with current helpers.
+result. V14 measures this recovery; do not rebuild V13 or older versions with current helpers.
 
 ## Verification and archive
 
@@ -54,7 +68,7 @@ Forty-nine focused ghost/source/harness/calibration tests pass. Full suite:
 changed `evaluation/README.md`. Do not rewrite historical locks to conceal them.
 Logs: `evaluation/runs/ghost_smoke_v13/budget_{focused,full}_tests.log`.
 
-V11, V12 and V13 each pass downloaded/frozen payload equality, exact replay,
+V11–V14 each pass downloaded/frozen payload equality, exact replay,
 local tokenizer reconstruction and preserved helper/adapter hashes. Use
 `.venv-tokenizer/bin/python scripts/verify_ghost_smoke.py --version ghost_smoke_v13
 --tokenizer training/data_revision_v2/tokenizer_assets` and
@@ -65,11 +79,11 @@ explicitly test inputs, never trusted chatbot replies.
 
 Executed history: v1/saved4 (16 calls), v2/saved5 (19), v3/saved6 (19),
 v4/saved7 (19), v5/saved8 (20), v7/saved9 (22), v8/saved10 (21), v9/saved11 (16),
-v10/saved12 (18), v11/saved13 (19), v12/saved14 (10), v13/saved15 (22).
+v10/saved12 (18), v11/saved13 (19), v12/saved14 (10), v13/saved15 (22), v14/saved16 (23).
 V6 was prepared but never uploaded/run. V1–v4 share inspected initial questions;
 v5 introduces new questions, v7/v8 regress them; v9 introduces a fresh matched
 pair, v10/v11 regress it; v12 is designed calibration; v13 fresh natural retrieval.
-All are source-exposed development studies, not pretraining novelty benchmarks.
+V14 regresses V13 for interface/rendering; all are source-exposed development studies, not pretraining novelty benchmarks.
 [Protocol](docs/GHOST_SMOKE.md), [active guide](docs/PRESENT_DAY_GHOST.md).
 
 ## Active data and interface

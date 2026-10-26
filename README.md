@@ -16,14 +16,13 @@ python3 scripts/build_ghost_chat.py
 python3 scripts/ghost_chat.py --dry-run --question "How would you assess renting an A40 on Runpod today?"
 ```
 
-Forty-nine focused ghost/source/harness/calibration tests pass. A balanced
-auditor calibration accepts five valid candidates and rejects five traps;
-the subsequent fresh ten-reply study still exposes source-inference errors,
-task/schema failures and weak depth/shortening. Relevant retrieval and tested
-mode changes work. The observed invalid task label has a local regression fix,
-not a new GPU result. Complete-card and whole-reply budgeting now have local
-regressions and a frozen same-question GPU follow-up. The active collection has ten packets/39 propositions.
-Training remains paused; this is a research prototype.
+Forty-nine focused ghost/source/harness/calibration tests pass. The latest GPU
+regression fixes brief factual coverage and the observed invalid task label.
+It preserves dated evidence limits, but whole-answer brevity and source
+interpretation remain unreliable: the model exceeds its word allowance and
+the auditor approves an unsupported historical generalization. The active
+collection has ten packets/39 propositions. Training remains paused; this is
+a research prototype.
 [Measured progress](docs/PRESENT_DAY_GHOST.md),
 [next review](docs/GHOST_NEXT_REVIEW.md).
 

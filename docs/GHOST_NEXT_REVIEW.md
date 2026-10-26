@@ -18,7 +18,7 @@ now be separated using exact saved requests, candidates, audits and replies.
 The next useful evidence is independent review, followed by a preregistered
 study with new questions. Do not keep adjusting prompts against these same
 inspected replies. The local review packet is
-`evaluation/runs/ghost_smoke_v13/REVIEW_WORKSHEET.md`; it includes frozen source
+`evaluation/runs/ghost_smoke_v14/REVIEW_WORKSHEET.md`; it includes frozen source
 blocks, actual displayed replies and generated candidates, without our case
 labels or the model's approval reasons. Reviewers should record:
 
@@ -44,7 +44,7 @@ approval counts. Introduce changes separately where practical. Existing case
 sets remain regressions, excluded from claims of fresh performance.
 
 The post-V13 `premise_corrections` → `facts` normalization has a local regression
-but no new GPU result. It preserves validated claim IDs, generates no opinion,
+and now reaches a canonical factual answer in the verified V14 GPU result. It preserves validated claim IDs, generates no opinion,
 logs its action and still requires auditing. Do not attribute improvement to it
 in the frozen V13 output. Other semantic and rendering failures remain open.
 
@@ -59,3 +59,13 @@ brief-card and whole-reply budget defects. V14 is an exact-question rendering
 regression, not renewed semantic prompt tuning or fresh validation. Whole cards
 and uncertainty remain intact, and actual model compliance is measured rather
 than assumed. See [the response-budget design](GHOST_RESPONSE_BUDGET.md).
+
+
+V14 has completed/verified. The brief reported-information contrast is fixed;
+ILO scope is preserved and the invalid task label recovers. Whole-answer length
+is still wrong (84 words for about fifty) despite an accurate six-word draft
+allowance. The auditor also approves a new unsupported historical universal.
+Use the latest V14 neutral worksheet for independent review. No independent
+review has yet occurred, and no further GPU run is queued. Review compact
+source presentation and whole-reply length separately from semantic judging;
+neither a larger GPU nor approval counts establish those qualities.

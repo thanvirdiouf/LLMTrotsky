@@ -9,7 +9,7 @@ A successful run, structural check or model approval is not a quality score.
 Ghost v1–v5, v7 and v8 are complete, downloaded, verified and source-reviewed.
 V6 is preserved as a prepared routing-only bundle, **never uploaded or run**.
 V9 is the completed fresh matched-source direct/checked comparison, saved
-Kaggle version 11. V10 completed as saved version 12; V11 completed as saved version 13; V12 completed as saved version 14; V13 completed as saved version 15 with fresh end-to-end questions. [Active guide](PRESENT_DAY_GHOST.md),
+Kaggle version 11. V10 completed as saved version 12; V11 completed as saved version 13; V12 completed as saved version 14; V13 completed as saved version 15 with fresh end-to-end questions; V14 completed as saved version 16 with the same questions. [Active guide](PRESENT_DAY_GHOST.md),
 [comparison design](GHOST_COMPARISON.md), [failure analysis](GHOST_FAILURE_ANALYSIS.md).
 
 | Local version | Saved Kaggle version | Evaluation calls | Source/case scope |
@@ -27,7 +27,7 @@ Kaggle version 11. V10 completed as saved version 12; V11 completed as saved ver
 | ghost_smoke_v11 | 13 | 19 | Prose completes; auditor role confusion causes rejections |
 | ghost_smoke_v12 | 14 | 10 | Five valid accepted, five false rejected; no blocks |
 | ghost_smoke_v13 | 15 | 22 | Fresh ordinary retrieval; task/schema, inference and conversation limits |
-| ghost_smoke_v14 | pending | at most 30 | Exact V13 questions/evidence, complete-card/whole-reply budget regression |
+| ghost_smoke_v14 | 16 | 23 | Exact V13 controls; contrast/task recovery fixed, length/audit still fail |
 
 V1–v4 retain a frozen reference date of 25 October; later versions use 26 October.
 Execution occurred on 26 October. Do not silently change dates, helpers or
@@ -185,3 +185,12 @@ needed evidence, but classification/schema, brief coverage, source inference,
 depth and overall brevity still fail. After freezing, a narrow local enum
 normalization is unit-tested but not GPU-retested. Preserve V13 as executed.
 See [next review and decision](GHOST_NEXT_REVIEW.md). That review queued no run; a subsequent user continuation prepares V14 for rendering fixes.
+
+
+V14 is complete/verified: ten replies, 23 generations, no budget rejection or
+length truncation, 11.32 GiB probe peak. Brief source contrast and the observed
+enum recovery now work on GPU. Whole-reply allowance is logged correctly but
+not obeyed (84 total words for about fifty); the auditor still approves an
+unsupported historical universal. Local report/transcript/neutral worksheet are
+in `evaluation/runs/ghost_smoke_v14/`. No further run is queued. Training and
+adapter promotion remain paused.

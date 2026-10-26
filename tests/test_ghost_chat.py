@@ -313,6 +313,7 @@ class GhostChatTest(unittest.TestCase):
         self.assertEqual(data['conversation'],history)
         self.assertEqual(data['requested_answer_mode'],'fictional_interpretation')
         self.assertEqual(data['current_user_request'],'Explain your own fictional present-day view more fully.')
+        self.assertEqual(list(data)[-1],'current_user_request')
         self.assertIn('My present-day interpretation:',data['candidate_display'])
         self.assertIn('[newleader]',data['candidate_display'])
 
@@ -326,7 +327,8 @@ class GhostChatTest(unittest.TestCase):
             elif len(calls)==2:
                 data=json.loads(messages[1]['content'])
                 self.assertEqual(data['turn_task'],{'answer_mode':'view','detail':'expanded'})
-                out={'facts':['runpod_a40_price'],'interpretation':'I would ask whether the group can influence the rules governing these tools.','quotes':[]}
+                self.assertEqual(data['draft_format'],'plain_prose')
+                return {'response':'I would ask whether the group can influence the rules governing these tools.','finish_reason':'stop'}
             else:out={'verdicts':[{'id':'s1','reason':'Synthetic mode routing fixture',**{k:True for k in CHECKS}}]}
             return {'response':json.dumps(out),'finish_reason':'stop'}
         result=self.bot.answer('Return to your own imagined outlook and explain it in more depth.',generate,state=state)

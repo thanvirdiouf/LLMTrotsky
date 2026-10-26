@@ -94,3 +94,9 @@ and narrow structural recovery without training. An additional local natural-
 retrieval miss on the definite study reference is corrected separately; the
 fixed-context comparison cannot validate retrieval recall. Keep this distinction
 when interpreting any improvement on the now-inspected questions.
+
+V10 confirms task classification can repair the tested skipped-stage problem
+without extra calls or training. It still fails an ordinary paragraph because
+of malformed JSON, so V11 removes that paragraph's serialization contract.
+This preserves structured evidence control while avoiding a format failure
+that should not be confused with source absence or interpretive ability.

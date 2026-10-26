@@ -7,54 +7,48 @@ dependent continuation, proper documentation, milestone commits and pushes.
 
 ## Immediate continuation
 
-V9 fresh direct/checked comparison completed as saved Kaggle version 11 and is
-verified/source-reviewed. V10 is frozen and staged in
-`training/kaggle_cli/ghost_smoke_v10/`, not yet submitted. Same five v9 questions,
-now inspected regressions, in two arms: ten answers, maximum twenty requests
-plus one memory probe. Direct is re-generated, not copied. Commit/push the
-completed application fixes/docs, submit under standing approval, then download
-the exact saved version and verify/review. No training/adapters/paid compute.
+V9 fresh direct/checked comparison is complete/verified as saved Kaggle version
+11. V10 is complete/verified as saved version 12. V11 is frozen/staged but not
+yet submitted: same inspected five-turn pair, ten answers, maximum twenty
+requests plus one probe. Commit/push the tested prose-generation changes/docs,
+submit V11 under standing approval, then download the exact saved version and
+verify/review. No training, adapters or paid compute.
 
-V9: 16 generations; five direct unchecked, one checked partial, three checked
-approved and one block. All tokenizer/frozen replay checks pass, no budget or
-truncation failure, 11.32 GiB probe peak. Direct responds to modes but confuses
-adoption/automation/displacement and predicts unsupported inevitability. Checked
-preserves reviewed facts but misses new viewpoint wording, filters term styling
-and blocks all content when one of two verdicts is missing. It skips draft
-stages on return-to-outlook and condense turns. Neither arm is promoted. Review
-is same-agent and unblinded, not independent historian validation. See
-`evaluation/runs/ghost_smoke_v9/{QUALITY_REVIEW,TRANSCRIPT}.md` and response-bound
-`case_outcomes.jsonl`.
+V9: sixteen generations. Direct engages but invents certainty; checked preserves
+facts yet skips new viewpoint wording or blocks format/coverage. V10: eighteen
+generations, same direct messages/replies byte-for-byte; checked returns valid
+mixed/normal, mixed/normal, facts/brief, view/expanded, mixed/brief fields. The
+dated finding is now two sentences and a view is drafted. Its final paragraph
+has incomplete JSON despite a stop token, so it is blocked. Source interpretation
+still overstates displacement and the view can continue an older argument.
+Neither pipeline is promoted. Local reports/transcripts and response-bound
+judgments are in the corresponding `evaluation/runs/ghost_smoke_vN/` folders.
 
-V10 fixes: select returns facts/view/mixed and brief/normal/expanded, with a
-logged legacy fallback. No extra requests. Mixed replies use independently
-selected canonical modern statements; view-only mode avoids fact dumps. Full
-bounded source context is restored to drafting. Known trailing citations and
-single-term quote styling are normalized/logged; unknown references and exact
-quote requests remain guarded. Missing verdicts become explicit rejection for
-only uncovered segments, never approval; duplicate/invalid known verdicts fail.
-The source/profile/ledger/model-case payloads and direct evaluator match v9.
+V11: ordinary opinion drafting is plain prose, wrapped into internal segments
+by the application. Structured selector and auditor, canonical facts and
+requested exact-quote references remain. Current user request is last in every
+stage. Known selected citation markers and short source-matching concept style
+are normalized/logged; unknown references and invented quotes stay guarded.
+No extra model requests. Source/profile/model-cases/direct-evaluator payloads
+match V10. After execution check regenerated direct equality, actual mode/detail,
+group-scenario relevance, depth/shortening and remaining source overreach.
 
-A local natural-retrieval check AFTER v10 freeze found the definite study
-reference retrieved Blumkin/New Leader instead of the prior ILO/radio topic.
-The current helper corrects that retention and explicit subject changes still
-win; regression tests pass. This local patch is NOT in frozen v10, and the fixed-
-context experiment cannot test natural retrieval anyway. Do not rebuild or
-mutate the frozen bundle. Record `natural_retrieval_followup.json` has both helper
-hashes and before/after packet IDs. After download, check whether current-code
-fixed-context replay matches the frozen model requests/answers without inference.
+The natural definite-study retention patch made after V10 freeze is now in V11.
+V10 fixed-context GPU data did not test that local patch; its separately recorded
+before/after source IDs and unit tests do. V11 frozen helper matches current
+code. Do not rebuild older versions with changed helpers.
 
 ## Verification and archive
 
 Forty-three focused ghost/source/harness/comparison tests pass. Full suite:
 316 tests, the same two pre-existing pilot snapshot errors for the already
 changed `evaluation/README.md`. Do not rewrite historical locks to conceal them.
-Current full output: `evaluation/runs/ghost_smoke_v10/local_tests.log`.
+Current full output: `evaluation/runs/ghost_smoke_v10/prose_full_tests.log`.
 
 Verify with `.venv-tokenizer/bin/python scripts/verify_ghost_smoke.py --version
-ghost_smoke_v10 --tokenizer training/data_revision_v2/tokenizer_assets` after
-exact-version download into `evaluation/runs/ghost_smoke_v10/download/`.
-`export_ghost_transcript.py --version ghost_smoke_v10` makes a readable verified
+ghost_smoke_v11 --tokenizer training/data_revision_v2/tokenizer_assets` after
+exact-version download into `evaluation/runs/ghost_smoke_v11/download/`.
+`export_ghost_transcript.py --version ghost_smoke_v11` makes a readable verified
 transcript. Direct citations are model-written/unchecked, not renderer proofs.
 Verifier chooses the frozen comparison evaluator and reconstructs every token.
 Adapter and archived helper hashes remain checked. Do not equate run status
@@ -62,10 +56,10 @@ or model approval with semantic quality. [Protocol](docs/GHOST_SMOKE.md),
 [comparison](docs/GHOST_COMPARISON.md), [failure analysis](docs/GHOST_FAILURE_ANALYSIS.md).
 
 Executed ghost history: v1/saved4 (16 calls), v2/saved5 (19), v3/saved6 (19),
-v4/saved7 (19), v5/saved8 (20), v7/saved9 (22), v8/saved10 (21), v9/saved11 (16).
+v4/saved7 (19), v5/saved8 (20), v7/saved9 (22), v8/saved10 (21), v9/saved11 (16), v10/saved12 (18).
 V6 was prepared but never uploaded/run. V1–v4 share initial inspected cases;
 v5 introduces new four singles/six conversation turns, then v7/v8 regress them;
-v9 introduces new five-turn paired questions, and v10 regresses them. These are
+v9 introduces new five-turn paired questions; v10/v11 regress them. These are
 source-exposed development studies, not held-out pretraining benchmarks.
 
 ## Active data and interface
@@ -99,15 +93,15 @@ same private Kaggle notebook `thanvirdiouf/trotsky-grounded-base-chatbot`, numer
 ID 140792344. Payload categories: project helpers/persona prompts, reviewed
 public historical/contemporary excerpts/propositions and evaluation questions.
 At most ten answers/thirty requests plus one probe per run, no training/adapters
-or paid compute. V10 is tighter: ten answers/twenty requests plus one probe.
+or paid compute. V10/V11 are tighter: ten answers/twenty requests plus one probe.
 Do not ask again inside that scope; preserve title and URL.
 
 Origin stays SSH at the user's request. Existing key is accepted but unavailable
 for signing without an unlocked agent. Re-authenticated gh works with network
 access: `git -c credential.helper='!gh auth git-credential' push
 https://github.com/thanvirdiouf/LLMTrotsky.git main`. Do not print/request secrets.
-Commits through `28f0011` are pushed. Current mode/normalization/retention fixes
-and consolidated docs need a milestone commit/push before v10 submission.
+Commits through `f34390e` are pushed. Current plain-prose draft changes and
+updated reports need a milestone commit/push before V11 submission.
 
 The superseded 1940 v2 trial failed after fourteen direct answers, before its
 checked arm, at 6,546 input tokens. Saved version 3 restored the notebook title

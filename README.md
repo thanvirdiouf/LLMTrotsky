@@ -19,9 +19,9 @@ python3 scripts/ghost_chat.py --dry-run --question "How would you assess renting
 Forty-three focused ghost/source/harness/comparison tests pass. The fresh
 matched-source comparison separates two failures: direct replies engage with
 the conversation but invent certainty, while checked replies preserve reviewed
-facts but miss task changes or reject formatting. The next regression classifies
-the current task in the existing selection call and tests those application
-fixes. The active collection has ten packets/39 propositions. Training remains
+facts but miss task changes or reject formatting. Task classification now handles the tested mode switches. The next regression
+uses ordinary prose for opinions while keeping selection and auditing structured,
+removing the observed prose-JSON failure. The active collection has ten packets/39 propositions. Training remains
 paused; neither pipeline is promoted as reliably grounded.
 [Measured progress](docs/PRESENT_DAY_GHOST.md).
 

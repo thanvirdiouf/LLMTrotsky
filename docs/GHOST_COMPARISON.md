@@ -84,3 +84,11 @@ segments when others lack verdicts, and materializes selected modern facts for
 mixed replies. The direct control is generated again rather than copied. This
 is a combined application intervention, not a component ablation. Use a new
 version when building; preserve the earlier frozen comparison.
+
+V10 completed as saved version 12 with eighteen requests. Its regenerated direct
+messages and replies are byte-identical to v9. Task fields are valid on every
+checked turn; study-only scope and return-to-view routing improve. One final
+ordinary paragraph emits malformed JSON and is blocked. V11 keeps the controls
+but generates ordinary opinions as plain prose, leaving structured selection,
+audit and exact-quote references intact. The current request is last in every
+stage. These are now inspected regressions, not new validation questions.

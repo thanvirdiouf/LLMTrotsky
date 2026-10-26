@@ -9,7 +9,7 @@ A successful run, structural check or model approval is not a quality score.
 Ghost v1–v5, v7 and v8 are complete, downloaded, verified and source-reviewed.
 V6 is preserved as a prepared routing-only bundle, **never uploaded or run**.
 V9 is the completed fresh matched-source direct/checked comparison, saved
-Kaggle version 11. V10 is a prepared regression on those same questions. [Active guide](PRESENT_DAY_GHOST.md),
+Kaggle version 11. V10 completed as saved version 12; V11 is a prepared regression on the same questions. [Active guide](PRESENT_DAY_GHOST.md),
 [comparison design](GHOST_COMPARISON.md), [failure analysis](GHOST_FAILURE_ANALYSIS.md).
 
 | Local version | Saved Kaggle version | Evaluation calls | Source/case scope |
@@ -23,7 +23,8 @@ Kaggle version 11. V10 is a prepared regression on those same questions. [Active
 | ghost_smoke_v7 | 9 | 22 | Inspected v5 regressions |
 | ghost_smoke_v8 | 10 | 21 | Inspected v5 regressions |
 | ghost_smoke_v9 | 11 | 16 | Five new dialogue turns in each of two matched-source arms |
-| ghost_smoke_v10 | pending | at most 20 | Inspected v9 regressions with task/format/coverage fixes |
+| ghost_smoke_v10 | 12 | 18 | Valid task labels; final paragraph has malformed JSON |
+| ghost_smoke_v11 | pending | at most 20 | Ordinary opinion prose, structured selection/audit |
 
 V1–v4 retain a frozen reference date of 25 October; later versions use 26 October.
 Execution occurred on 26 October. Do not silently change dates, helpers or
@@ -157,3 +158,12 @@ narrow format mistakes, and fails closed only on unreviewed segments. Same
 questions, sources, profile and model; direct control is re-generated.
 Natural definite-source retention is separately unit-tested outside the frozen
 fixed-context experiment. No source-data or training changes are involved.
+
+V10 is verified with eighteen generations and no input-budget or length-cap
+failure. Valid task labels fix the tested transitions and the study-only reply
+is dated and two sentences. The last paragraph ends with invalid JSON despite
+a stop token. V11 removes that serialization requirement for ordinary opinions,
+while retaining structured selection, audit and requested source quotations.
+The application supplies factual blocks/labels/citations and logs narrow styling
+normalization. Same source/model/case controls; maximum twenty requests plus
+one probe. Interpretive faithfulness remains a separate quality question.

@@ -11,7 +11,8 @@ Seven ghost smokes and the fresh matched-source comparison are complete,
 downloaded, source-reviewed and verified.
 They establish bounded T4 memory capacity and several application fixes, but
 **do not establish reliable interpretation or conversation**. The checker still
-accepts faulty source inferences. The fresh direct/checked comparison ran as saved Kaggle version 11. Direct
+accepts faulty source inferences. The fresh direct/checked comparison ran as saved Kaggle version 11; its
+task-classified regression completed as saved version 12. Direct
 engages with the dialogue but invents certainty; checked preserves reviewed
 facts but misses new wording or blocks format. Neither arm is promoted.
 
@@ -26,7 +27,8 @@ facts but misses new wording or blocks format. Neither arm is promoted.
 | v7 / 9 | 22 | Study-only scope and draft routing fixed; audit confuses prior constraints |
 | v8 / 10 | 21 | Fuller view displays; source overreach passes; shortening filtered for raw citations |
 | v9 / 11 | 16 | Fresh comparison: direct source overreach; checked task/format failures |
-| v10 / pending | at most 20 | Same questions as regressions; task classification and format/coverage fixes |
+| v10 / 12 | 18 | Valid task labels and dated two-sentence finding; final opinion JSON is incomplete |
+| v11 / pending | at most 20 | Ordinary opinion prose, structured selector/auditor, same regression controls |
 
 V1–v4 use the same inspected ten-turn development set. V5 introduces four
 single questions and a six-turn conversation; v7/v8 reuse those as regressions.
@@ -160,3 +162,16 @@ new subjects still win. This patch was made after v10 was frozen and is recorded
 separately: fixed-context GPU comparisons do not measure natural retrieval.
 The same inspected five-turn comparison is prepared as v10 to test application
 changes, not to claim fresh generalization.
+
+### Latest generation contract
+
+V10 returns task/detail labels on all five checked turns without legacy fallback.
+Its dated study-only reply meets two sentences, and its viewpoint turn reaches
+drafting. The final turn still blocks because the model emits incomplete JSON
+for an ordinary paragraph. V11 therefore uses plain prose for ordinary opinion
+drafting; the application wraps that paragraph internally. Selection/audit stay
+structured, facts stay canonical, and exact quotation requests keep the structured
+source-anchor path. The current request is last in every stage. Known selected
+citation markers, whitespace and short source-matching concept styling are
+normalized/logged; unknown references and invented quotes remain guarded.
+This is a same-question regression, not fresh proof of reliable conversation.

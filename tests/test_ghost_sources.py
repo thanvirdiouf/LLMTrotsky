@@ -11,7 +11,7 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'scripts'))
 from build_ghost_chat import build,historical_additions
 from grounded_chat import fingerprint
-from ghost_chat import GhostChat,initial_state,claims_for_trace,request
+from ghost_chat import GhostChat,initial_state,claims_for_trace,request,normalize_prose_format
 from grounded_chat_v2 import CHECKS
 
 
@@ -99,6 +99,10 @@ class GhostSourceTest(unittest.TestCase):
         result=bot.answer('Now give only the dated study findings, without your political interpretation.',generate,state=state)
         self.assertEqual(result['application_excluded_context_claim_ids'],['radio_social_control'])
         self.assertNotIn('[radio_science]',result['response'])
+        cards={c['id']:c for c in ledger['claims'] if c['id']=='ilo_adoption_limit'}
+        normalized,actions=normalize_prose_format({'interpretation':'I distinguish "potential exposure" [ilo_genai_2025] from certainty.\nI would ask who controls adoption.'},cards)
+        self.assertEqual(normalized['interpretation'],'I distinguish *potential exposure* from certainty. I would ask who controls adoption.')
+        self.assertTrue(actions)
         self.assertFalse(result['state_after']['interpretation_basis_claim_ids'])
 
     def test_model_classifies_new_study_only_wording_and_brief_canonical_facts(self):
@@ -132,7 +136,8 @@ class GhostSourceTest(unittest.TestCase):
                     elif len(calls)==2:
                         data=json.loads(messages[1]['content'])
                         self.assertIn('ilo_transformation_assessment',[c['id'] for c in data['evidence_propositions']])
-                        out={'facts':['ilo_genai_2025'],'interpretation':"I would not wait for 'automatic' progress. [radio_science][ilo_genai_2025]",'quotes':[]}
+                        self.assertEqual(data['draft_format'],'plain_prose')
+                        return {'response':"I would not wait for 'automatic' progress. [radio_science][ilo_genai_2025]",'finish_reason':'stop'}
                     else:
                         segments=json.loads(messages[1]['content'])['candidate_segments']
                         self.assertEqual(segments[0]['claim_ids'],['ilo_exposure_estimate','ilo_adoption_limit'])

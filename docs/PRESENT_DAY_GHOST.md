@@ -33,6 +33,7 @@ Neither pipeline is promoted. Both adapters stay experimental.
 | v11 / 13 | 19 | Prose completes; reviewer confuses speaker and source-support roles |
 | v12 / 14 | 10 | All five valid accepted/five traps rejected; explanations still imperfect |
 | v13 / 15 | 22 | Natural retrieval works; task/schema, source inference, coverage and depth/length still fail |
+| v14 / pending | at most 30 | Same questions/evidence, complete-card and whole-reply budget regression |
 
 V1–v4 use the same inspected ten-turn development set. V5 introduces four
 single questions and a six-turn conversation; v7/v8 reuse those as regressions.
@@ -128,8 +129,8 @@ model calls, preserving source state.
 
 ## Validation and limits
 
-Forty-seven focused ghost/source/harness/calibration tests pass. The full suite
-runs 320 tests with two pre-existing historical pilot snapshot errors for the
+Forty-nine focused ghost/source/harness/calibration tests pass. The full suite
+runs 322 tests with two pre-existing historical pilot snapshot errors for the
 already changed `evaluation/README.md`; historical locks remain preserved.
 Kaggle runs verify submitted/downloaded payloads, exact frozen-code replay,
 all input/output token reconstructions, zero optimizer updates, no adapters and
@@ -177,3 +178,13 @@ worksheet, then new preregistered questions. No independent review has yet
 occurred. Stop prompt micro-tuning on inspected cases and retain the untouched
 base reference. The larger corpus, unlimited memory, live news and production
 service remain outside the demonstrated prototype.
+
+
+A subsequent user continuation addresses the two measured rendering issues
+without changing the source interpretation contract. Complete selected cards
+are packed into brief factual replies; drafting receives the exact planned
+fact display and remaining whole-reply word allowance. Diagnostics preserve
+impossible targets and actual overages; no source wording is truncated. V14
+freezes the exact V13 questions/profile/collection/ledger for a GPU regression.
+See [response budget design](GHOST_RESPONSE_BUDGET.md). This does not resolve
+semantic auditing or replace the independent-review plan.

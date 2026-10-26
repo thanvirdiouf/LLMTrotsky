@@ -52,3 +52,10 @@ Keep both adapters experimental and training paused. Free Kaggle already fits
 these bounded batches; no paid GPU has been provisioned. Source review and
 application design are the next bottlenecks, not demonstrated GPU capacity.
 There is no persistent inference service or production deployment.
+
+
+On the next user continuation, application work also addresses the known
+brief-card and whole-reply budget defects. V14 is an exact-question rendering
+regression, not renewed semantic prompt tuning or fresh validation. Whole cards
+and uncertainty remain intact, and actual model compliance is measured rather
+than assumed. See [the response-budget design](GHOST_RESPONSE_BUDGET.md).

@@ -388,5 +388,50 @@ class GhostChatTest(unittest.TestCase):
                     self.assertEqual(len(calls),1)
                     self.assertFalse(result['state_after']['accepted_claim_ids'])
 
+    def test_brief_reply_preserves_reported_information_and_its_verification_limit(self):
+        calls=[]
+        def generate(messages):
+            calls.append(messages)
+            if len(calls)==1:out={'answer_mode':'facts','detail':'brief','claim_ids':['bessedovsky_limit','bessedovsky_report']}
+            else:
+                data=json.loads(messages[1]['content'])
+                out={'verdicts':[{'id':s['id'],'reason':'Synthetic rendering fixture',**{k:True for k in CHECKS}} for s in data['candidate_segments']]}
+            return {'response':json.dumps(out),'finish_reason':'stop'}
+        result=self.bot.answer('Was the Bessedovsky embassy-purge account something you personally witnessed and fully verified, or information reported to you? State the limit of that source.',generate)
+        self.assertEqual(set(result['state_after']['accepted_claim_ids']),{'bessedovsky_limit','bessedovsky_report'})
+        self.assertIn(self.cards['bessedovsky_limit']['statement'],result['response'])
+        self.assertIn(self.cards['bessedovsky_report']['statement'],result['response'])
+        self.assertFalse(result['response_budget']['over_target'])
+        self.assertEqual(result['response_budget']['omitted_fact_claim_ids'],[])
+
+    def test_whole_reply_budget_includes_facts_labels_and_citations_without_cutting_cards(self):
+        from ghost_chat import load_active,plan_response_budget
+        bot=load_active();calls=[]
+        def generate(messages):
+            calls.append(messages);data=json.loads(messages[1]['content'])
+            if len(calls)==1:out={'answer_mode':'mixed','detail':'brief','claim_ids':['ilo_adoption_limit']}
+            elif len(calls)==2:
+                self.assertEqual(data['response_budget']['target_words'],50)
+                self.assertEqual(data['response_budget']['draft_target_words'],6)
+                self.assertIn('upper threshold',data['planned_fact_display'])
+                self.assertIn('only 6 words available',messages[0]['content'])
+                return {'response':'I would seek shared democratic control.','finish_reason':'stop'}
+            else:out={'verdicts':[{'id':s['id'],'reason':'Synthetic budget fixture',**{k:True for k in CHECKS}} for s in data['candidate_segments']]}
+            return {'response':json.dumps(out),'finish_reason':'stop'}
+        result=bot.answer('Using the ILO article, distinguish its evidence limit and your own new judgment in around fifty words.',generate)
+        self.assertEqual(len(result['response'].split()),50)
+        self.assertEqual(result['response_budget']['displayed_words'],50)
+        self.assertFalse(result['response_budget']['over_target'])
+        self.assertNotIn('_response_budget',result['state_after'])
+        cards={c['id']:c for c in bot.ledger['claims']}
+        selected={cid:cards[cid] for cid in ('ilo_exposure_estimate','ilo_adoption_limit')}
+        ids,text,budget=plan_response_budget('Give the dated finding and uncertainty in two sentences.',selected,{'_answer_mode':'facts','_detail':'brief'})
+        self.assertEqual(ids,['ilo_exposure_estimate'])
+        self.assertIn(cards['ilo_exposure_estimate']['statement'],text)
+        self.assertEqual(budget['omitted_fact_claim_ids'],['ilo_adoption_limit'])
+        ids,text,budget=plan_response_budget('Give the finding in ten words.',selected,{'_answer_mode':'facts','_detail':'brief'})
+        self.assertTrue(budget['minimum_exceeds_target'])
+        self.assertIn(cards['ilo_exposure_estimate']['statement'],text)
+
 
 if __name__=='__main__':unittest.main()

@@ -27,6 +27,7 @@ Kaggle version 11. V10 completed as saved version 12; V11 completed as saved ver
 | ghost_smoke_v11 | 13 | 19 | Prose completes; auditor role confusion causes rejections |
 | ghost_smoke_v12 | 14 | 10 | Five valid accepted, five false rejected; no blocks |
 | ghost_smoke_v13 | 15 | 22 | Fresh ordinary retrieval; task/schema, inference and conversation limits |
+| ghost_smoke_v14 | pending | at most 30 | Exact V13 questions/evidence, complete-card/whole-reply budget regression |
 
 V1–v4 retain a frozen reference date of 25 October; later versions use 26 October.
 Execution occurred on 26 October. Do not silently change dates, helpers or
@@ -183,4 +184,4 @@ rejection or truncation, 11.32 GiB probe peak. Ordinary retrieval retains the
 needed evidence, but classification/schema, brief coverage, source inference,
 depth and overall brevity still fail. After freezing, a narrow local enum
 normalization is unit-tested but not GPU-retested. Preserve V13 as executed.
-See [next review and decision](GHOST_NEXT_REVIEW.md). No new run is queued.
+See [next review and decision](GHOST_NEXT_REVIEW.md). That review queued no run; a subsequent user continuation prepares V14 for rendering fixes.

@@ -5,7 +5,19 @@ records, dated modern evidence and newly imagined views. Both adapters remain
 experimental and training stays paused. User authorized autonomous result-
 dependent continuation, proper documentation, milestone commits and pushes.
 
-## Current result and next work
+## Active continuation: rendering regression
+
+After the latest user continuation, complete-card factual packing and whole-
+reply word budgeting are implemented and locally tested. V14 is frozen/staged
+from `config/ghost_rendering_regression_v1.json`: exact V13 profile, collection,
+ledger and model questions (verified byte equality), ten replies/maximum thirty
+calls plus one probe. Commit/push changes/docs, submit under standing approval,
+exact-download/verify and review actual contrast coverage and total length.
+No extra model stage, no truncated factual wording. Full design:
+`docs/GHOST_RESPONSE_BUDGET.md`. This application work does not establish semantic
+reliability or replace the independent-review packet/plan below.
+
+## Prior result and next quality evidence
 
 V11/saved13 verified: nineteen calls, prose serialization works; reviewer role
 confusion overrejects. V12/saved14 verified: ten checker calls, five valid
@@ -37,10 +49,10 @@ result. Do not rebuild V13 or older versions with current helpers.
 
 ## Verification and archive
 
-Forty-seven focused ghost/source/harness/calibration tests pass. Full suite:
-320 tests with the same two pre-existing pilot snapshot errors for the already
+Forty-nine focused ghost/source/harness/calibration tests pass. Full suite:
+322 tests with the same two pre-existing pilot snapshot errors for the already
 changed `evaluation/README.md`. Do not rewrite historical locks to conceal them.
-Logs: `evaluation/runs/ghost_smoke_v13/final_{focused,full}_tests.log`.
+Logs: `evaluation/runs/ghost_smoke_v13/budget_{focused,full}_tests.log`.
 
 V11, V12 and V13 each pass downloaded/frozen payload equality, exact replay,
 local tokenizer reconstruction and preserved helper/adapter hashes. Use

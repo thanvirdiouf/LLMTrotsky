@@ -82,6 +82,12 @@ def historical_claim_supplements(packets,existing_claims,path):
     collection={'packets':packets,'packets_sha256':fingerprint(packets)}
     validate_ledger(collection,{'collection_sha256':collection['packets_sha256'],
         'claims':deepcopy(existing_claims)+added,'topic_aliases':{pid:[] for pid in by_packet}})
+    try:
+        from .ghost_chat import validate_segments
+    except ImportError:
+        from ghost_chat import validate_segments
+    for claim in added:
+        validate_segments({'segments':[{'id':'s1','kind':'fact','claim_ids':[claim['id']]}]},{claim['id']:claim})
     return added,spec['review']
 
 

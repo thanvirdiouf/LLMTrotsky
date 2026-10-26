@@ -14,7 +14,7 @@ from grounded_chat import fingerprint
 
 class UserContextTest(unittest.TestCase):
     def test_original_and_revised_user_terms_survive_source_only_turns_without_becoming_facts(self):
-        bot=load_active();source=json.load(open(ROOT/'config/ghost_transfer_evaluation_v1.json'));spec=model_cases(source)
+        bot=load_active();source=json.loads((ROOT/'config/ghost_transfer_evaluation_v1.json').read_text());spec=model_cases(source)
         requests=[]
         def generate(messages):
             requests.append(json.loads(messages[1]['content']))
@@ -33,6 +33,21 @@ class UserContextTest(unittest.TestCase):
             self.assertEqual(len(calls),10)
             again,_=evaluate(bot.profile,bot.collection,bot.ledger,spec,lambda _:self.fail('Replay must not infer'),temp,{'synthetic_context_fixture':True})
             self.assertEqual(again,answers)
+
+    def test_explicit_revision_of_an_existing_scenario_does_not_depend_on_its_noun(self):
+        for verb in ('Revise','Now update','Modify','Amend'):
+            with self.subTest(verb=verb):
+                state,_=retain_user_context({'turns':0},'Imagine a committee with an advisory council.')
+                state['turns']=1
+                revised=verb+' the committee: elected delegates now decide and the chair has no veto.'
+                state,events=retain_user_context(state,revised)
+                self.assertEqual([r['turn'] for r in state['user_context_records']],[1,2])
+                self.assertEqual(state['user_context_records'][-1]['text'],revised)
+                self.assertEqual(state['user_context_records'][-1]['status'],'unverified_user_context')
+                self.assertTrue(events)
+        # Ordinary editing instructions do not start a hypothetical memory.
+        state,events=retain_user_context({'turns':0},'Revise this sentence for grammar.')
+        self.assertNotIn('user_context_records',state);self.assertEqual(events,[])
 
     def test_context_is_bounded_by_whole_messages_with_omission_provenance(self):
         state={'turns':0};original=copy.deepcopy(state)

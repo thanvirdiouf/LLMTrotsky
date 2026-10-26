@@ -5,58 +5,71 @@ records, dated modern evidence and newly imagined views. Both adapters remain
 experimental and training stays paused. User authorized autonomous result-
 dependent continuation, proper documentation, milestone commits and pushes.
 
-## Active continuation: V23 verified; V24 coverage variant staged
+## Active continuation: V24 verified, V25 fresh tasks staged
 
-Latest pushed d52d2f2. V20/saved22 memory verified25calls: inputs restored but
-no qualitygain; V21/saved23 parser verified27calls:2blocks removed, partial
-usefulness gains/regressions. Masked A/B/C reviews and exacthashchecks saved
-under ghost_user_context_comparison. Reviewers AI,not humanhistorian gold.
+Latest pushed3a2e738. Initial push/uploadfailed automaticapproval-reviewusage
+limit (not unsafeaction); no actionexecuted. Afterreported22:22ISTreset,normal
+approvalretry succeeded: commitpushed,V24submittedsaved26. No bypassused.
+V24verified10replies/27calls,nobudget/truncation,11.32GiB. Activepointerstillv3.
 
-V22/saved24 verified10checker calls:5valid approvals,3invalid rejections,2false
-corroboration approvals,3/5pairsbothcorrect. V23/saved25 verified10calls: both
-corroborations rejected, all5validapproved, butnewfalseapproval oftheoretical
-agreement;4/5pairsbothcorrect. Rationale again rewritesfalsecandidateastruedistinction.
-No budgets/truncation, peak11.32GiB. Not reliable gate/no generalrateclaim.
-Reusable scripts/summarize_ghost_calibration.py binds frozenexpectedhash/actual
-verifiedjournal and nevercreditsblocks/missingjudgmentsas correctrejection.
+V24 optionalv4data keepsall10packets/original39claims/4brief forms identical,
+adds3reviewedclaims and dropsselector-onlyoffsetmetadata. Dresultsnewtheory
+claimrenderedonce; otherrequestedfacts SELECTEDbutpackingdrops them: hearing
+selectedcorrection+secretarycountbutmixedfallbackfirstonly; Blumkinselected
+allegation/prediction/disclosure/visitorclaimbutbrief2sentencecapkeepsfirsttwo.
+application_coverage_audit.json proves inputs/selection/packing; notLLMknowledge
+failure. Views stillmisreadownership/author andsourcecertainty. MaskedDpacket
+exported under ghost_user_context_comparison; review_compact_trial saved
+standaloneD thencomparisonC; rootverifiedD10hashes. D improvesEastmanhalfR08
+and88wordconditionalcloseR10, losesopeningengagementR03;4identicalC/D, no
+unqualifiedoverallgain. FreshV2remainsunchanged. No statuses/drafts/code/
+armidentities supplied to reviewer.
 
-Working changes now builder supplement support, optional selector offset
-omission,sourceplan_v4,4newtests and docs/results. Source_review proposed3new
-canonicalclaims from hearing/Eastman/Blumkin completepackets (no runoutputsread).
-Rootcheckedanchors/roles/dates/fingerprints. Alloriginal39claims+4brief forms
-and all10packets remain identical. Add hearing_secretary_count_limit,
-eastman_sincerity_theory_distinction,blumkin_visitor_identification_limit.
-RootclassifiesBlumkinasinference; quotationstyling removed fromtwo paraphrases
-after renderpreflight, preserving words/qualifications and exactanchors.
-Originalproposal unchanged in evaluation/ghost_claim_coverage_proposal_v1.
+V22/V23calibration verified10callseach: V22twofalsecorroborations pass(3/5pairs),
+V23fixesthosebutnewfalseagreementpasses(4/5pairs). Noreliabilityclaim. Reporter
+summarize_ghost_calibration.py bindsfrozenexpectedhashes and actualjournals, no
+creditforblocks/missingjudgments. Source-basedAIreviewsarenot humangold.
 
-New ignored config/ghost_historical_sources_v4_supplements.json matchesexisting
-gitignore prefix. Plan config/ghost_source_plan_v4.json opt-in only. Builder
-bindsoriginalpacketfingerprints, derives dates/domain, forbids IDrewrites/source
-metadataoverrides, revalidatesanchors/speakers/statuses. Sourcepacketsunchanged.
-Activepointer remainsv3, no promotion/training. Newsourcebodyinputsremainignored.
+Source_review sourcecurationproposal remainsignored, accepted v4sourceinputs
+in ignored config/ghost_historical_sources_v4_supplements.json. Finaldata at
+evaluation/ghost_chat_v4_ready; earlierunsubmittedmaterializationspreserved.
+Buildernowadditionallyvalidatesnewcanonicalfacts withactualrendererguards.
+Guardonlybuilder,notruntimepayload;4boundarytestspass,42claimbuildpasses.
 
-Initial three-card extension withfullselectoroffsets exceeded5120 infive
-preflightturns(max5211). Variantselection_anchor_offsets:false omits offsets
-ONLYfromselection propositions, preservingfullsourceblocks/roles/dates/statuses
-and all laterdraft/audit/renderer anchors. Defaultv3behaviorunchanged. Final
-readypreflight10selectorsmax4711,fullsourceJSONidenticaltoV21; notboundonfuture
-generatedhistories/laterstages. Reports in proposal_v1/budget/*.json.
-Final local evidence evaluation/ghost_chat_v4_ready; earlier unsubmitted builds
-v4/v4_compact preserved. 76focused pass/full349same2historicalREADMEerrors,
-logs under evaluation/runs/ghost_coverage_local/compact_{focused,full}_tests.log.
-All3newcanonicalfacts render exact approvedtext with citations (manualpreflight).
+Fresh V2 authoring done by review_compact_trial before readingD. Only fullsource
+collectionread,noledger/code/calibration/curation. Fixeddesign in ignored
+evaluation/ghost_fresh_transfer_v2 and exactcopyconfig/ghost_fresh_transfer_
+evaluation_v2.json. Two singles: Rakovsky/Bessedovsky report/hypothesisroutes;
+ILO5.7+4.7denominator/localoffice limits. Eightturn forumscenario usesfixed
+Weisbord/NewLeaderpool, atmost2sources/call; meaningfulobjection/revision/two
+source-onlypauses/delayedreturn/40–55wordclosing. Questions/checks unchanged.
 
-V24 FROZEN/STAGED, NOT SUBMITTED: same config/ghost_transfer_evaluation_v1.json
-two singles+8turns, explicit sourceplanv4. Currentexperimentalcheckerframing
-retained. This is combinedevidence/applicationcandidate versusinspectedV21
-regressions, notsinglecomponentablation/freshgeneralization. Model/sourcepackets/
-questions unchanged; ledger/selectorview/checkinstruction differfromV21.
-Commit/pushthen submitunderstandingprivateapproval (expected saved26),<=30calls
-+probe1/notraining/adapters/paidcompute. Exactdownload/replay/tokenverify, inspect
-newclaimcoverage/budget/refusals, exportmaskedD forauthorizedreview_compact_trial.
-Do not share pipeline statuses/verdicts/armidentities. Needfresh transfer before
-qualitypromotion, regardlessbetterinspectedcases. Docs GHOST_CLAIM_COVERAGE.md.
+PreflightBEFOREinference found oldretentionmisses Revise the forum (only
+revisehypothetical recognized). Rootgeneralizedinitialrevise/update/modify/
+amend ONLYwhenexistingusercontextstored. No nounlist. Preservewholeunverified
+userrecords andlimits; ordinaryeditingwithoutcontextdoesnotstartmemory.
+Before/afterpreflightfiles showlate7changesfrom[1]to[1,4]. Oneadditionaltest;
+77focusedpass/full350same2historicalREADMEerrors. Thisfixaftercoderreadnew
+questions meansfresh-taskdevelopmentdiagnostic,notuntouchedheld-outvalidation.
+
+V25FROZEN/STAGED,NOTSUBMITTED: exactsameV24profile/collection/42claimledger,
+onlyghost_chat.py/model_cases.json/protocolchanged. Neutral/rubricmetadata
+withheld;source/questionhasheschecked. CPU synthetic10selectorsmax3257, late
+context1/4present; notboundonfuturehistories/laterstages. Preflight/testlogs
+under evaluation/runs/ghost_smoke_v25. Commit/pushcurrentcode/tests/config/docs
+then submitV25(expected saved27)standingprivateapproval <=30calls+probe1,
+notraining/adapters/paidcompute. Downloadexact/replay/tokenverify/exportneutral
+review. Docs GHOST_FRESH_TRANSFER_V2.md.
+
+Next probable architecture diagnostic iffreshconfirmsfixedcatalogue limits:
+paired independent factualtasks, canonical compiler vs minimal source-reading
+pipeline (samebase/fullboundedpassages, plain factual draft+sameauditor, no
+newverifiedclaimmemory). Existing math/field questions alreadyprovebase output
+canbe discarded/unrepresentable. Separate experimental runner could expose
+faithfulness/usefulness tradeoff without rewriting activepath. Do not claim
+afalliblechecker orsource-readingdraft guaranteestruth; keep currentcanonical
+control. No such source-readingcode exists yet. Avoid furthertraining/promoting
+adapters while application/interpretation causes remain unresolved.
 
 ## Active continuation: V18 compact forms trial
 

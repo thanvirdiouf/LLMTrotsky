@@ -190,7 +190,7 @@ def retain_user_context(state,question):
     if type(omitted)is not int or omitted<0 or sum(len(r['text']) for r in records)>2500:
         raise EvidenceError('Invalid user-context budget')
     cue=bool(re.search(r'(?:^|[.!?]\s+)\s*(?:(?:let us|let[’\x27]s)\s+)?(?:suppose|assume|imagine|consider (?:this|the following) (?:proposal|scenario)|(?:now\s+)?revise (?:the|our) hypothetical)\b',question,re.I))
-    if records and re.match(r'\s*(?:actually\b|correction\s*:)',question,re.I):cue=True
+    if records and re.match(r'\s*(?:(?:now\s+)?(?:revise|update|modify|amend)\b|actually\b|correction\s*:)',question,re.I):cue=True
     if cue:
         turn=state['turns']+1
         if len(question)>2500:

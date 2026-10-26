@@ -41,13 +41,14 @@ class ClaimSupplementTest(unittest.TestCase):
         self.assertTrue(review)
 
     def test_changed_source_or_unsupported_anchor_speaker_cannot_be_added(self):
-        for change in ('packet','text','speaker','status'):
+        for change in ('packet','text','speaker','status','unrenderable_format'):
             with self.subTest(change=change):
                 spec=copy.deepcopy(self.spec);packet=copy.deepcopy(self.packet);c=spec['sources'][0]['claims'][0]
                 if change=='packet':packet['blocks'][0]['text']='A changed source, with a different count.'
                 elif change=='text':c['anchors'][0]['text']='Exactly four residents.'
                 elif change=='speaker':c['anchors'][0]['speaker']='Counsel'
-                else:c['status']='independently_verified'
+                elif change=='status':c['status']='independently_verified'
+                else:c['statement']='The count is “three or four” according to the witness.'
                 with self.assertRaises((ValueError,EvidenceError)):self.apply(spec,packet)
 
     def test_selector_offset_omission_preserves_full_sources_and_later_anchor_checks(self):

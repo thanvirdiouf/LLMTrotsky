@@ -65,3 +65,23 @@ inputs before considering activation; new claims are not a quality promotion.
 Sources/propositions/review snapshots and generated notebooks remain ignored.
 Only the builder, plan, tests and documentation are published. Training and both
 experimental adapters remain unchanged.
+
+## Executed coverage candidate
+
+V24/saved26 passed frozen replay/token verification: ten replies/27 calls, no
+input-budget rejection or truncation, peak11.32GiB. Selector offsets were omitted
+and later draft/audit offsets retained as intended. One new theoretical-
+difference claim is rendered. Other requested new claims were selected but
+dropped by packing: historical mixed mode kept only the first claim in the
+hearing task, while the brief two-sentence limit removed the disclosure and
+visitor-identification claims after less relevant earlier claims.
+
+These are observed application omissions despite source availability and model
+selection, not proof the base lacked the information. The new comparison still
+omits a requested source, and some fictional reasoning misstates authority or
+evidentiary status. Masked D review finds improved Eastman coverage and an 88-word conditional
+close, alongside lost opening engagement and persistent omissions/authority
+confusion. Four replies are identical to C. All twenty C/D raw-text and legacy
+response bindings verify; no unqualified overall improvement is claimed. The
+active evidence pointer remains v3. The next [fresh-task study](GHOST_FRESH_TRANSFER_V2.md) uses the same
+optional evidence candidate, with a separately tested natural-revision fix.

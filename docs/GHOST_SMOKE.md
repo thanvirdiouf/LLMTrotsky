@@ -37,7 +37,8 @@ Kaggle version 11. V10 completed as saved version 12; V11 completed as saved ver
 | ghost_smoke_v21 | 23 | 27 | Two parser blocks removed; partial answers still omit task details |
 | ghost_smoke_v22 | 24 | 10 | Five valid accepted; two false corroboration claims also accepted |
 | ghost_smoke_v23 | 25 | 10 | Two corroboration errors fixed; one new false theory-agreement approval |
-| ghost_smoke_v24 | staged | at most 30 | Opt-in three-claim coverage and selector metadata variant |
+| ghost_smoke_v24 | 26 | 27 | New claim rendered; packing still drops selected requested facts |
+| ghost_smoke_v25 | staged | at most 30 | Fresh two-plus-eight tasks; natural scenario-revision retention |
 
 V1–v4 retain a frozen reference date of 25 October; later versions use 26 October.
 Execution occurred on 26 October. Do not silently change dates, helpers or

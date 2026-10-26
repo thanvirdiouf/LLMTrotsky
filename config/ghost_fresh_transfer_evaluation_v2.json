@@ -1,0 +1,590 @@
+{
+  "schema_version": 2,
+  "title": "Fresh bounded transfer v2: reported certainty, denominators and a joint-forum dialogue",
+  "controlled_sources": true,
+  "reference_date": "2026-10-26",
+  "persona": {
+    "label": "Clearly fictional present-day Leon Trotsky",
+    "historical_knowledge_cutoff": null,
+    "no_1940_cutoff": true,
+    "instruction": "Portray a clearly fictional ghost of Leon Trotsky conversing in the present day. Speak in the first person with conceptual precision, argumentative clarity, intellectual curiosity, and an appropriate range of warmth, humor and disagreement. Draw on his documented revolutionary Marxist outlook, but allow this fictional persona to reason about later history, new technologies and contemporary society. There is no 1940 knowledge cutoff: you may discuss events after 1940 and Trotsky’s death when factual claims have appropriate evidence. Do not pretend to be the real Trotsky, an actual supernatural contact, or the author of authentic writings after his lifetime. Distinguish three things: what historical sources document, what dated contemporary sources support, and this fictional persona’s present-day interpretations. A modern opinion is an extrapolation, not a rediscovered Trotsky quotation or proof of what the real person would have thought. Historical predictions remain predictions at their original date; later outcomes require separate evidence. Preserve speaker roles, authorship, uncertainty, source dates and surrounding context. Do not invent letters, quotations, private meetings or motives and present them as historical records. User-supplied contemporary scenarios may be considered conditionally without being authenticated. Give useful supported reasoning, adapt to follow-ups and requested detail, and avoid turning ordinary conversation into a public speech or signed letter. Do not mechanically announce the fiction in every reply; the interface labels it, and briefly distinguish interpretation when giving a newly imagined view."
+  },
+  "design_status": "Fixed authored questions and expectations, saved before any corresponding tested-model inference; design only.",
+  "author_identity": "Distinct coding-agent-model AI design/review instance, not human historical adjudication or independent-human gold.",
+  "provenance": {
+    "only_source_file_read_for_this_design": "/home/spectre/Projects/LLMTrotsky/evaluation/ghost_chat_v3/collection.json",
+    "source_collection_raw_file_sha256": "2ebd71d503eef30ef200f050d77dd2730dcd75e8a88eeedbd35a449f5d005e70",
+    "source_selection_basis": "Full source passages and dates in collection.json. No card catalogue, claim ledger, calibration output or source-curation proposal read.",
+    "original_rubric_reread": false,
+    "run_identities_or_private_mappings_read": false,
+    "V24_outputs_read": false,
+    "current_code_read": false,
+    "model_calls_for_this_design": 0,
+    "external_sources_or_facts_added": false,
+    "other_chat_messaged": false,
+    "novelty_limit": "Newly authored bounded task/scenario wording; no pretraining novelty, representative quality or unique authentic modern political-position claim. Prior review context remains with this AI author."
+  },
+  "source_bindings": [
+    {
+      "source_packet_id": "bessedovsky",
+      "canonical_packet_sha256": "648fd11a58fdf16863db65718db403773e461444464a2e25f9eecfbd3d8e4d6e",
+      "composition_date_interval": {
+        "earliest": "1929-12-21",
+        "latest": "1929-12-21",
+        "precision": "day",
+        "raw": "written: 21 December 1929"
+      }
+    },
+    {
+      "source_packet_id": "ilo_genai_2025",
+      "canonical_packet_sha256": "fd6eaf9399a48d7daf6dfb38ed14773c2513a24e75834aa72ac03e89a039dfc4",
+      "composition_date_interval": {
+        "earliest": "2025-05-20",
+        "latest": "2025-05-20",
+        "precision": "day"
+      }
+    },
+    {
+      "source_packet_id": "newleader",
+      "canonical_packet_sha256": "18f495412689571e28346747511fbcfe47ceff7719202c7201455e3bfeca8e91",
+      "composition_date_interval": {
+        "earliest": "1933-10-02",
+        "latest": "1933-10-02",
+        "precision": "day",
+        "raw": "written: 2 October 1933"
+      }
+    },
+    {
+      "source_packet_id": "rakovsky",
+      "canonical_packet_sha256": "7e9d66c8692ab02993ad7316351aebac48cb00c84cc84250269cb0a2ad1eeed6",
+      "composition_date_interval": {
+        "earliest": "1933-05-25",
+        "latest": "1933-05-25",
+        "precision": "day",
+        "raw": "written: 25 May 1933"
+      }
+    },
+    {
+      "source_packet_id": "weisbord",
+      "canonical_packet_sha256": "55974e56c644f789033daf97c2421e0611cf14f98e1cead384c4d81c4ffcdf3b",
+      "composition_date_interval": {
+        "earliest": "1931-10-10",
+        "latest": "1931-10-10",
+        "precision": "day",
+        "raw": "written: 10 October 1931"
+      }
+    }
+  ],
+  "cases": [
+    {
+      "id": "v2_report_routes_and_hypothesis",
+      "question": "For an imagined research-training sheet, classify three claims: Rakovsky was taken to Moscow; he was pressured to recant and refused; Bessedovsky helped purge the Paris embassy cell. Explain each claim’s route and certainty in its letter, with the letter dates. What can these excerpts settle about Rakovsky’s eventual fate or the embassy informant’s identity?",
+      "source_packet_ids": [
+        "rakovsky",
+        "bessedovsky"
+      ],
+      "checks": [
+        {
+          "id": "transfer_route",
+          "expected": "Attributes certainty about ill Rakovsky’s removal from Barnaul to Moscow to Trotsky’s 25 May 1933 account based on two sources, one Oppositional and one official/Stalinist-connected. This documents the author’s asserted confidence, not independently verified transport/hospital records.",
+          "source_anchors": [
+            "rakovsky:4",
+            "rakovsky:7",
+            "rakovsky:composition_date_interval"
+          ]
+        },
+        {
+          "id": "pressure_story_status",
+          "expected": "Treats political pressure/recantation demand and Rakovsky’s refusal as the author’s hypothesis requiring verification. Later probably/must narrative and inability to find another explanation do not make the story an established eyewitness report.",
+          "source_anchors": [
+            "rakovsky:4-6"
+          ]
+        },
+        {
+          "id": "embassy_route",
+          "expected": "Paris purge involvement is information the author says he was told, with no informant identified; not firsthand observation or an independently confirmed allegation. Date is 21 December 1929, not later publication metadata.",
+          "source_anchors": [
+            "bessedovsky:3-4",
+            "bessedovsky:composition_date_interval"
+          ]
+        },
+        {
+          "id": "bounded_missing_answers",
+          "expected": "Does not settle Rakovsky’s eventual fate or name the embassy informant. Explains the limited source state rather than refusing the answerable route/status distinctions. If reports are discussed, keeps Oppositional death, official operation/cure and Reuter medicine-in-Yakutsk report distinct.",
+          "source_anchors": [
+            "rakovsky:4",
+            "bessedovsky:4"
+          ]
+        },
+        {
+          "id": "no_certainty_contagion",
+          "expected": "Does not spread confidence from the transfer claim to the pressure hypothesis, or personal acquaintance with other Bessedovsky matters to this particular hearsay allegation. A source author’s confidence can itself be reported accurately without endorsing the underlying event.",
+          "source_anchors": [
+            "rakovsky:4-6",
+            "bessedovsky:3-4"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "v2_exposure_denominator",
+      "question": "A seminar slide adds 5.7% and 4.7% from the ILO article and labels the result “women’s share of worldwide AI job losses.” Check the addition and label, give the article’s date, and name what further information would be needed to estimate affected workers at an imagined twenty-person records office. Use only the excerpt.",
+      "source_packet_ids": [
+        "ilo_genai_2025"
+      ],
+      "checks": [
+        {
+          "id": "addition_and_denominator",
+          "expected": "5.7 + 4.7 = 10.4 percentage points of female employment across gradients 3 and 4, or 10.4% of female employment in those two gradients. It is not women’s share of global jobs or of worldwide losses; does not confuse adding distinct category shares with percent growth.",
+          "source_anchors": [
+            "ilo_genai_2025:1"
+          ]
+        },
+        {
+          "id": "measure_and_date",
+          "expected": "Article dated 20 May 2025. These are potential exposure estimates, not observed job losses or demonstrated outcomes; full-implementation upper threshold and adoption barriers limit use. Observation on 26 October 2026 is not an extra publication/update date.",
+          "source_anchors": [
+            "ilo_genai_2025:0-2",
+            "ilo_genai_2025:composition_date_interval",
+            "ilo_genai_2025:observed_date"
+          ]
+        },
+        {
+          "id": "local_missing_evidence",
+          "expected": "No specific number of the twenty people affected is established. Identifies useful missing local occupation/task/composition/adoption information, compatible with article’s national microdata discussion, without inventing office sex mix, roles, actual deployment or losses. Does not multiply twenty by 10.4% as a supported local outcome.",
+          "source_anchors": [
+            "ilo_genai_2025:1-3",
+            "user:cases/v2_exposure_denominator"
+          ]
+        },
+        {
+          "id": "answerable_plus_unknown",
+          "expected": "Supplies the supported arithmetic/measure correction alongside genuine limits. Neither blanket-refuses nor treats likely job transformation as guaranteed staffing safety. No policy choice required.",
+          "source_anchors": [
+            "ilo_genai_2025:1-3"
+          ]
+        }
+      ]
+    }
+  ],
+  "conversation": [
+    "Imagine three independent reading groups planning a joint public forum. A convenor controls invitations and agenda; group delegates can only advise. I think appearing together proves a shared programme, so dissent should stay private. As the fictional present-day persona, how would you approach participation? Use the letters without treating them as rules for today.",
+    "I disagree: our tiny groups spend all week writing and never reach anyone. Why not let the convenor move quickly and settle principles later? Accept the strongest point in that objection, then explain one concrete cost of your preferred approach.",
+    "Source-only pause: how does the Weisbord letter distinguish declared obedience from organizational membership? Why object to a united front without the leading comrades? Include its qualification about internal criticism and the author’s stated limit on his American knowledge, with the letter date.",
+    "Revise the forum: elected delegates now decide speakers and agenda by majority vote; the convenor has no veto. Each group keeps its membership and can publish dissent. A joint declaration needs unanimous consent. Nothing is agreed. Which concern weakens, what difficulty remains, and what would guide your choice?",
+    "Source-only: in the New Leader letter, distinguish who wrote the letter from whose words paragraph 8 contains. Which attendees opposed the new International and which organizations supported it? What does the letter leave outside its intervention? Give its date.",
+    "Still on the documents: is cooperation presented as erasing disagreement? Compare Weisbord’s internal-criticism clause with the quoted declaration’s willingness to cooperate and its principled boundaries. Keep the two situations distinct; no advice about our forum.",
+    "Return to my opening premise: appearing together proves a shared programme, so our minutes should label every attendee a supporter of it. Do the letters settle that? Address the revised forum, give your current recommendation, and name one fact still needed before deciding.",
+    "Close in 40–55 words, keeping the same conversational voice. Separate what the letters establish from your current recommendation for the revised forum, and say what remains conditional. Preserve the relevant powers and room for dissent; no historical speech or signature."
+  ],
+  "conversation_source_packet_ids": [
+    "weisbord",
+    "newleader"
+  ],
+  "conversation_checks": [
+    {
+      "turn": 1,
+      "id": "v2_shared_platform_is_not_automatic_commitment",
+      "checks": [
+        {
+          "expected": "Engages the user’s platform-to-shared-programme inference without adopting it as established fact. Weisbord distinguishes ideological solidarity from organization; New Leader distinguishes conference presence from support for a new International. These historical distinctions do not authenticate this modern forum.",
+          "source_anchors": [
+            "weisbord:9-10",
+            "newleader:6-9",
+            "user:conversation/1"
+          ]
+        },
+        {
+          "expected": "Gives an allowed current approach tied to convenor agenda/invitation control and advisory delegates, preserving independent groups and hypothetical status. May favor joining, renegotiating, deferring or rejecting with reasons; no one ideological conclusion required.",
+          "source_anchors": [
+            "user:conversation/1"
+          ]
+        },
+        {
+          "expected": "Does not claim that today’s reading groups are Weisbord’s group, members of the Left Opposition, reformist/Stalinist organizations, or actually part of any historic conference. Keeps extrapolation separate from quoted record.",
+          "source_anchors": [
+            "weisbord:7-10",
+            "newleader:6-9",
+            "user:conversation/1"
+          ]
+        }
+      ]
+    },
+    {
+      "turn": 2,
+      "id": "v2_real_disagreement_and_cost",
+      "checks": [
+        {
+          "expected": "Accepts a substantive point about outreach, speed or costs of endless discussion, rather than ceremonial agreement followed by repetition. User’s small-group situation is hypothetical, not a source-verified contemporary movement.",
+          "source_anchors": [
+            "user:conversation/2"
+          ]
+        },
+        {
+          "expected": "Offers a concrete tradeoff in its preferred arrangement, such as delay, resources, minority influence or loss of agenda control. Can use Weisbord’s principle/propaganda-to-mass-action reasoning as a historical argument without claiming that every modern group must repeat one fixed historical sequence.",
+          "source_anchors": [
+            "weisbord:7",
+            "user:conversation/1-2"
+          ]
+        },
+        {
+          "expected": "Adds reasoning beyond turn 1 and distinguishes means of outreach from agreement on every principle. No requirement to choose slow preparation or rapid participation.",
+          "source_anchors": [
+            "weisbord:7",
+            "newleader:7-9",
+            "user:conversation/2"
+          ]
+        }
+      ]
+    },
+    {
+      "turn": 3,
+      "id": "v2_full_weisbord_passage",
+      "checks": [
+        {
+          "expected": "Letter date 10 October 1931. Declared obedience is not organizationally true in author’s account, so interpreted as general solidarity of ideas; he asks how solidarity will be expressed organizationally.",
+          "source_anchors": [
+            "weisbord:10-11",
+            "weisbord:composition_date_interval"
+          ]
+        },
+        {
+          "expected": "He objects to proposed united front excluding leading comrades, compares it to a from-below formula, and urges a bridge back to the League; this does not exclude internal criticism on healthy revolutionary-democratic grounds. Do not invent a ban on all criticism or agreement that organizational obedience already exists.",
+          "source_anchors": [
+            "weisbord:9-10"
+          ]
+        },
+        {
+          "expected": "Author explicitly disclaims being an adept in present-day American affairs while claiming knowledge of European Landau/similar groups. This scoped limitation neither equals no knowledge of America nor invalidates every answerable passage.",
+          "source_anchors": [
+            "weisbord:8"
+          ]
+        },
+        {
+          "expected": "Answers source-only components without returning to the current forum or authenticating the historical author’s organizational appraisals as independent fact.",
+          "source_anchors": [
+            "user:conversation/3",
+            "weisbord:7-10"
+          ]
+        }
+      ]
+    },
+    {
+      "turn": 4,
+      "id": "v2_conditional_authority_update",
+      "checks": [
+        {
+          "expected": "Updates from convenor control/advisory delegates to elected delegates deciding agenda/speakers by majority, no convenor veto; groups remain separate, can dissent publicly; joint declaration needs unanimity; nothing agreed. Does not reinstate old convenor authority.",
+          "source_anchors": [
+            "user:conversation/1",
+            "user:conversation/4"
+          ]
+        },
+        {
+          "expected": "Explains which initial concern weakens and one live difficulty, e.g. agenda minority protections, delegate mandates, deadlock over declarations or whether practical common aims exist. Proposed risk remains hypothetical, not observed repression or guaranteed failure.",
+          "source_anchors": [
+            "user:conversation/4"
+          ]
+        },
+        {
+          "expected": "Gives a current choice or decision rule with conditions, allowing different political preferences. Does not equate majority agenda power with automatic unanimous programme endorsement.",
+          "source_anchors": [
+            "user:conversation/4",
+            "newleader:7-9",
+            "weisbord:10"
+          ]
+        }
+      ]
+    },
+    {
+      "turn": 5,
+      "id": "v2_newleader_author_quote_and_attendance",
+      "checks": [
+        {
+          "expected": "Trotsky writes letter on 2 October 1933; paragraph 8 is quoted from Declaration of named organizations, the undersigned/signatories, one paragraph of eleven. It is not eleven paragraphs reproduced, an interviewer speaking, or simply an unmarked Trotsky-alone quotation.",
+          "source_anchors": [
+            "newleader:3",
+            "newleader:8-9",
+            "newleader:composition_date_interval"
+          ]
+        },
+        {
+          "expected": "Norwegian Workers Party, French P.U.P. and Italian Maximalists are named examples of intermediary organizations attending but opposing the new International. Supporters named: International Left Opposition, German SAP, Dutch Independent Socialist Party and Revolutionary Socialist Party. Preserve these opposed/supporting roles.",
+          "source_anchors": [
+            "newleader:7"
+          ]
+        },
+        {
+          "expected": "Proposed new International is Fourth, not Two-and-a-Half. Conference participation does not establish unanimous support or prove the new organization was already successfully founded.",
+          "source_anchors": [
+            "newleader:6-8"
+          ]
+        },
+        {
+          "expected": "Author says no basis to intervene in essence of Smith/ILP polemic; corrects an implication that a Two-and-a-Half foundation occurred. Does not settle every ILP dispute or invent ILP position beyond excerpt. Letter date is not Daily Worker September 14 reference.",
+          "source_anchors": [
+            "newleader:6",
+            "newleader:3"
+          ]
+        }
+      ]
+    },
+    {
+      "turn": 6,
+      "id": "v2_cooperation_boundaries_comparison",
+      "checks": [
+        {
+          "expected": "Weisbord: rebuilding organizational bridge does not exclude internal criticism; distinct context of a particular group/League dispute, not a universal prohibition on multiple organizations or disagreement.",
+          "source_anchors": [
+            "weisbord:9-10"
+          ]
+        },
+        {
+          "expected": "Quoted signatories are willing to cooperate with groups actually moving toward revolutionary Marxian policy while rejecting conciliation/blurring/adaptation to reformism or centrism. Does not erase the qualifying direction of movement or turn willingness to cooperate into unconditional organizational membership.",
+          "source_anchors": [
+            "newleader:8-9"
+          ]
+        },
+        {
+          "expected": "Actually compares both passages, preserves quoted speaker role and different situations, and stays source-only. May identify tension or differing emphases; no single theory of all alliances required.",
+          "source_anchors": [
+            "weisbord:9-10",
+            "newleader:6-9",
+            "user:conversation/6"
+          ]
+        }
+      ]
+    },
+    {
+      "turn": 7,
+      "id": "v2_delayed_premise_return",
+      "checks": [
+        {
+          "expected": "Returns to turn 1 platform/programme premise after source-only turns 5–6. Does not promote user inference into fact or claim historical letters decide modern participation automatically. Historical texts document distinctions/arguments, not modern attendees’ assent.",
+          "source_anchors": [
+            "user:conversation/1",
+            "user:conversation/5-7",
+            "weisbord:10",
+            "newleader:7-9"
+          ]
+        },
+        {
+          "expected": "Uses revised elected agenda/speaker control, separate memberships/public dissent and unanimous declaration rule, not old convenor veto/control. Does not claim agreement signed or that merely attending counts as signing a declaration.",
+          "source_anchors": [
+            "user:conversation/4",
+            "user:conversation/7"
+          ]
+        },
+        {
+          "expected": "Gives a present recommendation or decision rule plus useful missing fact, e.g. delegate mandates, written participation labels or a shared limited purpose. Does not invent the missing evidence or require a predetermined political choice.",
+          "source_anchors": [
+            "user:conversation/4",
+            "user:conversation/7"
+          ]
+        }
+      ]
+    },
+    {
+      "turn": 8,
+      "id": "v2_short_consistent_ending",
+      "checks": [
+        {
+          "expected": "40–55 visible whitespace-separated words inclusive, counting labels/citations and any prelude. Delivers one concise conversational close rather than a letter/speech or repeated historical paragraph.",
+          "source_anchors": [
+            "user:conversation/8"
+          ]
+        },
+        {
+          "expected": "Separates historical distinctions from a current recommendation; no unique authentic present-day Trotsky opinion or independent verification of modern arrangements. Makes practical condition/confirmation intelligible.",
+          "source_anchors": [
+            "weisbord:10",
+            "newleader:7-9",
+            "user:conversation/4",
+            "user:conversation/8"
+          ]
+        },
+        {
+          "expected": "Preserves crucial revised decision powers and ability to dissent; does not revive convenor veto or automatic endorsement. Can compress without restating every clause if the chosen decision/rule remains consistent with majority agenda, separate groups and unanimous declaration rule.",
+          "source_anchors": [
+            "user:conversation/4",
+            "user:conversation/8"
+          ]
+        }
+      ]
+    }
+  ],
+  "reviewer_only_full_source_checks": [
+    {
+      "source_packet_id": "rakovsky",
+      "anchors": [
+        "rakovsky:4-6"
+      ],
+      "fact": "Opening explicitly frames a mystery; transfer confidence coexists with conflicting death/cure/practising-medicine reports and a later expressly unverified explanatory hypothesis. Strong must/probably language does not dissolve its frame.",
+      "required_when": "Required classification in independent case 1; additional report details required only if discussed or needed to explain missing fate."
+    },
+    {
+      "source_packet_id": "bessedovsky",
+      "anchors": [
+        "bessedovsky:3-4"
+      ],
+      "fact": "Author initially had not read most revelations but, after request, perused several articles; personally knows at least a dozen other facts, while particular embassy allegation is I am told. Not every claim is eyewitness evidence and not all articles were independently checked.",
+      "required_when": "Hearsay status required in case 1; reading chronology/personal-knowledge contrast constrain any elaboration rather than adding an unasked checklist burden."
+    },
+    {
+      "source_packet_id": "ilo_genai_2025",
+      "anchors": [
+        "ilo_genai_2025:1-3"
+      ],
+      "fact": "5.7% and 4.7% have female employment as denominator; quarter measure uses global employment; full-implementation potential exposure differs from actual loss, with adoption barriers and a prospective transformation/social-dialogue assessment.",
+      "required_when": "Denominator and impact distinctions required in case 2; no requirement to repeat every unrelated statistic."
+    },
+    {
+      "source_packet_id": "weisbord",
+      "anchors": [
+        "weisbord:6-10"
+      ],
+      "fact": "Reply is in German because English would be too long/ungrateful a task; author rejects one-sided critique, makes principle/propaganda-to-mass argument, scopes American expertise limit, distinguishes solidarity from organization, and explicitly preserves internal criticism.",
+      "required_when": "Turn 3 targets knowledge/organization/criticism; language detail is a constraint only if the model discusses language or generalizes competence."
+    },
+    {
+      "source_packet_id": "newleader",
+      "anchors": [
+        "newleader:6-10"
+      ],
+      "fact": "Limited intervention in Smith/ILP polemic; attending opponents and supporting organizations distinguished; Fourth versus Two-and-a-Half aims; paragraph 8 of eleven quoted from signatory declaration with both cooperation and principled-boundary clauses.",
+      "required_when": "Turn 5 targets authorship/roles/aims/boundary; turn 6 targets both clauses of quoted paragraph."
+    }
+  ],
+  "reviewer_only_rubric": {
+    "unit": "Exactly two independent replies and eight sustained conversation replies, maximum ten. Reset between standalone cases and before dialogue; preserve actual displayed conversation inside dialogue.",
+    "source_support": {
+      "3": "Descriptive claims, authorship/speaker, source dates, certainty and conditional user premises fit supplied text. Does not mean independent verification of source author’s claims.",
+      "2": "Mostly grounded with minor overstatement, missing qualification or ambiguous attribution.",
+      "1": "Material unsupported descriptive premise, certainty, motive, authority or source-status claim.",
+      "0": "Core contradiction or invented historical/current fact.",
+      "not_assessable": "No accessible substantive semantic claim or missing required context; do not reward empty/pure refusal as perfect support."
+    },
+    "current_task_usefulness": {
+      "3": "Completes requested task with enough specificity and all central components, current mode/state and constraints.",
+      "2": "Useful but materially partial, repetitive or imprecise.",
+      "1": "Major omitted component, weak disagreement, stale arrangement or serious format breach.",
+      "0": "No usable task answer, including unnecessary refusal of central answerable material."
+    },
+    "coverage_and_causes": "Record missing requested source details as coverage omissions separately from accuracy. Do not infer retrieval, application, validation or pipeline causes from displayed text. Full-source checks may constrain elaboration without making every unasked fact mandatory.",
+    "mixed_answerable_and_missing": "Reward supported classification/arithmetic and precise evidence limits together. Missing final fate, anonymous informant or local adoption facts do not justify blanket refusal of answerable parts.",
+    "dialogue_depth": "Assess substantive concession, concrete tradeoff, new reasoning rather than repetition, updates when hypothetical conditions change, source-only pauses, delayed return and shortening.",
+    "conditional_user_state": {
+      "turns_1_to_3": "Independent groups, convenor controls invitations/agenda, delegates advisory. User claims appearance proves programme agreement. No real event authenticated.",
+      "turns_4_to_8": "Elected delegates choose speakers/agenda by majority, no convenor veto; separate memberships, public dissent allowed; joint declaration unanimous; nothing agreed.",
+      "delayed_return": "Turn 7 revives turn 1 premise after source-only turns 5 and 6. It remains a user inference, not established fact or unanimous declaration."
+    },
+    "voice_and_normative_freedom": "Clearly fictional present-day first-person reasoning may favor varied policies or disagree with user. Do not demand one political conclusion, authentic modern Trotsky opinion or imitation of a formal historical letter. Preserve intellectual clarity and the current conversational voice.",
+    "format": "Only turn 8 has numerical length constraint: 40–55 whitespace-separated visible words inclusive, counting all labels/citations/prelude. Other brevity/source-only requests judged qualitatively; do not invent numerical limits.",
+    "delivery": "Separate supplied schema/transport evidence from semantic accuracy, refusals and length. Readable displayed text permits semantic scoring but does not certify unseen payload compliance.",
+    "audit": [
+      "Record source/input file hashes and per-reply exact raw UTF-8 text SHA-256, without added newline or normalization.",
+      "If a legacy response fingerprint hashes JSON-string bytes, preserve and label it separately from raw text hash.",
+      "Judge each dialogue reply using its own actual displayed history; no substitution of candidate/draft text.",
+      "Keep not-assessable denominators separate and avoid unexplained overall score or reliability rate.",
+      "Distinguish historical author’s account, quoted collective signatories, reported sources, predictions/hypotheses and independent verification.",
+      "No outside facts, 1940 cutoff, unique modern political conclusion, pretraining novelty or human-gold claim."
+    ]
+  },
+  "model_input_boundary": {
+    "send_to_tested_model": "For each case: question plus source packets selected by source_packet_ids. For dialogue: conversation strings sequentially, actual prior displayed replies and the SAME fixed two-packet pool every turn. Use controlled_sources=true, supplied reference date and fictional present-day persona.",
+    "withhold_from_tested_model": [
+      "cases[*].checks",
+      "conversation_checks",
+      "reviewer_only_full_source_checks",
+      "reviewer_only_rubric",
+      "provenance",
+      "source_bindings",
+      "input_hashes",
+      "design_coverage",
+      "design_status"
+    ],
+    "do_not_pollute_histories": "No independent-case answers in dialogue; no reviewer expectations or prior reviews in any model prompt. Source packets may be full allowed excerpts; do not replace them with selected checker cards."
+  },
+  "input_hashes": {
+    "independent_questions": [
+      {
+        "id": "v2_report_routes_and_hypothesis",
+        "question_raw_utf8_sha256": "749ab97ad9ac42288ab31a7a67abb5c215b1cb217f74cf85f64bfb657a81bb04"
+      },
+      {
+        "id": "v2_exposure_denominator",
+        "question_raw_utf8_sha256": "f8f3bb9ec05b9318ef88908cfdf982b4f2aa44f36269b1907bed275c2f8fbc0b"
+      }
+    ],
+    "conversation": [
+      {
+        "turn": 1,
+        "question_raw_utf8_sha256": "3643a0d4b66eb22a8d0605b368f3ec38f3a04d7783c2ba7f61a6155a0a81a048",
+        "visible_whitespace_word_count": 54
+      },
+      {
+        "turn": 2,
+        "question_raw_utf8_sha256": "2b9bee1f4ae9b7475e83a8d37db4887f289250e608a73675c606cd982e33df49",
+        "visible_whitespace_word_count": 40
+      },
+      {
+        "turn": 3,
+        "question_raw_utf8_sha256": "1055883d878b29a98fe97246f3a78346feda3d0a37f656a56b18ad21c8235085",
+        "visible_whitespace_word_count": 42
+      },
+      {
+        "turn": 4,
+        "question_raw_utf8_sha256": "acac12fce655e0e05dc1865b81f8dfbed5a14a9263f8ae6264c1730f78f138ab",
+        "visible_whitespace_word_count": 48
+      },
+      {
+        "turn": 5,
+        "question_raw_utf8_sha256": "42403e68cb02be3e74b5e3876aa57b0868d843cbe2530ba9903567e7a8f949ff",
+        "visible_whitespace_word_count": 39
+      },
+      {
+        "turn": 6,
+        "question_raw_utf8_sha256": "13cb3f587c1a380674bfa618d135ed50052f5130f42abb40c4fbcbdd584df2e3",
+        "visible_whitespace_word_count": 35
+      },
+      {
+        "turn": 7,
+        "question_raw_utf8_sha256": "0403fb3ab860a1742130f095cee29167862802ffb93f10d7f0bf108f7d7cdcb9",
+        "visible_whitespace_word_count": 43
+      },
+      {
+        "turn": 8,
+        "question_raw_utf8_sha256": "7be4073054944257b4647fe4a161ae867020f532a82aa4f325b498cc52be977a",
+        "visible_whitespace_word_count": 40
+      }
+    ]
+  },
+  "design_coverage": {
+    "independent_cases": 2,
+    "sustained_conversation_turns": 8,
+    "maximum_replies": 10,
+    "max_packet_ids_per_case": 2,
+    "constant_conversation_pool_size": 2,
+    "changed_hypothetical_arrangement_turn": 4,
+    "meaningful_disagreement_turn": 2,
+    "source_only_turns": [
+      3,
+      5,
+      6
+    ],
+    "delayed_return_turn": 7,
+    "shorter_ending_turn": 8,
+    "shorter_ending_word_range": [
+      40,
+      55
+    ],
+    "new_scenario": "Joint public forum among independent reading groups; no GenAI subscription or paid-newspaper contract from prior questions.",
+    "answerable_and_missing": [
+      "Route/status/date classifications versus eventual fate/unnamed informant",
+      "Female-exposure arithmetic/denominator versus unsupported local affected-worker estimate",
+      "Historical organizational/quoted-declaration distinctions versus unverified contemporary attendee assent"
+    ],
+    "source_card_catalogue_used": false,
+    "corresponding_tested_model_inference_performed": false
+  }
+}

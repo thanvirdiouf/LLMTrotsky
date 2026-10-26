@@ -16,7 +16,7 @@ python3 scripts/build_ghost_chat.py
 python3 scripts/ghost_chat.py --dry-run --question "How would you assess renting an A40 on Runpod today?"
 ```
 
-Seventy-six focused ghost/source/harness tests pass. The active collection has
+Seventy-seven focused ghost/source/harness tests pass. The active collection has
 ten packets/39 propositions plus four reviewed compact forms. The longer
 transfer study exposed missing user context, incomplete source coverage,
 certainty overstatements and parser failures. Bounded context retention now
@@ -24,12 +24,15 @@ supplies the original/revised scenario, but has not improved the delayed
 answer. A separate parser comparison removed two formatting blocks, while task omissions
 remain. The paired checker diagnostic reproduced two false corroboration approvals;
 source-status framing rejects those but introduces another false approval.
-An opt-in three-claim coverage variant is prepared; the checker remains fallible.
+An opt-in coverage run exposed selected facts dropped by application packing.
+The next fresh-task study includes a tested correction for natural scenario
+revisions; the checker remains fallible.
 Training remains paused; no persistent service is deployed.
 [Measured progress](docs/PRESENT_DAY_GHOST.md),
 [transfer study](docs/GHOST_TRANSFER_EVALUATION.md),
 [context results](docs/GHOST_USER_CONTEXT.md),
-[coverage variant](docs/GHOST_CLAIM_COVERAGE.md).
+[coverage variant](docs/GHOST_CLAIM_COVERAGE.md),
+[fresh-task study](docs/GHOST_FRESH_TRANSFER_V2.md).
 
 The following describes the preserved historical research archive.
 

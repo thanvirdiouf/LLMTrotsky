@@ -5,34 +5,45 @@ records, dated modern evidence and newly imagined views. Both adapters remain
 experimental and training stays paused. User authorized autonomous result-
 dependent continuation, proper documentation, milestone commits and pushes.
 
-## Active continuation: V20 context comparison
+## Active continuation: V20 running, V21 formatting candidate staged
 
-HEAD before this milestone: 1ec2a78, pushed. V19/saved21 completed and verified:
-ten replies/25 calls, no truncation/budget rejection, 11.32 GiB. Statuses six
-model-approved/two partial/two blocked are not quality scores. Delayed turn7
-received only turns5/6; original/revised hypothetical missing. Compute selection
-object plus essay and source-only check object plus stray backtick fail strict
-JSON; planner calculated $3.54 correctly. Other remaining issues: user-premise
-quote guard, historical mixed first-card coverage, full-passage facts absent
-from catalog. Do not conflate these with model arithmetic or retrieval failure.
+Memory milestone80d5003 pushed. V19/saved21 completed and verified: ten
+replies/25 calls, no truncation/budget rejection, 11.32 GiB; six model-approved,
+two partial/two blocked are not quality scores. Delayed turn7 input lacks the
+original/revised hypothetical. Compute planner calculated $3.54 correctly but
+appended an essay; source-only check appended one backtick. Other issues:
+user-premise quote guard; historical mixed first-card coverage; source facts
+absent from claim catalog. Do not conflate with model arithmetic or retrieval.
 
-V20 staged/frozen, not yet submitted: exact same V19 inputs, only ghost_chat.py
-and protocol hashes differ. Bounded original user-context retention: max3 whole
-messages/2500 chars, user/unverified roles, fingerprints, chronological turns,
-omission events; no verified facts/summaries. Hypothetical/revision cues retain
-turns1/4; disagreement turn2 not retained. Current request supersedes old task
-instructions; later assumptions supersede original. Three new tests, 65 focused
-pass; full338 retains two known historical README snapshot errors. Test logs
-under V19/context_{focused,full}_tests.log. Do not change frozen V20 payload.
+V20 submitted as saved22, RUNNING. Same V19 inputs, only ghost_chat.py and
+protocol differ. Max3 whole unverified original user messages/2500 chars with
+fingerprints/turns/omissions; no verified facts/summaries. Cues retain original
+and revised hypothetical turns1/4, not disagreementturn2. Current task overrides
+old instructions. 65 focused pass/full338 two known historical README errors.
+V19/context_{focused,full}_tests.log. Do not change frozen V20. Logs follower
+session57924 may still exist. Download exact saved22 and replay/token verify.
 
-Commit/push memory code/tests/docs; submit V20 to same private notebook under
-standing approval (expected saved22), ten answers/at most30 calls+probe1. Verify
-exact download/replay/tokens, export neutral packets, ask already-authorized
-review_compact_trial reviewer for masked V19/V20 comparison. It authored the
-fresh transfer questions only after saving V18 review. Do not leak statuses,
-model verdicts or arm mapping. Active v3 stays experimental (10 original packets,
-39 full propositions plus four reviewed brief forms); training/adapters paused.
-See GHOST_TRANSFER_EVALUATION.md; continue result-dependent iterations.
+Authorized reviewer review_compact_trial is assessing neutral packet_A in
+evaluation/runs/ghost_user_context_comparison/. It is V19 (do not disclose to
+reviewer). It must save standalone judgments before B arrives. After V20
+verification export neutral packet_B then request separate B assessment/pairwise
+comparison, no statuses/verdicts/private_assignment. It authored fresh questions
+after saving V18 review. AI review, not human historical validation.
+
+V21 is frozen/staged, NOT SUBMITTED. Same V20 inputs and context code; only
+ghost helper/protocol differ. New stage parser keeps strict object validation,
+may discard select-only newline prose postface with no braces/brackets/backticks,
+or a single/triple trailing Markdown delimiter after select/check objects.
+Never promote postface into facts/draft/verdict; substantive checker commentary
+still fails. Raw outputs + normalization fingerprints logged. Legacy helpers
+unchanged. Four tests: 69 focused pass/full342 same two README errors. Logs
+V20/format_{focused,full}_tests.log; GHOST_STAGE_OUTPUT_FORMAT.md. Exact frozen
+V20→V21 payload comparison passed. Decide next execution from V20 results,
+then commit/push before submitting V21 under standing private bounded approval.
+
+Active v3 remains experimental (10 packets/39 original claims+4 reviewed brief
+forms); training/adapters paused, no paid compute/public endpoint. Continue
+source-bound review→choose→execute iterations as user requested.
 
 ## Active continuation: V18 compact forms trial
 

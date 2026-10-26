@@ -15,6 +15,33 @@ except ImportError:
         claims_for_trace, validate_plan, validate_draft, validate_review, render_segments, parse_object, REFUSAL, REVIEW_FAILURE)
 
 
+def parse_stage_object(text,stage):
+    """Preserve strict fields; normalize only bounded outer stage formatting."""
+    try:return parse_object(text),None
+    except EvidenceError as original:
+        if stage not in ('select','check') or not isinstance(text,str):raise
+        stripped=text.lstrip()
+        if not stripped.startswith('{'):raise
+        try:
+            _,end=json.JSONDecoder().raw_decode(stripped)
+            # Reparse the exact span with duplicate/nonfinite-key protection.
+            value=parse_object(stripped[:end])
+        except (ValueError,TypeError):raise original
+        suffix=stripped[end:];tail=suffix.strip()
+        kind=None
+        if tail in ('`','```'):kind='discarded_trailing_markdown_delimiter'
+        elif (stage=='select' and suffix.startswith(('\n','\r'))
+                and len(tail.split())>=3 and re.search(r'[A-Za-z]',tail)
+                and not re.search(r'[{}\[\]`]',tail)):
+            # A plan is still untrusted and validated downstream. Never use a
+            # planner's appended answer as facts, a draft or an audit verdict.
+            kind='discarded_selection_postface'
+        if kind is None:raise original
+        return value,{'kind':kind,'raw_output_fingerprint':fingerprint(text),
+            'parsed_object_fingerprint':fingerprint(value),
+            'discarded_suffix_fingerprint':fingerprint(suffix),'discarded_suffix_characters':len(suffix)}
+
+
 def facts_only_requested(question):
     return bool(re.search(r'\b(?:facts?[- ]only|(?:only|just) (?:the )?(?:dated )?(?:facts|study findings|source findings))\b|\bwithout (?:your |any |a )?(?:political |fictional |present-day )?(?:interpretation|opinion)\b',question,re.I))
 
@@ -531,7 +558,10 @@ class GhostChat:
             out=generate(req['messages']);stages.append({**req,'output':out})
             if not isinstance(out,dict) or out.get('finish_reason')!='stop' or not isinstance(out.get('response'),str):
                 raise EvidenceError('Ghost stage incomplete or truncated')
-            return parse_object(out['response']) if structured else out['response'].strip()
+            if not structured:return out['response'].strip()
+            value,normalization=parse_stage_object(out['response'],stage)
+            if normalization:stages[-1]['structured_output_normalization']=normalization
+            return value
         try:
             if available:
                 selection=call('select')

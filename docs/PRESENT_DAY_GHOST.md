@@ -7,14 +7,16 @@ adapters stay experimental and training stays paused.
 
 ## Current result — 26 October 2026
 
-Ten ghost runs are complete, downloaded and verified. They establish bounded
-T4 memory capacity and several application fixes, but **do not establish reliable
-interpretation or conversation**. V11 completes ordinary opinion prose without
-JSON failures, yet its auditor confuses the fictional assistant with the user
-and sometimes treats new opinions as institutional source claims. Canonical
-facts survive. Some rejected premises still have legitimate source concerns.
-Neither pipeline is promoted. V12 completes a balanced checker-only diagnostic;
-see [speaker/source-role calibration](GHOST_AUDIT_CALIBRATION.md).
+Twelve ghost runs are complete, downloaded and verified. The latest fresh study
+(V13, saved Kaggle version 15) uses ordinary retrieval with four standalone
+questions and a six-turn conversation: ten replies, 22 generations. Relevant
+sources are present and several mode changes work, but **interpretation and
+conversation are not reliably grounded**. A real reply confuses exposure
+gradients with adoption barriers despite auditor approval; task classification,
+brief factual coverage, depth and total answer length also fail in specific cases.
+Neither pipeline is promoted. Both adapters stay experimental.
+[Failure boundaries](GHOST_FAILURE_ANALYSIS.md),
+[concrete next review](GHOST_NEXT_REVIEW.md).
 
 | Ghost version / Kaggle version | Evaluation calls | Main finding |
 |---|---:|---|
@@ -30,7 +32,7 @@ see [speaker/source-role calibration](GHOST_AUDIT_CALIBRATION.md).
 | v10 / 12 | 18 | Valid task labels and dated two-sentence finding; final opinion JSON is incomplete |
 | v11 / 13 | 19 | Prose completes; reviewer confuses speaker and source-support roles |
 | v12 / 14 | 10 | All five valid accepted/five traps rejected; explanations still imperfect |
-| v13 / pending | at most 30 | Fresh natural retrieval: four singles and six-turn conversation |
+| v13 / 15 | 22 | Natural retrieval works; task/schema, source inference, coverage and depth/length still fail |
 
 V1–v4 use the same inspected ten-turn development set. V5 introduces four
 single questions and a six-turn conversation; v7/v8 reuse those as regressions.
@@ -40,12 +42,11 @@ pipelines, not individual components. Source-exposed development and same-agent
 unblinded review are not independent historian validation or a representative
 benchmark. Detailed local reports/transcripts: `evaluation/runs/ghost_smoke_vN/`.
 
-The last ordinary smoke has six clearly useful factual/scope/identity
-replies. Its fuller-view mode works, but interpretation still misreads adoption
-barriers as a statement about displacement and invents causal explanations for
-a research metric. The shorter draft is filtered before model audit for writing
-raw citations in prose. Model status is not a quality score.
-[Failure boundaries and training decision](GHOST_FAILURE_ANALYSIS.md).
+V12's designed calibration accepts five valid candidates and rejects five
+traps, with expected labels withheld. V13 demonstrates why that is not a
+production success rate. The model judge remains fallible on actual generated
+reasoning. Exact local reports/transcripts and source-bound judgments are in
+`evaluation/runs/ghost_smoke_v12/` and `evaluation/runs/ghost_smoke_v13/`.
 
 ## Run and reproduce
 
@@ -127,8 +128,8 @@ model calls, preserving source state.
 
 ## Validation and limits
 
-Forty-six focused ghost/source/harness/calibration tests pass. The full suite
-runs 319 tests with two pre-existing historical pilot snapshot errors for the
+Forty-seven focused ghost/source/harness/calibration tests pass. The full suite
+runs 320 tests with two pre-existing historical pilot snapshot errors for the
 already changed `evaluation/README.md`; historical locks remain preserved.
 Kaggle runs verify submitted/downloaded payloads, exact frozen-code replay,
 all input/output token reconstructions, zero optimizer updates, no adapters and
@@ -148,50 +149,31 @@ verified exact displayed replies and source links without assigning scores.
 Do not resume training or promote an adapter from execution success or scores
 on inspected questions. Fresh source-based conversation evidence is required.
 
-### Application fixes following the fresh comparison
+### Current application and evaluation boundary
 
-For mixed replies, reviewed contemporary facts are materialized independently
-of model-written packet IDs. Interpretation-only requests do not dump canonical
-facts by default. Narrow single-term quote styling and trailing known source
-references are normalized and logged; unknown references, multiword quotes and
-requested exact quotation remain guarded. Missing audit verdicts explicitly
-reject only the uncovered segments; they never become approvals or erase a
-separately valid reviewed segment. Semantic judgment remains fallible.
+Ordinary opinions use plain prose wrapped into internal segments. Selector and
+auditor remain structured, factual wording stays canonical and exact quotation
+requests use source anchors. Narrow known citation/style normalization is logged;
+unknown references and invented quotes remain guarded. Missing verdicts reject
+only uncovered segments and never become approvals. The current user request
+is last in every stage. Candidate speaker and historical/modern support roles
+are explicit; a new normative conclusion need not be endorsed by ILO.
 
-A separate local test found that a definite reference to the study lost its prior
-ILO topic. The natural retriever now retains that source reference while explicit
-new subjects still win. This patch was made after v10 was frozen and is recorded
-separately: fixed-context GPU comparisons do not measure natural retrieval.
-The same inspected five-turn comparison is prepared as v10 to test application
-changes, not to claim fresh generalization.
+Natural definite-study retention is tested locally and exercised by V13. The
+older fixed-context comparison does not measure retrieval. V13 also reveals
+that brief first-card rendering can omit a necessary contrast and canonical
+fact blocks can make the overall answer too long even with a short opinion.
+These remain open application issues, separately from source inference errors.
 
-### Latest generation contract
+After V13, only the observed task label `premise_corrections` is normalized to
+`facts`, with a logged original value. Other unknown enums still fail closed.
+The regression confirms that valid source IDs reach canonical factual rendering
+without drafting an opinion. This local patch has not been GPU-retested; frozen
+V13 outputs retain the original failure. Do not rebuild earlier versions with
+current helpers or count this as a measured semantic improvement.
 
-V10 returns task/detail labels on all five checked turns without legacy fallback.
-Its dated study-only reply meets two sentences, and its viewpoint turn reaches
-drafting. The final turn still blocks because the model emits incomplete JSON
-for an ordinary paragraph. V11 therefore uses plain prose for ordinary opinion
-drafting; the application wraps that paragraph internally. Selection/audit stay
-structured, facts stay canonical, and exact quotation requests keep the structured
-source-anchor path. The current request is last in every stage. Known selected
-citation markers, whitespace and short source-matching concept styling are
-normalized/logged; unknown references and invented quotes remain guarded.
-This is a same-question regression, not fresh proof of reliable conversation.
-
-
-V11 is verified as saved version 13: nineteen requests, no budget rejection or
-length truncation, direct messages/replies byte-identical to v10. It displays
-three partial replies, one factual reply and one refusal. Its source-safe
-study-only answer is two sentences (33 words); rejected opinions reveal the
-speaker/support-role errors described above. V12 explicitly identifies those
-roles and tests ten fixed candidates before any further conversation study.
-Candidates are never trusted replies or memory. The same base judge remains
-fallible; a successful calibration would not establish production reliability.
-
-
-V12 accepts five valid candidates and rejects five traps with no blocked calls,
-verified as saved version 14. This is a designed diagnostic, not a production
-success rate. Some secondary audit reasons are still loose. The next V13 study
-uses fresh wording and ordinary retrieval across ten replies, including source
-certainty and insufficient evidence, then sustained conditional discussion and
-mode changes. No new sources, model, adapters or training are introduced.
+The next step is independent source/conversation review of the prepared local
+worksheet, then new preregistered questions. No independent review has yet
+occurred. Stop prompt micro-tuning on inspected cases and retain the untouched
+base reference. The larger corpus, unlimited memory, live news and production
+service remain outside the demonstrated prototype.

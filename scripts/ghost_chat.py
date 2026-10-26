@@ -381,6 +381,7 @@ class GhostChat:
         request_state=state
         format_actions,missing_verdicts,unknown_verdicts=[],[],[]
         routing_source='not_called'
+        selection_normalizations=[]
         def call(stage,candidate=None,*,structured=True):
             req=request(stage,self.profile,question,trace,available if stage=='select' else selected,history,request_state,candidate)
             out=generate(req['messages']);stages.append({**req,'output':out})
@@ -390,6 +391,12 @@ class GhostChat:
         try:
             if available:
                 selection=call('select')
+                # Observed v13 output used this descriptive task name despite
+                # selecting valid evidence. It is a factual premise correction,
+                # never permission to invent a new mode or generate an opinion.
+                if selection.get('answer_mode')=='premise_corrections':
+                    selection={**selection,'answer_mode':'facts'}
+                    selection_normalizations.append({'field':'answer_mode','from':'premise_corrections','to':'facts'})
                 plan,rejected_claim_ids=sanitize_selection(selection,available)
                 if 'answer_mode' in selection:
                     mode='facts' if facts_only_requested(question) else selection['answer_mode']
@@ -449,6 +456,7 @@ class GhostChat:
                 'application_added_basis_claim_ids':added_basis,
                 'application_excluded_context_claim_ids':excluded_context,
                 'answer_mode':request_state.get('_answer_mode'),'detail':request_state.get('_detail'),'routing_source':routing_source,
+                'application_selection_normalizations':selection_normalizations,
                 'application_format_normalizations':format_actions,'missing_verdict_ids':missing_verdicts,'unknown_verdict_ids':unknown_verdicts,
                 'status':'blocked' if error else 'application_filtered' if selected and not segments and rejected_segments else 'review_rejected' if selected and not accepted else 'abstained' if not facts and not basis else 'partial' if len(accepted)<len(segments) or rejected_segments else 'supported_by_model_review',
                 'validation_error':error,'semantic_guarantee':False,'model':MODEL,'training_steps':0,'adapters_loaded':[]}

@@ -5,54 +5,60 @@ records, dated modern evidence and newly imagined views. Both adapters remain
 experimental and training stays paused. User authorized autonomous result-
 dependent continuation, proper documentation, milestone commits and pushes.
 
-## Immediate continuation
+## Current result and next work
 
-V11 completed/verified as saved Kaggle version 13: ten answers, nineteen calls,
-no input rejection/truncation, 11.32 GiB probe peak. Direct messages/replies match
-v10 byte-for-byte. Plain prose fixes draft JSON failures; the dated study-only
-reply remains two sentences. Reviewer role confusion now overrejects fictional
-first person and misattributes new political conclusions to ILO. Some rejected
-premises remain problematic; do not call every rejection false.
+V11/saved13 verified: nineteen calls, prose serialization works; reviewer role
+confusion overrejects. V12/saved14 verified: ten checker calls, five valid
+accepted/five traps rejected, zero blocks under withheld preregistered labels.
+Some explanations remain loose. Candidate inputs never enter trusted memory.
 
-V12 completed/verified as private saved version 14: ten checker-only calls plus
-one memory probe, no budget/length problems. All five valid cases accepted and
-five traps rejected, zero blocks against preregistered authoring-agent contract
-labels withheld from the model. Some secondary explanations remain loose. Test
-candidates never become trusted chat output or memory. See local V12 report,
-scores/transcript and `docs/GHOST_AUDIT_CALIBRATION.md`.
+V13/saved15 is complete, verified and source-reviewed: four fresh singles plus
+six conversation turns, ordinary natural retrieval, ten replies/22 generations,
+no input/length blocks, 11.32 GiB probe peak. Relevant sources and definite-study
+retention work. Prediction question misroutes to an opinion; missing ILO outcome
+returns unknown task enum; brief Bessedovsky reply omits the report/witness
+contrast. Actual opinions confuse exposure gradients with adoption barriers
+and are approved. Mode switches work better, but depth and whole-answer brevity
+fail. Do not equate six approved answers with six correct/useful answers.
 
-V13 is now frozen/staged: `config/ghost_chat_evaluation_v3.json`, four new singles
-and six sustained dialogue turns, ordinary natural retrieval, maximum thirty
-calls plus one probe. Same sources/profile/base and corrected speaker/support
-contract. Commit/push protocol/config and submit under standing approval, then
-exact-download, frozen/token verify and source-review. Separate retrieval,
-interpretation, auditor and actual conversational usefulness. Neither a clean
-calibration nor ten fresh replies establishes production reliability. No
-training, adapters or paid compute.
+Local V13 archive contains QUALITY_REVIEW.md, TRANSCRIPT.md, case_outcomes.jsonl,
+verification.json and REVIEW_WORKSHEET.md. The worksheet includes frozen source
+blocks, actual replies and generated candidates, without our case labels or
+auditor reasons, ready for independent review. No independent review has yet
+occurred. Public next-step plan: `docs/GHOST_NEXT_REVIEW.md`. Stop prompt micro-
+tuning on these inspected cases; no further run is queued. Keep adapters
+experimental and training paused. No paid compute or persistent service.
+
+After V13 freeze, the exact observed label premise_corrections is normalized to
+facts with a logged original value. Other unknown modes still fail closed;
+validated source IDs and semantic audit are still required, no opinion drafted.
+This fixes the observed interface path in a local regression, not a new GPU
+result. Do not rebuild V13 or older versions with current helpers.
 
 ## Verification and archive
 
-Forty-six focused ghost/source/harness/calibration tests pass. Full suite:
-319 tests, the same two pre-existing pilot snapshot errors for the already
+Forty-seven focused ghost/source/harness/calibration tests pass. Full suite:
+320 tests with the same two pre-existing pilot snapshot errors for the already
 changed `evaluation/README.md`. Do not rewrite historical locks to conceal them.
-Current full output: `evaluation/runs/ghost_smoke_v11/audit_full_tests.log`.
+Logs: `evaluation/runs/ghost_smoke_v13/final_{focused,full}_tests.log`.
 
-Verify with `.venv-tokenizer/bin/python scripts/verify_ghost_smoke.py --version
-ghost_smoke_v11 --tokenizer training/data_revision_v2/tokenizer_assets` after
-exact-version download into `evaluation/runs/ghost_smoke_v11/download/`.
-`export_ghost_transcript.py --version ghost_smoke_v11` makes a readable verified
-transcript. Direct citations are model-written/unchecked, not renderer proofs.
-Verifier chooses the frozen comparison evaluator and reconstructs every token.
-Adapter and archived helper hashes remain checked. Do not equate run status
-or model approval with semantic quality. [Protocol](docs/GHOST_SMOKE.md),
-[comparison](docs/GHOST_COMPARISON.md), [failure analysis](docs/GHOST_FAILURE_ANALYSIS.md).
+V11, V12 and V13 each pass downloaded/frozen payload equality, exact replay,
+local tokenizer reconstruction and preserved helper/adapter hashes. Use
+`.venv-tokenizer/bin/python scripts/verify_ghost_smoke.py --version ghost_smoke_v13
+--tokenizer training/data_revision_v2/tokenizer_assets` and
+`python3 scripts/export_ghost_transcript.py --version ghost_smoke_v13`.
+The verifier selects the correct frozen ordinary/comparison/calibration evaluator.
+Direct citations remain unchecked model references; calibration candidates are
+explicitly test inputs, never trusted chatbot replies.
 
-Executed ghost history: v1/saved4 (16 calls), v2/saved5 (19), v3/saved6 (19),
-v4/saved7 (19), v5/saved8 (20), v7/saved9 (22), v8/saved10 (21), v9/saved11 (16), v10/saved12 (18), v11/saved13 (19).
-V6 was prepared but never uploaded/run. V1–v4 share initial inspected cases;
-v5 introduces new four singles/six conversation turns, then v7/v8 regress them;
-v9 introduces new five-turn paired questions; v10/v11 regress them. These are
-source-exposed development studies, not held-out pretraining benchmarks.
+Executed history: v1/saved4 (16 calls), v2/saved5 (19), v3/saved6 (19),
+v4/saved7 (19), v5/saved8 (20), v7/saved9 (22), v8/saved10 (21), v9/saved11 (16),
+v10/saved12 (18), v11/saved13 (19), v12/saved14 (10), v13/saved15 (22).
+V6 was prepared but never uploaded/run. V1–v4 share inspected initial questions;
+v5 introduces new questions, v7/v8 regress them; v9 introduces a fresh matched
+pair, v10/v11 regress it; v12 is designed calibration; v13 fresh natural retrieval.
+All are source-exposed development studies, not pretraining novelty benchmarks.
+[Protocol](docs/GHOST_SMOKE.md), [active guide](docs/PRESENT_DAY_GHOST.md).
 
 ## Active data and interface
 
@@ -85,7 +91,7 @@ same private Kaggle notebook `thanvirdiouf/trotsky-grounded-base-chatbot`, numer
 ID 140792344. Payload categories: project helpers/persona prompts, reviewed
 public historical/contemporary excerpts/propositions and evaluation questions.
 At most ten answers/thirty requests plus one probe per run, no training/adapters
-or paid compute. V10/V11 are tighter: ten answers/twenty requests plus one probe.
+or paid compute. V10/V11 are tighter: ten answers/twenty requests plus one probe; V12 has ten checker calls plus one probe.
 Do not ask again inside that scope; preserve title and URL.
 
 Origin stays SSH at the user's request. Existing key is accepted but unavailable

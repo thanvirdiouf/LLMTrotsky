@@ -77,3 +77,12 @@ scope and shortening. Review checks remain local and withheld; inspect actual
 source routing, selected claims, drafts, audits and displayed answers separately.
 These questions are new wording over exposed sources, not independent gold.
 Training and adapter promotion remain paused.
+
+
+V13 has now completed and been verified as saved version 15 (22 generations).
+It confirms that a clean designed calibration does not establish production
+review reliability: a generated reply confuses exposure gradients and adoption
+barriers and is approved. Relevant retrieval and several mode changes work;
+other task, rendering and conversation issues remain. The cases are now
+inspected. See [the next review decision](GHOST_NEXT_REVIEW.md); no further
+prompt-tuning loop or training run is queued.

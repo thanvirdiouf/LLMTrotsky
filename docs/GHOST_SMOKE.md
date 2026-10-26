@@ -9,7 +9,7 @@ A successful run, structural check or model approval is not a quality score.
 Ghost v1–v5, v7 and v8 are complete, downloaded, verified and source-reviewed.
 V6 is preserved as a prepared routing-only bundle, **never uploaded or run**.
 V9 is the completed fresh matched-source direct/checked comparison, saved
-Kaggle version 11. V10 completed as saved version 12; V11 completed as saved version 13; V12 completed as saved version 14; V13 prepares fresh end-to-end questions. [Active guide](PRESENT_DAY_GHOST.md),
+Kaggle version 11. V10 completed as saved version 12; V11 completed as saved version 13; V12 completed as saved version 14; V13 completed as saved version 15 with fresh end-to-end questions. [Active guide](PRESENT_DAY_GHOST.md),
 [comparison design](GHOST_COMPARISON.md), [failure analysis](GHOST_FAILURE_ANALYSIS.md).
 
 | Local version | Saved Kaggle version | Evaluation calls | Source/case scope |
@@ -26,7 +26,7 @@ Kaggle version 11. V10 completed as saved version 12; V11 completed as saved ver
 | ghost_smoke_v10 | 12 | 18 | Valid task labels; final paragraph has malformed JSON |
 | ghost_smoke_v11 | 13 | 19 | Prose completes; auditor role confusion causes rejections |
 | ghost_smoke_v12 | 14 | 10 | Five valid accepted, five false rejected; no blocks |
-| ghost_smoke_v13 | pending | at most 30 | Fresh ordinary retrieval, four singles and six-turn dialogue |
+| ghost_smoke_v13 | 15 | 22 | Fresh ordinary retrieval; task/schema, inference and conversation limits |
 
 V1–v4 retain a frozen reference date of 25 October; later versions use 26 October.
 Execution occurred on 26 October. Do not silently change dates, helpers or
@@ -176,3 +176,11 @@ V12 selects `evaluate_ghost_audit.py` only for its calibration purpose: ten fixe
 candidates, ten checker requests, one separate probe. No candidates become
 trusted chat output or verified memory. The model receives no expected labels.
 See [calibration protocol](GHOST_AUDIT_CALIBRATION.md).
+
+
+V13 is complete and verified: ten replies, 22 generations, no input budget
+rejection or truncation, 11.32 GiB probe peak. Ordinary retrieval retains the
+needed evidence, but classification/schema, brief coverage, source inference,
+depth and overall brevity still fail. After freezing, a narrow local enum
+normalization is unit-tested but not GPU-retested. Preserve V13 as executed.
+See [next review and decision](GHOST_NEXT_REVIEW.md). No new run is queued.

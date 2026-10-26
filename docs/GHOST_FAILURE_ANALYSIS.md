@@ -110,3 +110,14 @@ isolates the auditor with five valid and five deliberately false fixed
 candidates, expected labels withheld. Speaker and source-support roles are
 explicit; political preference need not be endorsed by ILO, while descriptive
 premises still require evidence. See [calibration](GHOST_AUDIT_CALIBRATION.md).
+
+
+V12 makes all ten preregistered designed audit decisions correctly, but V13's
+fresh full pipeline still approves a source-concept error (exposure gradients
+versus adoption barriers). It also exposes an invalid task enum, a source-status
+question routed to opinion, brief rendering that drops a necessary card, and
+whole-answer length/depth failures. Relevant natural retrieval and definite-
+study retention work in these cases. The observed enum synonym is now recovered
+locally with logging; no post-fix GPU result is claimed. Stop adapting to these
+inspected questions. [Independent review and next evidence](GHOST_NEXT_REVIEW.md)
+are prepared; no independent review has yet occurred. Training stays paused.

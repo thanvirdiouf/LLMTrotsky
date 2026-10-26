@@ -71,3 +71,12 @@ rejected candidates. A separate private mapping links neutral review IDs to
 run keys. Review displayed replies first; inspect candidates later for diagnosis.
 Calibration judge outputs are refused as chatbot-review inputs. This differs
 from the existing full diagnostic worksheet, which also exposes candidates.
+
+V15 is submitted as private saved version 17. V16 is frozen after the narrow
+historical-component change. All payloads except `ghost_chat.py` and derived
+protocol hashes are byte-identical, including reviewer-authored model questions,
+profile, collection, ledger, evaluator and memory probe. Local regressions prove
+that an invented quoted opinion cannot erase the planner-prioritized canonical
+prediction; view-only replies remain separate and mixed source behavior is not
+keyword-gated. Fifty-four focused tests pass. Full suite: 327 tests, the same
+two pre-existing historical README snapshot errors; locks remain preserved.

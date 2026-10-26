@@ -18,9 +18,9 @@ Local review/adjudication/new questions: V14 `second_review/`.
 V15 baseline is frozen/staged from `config/ghost_second_review_evaluation_v1.json`:
 ten new reviewer-authored replies, fixed reviewed source context, ordinary
 last-four-message model history. V14 engine/profile/evidence retained. New
-controlled-context harness and score-blinded export tested (52 focused pass).
-Commit/push protocol/harness, submit within standing approval. Before inspecting
-outputs, V16 will test retaining a planner-prioritized canonical historical fact
+controlled-context harness and score-blinded export are committed/pushed as
+6fe4b35; V15 is running as private saved version 17. Before inspecting outputs,
+V16 is implemented and frozen, testing retention of a planner-prioritized canonical historical fact
 in mixed source answers when no contemporary factual card applies. No rejected
 prose promoted. Same questions/evidence/evaluator/control policy. See
 `docs/GHOST_INDEPENDENT_REVIEW.md`. Training/adapters/paid compute unchanged.

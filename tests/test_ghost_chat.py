@@ -433,5 +433,46 @@ class GhostChatTest(unittest.TestCase):
         self.assertTrue(budget['minimum_exceeds_target'])
         self.assertIn(cards['ilo_exposure_estimate']['statement'],text)
 
+    def test_rejected_opinion_does_not_erase_planner_prioritized_historical_fact(self):
+        from ghost_chat import load_active
+        bot=load_active();calls=[]
+        def generate(messages):
+            calls.append(messages);data=json.loads(messages[1]['content'])
+            if len(calls)==1:out={'answer_mode':'mixed','detail':'normal','claim_ids':['radio_war_prediction']}
+            elif len(calls)==2:
+                self.assertIn('does not establish its later fulfillment',data['planned_fact_display'])
+                return {'response':'Later nuclear history confirmed "an invented historical quotation".','finish_reason':'stop'}
+            else:
+                self.assertEqual(len(data['candidate_segments']),1)
+                self.assertEqual(data['candidate_segments'][0]['claim_ids'],['radio_war_prediction'])
+                out={'verdicts':[{'id':'s1','reason':'Synthetic source retention fixture',**{k:True for k in CHECKS}}]}
+            return {'response':json.dumps(out),'finish_reason':'stop'}
+        result=bot.answer('Does the supplied 1926 radio speech establish that later wars fulfilled its prediction, or does it only record what was predicted then?',generate)
+        self.assertEqual(result['selected_claim_ids'][0],'radio_social_control')
+        self.assertEqual(result['application_historical_fact_fallback_claim_ids'],['radio_war_prediction'])
+        self.assertEqual(result['state_after']['accepted_claim_ids'],['radio_war_prediction'])
+        self.assertEqual(result['state_after']['interpretation_basis_claim_ids'],[])
+        self.assertIn('does not establish its later fulfillment',result['response'])
+        self.assertNotIn('nuclear',result['response']);self.assertNotIn('_planner_claim_ids',result['state_after'])
+        self.assertTrue(result['rejected_segments'])
+        self.assertEqual([s['stage'] for s in result['stages']],['select','draft','check'])
+
+    def test_mixed_historical_component_is_not_keyword_gated_and_view_only_stays_separate(self):
+        from ghost_chat import load_active
+        bot=load_active()
+        for mode in ('mixed','view'):
+            state=initial_state(bot.collection,bot.ledger);state['active_packet_ids']=['radio_science'];calls=[]
+            def generate(messages):
+                calls.append(messages);data=json.loads(messages[1]['content'])
+                if len(calls)==1:out={'answer_mode':mode,'detail':'normal','claim_ids':['radio_war_prediction']}
+                elif len(calls)==2:return {'response':'I would keep predictions separate from observations.','finish_reason':'stop'}
+                else:out={'verdicts':[{'id':s['id'],'reason':'Synthetic mode separation fixture',**{k:True for k in CHECKS}} for s in data['candidate_segments']]}
+                return {'response':json.dumps(out),'finish_reason':'stop'}
+            result=bot.answer('Compare what that account establishes with your own judgment.',generate,state=state)
+            with self.subTest(mode=mode):
+                self.assertIn('My present-day interpretation:',result['response'])
+                self.assertEqual(result['state_after']['accepted_claim_ids'],['radio_war_prediction'] if mode=='mixed' else [])
+                self.assertEqual(result['application_historical_fact_fallback_claim_ids'],['radio_war_prediction'] if mode=='mixed' else [])
+
 
 if __name__=='__main__':unittest.main()

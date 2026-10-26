@@ -141,7 +141,16 @@ def plan_response_budget(question,selected,state):
     sentence_limit=1 if re.search(r'\b(?:one|1)[- ]sentence\b',question,re.I) else 2 if state.get('_detail')=='brief' or re.search(r'\b(?:two|2) sentences\b',question,re.I) else None
     mode=state.get('_answer_mode')
     if mode=='view':candidates=[]
-    elif mode=='mixed':candidates=[cid for cid,c in selected.items() if c['domain']=='contemporary_evidence'][:1 if state.get('_detail')=='brief' else 2]
+    elif mode=='mixed':
+        modern=[cid for cid,c in selected.items() if c['domain']=='contemporary_evidence']
+        if modern:candidates=modern[:1 if state.get('_detail')=='brief' else 2]
+        else:
+            # A source question can be classified mixed even when its factual
+            # component is historical. Preserve the planner's first reviewed
+            # claim rather than substituting an app-added outlook principle or
+            # making an unsupported opinion a dependency of the factual answer.
+            priority=state.get('_planner_claim_ids',list(selected))
+            candidates=[cid for cid in priority if cid in selected and selected[cid]['domain']=='historical_record'][:1]
     else:candidates=list(selected)[:4]
     ids=[];omitted=[]
     def display(chosen):
@@ -274,7 +283,7 @@ def expand_draft(draft,selected,question,state):
         facts=list(state['_planned_fact_ids'])
     interpret=interpretation_requested(question,state)
     source_question=bool(re.search(r'\b(letter|historical|record|transcript|wrote|said|radio speech|1926)\b',question,re.I))
-    if interpret and not source_question:
+    if interpret and not source_question and state.get('_answer_mode')!='mixed':
         facts=[c for c in facts if selected[c]['domain']=='contemporary_evidence']
     segments=[]
     for start in range(0,len(facts),2):segments.append({'kind':'fact','claim_ids':facts[start:start+2]})
@@ -428,6 +437,7 @@ class GhostChat:
         routing_source='not_called'
         selection_normalizations=[]
         response_budget=None
+        historical_fact_fallback_ids=[]
         def call(stage,candidate=None,*,structured=True):
             req=request(stage,self.profile,question,trace,available if stage=='select' else selected,history,request_state,candidate)
             out=generate(req['messages']);stages.append({**req,'output':out})
@@ -451,6 +461,8 @@ class GhostChat:
                     if mode!=selection['answer_mode']:routing_source='explicit_facts_override'
                 else:routing_source='legacy_keyword_fallback'
                 selected={c['id']:c for c in validate_plan(plan,available)}
+                if request_state.get('_answer_mode'):
+                    request_state={**request_state,'_planner_claim_ids':list(selected)}
                 factual_request=request_state.get('_answer_mode')=='facts' or facts_only_requested(question)
                 if (factual_request and re.search(r'\b(study|report|research)\b',question,re.I)
                         and not re.search(r'\b(historical|radio|1926|letter|transcript)\b',question,re.I)
@@ -476,6 +488,8 @@ class GhostChat:
                     fact_ids=list(selected)[:4]
                     if request_state.get('_answer_mode') and not quote_requested:
                         fact_ids,fact_display,response_budget=plan_response_budget(question,selected,request_state)
+                        if request_state['_answer_mode']=='mixed':
+                            historical_fact_fallback_ids=[cid for cid in fact_ids if selected[cid]['domain']=='historical_record']
                         request_state={**request_state,'_planned_fact_ids':fact_ids,'_planned_fact_display':fact_display,'_response_budget':response_budget}
                     if interpret and not quote_requested and request_state.get('_answer_mode'):
                         raw={'facts':[],'interpretation':call('draft',structured=False),'quotes':[]}
@@ -510,6 +524,7 @@ class GhostChat:
                 'answer_mode':request_state.get('_answer_mode'),'detail':request_state.get('_detail'),'routing_source':routing_source,
                 'application_selection_normalizations':selection_normalizations,
                 'response_budget':response_budget,
+                'application_historical_fact_fallback_claim_ids':historical_fact_fallback_ids,
                 'application_format_normalizations':format_actions,'missing_verdict_ids':missing_verdicts,'unknown_verdict_ids':unknown_verdicts,
                 'status':'blocked' if error else 'application_filtered' if selected and not segments and rejected_segments else 'review_rejected' if selected and not accepted else 'abstained' if not facts and not basis else 'partial' if len(accepted)<len(segments) or rejected_segments else 'supported_by_model_review',
                 'validation_error':error,'semantic_guarantee':False,'model':MODEL,'training_steps':0,'adapters_loaded':[]}

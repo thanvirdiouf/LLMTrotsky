@@ -1,0 +1,12 @@
+{
+  "status": "Opt-in reviewed claim coverage and selector metadata variant; three additions, unchanged packets/original39claims/brief forms; no quality promotion",
+  "persona_file": "config/persona_ghost_expansion.json",
+  "historical_sources_file": "config/ghost_historical_sources_v3.json",
+  "contemporary_sources_file": "config/ghost_contemporary_sources_v3.json",
+  "reflection_basis_claim_ids": [
+    "radio_social_control",
+    "radio_no_automatic_peace"
+  ],
+  "historical_claim_supplements_file": "config/ghost_historical_sources_v4_supplements.json",
+  "selection_anchor_offsets": false
+}

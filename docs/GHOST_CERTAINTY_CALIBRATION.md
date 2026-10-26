@@ -100,3 +100,13 @@ rejection. It checks both members before crediting a pair. Three new tests cover
 those measurement boundaries and refuse changed expectations or result journals.
 All72 focused tests pass; the full345 suite retains the same two historical
 README snapshot errors. No historical locks are changed.
+
+V23/saved25 is now complete and token/frozen verified: ten calls, no budget
+rejection/truncation, 11.32GiB. It rejects both false corroboration variants and
+keeps all five valid approvals, but newly accepts the false theoretical-agreement
+variant. Four of five pairs now match both expectations, compared with three
+in V22. The false approval rationale paraphrases the candidate as preserving
+the very distinction it actually reverses. This is a partial improvement with a
+reading regression, not a reliable semantic gate. No general success rate or
+human-gold claim follows. Source coverage work remains
+[separate and opt-in](GHOST_CLAIM_COVERAGE.md).

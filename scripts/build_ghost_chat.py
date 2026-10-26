@@ -51,6 +51,40 @@ def historical_additions(root, path, reference):
     return packets,claims,aliases,spec['review']
 
 
+def historical_claim_supplements(packets,existing_claims,path):
+    """Add reviewed claims to identical existing packets, never rewrite history."""
+    spec=json.loads(path.read_text())
+    if (set(spec)!={'schema_version','review','sources'} or type(spec['schema_version']) is not int or spec['schema_version']!=1
+            or not isinstance(spec['review'],str) or not spec['review'].strip()
+            or not isinstance(spec['sources'],list) or not spec['sources']):
+        raise ValueError('Expected reviewed historical claim supplements')
+    by_packet={p['id']:p for p in packets};seen={c['id'] for c in existing_claims}
+    sources=set();added=[]
+    for source in spec['sources']:
+        if not isinstance(source,dict) or set(source)!={'packet_id','packet_fingerprint','claims'}:
+            raise ValueError('Invalid supplement source binding')
+        pid=source['packet_id'];packet=by_packet.get(pid)
+        if (pid in sources or packet is None or packet['domain']!='historical_record'
+                or fingerprint(packet)!=source['packet_fingerprint']):
+            raise ValueError('Supplement source differs from reviewed historical packet')
+        sources.add(pid)
+        if not isinstance(source['claims'],list) or not source['claims']:raise ValueError('Supplement claims required')
+        for claim in source['claims']:
+            if not isinstance(claim,dict) or set(claim)!={'id','statement','status','attribution','anchors'}:
+                raise ValueError('Supplement cannot override source metadata')
+            if not isinstance(claim['id'],str) or claim['id'] in seen:
+                raise ValueError('Supplement claim IDs must be new and unique')
+            seen.add(claim['id'])
+            added.append({**deepcopy(claim),'packet_id':pid,
+                'composition_date_interval':deepcopy(packet['composition_date_interval']),'domain':'historical_record'})
+    # Reuse the established statement/anchor/speaker/status validator as well as
+    # the packet fingerprint. A source binding alone is not a semantic review.
+    collection={'packets':packets,'packets_sha256':fingerprint(packets)}
+    validate_ledger(collection,{'collection_sha256':collection['packets_sha256'],
+        'claims':deepcopy(existing_claims)+added,'topic_aliases':{pid:[] for pid in by_packet}})
+    return added,spec['review']
+
+
 def build(root=ROOT, source_plan=None):
     if source_plan is None:
         active=root/'config/active_chat.json'
@@ -98,6 +132,9 @@ def build(root=ROOT, source_plan=None):
         for claim in source['claims']:
             claims.append({**deepcopy(claim), 'packet_id': source['id'], 'composition_date_interval': interval,
                            'observed_date': source['observed_date'], 'domain': 'contemporary_evidence'})
+    if plan.get('historical_claim_supplements_file'):
+        supplements,supplement_review=historical_claim_supplements(packets,claims,root/plan['historical_claim_supplements_file'])
+        claims.extend(supplements);extra_review+=' Historical claim supplements: '+supplement_review
     collection = {'schema_version': 3, 'mode': profile['mode'], 'reference_date': profile['reference_date'],
         'historical_knowledge_cutoff': None, 'persona_prompt': profile['system_prompt'],
         'display_label': profile['display_label'], 'packets': packets, 'packets_sha256': fingerprint(packets),
@@ -106,6 +143,9 @@ def build(root=ROOT, source_plan=None):
         'review': old_ledger['review']+' Contemporary source: '+modern['review']+extra_review,
         'claims': claims, 'topic_aliases': aliases,
         'reflection_basis_claim_ids': plan.get('reflection_basis_claim_ids',['newleader_principles', 'weisbord_propaganda'])}
+    if 'selection_anchor_offsets' in plan:
+        if type(plan['selection_anchor_offsets']) is not bool:raise ValueError('Selection offset policy must be Boolean')
+        ledger['selection_anchor_offsets']=plan['selection_anchor_offsets']
     validate_ledger(collection, ledger)
     by_id={c['id']:c for c in claims}
     if not ledger['reflection_basis_claim_ids'] or any(c not in by_id or by_id[c]['domain']!='historical_record' for c in ledger['reflection_basis_claim_ids']):

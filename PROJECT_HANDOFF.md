@@ -5,54 +5,58 @@ records, dated modern evidence and newly imagined views. Both adapters remain
 experimental and training stays paused. User authorized autonomous result-
 dependent continuation, proper documentation, milestone commits and pushes.
 
-## Active continuation: V22 baseline verified; V23 framing comparison staged
+## Active continuation: V23 verified; V24 coverage variant staged
 
-Latest pushed4f6fe21 includes transfer findings, transcript metadata fix and
-certainty design. Working changes now: checker source-status instruction,
-verified C review docs, reusable calibration scorer+3tests and V22/V23 docs.
-V19/saved21,V20/saved22 verified25calls; V21/saved23 verified27calls. Masked
-A/B shows7identical/no overall gain. Memory supplies original/revised1/4 but
-delayed answer stillsame17wordfact. B/C shows6identical, partialgainsR02/R07,
-regressionR08, no closingminute. All A/B/C rawtext+legacy hasheschecked.
-Review_compact_trial blindtoimplementation/statuses/verdicts; nothumangold.
+Latest pushed d52d2f2. V20/saved22 memory verified25calls: inputs restored but
+no qualitygain; V21/saved23 parser verified27calls:2blocks removed, partial
+usefulness gains/regressions. Masked A/B/C reviews and exacthashchecks saved
+under ghost_user_context_comparison. Reviewers AI,not humanhistorian gold.
 
-V22/saved24 COMPLETE/token/frozen verified:10checker calls,no inputbudget
-rejection/truncation,11.32GiB. 5valid approved,3invalid rejected,2invalidapproved
-(independentdonationconfirmation, externalcorroborationofretrospectivepressure).
-3/5pairsbothcorrect. Onefalseacceptance rationale inverseswhatcandidate says;
-other treatsprimaryaccountasindependentcorroboration. Notretrievalfailure.
-Sources/expectedcasesrootcheckedbeforecall; source_review proposal author
-neverreadV19–21outputs. AIexpectedjudgments, nothumanhistorian gold.
+V22/saved24 verified10checker calls:5valid approvals,3invalid rejections,2false
+corroboration approvals,3/5pairsbothcorrect. V23/saved25 verified10calls: both
+corroborations rejected, all5validapproved, butnewfalseapproval oftheoretical
+agreement;4/5pairsbothcorrect. Rationale again rewritesfalsecandidateastruedistinction.
+No budgets/truncation, peak11.32GiB. Not reliable gate/no generalrateclaim.
+Reusable scripts/summarize_ghost_calibration.py binds frozenexpectedhash/actual
+verifiedjournal and nevercreditsblocks/missingjudgmentsas correctrejection.
 
-V23 FROZEN/STAGED, NOT SUBMITTED. Exact V22source/candidate/question/userpayloads,
-onlycheckersysteminstruction changes toexplain documented_statement vs actual
-independentrecord/corroboration. No expectedlabel edits/keywordban. Probe uses
-new instruction withpaddingadjustedtosame5000tokens. Only ghost_chat.py,
-memory_probe.json,protocol differ; scoredpayloadsequal. CPUpreflight under
-evaluation/runs/ghost_smoke_v23/preflight.json. Commit/push then submitV23
-(expected saved25) under standingprivate boundedapproval:10checkercalls+probe1,
-notraining/adapters/paidcompute. Download/replay/tokenverify thenrun scorer.
+Working changes now builder supplement support, optional selector offset
+omission,sourceplan_v4,4newtests and docs/results. Source_review proposed3new
+canonicalclaims from hearing/Eastman/Blumkin completepackets (no runoutputsread).
+Rootcheckedanchors/roles/dates/fingerprints. Alloriginal39claims+4brief forms
+and all10packets remain identical. Add hearing_secretary_count_limit,
+eastman_sincerity_theory_distinction,blumkin_visitor_identification_limit.
+RootclassifiesBlumkinasinference; quotationstyling removed fromtwo paraphrases
+after renderpreflight, preserving words/qualifications and exactanchors.
+Originalproposal unchanged in evaluation/ghost_claim_coverage_proposal_v1.
 
-New scripts/summarize_ghost_calibration.py binds frozenexpectedhash andexact
-verifiedjournal/candidates, classifiesfalseaccepts/rejects/blocks/unscored
-judgments; missingverdictsarenotcorrectrejections. Bothpairmembersmustmatch.
-3newtests:72focused pass/full345same2historicalREADMEsnapshoterrors. Logs in
-V23/{focused,full}_tests.log. Legacyhelpers/locks unchanged. Reusable reporter
-already produced V22/CALIBRATION_REVIEW.json. Check V23preflight completion
-session3432 ifneeded. Docs GHOST_CERTAINTY_CALIBRATION.md has design/results.
+New ignored config/ghost_historical_sources_v4_supplements.json matchesexisting
+gitignore prefix. Plan config/ghost_source_plan_v4.json opt-in only. Builder
+bindsoriginalpacketfingerprints, derives dates/domain, forbids IDrewrites/source
+metadataoverrides, revalidatesanchors/speakers/statuses. Sourcepacketsunchanged.
+Activepointer remainsv3, no promotion/training. Newsourcebodyinputsremainignored.
 
-Remaining separable problems: fixedcatalogcannotrender some full-sourcefacts
-(secretarycount,Eastmantheoreticaldifferences,Marchcareerdate,certainBlumkin
-identification). Othersavailablebutnotselected (BlumkinApparently). Userpremise
-quotescanfilterentireview. Conditionalarithmeticiswronglyroutedtoviewrequiring
-historicalbasis. Selectstage stillinheritsroleplay systemunlikeauditor, a
-possiblelatercontrolledroutingexperiment. Do not train or assume hardwarefixes
-these application limits. Sourcecoverage expansion must preserve certainty/
-full-sourcebindingsandinputbudget, notjust addcardsperinspectedquestion.
+Initial three-card extension withfullselectoroffsets exceeded5120 infive
+preflightturns(max5211). Variantselection_anchor_offsets:false omits offsets
+ONLYfromselection propositions, preservingfullsourceblocks/roles/dates/statuses
+and all laterdraft/audit/renderer anchors. Defaultv3behaviorunchanged. Final
+readypreflight10selectorsmax4711,fullsourceJSONidenticaltoV21; notboundonfuture
+generatedhistories/laterstages. Reports in proposal_v1/budget/*.json.
+Final local evidence evaluation/ghost_chat_v4_ready; earlier unsubmitted builds
+v4/v4_compact preserved. 76focused pass/full349same2historicalREADMEerrors,
+logs under evaluation/runs/ghost_coverage_local/compact_{focused,full}_tests.log.
+All3newcanonicalfacts render exact approvedtext with citations (manualpreflight).
 
-Activev3 still10packets/39claims+4reviewedbrief forms; oldstudies/adapters
-preserved; trainingpaused. UserlatestContinue meansautonomousiterationwith
-commits/pushes. Noextrauploadpermissionneeded withinstandinginferencebounds.
+V24 FROZEN/STAGED, NOT SUBMITTED: same config/ghost_transfer_evaluation_v1.json
+two singles+8turns, explicit sourceplanv4. Currentexperimentalcheckerframing
+retained. This is combinedevidence/applicationcandidate versusinspectedV21
+regressions, notsinglecomponentablation/freshgeneralization. Model/sourcepackets/
+questions unchanged; ledger/selectorview/checkinstruction differfromV21.
+Commit/pushthen submitunderstandingprivateapproval (expected saved26),<=30calls
++probe1/notraining/adapters/paidcompute. Exactdownload/replay/tokenverify, inspect
+newclaimcoverage/budget/refusals, exportmaskedD forauthorizedreview_compact_trial.
+Do not share pipeline statuses/verdicts/armidentities. Needfresh transfer before
+qualitypromotion, regardlessbetterinspectedcases. Docs GHOST_CLAIM_COVERAGE.md.
 
 ## Active continuation: V18 compact forms trial
 

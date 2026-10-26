@@ -1,5 +1,9 @@
 # Next review after the fresh end-to-end study
 
+This was the plan after V13/V14. The requested separate AI reviews have since
+completed; human historian review has not. See [current transfer study](GHOST_TRANSFER_EVALUATION.md)
+and [active guide](PRESENT_DAY_GHOST.md) for ongoing result-dependent work.
+
 V13 completes the requested small grounded prototype experiment: bounded
 retrieval, source metadata/certainty, insufficient-evidence questions and a
 sustained conversation using the untouched base. It does not establish a

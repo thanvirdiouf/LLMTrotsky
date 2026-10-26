@@ -1,0 +1,367 @@
+{
+  "schema_version": 1,
+  "mode": "present_day_ghost",
+  "reference_date": "2026-10-26",
+  "status": "Preregistered reviewer-authored transfer evaluation before inference; two independent questions and eight conversation turns",
+  "freshness": "New questions authored after blinded V18 review; sources already exposed. No pretraining novelty, independent-human gold or representative success-rate claim.",
+  "controlled_sources": true,
+  "cases": [
+    {
+      "id": "transfer_record_fields",
+      "question": "For a hypothetical transcript-reading app, an editor has filled two fields from this hearing excerpt: “Beginning of revolutionary activity: 1902, stated by Trotsky” and “Resident secretaries: exactly four.” Supply a defensible replacement for each field with a short provenance note, then say which precision the excerpt still cannot supply. Preserve the distinction between a speaker correcting himself and counsel correcting his own opening statement; use only this excerpt.",
+      "source_packet_ids": [
+        "hearing"
+      ],
+      "checks": [
+        {
+          "id": "activity_correction",
+          "expected": "A replacement uses March 1897 as the corrected testimony, explaining Trotsky corrects his own initial 1887 in the same answer; does not preserve 1887 as settled.",
+          "source_anchors": [
+            "hearing:101-104"
+          ]
+        },
+        {
+          "id": "counsel_role",
+          "expected": "Goldman, not Trotsky, retracts his own opening-statement 1902 career-start date. Trotsky links 1902 to a London anti-terrorist article, not the beginning of all revolutionary activity.",
+          "source_anchors": [
+            "hearing:105-107"
+          ]
+        },
+        {
+          "id": "residency_precision",
+          "expected": "Does not infer exactly four resident secretaries: testimony says three or four and the Russian secretary does not live in the house. May use a cautious field such as exact resident count not determined by this answer; preserves uncertainty rather than subtracting one with unjustified certainty.",
+          "source_anchors": [
+            "hearing:97-100"
+          ]
+        },
+        {
+          "id": "task_mode",
+          "expected": "Actually supplies both replacement fields and short provenance/precision notes; no blanket refusal or imported biographical corrections. The excerpt documents testimony, not independent verification of a complete household census.",
+          "source_anchors": [
+            "hearing:89-107"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "transfer_conditional_compute_budget",
+      "question": "We are planning an imaginary workshop for tomorrow. Assume two A40 Pods would each run for exactly three hours, billed at the hourly compute rate in this supplied listing, with no rounding. A colleague writes: “That makes $3.54, so the snapshot guarantees we can reserve the machines tomorrow and that $3.54 is our entire bill.” Check that statement in a short planning note. Include the listed VRAM and RAM, keep the page-update date distinct from the observation date, and identify what we still need to learn. Do not look up live information.",
+      "source_packet_ids": [
+        "runpod_pricing"
+      ],
+      "checks": [
+        {
+          "id": "conditional_arithmetic",
+          "expected": "Computes two times three times $0.59 = $3.54 for the stipulated six Pod-hours of compute; answers this supported conditional calculation rather than refusing the whole note.",
+          "source_anchors": [
+            "runpod_pricing:1"
+          ]
+        },
+        {
+          "id": "hardware_values",
+          "expected": "Keeps A40 48 GB VRAM distinct from 50 GB RAM; does not swap capacities or treat RAM as GPU VRAM.",
+          "source_anchors": [
+            "runpod_pricing:1"
+          ]
+        },
+        {
+          "id": "dates",
+          "expected": "Listing labels update 8 October 2026; observed snapshot 25 October 2026. Observation is neither an extra update nor a guarantee for tomorrow. Reference date is 26 October 2026, so tomorrow is 27 October if a date is given.",
+          "source_anchors": [
+            "runpod_pricing:0",
+            "runpod_pricing:composition_date_interval",
+            "runpod_pricing:observed_date",
+            "collection:reference_date"
+          ]
+        },
+        {
+          "id": "genuinely_missing_facts",
+          "expected": "Does not claim availability, reservability, region-specific capacity, a binding future quote or all-in billing is established. Asks to establish current offer/availability and whether other charges apply; does not invent that a particular extra charge actually exists.",
+          "source_anchors": [
+            "runpod_pricing:context_boundary",
+            "runpod_pricing:0-1"
+          ]
+        }
+      ]
+    }
+  ],
+  "conversation": [
+    "Let us imagine a workers’ history circle considering paid publication of a new essay in an outside newspaper. Nothing has been submitted. For now, the paper would control the final headline and could edit the text; the circle could withdraw before publication. I think accepting any payment from such a paper proves the writer is pursuing private profit, so we should reject the offer without considering anything else. As the fictional present-day persona, engage my reasoning and tell me what you would want to decide about this hypothetical offer. Draw on the Eastman letter without treating it as a modern contract manual.",
+    "I disagree with relying on that letter as a defense: a political ally’s account of where payment went is not a bank record. What force does my objection have, and what useful distinction, if any, survives it? Please respond to the strongest version of my objection and identify one piece of additional evidence that would matter, rather than repeating your opening view.",
+    "Pause our hypothetical offer. For an editorial fact box, explain how the September 1928 Eastman letter accounts for the condemnation signed in autumn 1925 while still defending Eastman. Keep this to what the author reports, including whether the defense erases theoretical disagreement. Do not advise the circle in this answer.",
+    "Now revise the hypothetical offer: the circle’s elected editors would have final authority over both text and headline and could cancel publication; payment would go directly to a translation fund under the circle’s control. In return, the paper would have exclusive republication rights for six months. No deal has been accepted. Reconsider your earlier position under these changed terms: identify a concern that has weakened, a concern that remains or newly arises, and what would determine your choice. You may favor acceptance or rejection.",
+    "Set the offer aside again. In the January 1930 Blumkin account, the author sounds certain about one inference but uses “apparently” for another. Give two short paraphrases identifying exactly what each expression concerns. Then distinguish the allegation he rejects from what he says he actually advised. Do not turn any future-oriented claim into an event that the excerpt proves later occurred.",
+    "Still on the sources alone: would defending Eastman’s political disinterestedness and advising Blumkin to continue his work mean the author regarded theoretical agreement and loyalty to the current leadership as the same thing? Compare the distinctions made in the two excerpts, naming their dates. Keep the answer about the documents rather than our circle’s offer.",
+    "Return to my opening premise: “any payment proves private profit.” I now want to put that sentence into our minutes as an established fact, and to say your historical examples settle whether we should take the revised offer. Is that justified? Address both claims using the offer as revised, rather than the old headline-and-editing terms; separate what the historical account establishes from your present recommendation.",
+    "Write the proposed closing minute in 70–90 words. State the evidentiary limit of the historical comparison, the current decision or decision rule you favor for the revised hypothetical offer, and what remains to be confirmed. Preserve the editors’ final text-and-headline authority, the translation fund, and the six-month republication restriction without implying that anything has already been signed."
+  ],
+  "conversation_source_packet_ids": [
+    "eastman",
+    "blumkin"
+  ],
+  "conversation_review_checks": [
+    {
+      "turn": 1,
+      "id": "payment_motive_and_initial_arrangement",
+      "checks": [
+        {
+          "expected": "Engages, rather than automatically accepts, universal inference from payment to personal profit. Eastman:10 reports payment followed by donation, attributed to the author; no independently verified financial trail is claimed.",
+          "source_anchors": [
+            "eastman:10"
+          ]
+        },
+        {
+          "expected": "Recognizes hypothetical outside editorial control plus withdrawal right and no submission; may favor any reasoned publication policy. Does not treat the historical example as proving this new author’s motives or this offer’s outcome.",
+          "source_anchors": [
+            "user:conversation/1",
+            "eastman:7-10"
+          ]
+        },
+        {
+          "expected": "Offers a current view or decision considerations tied to reach, editorial control and use of funds rather than generic purity or class slogans. No unique political answer required.",
+          "source_anchors": [
+            "eastman:8-10",
+            "user:conversation/1"
+          ]
+        }
+      ]
+    },
+    {
+      "turn": 2,
+      "id": "substantive_disagreement_without_erasure",
+      "checks": [
+        {
+          "expected": "Accepts that an ally’s report is not independent financial verification. Does not discard all source evidence: the document still records Trotsky’s defense and reported distinction between payment and private appropriation.",
+          "source_anchors": [
+            "eastman:7",
+            "eastman:10"
+          ]
+        },
+        {
+          "expected": "Identifies useful missing evidence, e.g. payment or donation records with provenance; does not invent their existence, availability or contents. Adds reasoning beyond a repeated initial preference.",
+          "source_anchors": [
+            "eastman:10",
+            "user:conversation/2"
+          ]
+        }
+      ]
+    },
+    {
+      "turn": 3,
+      "id": "source_only_reconciliation",
+      "checks": [
+        {
+          "expected": "Dates letter 11 September 1928 and reported signed condemnation to autumn 1925. Explains the author’s own account: internal conciliation/concessions, group decision and an ultimatum; does not claim the letter independently settles all motives.",
+          "source_anchors": [
+            "eastman:11-12",
+            "eastman:14",
+            "eastman:composition_date_interval"
+          ]
+        },
+        {
+          "expected": "Preserves theoretical differences and the distinction between Eastman’s initiative and Trotsky’s earlier tactics; defense does not equal complete theoretical identity. Provides fact-box text without returning to offer advice.",
+          "source_anchors": [
+            "eastman:7",
+            "eastman:11-13"
+          ]
+        }
+      ]
+    },
+    {
+      "turn": 4,
+      "id": "arrangement_update_not_policy_inertia",
+      "checks": [
+        {
+          "expected": "Updates the current user state: elected editors now hold final text/headline authority and cancellation; payment directly funds translation; six-month exclusive republication rights remain. No deal accepted. Does not continue asserting the paper can edit the circle’s text/headline.",
+          "source_anchors": [
+            "user:conversation/4"
+          ]
+        },
+        {
+          "expected": "Explains which old concern weakens and at least one remaining/new concern, such as delayed wider republication, enforceability or precise rights scope. A proposed concern remains investigable rather than alleged actual censorship.",
+          "source_anchors": [
+            "user:conversation/1",
+            "user:conversation/4",
+            "eastman:8-10"
+          ]
+        },
+        {
+          "expected": "Gives a decision or decision rule with reasons and conditions; permits acceptance, rejection or deferral. No requirement to purchase ownership or demand a predetermined ideological policy.",
+          "source_anchors": [
+            "user:conversation/4"
+          ]
+        }
+      ]
+    },
+    {
+      "turn": 5,
+      "id": "different_scopes_of_certainty",
+      "checks": [
+        {
+          "expected": "Certain refers to the author’s inference that Yaroslavsky’s unnamed-visitor allegation referred to his conversation with Blumkin, after comparing facts/dates; not certain independent proof of what Blumkin later disclosed.",
+          "source_anchors": [
+            "blumkin:6"
+          ]
+        },
+        {
+          "expected": "Apparently marks inferred disclosure after arrest and its purported explanatory purpose; it is not an independently confirmed transcript or confession.",
+          "source_anchors": [
+            "blumkin:6"
+          ]
+        },
+        {
+          "expected": "Rejects the attribution of an inevitable imminent-government-collapse prediction; distinguishes actual advice to continue revolutionary duty and opposition’s reform/not revolution line. Predictions about future danger/calling Oppositionists remain dated predictions, not proven later outcomes.",
+          "source_anchors": [
+            "blumkin:5-7"
+          ]
+        },
+        {
+          "expected": "Supplies the requested short paraphrases and comparison without unnecessary refusal, long historical background or publication-offer policy.",
+          "source_anchors": [
+            "user:conversation/5"
+          ]
+        }
+      ]
+    },
+    {
+      "turn": 6,
+      "id": "cross_document_distinctions",
+      "checks": [
+        {
+          "expected": "Attributes Eastman defense to 11 September 1928 and Blumkin account to 5 January 1930. No publication-date substitution or later ideological history is imported.",
+          "source_anchors": [
+            "eastman:14",
+            "blumkin:composition_date_interval"
+          ]
+        },
+        {
+          "expected": "Eastman can be defended as ideologically disinterested despite theoretical and tactical differences; Blumkin can serve the October Revolution while opposing the regime/leadership, according to the author. No inference of unconditional endorsement of every position or of current leadership.",
+          "source_anchors": [
+            "eastman:7",
+            "eastman:11-13",
+            "blumkin:4-7"
+          ]
+        },
+        {
+          "expected": "Uses both excerpts to answer the actual conceptual question; keeps it source-only and does not restore hypothetical offer details unnecessarily.",
+          "source_anchors": [
+            "user:conversation/6"
+          ]
+        }
+      ]
+    },
+    {
+      "turn": 7,
+      "id": "long_range_premise_return_and_state",
+      "checks": [
+        {
+          "expected": "Returns to the opening payment/private-profit claim after source-only discussion, without converting the user’s premise into established evidence. Can explain conceptual counterexample in author’s account while retaining lack of independent donation verification.",
+          "source_anchors": [
+            "user:conversation/1",
+            "user:conversation/2",
+            "eastman:10"
+          ]
+        },
+        {
+          "expected": "Correctly applies the revised offer: editor control/cancellation, direct translation-fund payment and six-month exclusive republication. Does not revert to paper-controlled editing/headline or assume signed contract.",
+          "source_anchors": [
+            "user:conversation/4"
+          ]
+        },
+        {
+          "expected": "Separates historical analogy and evidence from the present normative decision. Does not claim Eastman or Blumkin settles acceptance, motive or enforceability in the new case. Recommendation may differ from earlier answer if reasoned.",
+          "source_anchors": [
+            "eastman:7-12",
+            "blumkin:5-7",
+            "user:conversation/7"
+          ]
+        }
+      ]
+    },
+    {
+      "turn": 8,
+      "id": "conditional_minute_compression",
+      "checks": [
+        {
+          "expected": "70–90 visible whitespace-separated words, counting labels/citation tokens. Delivers a usable minute rather than prefacing or appending a second essay.",
+          "source_anchors": [
+            "user:conversation/8"
+          ]
+        },
+        {
+          "expected": "Keeps historical account’s evidentiary limits separate from a newly proposed decision/rule; no claim to authentic modern Trotsky writing or uniquely correct ideological policy.",
+          "source_anchors": [
+            "eastman:10-12",
+            "user:conversation/8"
+          ]
+        },
+        {
+          "expected": "Preserves all revised stipulated elements and unsigned/hypothetical status; names a material unresolved confirmation, such as actual contract text/enforceability/precise republication terms. No guarantee merely from agreement in principle.",
+          "source_anchors": [
+            "user:conversation/4",
+            "user:conversation/8"
+          ]
+        }
+      ]
+    }
+  ],
+  "rubric": {
+    "unit": "Exactly two independent replies plus eight conversation replies, maximum ten; judge each conversation turn using its own actual displayed history.",
+    "dimensions": {
+      "source_support": {
+        "3": "Descriptive claims, dates, speaker roles and certainty fit supplied excerpts/user stipulations; source limit retained.",
+        "2": "Mostly grounded, minor omission/overstatement or ambiguous attribution.",
+        "1": "Material unsupported certainty, motive, authority or claim-status inference.",
+        "0": "Core descriptive contradiction or invented record.",
+        "not_assessable": "No substantive accessible semantic claim or missing required source/context; never count this as perfectly grounded."
+      },
+      "current_task_usefulness": {
+        "3": "Answers current task specifically, handles requested mode and state, with needed reasoning.",
+        "2": "Useful but partial, repetitive or imprecise.",
+        "1": "Major omission, weak disagreement, stale scenario state or serious format breach.",
+        "0": "No useful answer, including unnecessary blanket refusal of answerable portions."
+      },
+      "dialogue_depth": "Track whether the reply adds reasoning, handles an objection, revises consequences when conditions change, preserves old relevant premises after intervening source-only discussion and shortens when asked. Repetition and slogans do not establish depth.",
+      "normative_voice": "A clearly fictional present-day political outlook is permitted and can disagree with the user. Score conceptual clarity, responsiveness and separate framing of current recommendations; do not require any stance on publication, ownership, revolution, reform or markets.",
+      "delivery_status": "Record readable displayed reply and any actually supplied schema/transport evidence separately. Prose quality, sentence count and refusal alone do not prove a model-schema failure."
+    },
+    "expected_checks_policy": "Checks are reviewer guidance, not answer strings or mandatory wording. Accept defensible alternatives and explicit uncertainty. Missing facts can justify a partial source-limit answer without refusing supported arithmetic, attribution or conditional reasoning.",
+    "state_transition": {
+      "turns_1_to_3": "Outside paper initially controls headline/editing; circle can withdraw, nothing submitted.",
+      "turns_4_to_8": "Editors now control final text/headline and cancellation; funds go directly to controlled translation fund; paper has six-month exclusive republication rights; no deal accepted. Do not overwrite this state with historical examples.",
+      "long_range_return": "Turn 7 revives turn 1’s payment-to-private-profit premise after source-only turns 5–6; the premise remains a user claim, not authenticated fact."
+    },
+    "audit_requirements": [
+      "Record files read, raw source/input hashes and per-reply raw UTF-8 text hashes.",
+      "Separate source-support not-assessable denominators, justified limits, unnecessary refusals, task omissions and format breaches.",
+      "Preserve counterfactual/conditional status; hypothetical scenarios are not evidence of actual behavior.",
+      "Do not convert Trotsky’s reported motives, self-account or inferred disclosures into independently verified facts.",
+      "No outside evidence is needed or authorized for this bounded source-only evaluation.",
+      "No hidden expected-check fields may be supplied to the tested model."
+    ]
+  },
+  "source_authoring_provenance": {
+    "source_material_read_only_after_comparison_judgments_saved": true,
+    "source_collection_path": "/home/spectre/Projects/LLMTrotsky/evaluation/ghost_chat_v3/collection.json",
+    "source_collection_raw_file_sha256": "2ebd71d503eef30ef200f050d77dd2730dcd75e8a88eeedbd35a449f5d005e70",
+    "comparison_judgments_already_saved": [
+      {
+        "path": "/home/spectre/Projects/LLMTrotsky/evaluation/runs/ghost_brief_forms_comparison/comparison_review.json",
+        "raw_file_sha256": "4d984f8fd4fe77f9a7118a43634ee34495a93c4158131c462b802cff304e0c0d"
+      },
+      {
+        "path": "/home/spectre/Projects/LLMTrotsky/evaluation/runs/ghost_brief_forms_comparison/COMPARISON_REVIEW.md",
+        "raw_file_sha256": "f1c7a3a958c1894fb90341acec56eb32dd539d9e22c574acb50df4ef4309c845"
+      }
+    ],
+    "claims_ledger_or_earlier_question_reports_read_for_design": false,
+    "outside_facts_used": false,
+    "novelty_limit": "Newly authored transfer scenario relative to the ten compared prompts; no assertion about pretraining novelty or absence of similar questions elsewhere.",
+    "post_save_hash_audit": "Review hashes reflect the final hash-only serialization clarification; substantive comparison judgments were saved before source collection was read and were unchanged."
+  },
+  "execution": {
+    "scope": "Ten replies, maximum thirty calls plus one memory probe, untouched base, no adapters/training/paid compute.",
+    "context": "Reviewer-selected source pool, not natural retrieval recall. Full displayed history retained by application; model input still sees last four messages and omission count.",
+    "purpose": "Transfer beyond inspected ILO/cooperative wording: source roles, conditional planning, publication/payment distinctions, changed hypothetical offer and delayed return after source-only discussion."
+  }
+}

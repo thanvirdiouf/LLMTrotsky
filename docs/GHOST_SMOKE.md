@@ -28,6 +28,11 @@ Kaggle version 11. V10 completed as saved version 12; V11 completed as saved ver
 | ghost_smoke_v12 | 14 | 10 | Five valid accepted, five false rejected; no blocks |
 | ghost_smoke_v13 | 15 | 22 | Fresh ordinary retrieval; task/schema, inference and conversation limits |
 | ghost_smoke_v14 | 16 | 23 | Exact V13 controls; contrast/task recovery fixed, length/audit still fail |
+| ghost_smoke_v15 | 17 | 22 | New reviewer-authored controlled-source baseline |
+| ghost_smoke_v16 | 18 | 22 | Same ten replies; historical fallback unexercised |
+| ghost_smoke_v17 | 19 | 24 | Finite selection shape succeeds, mixed usefulness |
+| ghost_smoke_v18 | 20 | 24 | Reviewed compact forms; improved coverage/sentence compliance |
+| ghost_smoke_v19 | pending | at most 30 | New two-plus-eight transfer study |
 
 V1–v4 retain a frozen reference date of 25 October; later versions use 26 October.
 Execution occurred on 26 October. Do not silently change dates, helpers or

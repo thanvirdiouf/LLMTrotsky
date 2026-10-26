@@ -64,3 +64,13 @@ Sixty focused tests pass. The full suite runs 333 tests with the same two
 pre-existing historical README snapshot errors. No locks are rewritten. Each
 Kaggle run remains ten replies/at most thirty calls plus one memory probe;
 no training, adapters or paid compute. Both adapters remain experimental.
+
+
+V18 completed/token-verified as saved20, ten replies/24 calls. A fresh masked
+AI review finds better historical-summary usefulness, complete implementation
+assumptions in the 52-word opening, and an actual one-sentence 22-word limit.
+The ending meets 45–60 words at sixty. Reasoning/safeguard weaknesses remain;
+no aggregate reliability claim. The v3 forms are now the experimental active
+pointer; previous v1/v2 evidence remains intact. The next V19 transfer design
+uses different sources and eight conversation turns. Local routing/diagnostic
+fixes after V18 are frozen separately, not attributed to this run.

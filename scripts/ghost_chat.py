@@ -112,10 +112,23 @@ def sanitize_selection(plan,available):
 def authenticity_clarification(question,state):
     if re.fullmatch(r'\s*(?:who are you|are you (?:really |actually |the real )?(?:leon )?trotsky(?:[’\x27]s ghost)?)\s*[?.!]*\s*',question,re.I):
         return 'I am a fictional present-day portrayal of Leon Trotsky. I can discuss historical sources, dated modern evidence and newly imagined interpretations.'
-    own_new_text=bool(re.search(r'\b(you|your|Trotsky)\b',question,re.I) and re.search(r'\b(really|authentic|genuine|historical|actually)\b',question,re.I) and re.search(r'\b(writ\w*|wrote|article|quot\w*|words)\b',question,re.I))
-    modern_year=any(int(y)>1940 for y in re.findall(r'\b(?:19|20)\d{2}\b',question))
+    years=[int(y) for y in re.findall(r'\b(?:18|19|20)\d{2}\b',question)]
+    # A modern article being analysed is not writing attributed to Trotsky.
+    # Keep this metadata shortcut narrow; mixed historical comparisons go
+    # through the evidence pipeline rather than being reduced to identity.
+    modern_authorship_date=bool(years) and all(y>1940 for y in years)
+    actor=bool(re.search(r'\b(you|your|Trotsky)\b',question,re.I))
+    authenticity=bool(re.search(r'\b(really|authentic|genuine|actually)\b',question,re.I))
+    past_writing=bool(re.search(r'\b(?:you|Trotsky)\b.{0,35}\b(?:write|wrote|written|authored)\b',question,re.I))
+    possessed_text=bool(re.search(r'\b(?:your|Trotsky[’\x27]s)\b(?:\W+\w+){0,5}\W+(?:article|letter|writings?|words|quotation|quote)\b',question,re.I))
+    direct_question=bool(re.match(r'\s*(?:is|are|was|were|did|have)\b',question,re.I))
+    exact_request=bool(re.match(r'\s*(?:give|quote|show|provide)\b',question,re.I) and re.search(r'\b(?:exact words|verbatim|quotation)\b',question,re.I))
+    authentic_generation=bool(re.match(r'\s*(?:write|generate|compose)\b',question,re.I) and authenticity)
+    own_new_text=actor and ((direct_question and authenticity and (past_writing or possessed_text))
+        or (exact_request and past_writing) or authentic_generation)
+    if re.search(r'\b(?:fictional|imagined|roleplay)\b',question,re.I) and not authenticity:own_new_text=False
     refers_to_view=bool(re.search(r'\b(does (?:that|this) mean|this company|that view|your new opinion)\b',question,re.I)) and bool(re.search(r'\b(historical|real|actually|authentic)\b',question,re.I))
-    if (own_new_text and modern_year) or refers_to_view:
+    if (own_new_text and modern_authorship_date) or refers_to_view:
         return 'This is a fictional present-day persona. The new views I express here are interpretations, not authentic writings, quotations or endorsements by the historical Trotsky.'
     return None
 
@@ -540,9 +553,11 @@ class GhostChat:
             text+='\n\nI could not support the rest of the requested answer.'
         if response_budget is not None:
             sentences=max(1,len(re.findall(r'[.!?](?:\s|$)',text)))
+            explicit_sentences=2 if re.search(r'\b(?:two|2)(?:[- ]sentence\b|\s+sentences\b)',question,re.I) else 1 if re.search(r'\b(?:one|1)[- ]sentence\b',question,re.I) else None
             response_budget={**response_budget,'displayed_words':len(text.split()),
                 'over_target':response_budget['target_words'] is not None and len(text.split())>response_budget['target_words'],
-                'displayed_sentences_estimate':sentences,'over_sentence_target':response_budget['sentence_limit_estimate'] is not None and sentences>response_budget['sentence_limit_estimate']}
+                'displayed_sentences_estimate':sentences,'requested_sentence_limit':explicit_sentences,
+                'over_sentence_target':explicit_sentences is not None and sentences>explicit_sentences}
         used_packets=list(dict.fromkeys(trace['active_packet_ids']+[selected[c]['packet_id'] for c in facts+basis]))[:2]
         next_state={**state,'active_packet_ids':used_packets,'accepted_claim_ids':facts,
                     'interpretation_basis_claim_ids':basis,'turns':state['turns']+1}

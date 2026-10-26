@@ -5,6 +5,37 @@ records, dated modern evidence and newly imagined views. Both adapters remain
 experimental and training stays paused. User authorized autonomous result-
 dependent continuation, proper documentation, milestone commits and pushes.
 
+## Active continuation: V19 longer transfer study
+
+V18/saved20 complete/token-verified: ten replies/24 calls, no budget/truncation,
+11.32 GiB. Fresh reviewer review_compact_trial saved masked comparison before
+reading sources/new question authoring. V18 improves R04/R05/R09 and some
+certainty, but authority, guarantees, disagreement remain weak. All twenty
+review hashes bind exact replies. Local comparison/source-review artifacts
+under ghost_brief_forms_comparison; no human historian validation.
+
+V3 source plan/evidence is now experimental active pointer: exactly ten original
+packets/39 full claims plus four integrity-bound compact forms. Old v2 preserved.
+Current local identity route fixed false interception of ordinary historical-
+outlook analysis of modern sources; direct authentic posthumous requests stay
+metadata. Sentence diagnostics now distinguish requested limit from fact-packing
+default. 62 focused pass; full335 still has two historical README errors. Logs
+V18/promoted_{focused,full}_tests.log. These post-V18 changes are not in its frozen
+runtime; V19 includes them. Full-form budget regression explicitly uses v2 data.
+
+V19 is frozen/staged from config/ghost_transfer_evaluation_v1.json and source
+plan v3: two new independent questions plus eight conversation turns, at most
+30 calls+probe1, same private notebook/free T4/base/no adapters. New reviewer
+question wording, no claim ledger read during authoring. Controlled source pool,
+not natural retrieval. Model still sees last four messages; delayed original/
+revised-offer recall after source-only turns tests that application boundary.
+Commit/push state/docs/identity fixes/config, submit V19 under standing approval.
+Then inspect actual input context and classify source-card coverage/arithmetic/
+metadata/retention failures separately. Possible next controlled intervention:
+verbatim unverified user-context retention, never verified source-fact memory.
+See GHOST_TRANSFER_EVALUATION.md. Continue user-requested review→choose→execute
+iterations; no training/paid compute/public deployment.
+
 ## Active continuation: V18 compact forms trial
 
 Latest user says continue; original instruction is to review, choose next step,

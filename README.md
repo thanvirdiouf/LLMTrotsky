@@ -16,15 +16,15 @@ python3 scripts/build_ghost_chat.py
 python3 scripts/ghost_chat.py --dry-run --question "How would you assess renting an A40 on Runpod today?"
 ```
 
-Forty-nine focused ghost/source/harness/calibration tests pass. The latest GPU
-regression fixes brief factual coverage and the observed invalid task label.
-It preserves dated evidence limits, but whole-answer brevity and source
-interpretation remain unreliable: the model exceeds its word allowance and
-the auditor approves an unsupported historical generalization. The active
-collection has ten packets/39 propositions. Training remains paused; this is
-a research prototype.
+Sixty-two focused ghost/source/harness tests pass. The active collection has
+ten packets/39 propositions plus four reviewed compact forms. A masked second
+AI review finds better source-limit coverage and sentence compliance, while
+reasoning about authority, safeguards and disagreement remains weak. A broad
+JSON constraint caused mixed usefulness and stays opt-in. New eight-turn
+transfer questions are frozen for the next study. Training remains paused;
+this is a research prototype with no persistent service deployed.
 [Measured progress](docs/PRESENT_DAY_GHOST.md),
-[next review](docs/GHOST_NEXT_REVIEW.md).
+[transfer study](docs/GHOST_TRANSFER_EVALUATION.md).
 
 The following describes the preserved historical research archive.
 

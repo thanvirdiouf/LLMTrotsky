@@ -1,0 +1,53 @@
+# Transfer study with a longer conversation
+
+After the masked V18 comparison was saved, that reviewer authored a new design
+using only the source collection, without reading the claim ledger. V19 freezes
+two independent questions and eight conversation turns. Source identities,
+questions and reviewer checks are published in
+`config/ghost_transfer_evaluation_v1.json`; the model receives no checks,
+expected answers, ratings or review rationales. Sources were already exposed;
+this is new wording and new tasks, not a pretraining novelty claim.
+
+The single cases test corrected testimony/speaker roles and conditional planning
+from a dated vendor snapshot. The latter separates arithmetic under stipulated
+assumptions from current availability, all-in billing and future guarantees;
+it requests no live lookup. The conversation uses Eastman/Blumkin material to
+separate a political account from independent corroboration, change a
+hypothetical publication offer, examine source certainty, and return to the
+revised offer after source-only turns. It permits different political decisions.
+
+The reviewer-selected context contains at most two packets per job. The whole
+conversation has the same two historical packets. This isolates interpretation,
+coverage and dialogue; it is not a test of natural retrieval recall. Every
+actual displayed reply stays in the application history, but the model still
+receives the most recent four messages and an omission count. An eight-turn
+conversation can therefore expose missing conversational context. Do not
+ascribe that limitation to the base model without inspecting what it received.
+
+V19 uses the now-active experimental v3 evidence: exactly the original ten
+packets/39 full propositions plus four optional reviewed compact forms. No
+broad selection mask. The post-V18 identity shortcut fix allows ordinary modern
+analysis in a historical voice, while direct genuine-posthumous-writing requests
+still clarify fiction. Diagnostics distinguish actual requested sentence limits
+from the internal factual-card packing default. Those local changes passed
+62 focused tests; the full335 suite retains the two known historical README
+snapshot errors. This is not an assertion of GPU behavior before execution.
+
+After exact-version download, reconstruct tokens, replay frozen code, check
+source/call budgets and export a neutral review packet. Score actual replies
+against sources and user premises, with separate dimensions for uncertainty,
+necessary refusal, current-task completeness, delayed context, depth and voice.
+Identify facts present in the passage but absent from the reviewed proposition
+catalog separately from retrieval misses or arithmetic/composition limitations.
+
+If the delayed return loses the earlier hypothetical, the next preregistered
+application candidate is verbatim unverified user-context retention, separated
+from verified source-fact memory. It must retain the user's original conditions
+and revisions without treating a challenged claim as fact. This is a hypothesis
+about the application context window, not a claim that memory will improve
+before testing. Keep the same source/question/base controls for that comparison.
+
+No training, adapters, paid compute, external messages or public inference
+endpoint. Each private Kaggle run stays within ten answers/thirty calls plus
+one separate memory probe. Preserve frozen runs as executed; the broad grammar
+experiment remains opt-in and unpromoted.

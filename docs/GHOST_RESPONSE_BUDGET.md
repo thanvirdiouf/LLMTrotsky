@@ -84,3 +84,9 @@ worksheet are under `evaluation/runs/ghost_smoke_v14/`. Independent review has
 not happened. Future brevity designs may need reviewed compact fact variants
 or a separately evaluated bounded rewrite workflow; neither is implemented.
 No more prompt tuning on these inspected cases or training is queued.
+
+
+The subsequent V18 [compact-form trial](GHOST_BRIEF_FACT_FORMS.md) adds reviewed
+short alternatives without cutting source qualifications. It achieves the
+requested one-sentence limit and retains complete assumptions in the tested
+opening. V14 remains an immutable record of the earlier failed length strategy.

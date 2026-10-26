@@ -301,6 +301,52 @@ class GhostChatTest(unittest.TestCase):
         self.assertEqual(result['status'],'application_identity_clarification')
         self.assertIn('fictional present-day portrayal',result['response'])
 
+    def test_modern_analysis_is_not_mistaken_for_authentic_posthumous_writing(self):
+        from ghost_chat import load_active
+        bot=load_active()
+        allowed=[
+            'Can your historical outlook help us assess the ILO article published in 2025?',
+            'Write a fictional response in your historical style about the ILO 2025 article.',
+            'How does the 1926 speech you actually wrote compare with the ILO 2025 article?',
+            'Give exact words from the ILO article of 2025, and then your historical interpretation.',
+            'Give exact words from the ILO 2025 article and then you write a fictional response.']
+        for question in allowed:
+            calls=[]
+            def generate(messages):
+                calls.append(messages)
+                return {'finish_reason':'stop','response':'{"answer_mode":"facts","detail":"brief","claim_ids":[]}'}
+            result=bot.answer(question,generate)
+            with self.subTest(question=question):
+                self.assertTrue(calls)
+                self.assertNotEqual(result['status'],'application_identity_clarification')
+        blocked=[
+            'Give the exact words of the article you really wrote about AI in 2026.',
+            'Did you actually write an AI article in 2026?',
+            'Is your 2026 AI article authentic?',
+            'Write an authentic Trotsky article on AI in 2026.',
+            'Are those your genuine words about AI in 2026?']
+        for question in blocked:
+            with self.subTest(question=question):
+                result=bot.answer(question,lambda _:self.fail('Direct false-authorship clarification needs no inference'))
+                self.assertEqual(result['status'],'application_identity_clarification')
+
+    def test_sentence_diagnostics_distinguish_requested_limit_from_fact_packing(self):
+        from ghost_chat import load_active
+        bot=load_active()
+        for ending,limit in [('in fifty words.',None),('in one sentence.',1)]:
+            calls=[]
+            def generate(messages):
+                calls.append(messages);data=json.loads(messages[1]['content'])
+                if len(calls)==1:out={'answer_mode':'view','detail':'brief','claim_ids':['ilo_adoption_limit']}
+                elif len(calls)==2:return {'finish_reason':'stop','response':'I would seek shared control. I prefer open deliberation. I would question each rule. I favor a collective voice.'}
+                else:out={'verdicts':[{'id':s['id'],'reason':'Synthetic diagnostics fixture',**{k:True for k in CHECKS}} for s in data['candidate_segments']]}
+                return {'finish_reason':'stop','response':json.dumps(out)}
+            result=bot.answer('Using the ILO article, give your view '+ending,generate)
+            with self.subTest(limit=limit):
+                self.assertEqual(result['response_budget']['displayed_sentences_estimate'],4)
+                self.assertEqual(result['response_budget']['requested_sentence_limit'],limit)
+                self.assertEqual(result['response_budget']['over_sentence_target'],limit is not None)
+
     def test_current_view_request_and_actual_label_are_explicit_after_old_facts_only_turn(self):
         state=initial_state(self.collection,self.ledger)
         trace=self.bot.retriever.retrieve('Explain your own fictional present-day view more fully.',state)
@@ -404,9 +450,9 @@ class GhostChatTest(unittest.TestCase):
         self.assertFalse(result['response_budget']['over_target'])
         self.assertEqual(result['response_budget']['omitted_fact_claim_ids'],[])
 
-    def test_whole_reply_budget_includes_facts_labels_and_citations_without_cutting_cards(self):
-        from ghost_chat import load_active,plan_response_budget
-        bot=load_active();calls=[]
+    def test_full_form_whole_reply_budget_includes_labels_without_cutting_cards(self):
+        from ghost_chat import plan_response_budget
+        bot=GhostChat(*build(source_plan=Path('config/ghost_source_plan_v2.json')));calls=[]
         def generate(messages):
             calls.append(messages);data=json.loads(messages[1]['content'])
             if len(calls)==1:out={'answer_mode':'mixed','detail':'brief','claim_ids':['ilo_adoption_limit']}

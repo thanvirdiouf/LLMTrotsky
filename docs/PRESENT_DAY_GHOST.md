@@ -7,16 +7,19 @@ adapters stay experimental and training stays paused.
 
 ## Current result — 26 October 2026
 
-Thirteen ghost runs are complete, downloaded and verified. The latest rendering
-regression (V14, saved Kaggle version 16) makes ten replies in 23 generations
-on the exact V13 questions and evidence. It fixes brief reported-information
-coverage and recovers the observed invalid task label while preserving dated
-ILO scope. **Whole-answer brevity and semantic reliability remain unresolved.**
-The final reply is 84 words for about fifty requested; the auditor approves an
-unsupported universal claim about past technological revolutions. Neither
-pipeline is promoted. Both adapters stay experimental and training stays paused.
-[Failure boundaries](GHOST_FAILURE_ANALYSIS.md),
-[concrete next review](GHOST_NEXT_REVIEW.md).
+Seventeen ghost runs are complete, downloaded and verified. The active
+experimental evidence is now v3: the original ten packets/39 full propositions
+plus four source-reviewed compact forms. V18/saved20 improves the historical
+summary, complete exposure assumptions and actual one-sentence response in a
+masked second AI review. Its opening is 52 words; its closing is 60 words.
+**Authority reasoning, argumentative depth and unsupported assurances remain
+unreliable.** No human historian validation or representative success rate is
+claimed. Both adapters remain experimental and training stays paused.
+
+V15/V16 show no new source-first gain (identical replies). V17 fixes JSON shape
+but harms some useful answers and stays opt-in. V19 now freezes new transfer
+questions with an eight-turn conversation. [Iteration review](GHOST_INDEPENDENT_REVIEW.md),
+[compact forms](GHOST_BRIEF_FACT_FORMS.md), [transfer design](GHOST_TRANSFER_EVALUATION.md).
 
 | Ghost version / Kaggle version | Evaluation calls | Main finding |
 |---|---:|---|
@@ -34,6 +37,11 @@ pipeline is promoted. Both adapters stay experimental and training stays paused.
 | v12 / 14 | 10 | All five valid accepted/five traps rejected; explanations still imperfect |
 | v13 / 15 | 22 | Natural retrieval works; task/schema, source inference, coverage and depth/length still fail |
 | v14 / 16 | 23 | Brief contrast and task recovery fixed; total length and semantic audit still fail |
+| v15 / 17 | 22 | New second-reviewer questions; two schema blocks and mixed dialogue quality |
+| v16 / 18 | 22 | All ten replies equal V15; historical fallback not triggered |
+| v17 / 19 | 24 | Constrained selection valid but mixed usefulness; not promoted |
+| v18 / 20 | 24 | Reviewed short forms preserve assumptions and one-sentence scope; reasoning limits remain |
+| v19 / pending | at most 30 | Two new source/planning cases and eight-turn transfer conversation |
 
 V1–v4 use the same inspected ten-turn development set. V5 introduces four
 single questions and a six-turn conversation; v7/v8 reuse those as regressions.
@@ -75,7 +83,7 @@ workflow separately records the pinned revision, stack and frozen parameters.
 No weights or GPU inference run locally.
 
 `config/active_chat.json` selects `config/persona_ghost_expansion.json`,
-`config/ghost_source_plan_v2.json` and `evaluation/ghost_chat_v2/`. Its reference
+`config/ghost_source_plan_v3.json` and `evaluation/ghost_chat_v3/`. Its reference
 date is **26 October 2026**. Frozen initial smokes retain 25 October. A reference
 date is not live news; refresh sources and version artifacts explicitly.
 An explicit source plan requires a new explicit output path, and building never
@@ -129,8 +137,8 @@ model calls, preserving source state.
 
 ## Validation and limits
 
-Forty-nine focused ghost/source/harness/calibration tests pass. The full suite
-runs 322 tests with two pre-existing historical pilot snapshot errors for the
+Sixty-two focused ghost/source/harness/calibration tests pass. The full suite
+runs 335 tests with two pre-existing historical pilot snapshot errors for the
 already changed `evaluation/README.md`; historical locks remain preserved.
 Kaggle runs verify submitted/downloaded payloads, exact frozen-code replay,
 all input/output token reconstructions, zero optimizer updates, no adapters and
@@ -202,3 +210,12 @@ key failures while preserving uncertainty around political rhetoric. V15 freezes
 a baseline on ten new reviewer-authored questions with controlled source context;
 V16 will test a narrow canonical historical-fact retention change. See
 [review provenance and preregistered iteration](GHOST_INDEPENDENT_REVIEW.md).
+
+
+V18's revised forms are integrity-bound to their exact text and source packet;
+full original statements/anchors remain preserved. Both singular/plural factual
+task synonyms normalize without changing selected evidence. The local identity
+shortcut now avoids intercepting ordinary historical-outlook analysis of modern
+sources; exact fake-posthumous-authorship requests still clarify fiction. These
+post-run routing/diagnostic changes are local-test evidence and frozen in V19,
+not retrospective changes to the V18 output.

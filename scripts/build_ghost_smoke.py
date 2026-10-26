@@ -37,7 +37,7 @@ def model_cases(source_spec):
                  for arm in control['arms'] for i,c in enumerate(source_spec['cases'],1)]}
 
 
-def build(version='ghost_smoke_v1', evaluation_spec=None):
+def build(version='ghost_smoke_v1', evaluation_spec=None, constrain_selection=False):
     if not re.fullmatch(r'ghost_smoke_v[1-9][0-9]*',version):raise ValueError('Invalid smoke version')
     from transformers import AutoTokenizer
     bot=load_active();prior=json.loads((ROOT/'evaluation/grounded_chat_v2/protocol.json').read_text())
@@ -73,6 +73,7 @@ def build(version='ghost_smoke_v1', evaluation_spec=None):
            'evaluate_grounded_chat_v2.py','kaggle_ghost_smoke.py','kaggle_grounding.py','kbit_preparation.py']
     if 'comparison' in model_spec or 'conversation_source_packet_ids' in model_spec:names.append('evaluate_ghost_comparison.py')
     if 'audit_calibration' in model_spec:names.extend(['evaluate_ghost_comparison.py','evaluate_ghost_audit.py'])
+    if constrain_selection:names.append('selection_constraints.py')
     payload={n:(ROOT/'scripts'/n).read_bytes() for n in names}
     payload.update({'profile.json':enc(bot.profile),'collection.json':enc(bot.collection),'claims.json':enc(bot.ledger),
                     'model_cases.json':enc(model_spec),'memory_probe.json':enc(probe)})
@@ -87,6 +88,9 @@ def build(version='ghost_smoke_v1', evaluation_spec=None):
         protocol.update(purpose='ghost_direct_checked_comparison',maximum_model_calls=sum(1 if c['arm']=='direct' else 3 for c in model_spec['cases']))
     if 'audit_calibration' in model_spec:
         protocol.update(purpose='ghost_audit_calibration',maximum_model_calls=len(model_spec['cases']))
+    if constrain_selection:
+        from selection_constraints import POLICY
+        protocol['selection_constraints']=deepcopy(POLICY)
     payload['protocol.json']=enc(protocol)
     cells=[]
     def add(kind,cid,source):
@@ -125,5 +129,6 @@ if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--version',default='ghost_smoke_v1')
     parser.add_argument('--evaluation-spec',type=Path,help='Explicit new case set; default preserves the inspected regressions')
+    parser.add_argument('--constrain-selection',action='store_true',help='Experimental finite selection JSON decoding; no extra inference call')
     args=parser.parse_args()
-    build(args.version,args.evaluation_spec)
+    build(args.version,args.evaluation_spec,args.constrain_selection)

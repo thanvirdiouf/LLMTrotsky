@@ -5,6 +5,28 @@ records, dated modern evidence and newly imagined views. Both adapters remain
 experimental and training stays paused. User authorized autonomous result-
 dependent continuation, proper documentation, milestone commits and pushes.
 
+## New structural iteration: selection grammar
+
+V15 is complete/token-verified as saved17 (22 calls); two new cases block on
+unknown singular premise_correction enum. V16 source-first treatment completed
+as saved18; exact-version download/verification and blinded comparison pending.
+
+V17 is frozen with `--constrain-selection`, same exact V16 inputs, engine and
+evaluator. New `selection_constraints.py` finite token trie prevents invalid
+selection fields/enums/IDs, preserves every subset up to four and every first
+priority, then source-orders remaining IDs. Empty selection remains available.
+Native Transformers prefix callback; no new package/training/call. Runtime logs
+policy/whitelist/hash and verifier checks the frozen text/token grammar. This
+is opt-in Kaggle only, not a remote CLI guarantee or semantic guarantee.
+57 focused tests pass; full330 retains only the known two README snapshot
+errors. Source tokenizer preflight: 1,413 paths, max37 output tokens, roundtrip
+checks pass, no model weights loaded. Docs: GHOST_SELECTION_CONSTRAINTS.md.
+Commit/push this tested structural experiment, then submit V17 under standing
+approval. Review actual usefulness and unnecessary source dumps, not just
+schema success. The second reviewer saved a rubric without seeing new outputs;
+provide neutral A/B packets after V15/V16 verification. Never leak statuses or
+parent labels into the blinded packets.
+
 ## Active autonomous iteration after second review
 
 The user requested doing the next review, choosing the next step, executing it

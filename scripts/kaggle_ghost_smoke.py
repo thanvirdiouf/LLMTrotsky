@@ -66,6 +66,7 @@ def run(bundle, output):
                 'quantization': 'NF4 double quantization; float16 compute; sdpa',
                 'adapters_loaded': [], 'optimizer_updates': 0, 'enable_thinking': False,
                 'purpose': protocol['purpose']}
+    if 'selection_constraints' in protocol:identity['selection_constraints']=protocol['selection_constraints']
     manifest_path = output/'run_manifest.json'
     if manifest_path.exists() and json.loads(manifest_path.read_text())['identity'] != identity:
         raise ValueError('Resume identity changed')
@@ -79,6 +80,7 @@ def run(bundle, output):
     if not getattr(model, 'is_loaded_in_4bit', False) or getattr(model, 'peft_config', None) or any(p.requires_grad for p in model.parameters()):
         raise ValueError('Base must be frozen with no adapter')
     model.eval()
+    constraint_cache={}
     def generate(messages):
         ids = tokenizer.apply_chat_template(messages, tokenize=True, add_generation_prompt=True,
                                             enable_thinking=False, return_dict=False)
@@ -89,14 +91,28 @@ def run(bundle, output):
                     'token_count':0,'seconds':0,'model_call_made':False}
         torch.cuda.empty_cache()
         tensor = torch.tensor([ids], device='cuda:0')
+        constraint=None;extra={}
+        if 'selection_constraints' in protocol:
+            from selection_constraints import selection_ids,SelectionTrie
+            available=selection_ids(messages)
+            if available is not None:
+                key=tuple(available)
+                if key not in constraint_cache:
+                    constraint_cache[key]=SelectionTrie(tokenizer,available,generation.eos_token_id,protocol['selection_constraints'])
+                constraint=constraint_cache[key]
+                if constraint.max_tokens>generation.max_new_tokens:raise ValueError('Selection grammar exceeds generation cap')
+                extra['prefix_allowed_tokens_fn']=constraint.callback(len(ids))
         start = time.monotonic()
         with torch.inference_mode():
-            tokens = model.generate(input_ids=tensor, attention_mask=torch.ones_like(tensor), generation_config=generation)[0, len(ids):].tolist()
+            tokens = model.generate(input_ids=tensor, attention_mask=torch.ones_like(tensor), generation_config=generation,**extra)[0, len(ids):].tolist()
         torch.cuda.synchronize()
-        return {'response': tokenizer.decode(tokens, skip_special_tokens=True),
+        if constraint is not None and not constraint.accepts(tokens):raise ValueError('Selection output violates its finite grammar')
+        result={'response': tokenizer.decode(tokens, skip_special_tokens=True),
                 'finish_reason': 'stop' if tokens[-1] == generation.eos_token_id else 'length',
                 'input_token_ids': ids, 'token_ids': tokens, 'token_count': len(tokens),
                 'seconds': time.monotonic()-start,'model_call_made':True}
+        if constraint is not None:result['selection_constraint']=constraint.metadata
+        return result
     if not (output/'memory_probe.json').exists():
         probe=json.loads((bundle/'memory_probe.json').read_text())
         saved_limit=generation.max_new_tokens

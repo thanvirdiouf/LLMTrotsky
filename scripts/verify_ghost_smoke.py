@@ -56,6 +56,24 @@ def verify(download,tokenizer=None,version='ghost_smoke_v1'):
     answers=[json.loads(s) for s in (results/'answers.jsonl').read_text().splitlines()]
     calls=[json.loads(s) for s in (results/'model_calls.jsonl').read_text().splitlines()]
     if len(answers)!=protocol['answers'] or len(calls)!=manifest['model_calls']:raise ValueError('Journal coverage differs')
+    if 'selection_constraints' in protocol:
+        if identity.get('selection_constraints')!=protocol['selection_constraints']:raise ValueError('Selection policy identity differs')
+        # Use the frozen constraint implementation, not the current helper.
+        constraint_module={'__name__':'frozen_selection_constraints'}
+        exec(compile(payloads['selection_constraints.py'],'frozen_selection_constraints.py','exec'),constraint_module)
+        cache={}
+        for call in calls:
+            available=constraint_module['selection_ids'](call['messages']);out=call['output']
+            if available is not None and out.get('model_call_made') is True:
+                choices=constraint_module['candidate_texts'](available,protocol['selection_constraints'])
+                if not any(out['response']==text for text in choices):raise ValueError('Selection text violates frozen grammar')
+                if tokenizer:
+                    key=tuple(available)
+                    if key not in cache:cache[key]=constraint_module['SelectionTrie'](tokenizer,available,protocol['generation']['eos_token_id'],protocol['selection_constraints'])
+                    trie=cache[key]
+                    if not trie.accepts(out['token_ids']) or out.get('selection_constraint')!=trie.metadata:
+                        raise ValueError('Selection token path/constraint metadata differs')
+            elif 'selection_constraint' in out:raise ValueError('Unexpected selection constraint on a non-selection call')
     # Frozen helper code is replayed in a separate local Python process, making
     # this verifier usable even after the active application evolves.
     replay="""import json,contextlib,io

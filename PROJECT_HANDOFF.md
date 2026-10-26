@@ -5,36 +5,34 @@ records, dated modern evidence and newly imagined views. Both adapters remain
 experimental and training stays paused. User authorized autonomous result-
 dependent continuation, proper documentation, milestone commits and pushes.
 
-## Active continuation: V19 longer transfer study
+## Active continuation: V20 context comparison
 
-V18/saved20 complete/token-verified: ten replies/24 calls, no budget/truncation,
-11.32 GiB. Fresh reviewer review_compact_trial saved masked comparison before
-reading sources/new question authoring. V18 improves R04/R05/R09 and some
-certainty, but authority, guarantees, disagreement remain weak. All twenty
-review hashes bind exact replies. Local comparison/source-review artifacts
-under ghost_brief_forms_comparison; no human historian validation.
+HEAD before this milestone: 1ec2a78, pushed. V19/saved21 completed and verified:
+ten replies/25 calls, no truncation/budget rejection, 11.32 GiB. Statuses six
+model-approved/two partial/two blocked are not quality scores. Delayed turn7
+received only turns5/6; original/revised hypothetical missing. Compute selection
+object plus essay and source-only check object plus stray backtick fail strict
+JSON; planner calculated $3.54 correctly. Other remaining issues: user-premise
+quote guard, historical mixed first-card coverage, full-passage facts absent
+from catalog. Do not conflate these with model arithmetic or retrieval failure.
 
-V3 source plan/evidence is now experimental active pointer: exactly ten original
-packets/39 full claims plus four integrity-bound compact forms. Old v2 preserved.
-Current local identity route fixed false interception of ordinary historical-
-outlook analysis of modern sources; direct authentic posthumous requests stay
-metadata. Sentence diagnostics now distinguish requested limit from fact-packing
-default. 62 focused pass; full335 still has two historical README errors. Logs
-V18/promoted_{focused,full}_tests.log. These post-V18 changes are not in its frozen
-runtime; V19 includes them. Full-form budget regression explicitly uses v2 data.
+V20 staged/frozen, not yet submitted: exact same V19 inputs, only ghost_chat.py
+and protocol hashes differ. Bounded original user-context retention: max3 whole
+messages/2500 chars, user/unverified roles, fingerprints, chronological turns,
+omission events; no verified facts/summaries. Hypothetical/revision cues retain
+turns1/4; disagreement turn2 not retained. Current request supersedes old task
+instructions; later assumptions supersede original. Three new tests, 65 focused
+pass; full338 retains two known historical README snapshot errors. Test logs
+under V19/context_{focused,full}_tests.log. Do not change frozen V20 payload.
 
-V19 is frozen/staged from config/ghost_transfer_evaluation_v1.json and source
-plan v3: two new independent questions plus eight conversation turns, at most
-30 calls+probe1, same private notebook/free T4/base/no adapters. New reviewer
-question wording, no claim ledger read during authoring. Controlled source pool,
-not natural retrieval. Model still sees last four messages; delayed original/
-revised-offer recall after source-only turns tests that application boundary.
-Commit/push state/docs/identity fixes/config, submit V19 under standing approval.
-Then inspect actual input context and classify source-card coverage/arithmetic/
-metadata/retention failures separately. Possible next controlled intervention:
-verbatim unverified user-context retention, never verified source-fact memory.
-See GHOST_TRANSFER_EVALUATION.md. Continue user-requested review→choose→execute
-iterations; no training/paid compute/public deployment.
+Commit/push memory code/tests/docs; submit V20 to same private notebook under
+standing approval (expected saved22), ten answers/at most30 calls+probe1. Verify
+exact download/replay/tokens, export neutral packets, ask already-authorized
+review_compact_trial reviewer for masked V19/V20 comparison. It authored the
+fresh transfer questions only after saving V18 review. Do not leak statuses,
+model verdicts or arm mapping. Active v3 stays experimental (10 original packets,
+39 full propositions plus four reviewed brief forms); training/adapters paused.
+See GHOST_TRANSFER_EVALUATION.md; continue result-dependent iterations.
 
 ## Active continuation: V18 compact forms trial
 

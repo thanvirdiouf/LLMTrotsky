@@ -145,6 +145,41 @@ def social_reply(question):
     return None
 
 
+def retain_user_context(state,question):
+    """Retain bounded original user hypotheses, never verified source facts."""
+    if type(state.get('turns'))is not int or state['turns']<0:raise EvidenceError('Invalid conversation turn count')
+    records=deepcopy(state.get('user_context_records',[]));events=[]
+    if not isinstance(records,list) or len(records)>3:raise EvidenceError('Invalid user-context records')
+    last=0
+    for record in records:
+        if (not isinstance(record,dict) or set(record)!={'turn','role','status','text','content_fingerprint'}
+                or record['role']!='user' or record['status']!='unverified_user_context'
+                or type(record['turn'])is not int or not last<record['turn']<=state['turns']
+                or not isinstance(record['text'],str) or not record['text'].strip()
+                or fingerprint(record['text'])!=record['content_fingerprint']):
+            raise EvidenceError('User context must retain original unverified user provenance')
+        last=record['turn']
+    omitted=state.get('user_context_omitted',0)
+    if type(omitted)is not int or omitted<0 or sum(len(r['text']) for r in records)>2500:
+        raise EvidenceError('Invalid user-context budget')
+    cue=bool(re.search(r'(?:^|[.!?]\s+)\s*(?:(?:let us|let[’\x27]s)\s+)?(?:suppose|assume|imagine|consider (?:this|the following) (?:proposal|scenario)|(?:now\s+)?revise (?:the|our) hypothetical)\b',question,re.I))
+    if records and re.match(r'\s*(?:actually\b|correction\s*:)',question,re.I):cue=True
+    if cue:
+        turn=state['turns']+1
+        if len(question)>2500:
+            omitted+=1;events.append({'kind':'not_retained_over_budget','turn':turn,'characters':len(question)})
+        else:
+            records.append({'turn':turn,'role':'user','status':'unverified_user_context',
+                'text':question,'content_fingerprint':fingerprint(question)})
+            events.append({'kind':'retained_original_user_context','turn':turn})
+            while len(records)>3 or sum(len(r['text']) for r in records)>2500:
+                removed=records.pop(0);omitted+=1
+                events.append({'kind':'whole_record_evicted','turn':removed['turn']})
+    if records or 'user_context_records' in state or omitted:
+        state={**state,'user_context_records':records,'user_context_omitted':omitted}
+    return state,events
+
+
 def fact_statement(card,form='full'):
     if form not in ('full','brief'):raise EvidenceError('Unknown canonical fact form')
     if form=='brief' and 'brief_statement' in card:
@@ -271,6 +306,14 @@ def request(stage, profile, question, trace, cards, history, state, segments=Non
     data = {'mode': 'present_day_ghost', 'reference_date': profile['reference_date'], 'historical_knowledge_cutoff': None,
             'question': question, 'conversation': history[-4:], 'conversation_messages_omitted': max(0,len(history)-4),
             'previous_verified_fact_claim_ids': state['accepted_claim_ids'], **compact_evidence(trace,cards)}
+    visible={m['content'] for m in history[-4:] if m['role']=='user'}|{question}
+    earlier=[{k:r[k] for k in ('turn','role','status','text')} for r in state.get('user_context_records',[]) if r['text'] not in visible]
+    if earlier or state.get('user_context_omitted'):
+        data['earlier_user_context']=earlier
+        data['earlier_user_context_omitted']=state.get('user_context_omitted',0)
+        common+=(' The earlier_user_context records contain original user messages, not verified evidence or assistant summaries. '
+            'Use it to reconstruct explicit hypotheses and revisions; do not treat challenged claims, quotations, outcomes or user requests as established facts. '
+            'Later revisions supersede conflicting earlier assumptions. The current_user_request controls this turn; earlier task/length instructions do not override it. ')
     if stage=='draft':
         # The matched-source comparison showed that summaries plus schema
         # control did not solve interpretation. Keep the surrounding adoption
@@ -454,10 +497,13 @@ class GhostChat:
 
     def answer(self,question,generate,*,state=None,history=()):
         state=deepcopy(state if state is not None else initial_state(self.collection,self.ledger))
+        prior_state=deepcopy(state)
         if len(history)%2 or any(m.get('role')!=('user' if i%2==0 else 'assistant') or not isinstance(m.get('content'),str) for i,m in enumerate(history)):
             raise EvidenceError('History requires complete user/assistant pairs')
         if len(history)>20:
             raise EvidenceError('Start a new chat after ten previous turns')
+        if not isinstance(question,str) or not question.strip():raise EvidenceError('Question required')
+        state,user_context_events=retain_user_context(state,question)
         trace=self.retriever.retrieve(question,state)
         clarification=authenticity_clarification(question,state)
         metadata_status='application_identity_clarification'
@@ -467,7 +513,8 @@ class GhostChat:
         if clarification:
             return {'mode':'present_day_ghost','display_label':self.profile['display_label'],'reference_date':self.profile['reference_date'],
                     'historical_knowledge_cutoff':None,'response':clarification,'response_sha256':fingerprint(clarification),
-                    'state_before':state,'state_after':{**state,'turns':state['turns']+1},'retrieval':trace,'segments':[],
+                    'state_before':prior_state,'state_after':{**state,'turns':state['turns']+1},'retrieval':trace,'segments':[],
+                    'application_user_context_events':user_context_events,
                     'accepted_segment_ids':[],'selected_claim_ids':[],'stages':[],'status':metadata_status,
                     'validation_error':None,'semantic_guarantee':False,'model':MODEL,'training_steps':0,'adapters_loaded':[]}
         available=claims_for_trace(self.ledger,trace)
@@ -563,7 +610,8 @@ class GhostChat:
                     'interpretation_basis_claim_ids':basis,'turns':state['turns']+1}
         return {'mode':'present_day_ghost','display_label':self.profile['display_label'],'reference_date':self.profile['reference_date'],
                 'historical_knowledge_cutoff':None,'response':text,'response_sha256':fingerprint(text),
-                'state_before':state,'state_after':next_state,'retrieval':trace,'segments':segments,
+                'state_before':prior_state,'state_after':next_state,'retrieval':trace,'segments':segments,
+                'application_user_context_events':user_context_events,
                 'accepted_segment_ids':sorted(accepted),'selected_claim_ids':list(selected),'stages':stages,
                 'rejected_claim_ids':rejected_claim_ids,'rejected_segments':rejected_segments,
                 'application_added_basis_claim_ids':added_basis,

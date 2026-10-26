@@ -51,3 +51,38 @@ No training, adapters, paid compute, external messages or public inference
 endpoint. Each private Kaggle run stays within ten answers/thirty calls plus
 one separate memory probe. Preserve frozen runs as executed; the broad grammar
 experiment remains opt-in and unpromoted.
+
+## Executed baseline and context candidate
+
+V19 completed as private Kaggle version 21: ten replies, 25 evaluation calls,
+no token-budget rejection or truncation, 11.32 GiB peak. Frozen replay and
+CPU-tokenizer reconstruction passed. Six replies passed the fallible model
+review, two were partial and two blocked; those are execution dispositions,
+not independent quality scores.
+
+The delayed return received only the preceding two source-only user/assistant
+pairs. The original and revised hypothetical were absent. Other failures have
+different causes: the compute planner emitted a valid object followed by an
+essay, and a source-only checker emitted an object followed by a stray backtick.
+Strict parsing rejected both. The compute planner had already calculated the
+conditional $3.54 correctly; its formatting failure does not establish inability
+to multiply. The source-card catalog also omits some facts present in the full
+passages, and the quotation guard can reject quotation of a user's own premise.
+These remain separate from the memory intervention.
+
+V20 freezes exactly the same source packets, questions and model controls. Only
+the ghost helper and its protocol hash differ. It retains at most three whole
+original user messages and 2,500 characters, with fingerprints, chronological
+turns, explicit unverified-user provenance and whole-record omission events.
+Sentence-initial hypothetical/revision cues select messages; it is not general
+conversation memory and does not retain the earlier disagreement in this study.
+Earlier conditions are supplied only after leaving the ordinary four-message
+window. Revisions supersede earlier assumptions; current instructions control
+the turn. None of these messages become verified claims or assistant summaries.
+
+Three new tests verify delayed original/revised conditions, exact cached replay,
+bounded whole-message retention and rejection of forged provenance. All 65
+focused tests pass. The full suite ran 338 tests with the same two pre-existing
+historical `evaluation/README.md` snapshot errors. Historical locks are unchanged.
+Before claiming improvement, verify the actual V20 model inputs and compare
+masked displayed replies with V19, including possible source-only distraction.

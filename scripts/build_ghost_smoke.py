@@ -10,7 +10,7 @@ import lzma
 import re
 from pathlib import Path
 from grounded_chat import ROOT
-from ghost_chat import load_active,initial_state,claims_for_trace,request
+from ghost_chat import GhostChat,load_active,initial_state,claims_for_trace,request
 
 
 def enc(value):return (json.dumps(value,indent=2,sort_keys=True,ensure_ascii=False)+'\n').encode()
@@ -37,10 +37,14 @@ def model_cases(source_spec):
                  for arm in control['arms'] for i,c in enumerate(source_spec['cases'],1)]}
 
 
-def build(version='ghost_smoke_v1', evaluation_spec=None, constrain_selection=False):
+def build(version='ghost_smoke_v1', evaluation_spec=None, constrain_selection=False,source_plan=None):
     if not re.fullmatch(r'ghost_smoke_v[1-9][0-9]*',version):raise ValueError('Invalid smoke version')
     from transformers import AutoTokenizer
-    bot=load_active();prior=json.loads((ROOT/'evaluation/grounded_chat_v2/protocol.json').read_text())
+    if source_plan:
+        from build_ghost_chat import build as build_evidence
+        bot=GhostChat(*build_evidence(source_plan=source_plan))
+    else:bot=load_active()
+    prior=json.loads((ROOT/'evaluation/grounded_chat_v2/protocol.json').read_text())
     tokenizer=AutoTokenizer.from_pretrained(ROOT/'training/data_revision_v2/tokenizer_assets',trust_remote_code=False,local_files_only=True)
     if sha(tokenizer.chat_template.encode())!=prior['chat_template_sha256']:raise ValueError('Tokenizer changed')
     source_spec=json.loads((ROOT/(evaluation_spec or 'config/ghost_chat_evaluation.json')).read_text())
@@ -91,6 +95,7 @@ def build(version='ghost_smoke_v1', evaluation_spec=None, constrain_selection=Fa
     if constrain_selection:
         from selection_constraints import POLICY
         protocol['selection_constraints']=deepcopy(POLICY)
+    if source_plan:protocol['source_plan']={'path':str(source_plan),'sha256':sha((ROOT/source_plan).read_bytes())}
     payload['protocol.json']=enc(protocol)
     cells=[]
     def add(kind,cid,source):
@@ -130,5 +135,6 @@ if __name__=='__main__':
     parser.add_argument('--version',default='ghost_smoke_v1')
     parser.add_argument('--evaluation-spec',type=Path,help='Explicit new case set; default preserves the inspected regressions')
     parser.add_argument('--constrain-selection',action='store_true',help='Experimental finite selection JSON decoding; no extra inference call')
+    parser.add_argument('--source-plan',type=Path,help='Freeze an explicit evidence plan without changing the active pointer')
     args=parser.parse_args()
-    build(args.version,args.evaluation_spec,args.constrain_selection)
+    build(args.version,args.evaluation_spec,args.constrain_selection,args.source_plan)

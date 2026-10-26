@@ -132,6 +132,27 @@ def social_reply(question):
     return None
 
 
+def fact_statement(card,form='full'):
+    if form not in ('full','brief'):raise EvidenceError('Unknown canonical fact form')
+    if form=='brief' and 'brief_statement' in card:
+        if fingerprint(card['brief_statement'])!=card.get('brief_statement_fingerprint'):
+            raise EvidenceError('Compact fact form changed after review')
+        return card['brief_statement']
+    return card['statement']
+
+
+def validate_brief_forms(collection,ledger):
+    packets={p['id']:p for p in collection['packets']}
+    for card in ledger['claims']:
+        if 'brief_statement' not in card:continue
+        text=card['brief_statement']
+        if (not isinstance(text,str) or not text.strip() or len(text)>1600
+                or fingerprint(text)!=card.get('brief_statement_fingerprint')
+                or fingerprint(packets[card['packet_id']])!=card.get('brief_source_packet_fingerprint')
+                or not isinstance(card.get('brief_review'),str) or not card['brief_review'].strip()):
+            raise EvidenceError('Compact form lacks matching reviewed text/source provenance')
+
+
 def plan_response_budget(question,selected,state):
     """Budget immutable facts and the complete displayed reply, without cutting text."""
     words={'ten':10,'twenty':20,'thirty':30,'forty':40,'fifty':50,'sixty':60,'seventy':70,'eighty':80,'ninety':90,'hundred':100}
@@ -152,15 +173,17 @@ def plan_response_budget(question,selected,state):
             priority=state.get('_planner_claim_ids',list(selected))
             candidates=[cid for cid in priority if cid in selected and selected[cid]['domain']=='historical_record'][:1]
     else:candidates=list(selected)[:4]
+    prefer_brief=state.get('_detail')=='brief' or sentence_limit==1 or (target is not None and target<=80)
+    form='brief' if prefer_brief and any('brief_statement' in selected[c] for c in candidates) else 'full'
     ids=[];omitted=[]
     def display(chosen):
         segments=[{'id':'s'+str(i//2+1),'kind':'fact','claim_ids':chosen[i:i+2],
-                   'text':' '.join(selected[c]['statement'] for c in chosen[i:i+2])} for i in range(0,len(chosen),2)]
+                   'text':' '.join(fact_statement(selected[c],form) for c in chosen[i:i+2])} for i in range(0,len(chosen),2)]
         return render(segments,{s['id'] for s in segments},selected)[0]
     def sentences(chosen):
         # Conservative estimate for complete reviewed statements. Never split
         # a card to satisfy a count, which could discard its uncertainty.
-        return sum(max(1,len(re.findall(r'[.!?](?:\s|$)',selected[c]['statement']))) for c in chosen)
+        return sum(max(1,len(re.findall(r'[.!?](?:\s|$)',fact_statement(selected[c],form)))) for c in chosen)
     for cid in candidates:
         proposed=ids+[cid]
         if ids and ((target is not None and len(display(proposed).split())>target)
@@ -175,6 +198,7 @@ def plan_response_budget(question,selected,state):
             'draft_target_words':None if remaining is None else max(1,remaining),
             'minimum_exceeds_target':target is not None and len(fact_display.split())+overhead+(1 if overhead else 0)>target,
             'sentence_limit_estimate':sentence_limit,'omitted_fact_claim_ids':omitted}
+    if form=='brief':budget['fact_form']='brief'
     return ids,fact_display,budget
 
 
@@ -257,7 +281,7 @@ def request(stage, profile, question, trace, cards, history, state, segments=Non
     if prose_draft:data['draft_format']='plain_prose'
     if stage=='draft' and state.get('_response_budget'):
         data['planned_fact_display']=state['_planned_fact_display']
-        data['response_budget']=state['_response_budget']
+        data['response_budget']={k:v for k,v in state['_response_budget'].items() if k!='fact_form'}
         remaining=state['_response_budget']['draft_target_words']
         if prose_draft and remaining is not None:
             task+=f' The complete displayed reply has a {state["_response_budget"]["target_words"]}-word target, including the supplied planned_fact_display, label and citations. Your paragraph has only {remaining} words available. This overrides earlier paragraph-length ranges. Use those words for a new judgment, not repeated findings. Never truncate a claim or drop a necessary qualification to meet the target.'
@@ -286,7 +310,10 @@ def expand_draft(draft,selected,question,state):
     if interpret and not source_question and state.get('_answer_mode')!='mixed':
         facts=[c for c in facts if selected[c]['domain']=='contemporary_evidence']
     segments=[]
-    for start in range(0,len(facts),2):segments.append({'kind':'fact','claim_ids':facts[start:start+2]})
+    for start in range(0,len(facts),2):
+        item={'kind':'fact','claim_ids':facts[start:start+2]}
+        if state.get('_fact_form')=='brief' and any('brief_statement' in selected[c] for c in item['claim_ids']):item['form']='brief'
+        segments.append(item)
     if interpret and draft['interpretation'].strip():
         item={'kind':'interpretation','text':draft['interpretation'],'basis_claim_ids':list(selected)}
         if re.search(r'\b(shorter|one sentence|briefly)\b',question,re.I):segments.insert(0,item)
@@ -351,11 +378,11 @@ def validate_segments(draft, selected, maximum=3):
             if not isinstance(basis,list) or not any(isinstance(c,str) and c in selected and selected[c]['domain']=='historical_record' for c in basis):
                 raise EvidenceError('Fictional persona reasoning needs a retrieved historical basis')
             normalized.append({'id':s['id'],'text':s['text'],'claim_ids':s['basis_claim_ids']})
-        elif kind == 'fact' and set(s) in ({'id','kind','claim_ids'},{'id','kind','text','claim_ids'}):
+        elif kind == 'fact' and {'id','kind','claim_ids'}<=set(s)<={'id','kind','claim_ids','text','form'}:
             ids=s['claim_ids']
             if not isinstance(ids,list) or not 1<=len(ids)<=2 or any(not isinstance(c,str) or c not in selected for c in ids):
                 raise EvidenceError('Unknown or excessive factual claim references')
-            text=' '.join(selected[c]['statement'] for c in ids)
+            text=' '.join(fact_statement(selected[c],s.get('form','full')) for c in ids)
             normalized.append({'id':s['id'],'text':text,'claim_ids':ids})
         elif kind == 'quote' and set(s)=={'id','kind','quote'}:
             normalized.append({k:v for k,v in s.items() if k!='kind'})
@@ -396,7 +423,7 @@ def render(segments, accepted, cards):
             parts.append(prefix+s['text'].strip()+' '+''.join('['+c+']' for c in cites))
             basis.extend(ids); labeled=True
         else:
-            normalized={k:v for k,v in s.items() if k!='kind'}
+            normalized={k:v for k,v in s.items() if k not in ('kind','form')}
             text, used=render_segments([normalized],{s['id']},cards)
             parts.append(text); facts.extend(used)
     return '\n\n'.join(parts), list(dict.fromkeys(facts)), list(dict.fromkeys(basis))
@@ -409,6 +436,7 @@ class GhostChat:
         if collection['profile_sha256'] != fingerprint(profile) or collection['packets_sha256'] != fingerprint(collection['packets']):
             raise EvidenceError('Ghost profile or source collection changed')
         self.profile,self.collection,self.ledger=profile,collection,validate_ledger(collection,ledger)
+        validate_brief_forms(collection,ledger)
         self.retriever=GhostRetriever(collection,ledger)
 
     def answer(self,question,generate,*,state=None,history=()):
@@ -450,9 +478,10 @@ class GhostChat:
                 # Observed v13 output used this descriptive task name despite
                 # selecting valid evidence. It is a factual premise correction,
                 # never permission to invent a new mode or generate an opinion.
-                if selection.get('answer_mode')=='premise_corrections':
+                if selection.get('answer_mode') in ('premise_correction','premise_corrections'):
+                    original_mode=selection['answer_mode']
                     selection={**selection,'answer_mode':'facts'}
-                    selection_normalizations.append({'field':'answer_mode','from':'premise_corrections','to':'facts'})
+                    selection_normalizations.append({'field':'answer_mode','from':original_mode,'to':'facts'})
                 plan,rejected_claim_ids=sanitize_selection(selection,available)
                 if 'answer_mode' in selection:
                     mode='facts' if facts_only_requested(question) else selection['answer_mode']
@@ -490,7 +519,8 @@ class GhostChat:
                         fact_ids,fact_display,response_budget=plan_response_budget(question,selected,request_state)
                         if request_state['_answer_mode']=='mixed':
                             historical_fact_fallback_ids=[cid for cid in fact_ids if selected[cid]['domain']=='historical_record']
-                        request_state={**request_state,'_planned_fact_ids':fact_ids,'_planned_fact_display':fact_display,'_response_budget':response_budget}
+                        request_state={**request_state,'_planned_fact_ids':fact_ids,'_planned_fact_display':fact_display,
+                            '_response_budget':response_budget,'_fact_form':response_budget.get('fact_form','full')}
                     if interpret and not quote_requested and request_state.get('_answer_mode'):
                         raw={'facts':[],'interpretation':call('draft',structured=False),'quotes':[]}
                     else:
@@ -509,8 +539,10 @@ class GhostChat:
         elif len(accepted)<len(segments):
             text+='\n\nI could not support the rest of the requested answer.'
         if response_budget is not None:
+            sentences=max(1,len(re.findall(r'[.!?](?:\s|$)',text)))
             response_budget={**response_budget,'displayed_words':len(text.split()),
-                'over_target':response_budget['target_words'] is not None and len(text.split())>response_budget['target_words']}
+                'over_target':response_budget['target_words'] is not None and len(text.split())>response_budget['target_words'],
+                'displayed_sentences_estimate':sentences,'over_sentence_target':response_budget['sentence_limit_estimate'] is not None and sentences>response_budget['sentence_limit_estimate']}
         used_packets=list(dict.fromkeys(trace['active_packet_ids']+[selected[c]['packet_id'] for c in facts+basis]))[:2]
         next_state={**state,'active_packet_ids':used_packets,'accepted_claim_ids':facts,
                     'interpretation_basis_claim_ids':basis,'turns':state['turns']+1}
@@ -525,6 +557,7 @@ class GhostChat:
                 'application_selection_normalizations':selection_normalizations,
                 'response_budget':response_budget,
                 'application_historical_fact_fallback_claim_ids':historical_fact_fallback_ids,
+                'application_brief_fact_claim_ids':[cid for s in segments if s['kind']=='fact' and s.get('form')=='brief' for cid in s['claim_ids'] if 'brief_statement' in selected[cid]],
                 'application_format_normalizations':format_actions,'missing_verdict_ids':missing_verdicts,'unknown_verdict_ids':unknown_verdicts,
                 'status':'blocked' if error else 'application_filtered' if selected and not segments and rejected_segments else 'review_rejected' if selected and not accepted else 'abstained' if not facts and not basis else 'partial' if len(accepted)<len(segments) or rejected_segments else 'supported_by_model_review',
                 'validation_error':error,'semantic_guarantee':False,'model':MODEL,'training_steps':0,'adapters_loaded':[]}

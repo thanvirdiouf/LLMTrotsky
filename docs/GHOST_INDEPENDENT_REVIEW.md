@@ -3,9 +3,10 @@
 The user explicitly requested a second source-based review, followed by repeated
 result-dependent work. A fresh-context reviewer was delegated the V14 worksheet
 without parent history, prior case labels, model verdicts or earlier reports.
-It saved judgments before authoring the next questions. This is a separate AI
-review using the same model family, not independent human historian validation;
-correlated blind spots remain possible.
+It saved judgments before authoring the next questions. This is a separate
+fresh-context AI instance from the coding agent’s model family, distinct from
+the Qwen base under test. It is not human historian validation; correlated
+blind spots with the coding agent remain possible.
 
 The review covers all ten displayed replies and five candidates separately.
 Every displayed-text hash matches the verified journal. Its input worksheet
@@ -80,3 +81,13 @@ that an invented quoted opinion cannot erase the planner-prioritized canonical
 prediction; view-only replies remain separate and mixed source behavior is not
 keyword-gated. Fifty-four focused tests pass. Full suite: 327 tests, the same
 two pre-existing historical README snapshot errors; locks remain preserved.
+
+
+V15/saved17 and V16/saved18 are now complete and verified: ten replies/22 calls
+each, no input/output budget failures, about 11.32 GiB peak. All ten displayed
+replies are byte-identical; the historical mixed-fact fallback does not trigger
+on this new set. No fresh quality gain is claimed. A second reviewer receives
+neutral randomized packet labels without prior statuses or model verdicts.
+Both runs expose two invalid singular task labels. V17 separately tests finite
+selection decoding; semantic usefulness remains a separate outcome. See
+[constraint experiment](GHOST_SELECTION_CONSTRAINTS.md).

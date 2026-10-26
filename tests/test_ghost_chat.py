@@ -364,7 +364,7 @@ class GhostChatTest(unittest.TestCase):
     def test_observed_premise_correction_label_keeps_evidence_without_drafting_opinion(self):
         from ghost_chat import load_active
         bot=load_active()
-        for mode in ('premise_corrections','truth'):
+        for mode in ('premise_correction','premise_corrections','truth'):
             calls=[]
             def generate(messages):
                 calls.append(messages)
@@ -376,13 +376,13 @@ class GhostChatTest(unittest.TestCase):
                 return {'response':json.dumps(out),'finish_reason':'stop'}
             result=bot.answer('Using the ILO material here, give the exact worldwide total of jobs actually eliminated by generative AI during 2026. If that total is not established, explain what the dated estimate measures instead.',generate)
             with self.subTest(mode=mode):
-                if mode=='premise_corrections':
+                if mode in ('premise_correction','premise_corrections'):
                     self.assertEqual([s['stage'] for s in result['stages']],['select','check'])
                     self.assertEqual(result['answer_mode'],'facts')
                     self.assertIn('potential exposure, not observed job losses',result['response'])
                     self.assertTrue(all(s['kind']=='fact' for s in result['segments']))
                     self.assertEqual(result['application_selection_normalizations'],[{'field':'answer_mode','from':mode,'to':'facts'}])
-                    self.assertIn('premise_corrections',result['stages'][0]['output']['response'])
+                    self.assertIn(mode,result['stages'][0]['output']['response'])
                 else:
                     self.assertEqual(result['status'],'blocked')
                     self.assertEqual(len(calls),1)

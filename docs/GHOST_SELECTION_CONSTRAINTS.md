@@ -44,3 +44,16 @@ operator's endpoint. No persistent inference service is deployed. The bound
 remains ten replies/thirty evaluation calls plus one memory probe on the same
 private notebook, with no training/adapters/paid compute. Do not promote the
 experiment from structural success alone.
+
+
+## Verified result and promotion decision
+
+V17 completed as private saved version 19: ten replies/24 calls, zero invalid
+selection outputs, no budget rejection or output truncation. Frozen verification
+reconstructs every selection path and policy metadata. The structural goal is
+met, but the blinded C review finds mixed quality: the historical-summary reply
+and ending improve; caption editing and a hypothetical policy request regress
+to unnecessary refusals. This is not a clear quality improvement and is not
+promoted to the default. Valid syntax does not establish correct task routing.
+The next V18 trial returns to unconstrained baseline selection, normalizes the
+observed singular/plural factual synonym, and tests reviewed compact forms.

@@ -5,13 +5,48 @@ records, dated modern evidence and newly imagined views. Both adapters remain
 experimental and training stays paused. User authorized autonomous result-
 dependent continuation, proper documentation, milestone commits and pushes.
 
+## Active continuation: V18 compact forms trial
+
+Latest user says continue; original instruction is to review, choose next step,
+execute and repeat. V15/saved17 and V16/saved18 verified, 22 calls each, ten
+byte-identical replies; source-first historical fallback never exercised by
+new questions. Independent masked A/B AI review saved in
+`evaluation/runs/ghost_second_review_comparison/`; all pairs tie.
+
+V17/saved19 finite-selection run verified: ten replies/24 calls, every schema
+and token path valid. Blinded C review shows mixed quality: R04/R10 improve,
+R01/R07 become unnecessary refusals. Do NOT promote the broad grammar default.
+It remains opt-in; CLI has no remote grammar guarantee.
+
+V18 is frozen from same questions with experimental source-plan v3, WITHOUT
+constrained selection. Four compact canonical forms were source-reviewed by
+separate AI (two accepts/two revisions), then accepted by coder; originals,
+source packets and 39 IDs unchanged. Text/source fingerprints lock variants.
+One-sentence/short replies use whole reviewed forms; quote anchors unchanged.
+Singular and plural premise_correction(s) normalize to facts; other modes still
+block. Sixty focused tests pass; full333 has the same two README errors. Commit/
+push docs/code/plan, submit V18 under standing approval. The active evidence
+pointer is STILL v2; evaluate alternate v3 via --source-plan, no pointer change
+until source/conversation review. Source specs/claims remain ignored/private.
+Local data built as evaluation/ghost_chat_v3. Review artifacts/proposal are in
+`evaluation/ghost_brief_forms_proposal_v1/`. Docs GHOST_BRIEF_FACT_FORMS.md.
+
+After V18 exact download/token/frozen verification, export neutral review packet
+and have source_review agent apply its saved rubric without statuses/verdicts.
+That reviewer is a distinct coding-agent-model instance, different from Qwen,
+NOT a human historian. Choose the next step from actual results. Training,
+adapters, paid compute and persistent deployment remain unchanged.
+
 ## New structural iteration: selection grammar
 
 V15 is complete/token-verified as saved17 (22 calls); two new cases block on
-unknown singular premise_correction enum. V16 source-first treatment completed
-as saved18; exact-version download/verification and blinded comparison pending.
+unknown singular premise_correction enum. V16 source-first treatment is verified
+as saved18 (22 calls). All ten replies equal V15 byte-for-byte; fallback never
+triggers. No fresh quality gain claimed. Neutral A/B packets are under
+`evaluation/runs/ghost_second_review_comparison/`; source_review agent is now
+scoring them without statuses/verdicts/private_assignment.
 
-V17 is frozen with `--constrain-selection`, same exact V16 inputs, engine and
+V17 is submitted as saved19 (commit77bfb82) with `--constrain-selection`, same exact V16 inputs, engine and
 evaluator. New `selection_constraints.py` finite token trie prevents invalid
 selection fields/enums/IDs, preserves every subset up to four and every first
 priority, then source-orders remaining IDs. Empty selection remains available.
@@ -21,7 +56,7 @@ is opt-in Kaggle only, not a remote CLI guarantee or semantic guarantee.
 57 focused tests pass; full330 retains only the known two README snapshot
 errors. Source tokenizer preflight: 1,413 paths, max37 output tokens, roundtrip
 checks pass, no model weights loaded. Docs: GHOST_SELECTION_CONSTRAINTS.md.
-Commit/push this tested structural experiment, then submit V17 under standing
+This structural experiment is committed/pushed and running under standing
 approval. Review actual usefulness and unnecessary source dumps, not just
 schema success. The second reviewer saved a rubric without seeing new outputs;
 provide neutral A/B packets after V15/V16 verification. Never leak statuses or

@@ -1,0 +1,10 @@
+{
+  "status": "Experimental reviewed compact forms; source packets and full propositions unchanged; not quality promotion",
+  "persona_file": "config/persona_ghost_expansion.json",
+  "historical_sources_file": "config/ghost_historical_sources_v3.json",
+  "contemporary_sources_file": "config/ghost_contemporary_sources_v3.json",
+  "reflection_basis_claim_ids": [
+    "radio_social_control",
+    "radio_no_automatic_peace"
+  ]
+}

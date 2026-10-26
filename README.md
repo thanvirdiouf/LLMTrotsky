@@ -20,7 +20,8 @@ Forty-six focused ghost/source/harness/calibration tests pass. The verified
 comparison exposes source overreach in direct replies and reviewer role confusion
 in checked replies. Plain-prose opinion drafting removes the observed JSON
 failure; dated factual replies remain canonical. A balanced ten-case auditor
-calibration is prepared with expected decisions withheld from the model.
+calibration accepts five valid candidates and rejects five traps, with expected
+decisions withheld. Fresh end-to-end retrieval/dialogue testing is prepared.
 The active collection has ten packets/39 propositions. Neither pipeline is
 promoted as reliably grounded; training remains paused.
 [Measured progress](docs/PRESENT_DAY_GHOST.md),

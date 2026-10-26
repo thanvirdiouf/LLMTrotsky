@@ -54,3 +54,26 @@ examples cannot establish a reliable production auditor. A clean calibration
 would justify a fresh conversation study, not deployment or resumed training;
 continued errors would justify independent human review or a separately tested
 reviewer before more prompt tuning.
+
+
+## Completed result and next study
+
+V12 completed as private saved version 14: ten checker generations, no input
+budget rejection or truncation, 11.32 GiB probe peak. Frozen replay and exact
+local input/output token reconstruction pass. It accepts all five valid
+candidates and rejects all five traps, with zero blocks under preregistered
+contract labels. Some rejection explanations still add loose secondary
+reasoning; correct decisions are not proof that every rationale is sound.
+Detailed local review/scores/transcript are in `evaluation/runs/ghost_smoke_v12/`.
+
+This result justifies a fresh complete-pipeline study. V13 uses
+`config/ghost_chat_evaluation_v3.json`: four singles and a six-turn conversation,
+ordinary natural retrieval rather than fixed source context, ten replies and
+at most thirty calls plus one probe. Singles test a historical prediction,
+reported information versus firsthand witness, missing measured modern outcomes
+and an unrelated election premise. Dialogue tests dated evidence, fear versus
+actual events, conditional political reasoning, deeper disagreement, study-only
+scope and shortening. Review checks remain local and withheld; inspect actual
+source routing, selected claims, drafts, audits and displayed answers separately.
+These questions are new wording over exposed sources, not independent gold.
+Training and adapter promotion remain paused.

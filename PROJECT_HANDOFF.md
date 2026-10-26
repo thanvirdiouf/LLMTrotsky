@@ -14,15 +14,21 @@ reply remains two sentences. Reviewer role confusion now overrejects fictional
 first person and misattributes new political conclusions to ILO. Some rejected
 premises remain problematic; do not call every rejection false.
 
-V12 is frozen/staged for balanced checker-only calibration: ten cases, five
-valid/five invalid, ten calls plus one memory probe under standing approval.
-Expected decisions/rationales are excluded from model input. Test candidates
-never enter trusted chat output or memory. Explicit candidate speaker and
-historical/modern source-support roles clarify the contract. Submit to the same
-private notebook after committing/pushing; exact-download, frozen/token verify,
-and report false acceptance, false rejection and blocks separately. See
-`docs/GHOST_AUDIT_CALIBRATION.md`. Do not run further broad dialogue loops before
-reviewing this result. No training, adapters or paid compute.
+V12 completed/verified as private saved version 14: ten checker-only calls plus
+one memory probe, no budget/length problems. All five valid cases accepted and
+five traps rejected, zero blocks against preregistered authoring-agent contract
+labels withheld from the model. Some secondary explanations remain loose. Test
+candidates never become trusted chat output or memory. See local V12 report,
+scores/transcript and `docs/GHOST_AUDIT_CALIBRATION.md`.
+
+V13 is now frozen/staged: `config/ghost_chat_evaluation_v3.json`, four new singles
+and six sustained dialogue turns, ordinary natural retrieval, maximum thirty
+calls plus one probe. Same sources/profile/base and corrected speaker/support
+contract. Commit/push protocol/config and submit under standing approval, then
+exact-download, frozen/token verify and source-review. Separate retrieval,
+interpretation, auditor and actual conversational usefulness. Neither a clean
+calibration nor ten fresh replies establishes production reliability. No
+training, adapters or paid compute.
 
 ## Verification and archive
 

@@ -49,8 +49,8 @@ basis. Those checks cannot establish that every generated interpretation is
 sound, that all assumptions were identified, or that every supported statement
 is relevant. Even a labeled fictional view can contain unsupported assertions.
 
-Selection and auditing see full bounded source blocks. Opinion drafting uses an
-explicitly labeled proposition-summary view. The conversation log retains all
+Selection, drafting and auditing now see full bounded source blocks and reviewed
+propositions. Earlier summary-only drafting did not resolve interpretation. The conversation log retains all
 displayed replies, while model input contains the most recent four messages
 and an explicit omitted-message count. Durable topic/basis state is not a
 semantic summary of every earlier turn. Six evaluated turns therefore do not
@@ -100,3 +100,13 @@ without extra calls or training. It still fails an ordinary paragraph because
 of malformed JSON, so V11 removes that paragraph's serialization contract.
 This preserves structured evidence control while avoiding a format failure
 that should not be confused with source absence or interpretive ability.
+
+
+V11 removes ordinary draft JSON failures but exposes reviewer role confusion:
+fictional first-person lifetime references are treated as human-user claims, and
+new normative conclusions are incorrectly attributed to institutional sources.
+This is distinct from valid objections to unsupported causal premises. V12
+isolates the auditor with five valid and five deliberately false fixed
+candidates, expected labels withheld. Speaker and source-support roles are
+explicit; political preference need not be endorsed by ILO, while descriptive
+premises still require evidence. See [calibration](GHOST_AUDIT_CALIBRATION.md).

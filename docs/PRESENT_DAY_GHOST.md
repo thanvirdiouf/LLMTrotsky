@@ -13,7 +13,7 @@ interpretation or conversation**. V11 completes ordinary opinion prose without
 JSON failures, yet its auditor confuses the fictional assistant with the user
 and sometimes treats new opinions as institutional source claims. Canonical
 facts survive. Some rejected premises still have legitimate source concerns.
-Neither pipeline is promoted. V12 prepares a balanced checker-only diagnostic;
+Neither pipeline is promoted. V12 completes a balanced checker-only diagnostic;
 see [speaker/source-role calibration](GHOST_AUDIT_CALIBRATION.md).
 
 | Ghost version / Kaggle version | Evaluation calls | Main finding |
@@ -29,7 +29,8 @@ see [speaker/source-role calibration](GHOST_AUDIT_CALIBRATION.md).
 | v9 / 11 | 16 | Fresh comparison: direct source overreach; checked task/format failures |
 | v10 / 12 | 18 | Valid task labels and dated two-sentence finding; final opinion JSON is incomplete |
 | v11 / 13 | 19 | Prose completes; reviewer confuses speaker and source-support roles |
-| v12 / pending | at most 10 | Five valid/five invalid fixed audit candidates; expected labels withheld |
+| v12 / 14 | 10 | All five valid accepted/five traps rejected; explanations still imperfect |
+| v13 / pending | at most 30 | Fresh natural retrieval: four singles and six-turn conversation |
 
 V1–v4 use the same inspected ten-turn development set. V5 introduces four
 single questions and a six-turn conversation; v7/v8 reuse those as regressions.
@@ -186,3 +187,11 @@ speaker/support-role errors described above. V12 explicitly identifies those
 roles and tests ten fixed candidates before any further conversation study.
 Candidates are never trusted replies or memory. The same base judge remains
 fallible; a successful calibration would not establish production reliability.
+
+
+V12 accepts five valid candidates and rejects five traps with no blocked calls,
+verified as saved version 14. This is a designed diagnostic, not a production
+success rate. Some secondary audit reasons are still loose. The next V13 study
+uses fresh wording and ordinary retrieval across ten replies, including source
+certainty and insufficient evidence, then sustained conditional discussion and
+mode changes. No new sources, model, adapters or training are introduced.

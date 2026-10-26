@@ -35,15 +35,18 @@ def export(version,root=ROOT):
     for row in rows:
         if fingerprint(row['response'])!=row['response_sha256']:raise ValueError('Answer text hash differs')
         question=questions[row['case_id']][row['turn']-1]
+        audit=row.get('mode')=='reviewer_calibration'
         lines.extend([f"## {row['key']}",'',f"Status: `{row['status']}`; stage calls: {row['model_calls']}.",'',
-                      'User: '+question,'','Displayed reply:','',row['response'],''])
+                      'User: '+question,''])
+        if audit:lines.extend(['Candidate test input (may be deliberately false; never a trusted chatbot reply):','',row['audit_candidate_display'],''])
+        lines.extend(['Auditor diagnostic output:' if audit else 'Displayed reply:','',row['response'],''])
         if row.get('validation_error'):lines.extend(['Application error: '+row['validation_error'],''])
         for rejected in row.get('rejected_segments',[]):lines.extend(['Filtered candidate: '+rejected['reason'],''])
-        cited=[pid for pid in packets if '['+pid+']' in row['response']]
+        cited=[pid for pid in packets if '['+pid+']' in (row['audit_candidate_display'] if audit else row['response'])]
         direct=row.get('arm')=='direct'
         supplied={m['packet']['id'] for m in row['retrieval']['matches']}
         if cited:
-            lines.extend(['Source references written by the unchecked model (not verified):' if direct else 'Sources cited by the renderer:',''])
+            lines.extend(['Sources supplied for the test candidate (citation does not validate its text):' if audit else 'Source references written by the unchecked model (not verified):' if direct else 'Sources cited by the renderer:',''])
             for pid in cited:
                 packet=packets[pid];interval=packet['composition_date_interval']
                 observed='; observed '+packet['observed_date'] if 'observed_date' in packet else ''

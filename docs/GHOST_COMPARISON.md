@@ -66,3 +66,21 @@ and audit reasons, not just approval counts. A direct answer can be useful but
 unfaithful; a checked answer can be source-safe but fail the request. Do not
 interpret either arm's status as a quality score. Keep all research outputs
 local under the repository's publication boundary.
+
+## Completed first comparison and regression
+
+Saved Kaggle version 11 (`ghost_smoke_v9`) is verified: ten answers, sixteen
+requests, no budget rejection/truncation, 11.32 GiB probe peak. Direct engages
+with mode changes and shortening but adds unsupported certainty and omits the
+requested date. Checked preserves canonical source limits but fails mode,
+styling or review coverage. Neither whole pipeline is promoted. Detailed local
+review: `evaluation/runs/ghost_smoke_v9/QUALITY_REVIEW.md`.
+
+These questions are now inspected regressions. Prepared v10 keeps the exact
+profile, source collection, ledger, model cases and direct evaluator. Its
+checked select call returns facts/view/mixed plus detail; all stages see full
+bounded context. It also normalizes narrow styling, preserves valid reviewed
+segments when others lack verdicts, and materializes selected modern facts for
+mixed replies. The direct control is generated again rather than copied. This
+is a combined application intervention, not a component ablation. Use a new
+version when building; preserve the earlier frozen comparison.

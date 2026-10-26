@@ -85,3 +85,12 @@ regressions have reached diminishing diagnostic value. The next fresh
 [matched-source direct/checked comparison](GHOST_COMPARISON.md) keeps base and
 available context fixed while testing whole-pipeline usefulness and faithfulness.
 Do not assume the more elaborate pipeline is better without that comparison.
+
+The fresh v9 comparison confirms both categories on new robustness wording:
+direct engages with the dialogue but invents certainty, while checked skips a
+viewpoint task or blocks format/coverage despite available sources. V10 tests
+current-task classification in the existing select call, full-context drafting
+and narrow structural recovery without training. An additional local natural-
+retrieval miss on the definite study reference is corrected separately; the
+fixed-context comparison cannot validate retrieval recall. Keep this distinction
+when interpreting any improvement on the now-inspected questions.

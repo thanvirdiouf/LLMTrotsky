@@ -1,235 +1,162 @@
-# Present-day Trotsky ghost — active project direction
+# Present-day Trotsky ghost — active project
 
-The active goal is now a **clearly fictional ghost of Leon Trotsky conversing
-in the present day**, without a 1940 knowledge cutoff. This replaces the active
-product goal of reproducing exactly what he could know on 19 August 1940.
-The old experiments remain archived and reproducible.
+The active product is an **experimental, clearly fictional Leon Trotsky ghost
+living in the present day**, with no 1940 knowledge cutoff. Historical records,
+dated contemporary evidence and newly imagined views remain distinct. Both
+adapters stay experimental and training stays paused.
 
-## Measured progress — 26 October 2026
+## Current result — 26 October 2026
 
-Seven ghost smokes are complete and verified. V1–v4 use the same inspected
-ten-turn set; v5 evaluates four new questions and a six-turn conversation,
-which are now inspected regressions. All passed the separate 5,000-token probe at 11.32 GiB, without
-truncation or input-budget rejection. These establish compact T4 feasibility,
-not conversational readiness.
+Seven ghost smokes and the fresh matched-source comparison are complete,
+downloaded, source-reviewed and verified.
+They establish bounded T4 memory capacity and several application fixes, but
+**do not establish reliable interpretation or conversation**. The checker still
+accepts faulty source inferences. The fresh direct/checked comparison ran as saved Kaggle version 11. Direct
+engages with the dialogue but invents certainty; checked preserves reviewed
+facts but misses new wording or blocks format. Neither arm is promoted.
 
-| Smoke / Kaggle version | Evaluation calls | Main finding |
+| Ghost version / Kaggle version | Evaluation calls | Main finding |
 |---|---:|---|
-| v1 / 4 | 16 | Eight structural blocks; checker approved a wrong observation date |
-| v2 / 5 | 19 | Canonical facts fix the date; retained sources fix continuity; excessive refusal remains |
-| v3 / 6 | 19 | Selection ambiguity fixed; five drafts omit an empty quote field; useful conversation still fails |
-| v4 / 7 | 19 | No schema blocks; useful factual/identity answers; unsupported opinion premises still pass the checker |
-| v5 / 8 | 20 | Four new factual cases preserve source limits; conversation invents personal circumstances and misses mode transitions |
-| v7 / 9 | 22 | Study-only scope and draft routing fixed; audit still confuses prior constraints and accepts faulty source inferences |
-| v8 / 10 | 21 | Fuller view now displays; source overreach still passes; shortening is filtered for raw citation markup |
+| v1 / 4 | 16 | Eight structural blocks; wrong observation date incorrectly approved |
+| v2 / 5 | 19 | Canonical facts fix the date; retained sources improve continuity |
+| v3 / 6 | 19 | Five drafts omit an empty field; useful conversation still fails |
+| v4 / 7 | 19 | Useful factual/identity answers; unsupported opinion premises still pass |
+| v5 / 8 | 20 | New factual cases preserve source limits; conversation fails modes and assumptions |
+| v6 / none | 0 | Prepared routing-only bundle preserved, never uploaded or run |
+| v7 / 9 | 22 | Study-only scope and draft routing fixed; audit confuses prior constraints |
+| v8 / 10 | 21 | Fuller view displays; source overreach passes; shortening filtered for raw citations |
+| v9 / 11 | 16 | Fresh comparison: direct source overreach; checked task/format failures |
+| v10 / pending | at most 20 | Same questions as regressions; task classification and format/coverage fixes |
 
-Local source-based reviews are in `evaluation/runs/ghost_smoke_vN/QUALITY_REVIEW.md`.
-V3 fulfills only the modern factual question, identity clarification and scoped
-missing-news refusal. One checker-approved vendor fact answer is irrelevant to
-an endorsement question. Same-agent unblinded review is not independent
-historian validation. No interpretation or conversation reliability is claimed.
+V1–v4 use the same inspected ten-turn development set. V5 introduces four
+single questions and a six-turn conversation; v7/v8 reuse those as regressions.
+V9 introduces five newly authored turns in each of two arms with identical
+available ILO/radio context and separate actual histories. It compares whole
+pipelines, not individual components. Source-exposed development and same-agent
+unblinded review are not independent historian validation or a representative
+benchmark. Detailed local reports/transcripts: `evaluation/runs/ghost_smoke_vN/`.
 
-V4 gives five clearly useful answers and preserves the historical article's
-uncertainty. Its opinion audit still approves unsupported historical and price
-comparisons. The next test therefore changes relevant source coverage and basis
-selection: the active evidence version adds the 1926 radio speech and a dated
-ILO AI/work article. Opinions require a retrieved historical basis; application
-basis additions are logged. Facts-only follow-ups retain their topic and
-suppress opinion drafting. Date kinds and context boundaries enter model input.
+The last ordinary smoke has six clearly useful factual/scope/identity
+replies. Its fuller-view mode works, but interpretation still misreads adoption
+barriers as a statement about displacement and invents causal explanations for
+a research metric. The shorter draft is filtered before model audit for writing
+raw citations in prose. Model status is not a quality score.
+[Failure boundaries and training decision](GHOST_FAILURE_ANALYSIS.md).
 
-Thirty-seven focused ghost, source-provenance, harness and comparison tests
-pass. V5's four single questions and identity clarification are useful, but
-its views make unsupported personal assumptions; facts-only mode includes an
-unrequested historical argument, and later turns repeat facts. All model checks
-pass despite these failures. No conversation reliability is claimed.
+## Run and reproduce
 
-V7 fixes study-only scope and skipped drafting, but the fuller view remains
-partial and its audit reason wrongly applies a prior facts-only instruction.
-It also judges the raw candidate without the actual displayed fictional label.
-V8 supplies current request/mode and candidate display and now displays a
-fuller interpretation. It still approves faulty source inferences; the shorter
-draft supplies raw citations and is filtered. More inspected regression tuning
-is not evidence of general reliability. The next comparison uses five newly
-authored turns in direct and checked arms with identical available sources.
-V6 remains **unrun**. V7/v8 use the v5 questions as inspected regressions.
-[Evidence and case design](GHOST_SOURCE_EXPANSION.md).
-
-The persona can discuss later history, contemporary technology and current
-politics. New views are fictional interpretations, not rediscovered Trotsky
-writings. It keeps conceptual precision and a documented political starting
-point while allowing curiosity, disagreement, humor and ordinary conversation.
-It should not turn every reply into a signed public address or repeat a fiction
-disclaimer at every turn. The interface identifies the persona as fictional.
-
-## Run the active version
+The complete local research archive is required; public Git contains code,
+profiles and design, not source excerpts or model artifacts.
 
 ```bash
 python3 scripts/build_ghost_chat.py
 python3 scripts/ghost_chat.py --dry-run \
   --question "How would you assess renting an A40 on Runpod today?"
-python3 -m unittest discover -s tests -p test_ghost_chat.py -v
+python3 -m unittest discover -s tests -p 'test_ghost*.py' -v
 ```
 
-With an already configured remote service serving the untouched base model:
+With an operator-configured service already serving the untouched base:
 
 ```bash
 python3 scripts/ghost_chat.py --base-url https://YOUR_SERVER/v1 \
   --log /tmp/trotsky-ghost-chat.jsonl
 ```
 
-The endpoint uses `TROTSKY_MODEL_API_KEY` from the environment and never logs it.
-No model weights or GPU inference run locally. Endpoint identity remains an
-operator assertion; an HTTP model name cannot attest revision or adapter
-absence. No remote ghost service has been deployed or tested yet.
+The CLI takes `TROTSKY_MODEL_API_KEY` from the environment without logging it.
+No persistent remote ghost service has been deployed. HTTP model names are
+operator assertions, not proof of revision or absence of adapters. The Kaggle
+workflow separately records the pinned revision, stack and frozen parameters.
+No weights or GPU inference run locally.
 
-`config/active_chat.json` selects `config/persona_ghost_expansion.json`, the
-versioned source plan and generated ghost evidence files. The active reference date is **26 October 2026**. Frozen initial smokes retain
-25 October for reproducibility. It is a configurable reference date,
-not a fixed historical knowledge boundary. Update it and version the evidence
-artifacts when refreshing sources. A reference date alone does not supply news.
+`config/active_chat.json` selects `config/persona_ghost_expansion.json`,
+`config/ghost_source_plan_v2.json` and `evaluation/ghost_chat_v2/`. Its reference
+date is **26 October 2026**. Frozen initial smokes retain 25 October. A reference
+date is not live news; refresh sources and version artifacts explicitly.
+An explicit source plan requires a new explicit output path, and building never
+changes the active pointer. Existing generated evidence cannot be overwritten
+with different content.
 
-## Three kinds of content
+## Evidence and conversation contracts
 
-| Kind | What the bot may do | What remains constrained |
+| Content | Allowed behavior | Constraint |
 |---|---|---|
-| Historical record | Explain what Trotsky or another speaker documented | Original author, date, roles, order, quotation and uncertainty |
-| Contemporary evidence | Use facts documented after 1940 | Source author, observation/update dates, scope and freshness |
-| Fictional interpretation | Form new opinions and conditional reasoning in this persona | Label as a present-day interpretation; support factual premises; never attribute it to the historical author |
+| Historical record | Explain documented arguments, reports and predictions | Preserve author, speaker, original date, context and uncertainty |
+| Contemporary evidence | Use supported facts after 1940 | Retain publication/update kind, separate observation date and limited scope |
+| Fictional interpretation | Form new values, arguments and conditional views | Label the new view; support descriptive premises; never imply authentic posthumous writing |
 
-For example, a vendor's modern price is attributed to that vendor. A new
-political judgment about access to technology is the fictional persona's view.
-It must not become an authentic Trotsky endorsement of a modern company.
-Likewise, knowing later history does not turn an old prediction into a proven
-claim within the old document. A later outcome needs its own source.
+The active collection has ten packets and 39 reviewed propositions. The
+original seven historical excerpts and Runpod listing are unchanged. The vendor
+listing was observed 25 October 2026 and separately labels an 8 October update.
+Evidence v2 adds a complete bounded section of the speech delivered 1 March
+1926, excluding its later publisher introduction, and three complete paragraphs
+from an ILO article published 20 May 2025, observed 26 October 2026. Predictions,
+potential exposure and observed outcomes remain distinct. Broad current-affairs
+coverage and automatic live-news retrieval are not implemented.
+[Source provenance and expansion](GHOST_SOURCE_EXPANSION.md).
 
-The renderer labels newly imagined reasoning **“My present-day interpretation”**
-once in an answer containing such reasoning. Historical and modern facts keep
-their source citations. Exact quotations still come from original source
-anchors with their recorded speaker. Model-written quotation and citation
-markup are rejected. A new interpretation is not entered into verified-fact
-memory; its historical/contemporary basis IDs are recorded separately.
+The pipeline selects evidence, drafts, audits and renders. Factual prose comes
+from reviewed immutable statements; exact quotes come from original anchors
+with recorded speaker. Citation markup is inserted by the renderer. Model
+prose cannot invent quotation/citation markup. Newly imagined reasoning is
+labeled **“My present-day interpretation”** and excluded from verified-fact
+memory. Retrieved reviewed historical basis is required for new persona views;
+application-added basis IDs and excluded unrelated context are logged.
 
-## Evidence coverage and pipeline
+Selection, drafting and audit now retain full bounded source blocks. Earlier
+versions used a summary-only draft view; that did not establish reliable
+interpretation and could hide necessary surrounding limits. Audit input includes the current
+request/mode and prospective rendered display, including the fictional label.
+The auditor has a neutral role, but is the same fallible base model. Matching
+source membership, format and citation anchors is not semantic entailment.
+A passing review gives no factual guarantee.
 
-The original collection contains seven bounded historical packets and one
-dated modern example: Runpod's official A40 Pods listing, observed on
-25 October 2026. The page separately labels its update date as 8 October 2026.
-Its author is Runpod, and the snapshot is explicitly a bounded text
-transcription, not a raw HTML hash or full-page archive.
+Topic/basis state and actual displayed replies carry forward. Stored history
+allows ten previous turns; model input includes only the most recent four
+messages and an explicit omitted-message count. This is not unrestricted
+semantic memory. The selection call now classifies the current request as facts, view or mixed,
+with brief/normal/expanded detail. It adds no model calls. Legacy outputs fall
+back to the earlier rule and are explicitly logged. New wording is not gated
+solely by a keyword list. Fuller drafting permits 110–180 words, shorter
+requests 35–60, subject to actual model behavior. Exact greetings, thanks,
+farewells and direct persona-identity questions use application replies without
+model calls, preserving source state.
 
-That preserved version has 33 reviewed propositions. Active evidence v2 adds
-a complete bounded section of the 1 March 1926 radio speech and three paragraphs
-from an official ILO article published 20 May 2025, observed 26 October 2026.
-It contains ten packets and 39 propositions; prediction, estimate and observed
-outcome remain distinct. This is limited reviewed coverage; **broad current-affairs
-coverage and automatic live news retrieval have not been implemented**.
-Additional reviewed contemporary sources belong in a new versioned local
-source input selected by `config/ghost_source_plan_v2.json` or its successor.
-Retain the publication or update date, separate observation date, authorship,
-exact blocks and supported propositions. Rebuild into a new
-evidence version and update the active pointer rather than silently overwriting
-an existing source snapshot. User-supplied modern scenarios can be discussed
-conditionally without being authenticated as facts.
+## Validation and limits
 
-The select/draft/check/render pipeline supports separate fact,
-quotation and interpretation segments. The current checker has a neutral auditing role and permits clearly fictional
-normative reasoning while requiring support for descriptive premises. Earlier
-checks inherited the character prompt and accepted unsupported premises; the
-neutral-role change requires runtime evaluation. It is the same base model and remains
-fallible. A passing verdict is not proof of semantic faithfulness. Source
-curation is by the continuing coding agent, not an independent historian.
+Forty-three focused ghost/source/harness/comparison tests pass. The full suite
+runs 316 tests with two pre-existing historical pilot snapshot errors for the
+already changed `evaluation/README.md`; historical locks remain preserved.
+Kaggle runs verify submitted/downloaded payloads, exact frozen-code replay,
+all input/output token reconstructions, zero optimizer updates, no adapters and
+unchanged archived artifacts. Source curation and quality judgments are by the
+continuing coding agent, not an independent historian.
 
-Topic state persists over follow-ups and resets on explicit topic changes.
-For a present-day interpretive question, retrieval can include a reviewed
-historical basis alongside the relevant modern source. These are starting
-principles with their source-era context, not a claim that every earlier
-position was Trotsky's final view.
+The separate 5,000-token probe peaks at approximately 11.32 GiB on the T4.
+This supports the compact batch, not arbitrary larger contexts or production
+latency. The superseded historical 1940 v2 trial still failed at 6,546 input
+tokens after fourteen direct answers. It is a separate partial archive, not a
+completed quality comparison. No A40 or other paid GPU was provisioned.
 
-Prompt construction avoids repeating source text in every proposition. The
-original context blocks stay intact; claim anchors become block references
-and character offsets in the model request. Full source/proposition data stay
-in the trace for audit. JSON is compact, and omitted older conversation messages
-are explicitly counted. No qualifying source paragraph is silently cropped.
+Use [the smoke protocol](GHOST_SMOKE.md) for exact-version downloads and
+verification, and [the fresh comparison design](GHOST_COMPARISON.md) for controls.
+`python3 scripts/export_ghost_transcript.py --version ghost_smoke_vN` exports
+verified exact displayed replies and source links without assigning scores.
+Do not resume training or promote an adapter from execution success or scores
+on inspected questions. Fresh source-based conversation evidence is required.
 
-## Verification and next evaluation
+### Application fixes following the fresh comparison
 
-Twenty-seven ghost-specific local tests cover the active profile, use of post-1940
-evidence, source domains/dates, fictional-interpretation labeling, exact modern
-quotation rendering, compact-context fidelity, insufficient evidence and
-rejection of unsupported factual premises hidden inside an opinion. The
-grounded-chat tests remain applicable to the archived v1/v2 components.
+For mixed replies, reviewed contemporary facts are materialized independently
+of model-written packet IDs. Interpretation-only requests do not dump canonical
+facts by default. Narrow single-term quote styling and trailing known source
+references are normalized and logged; unknown references, multiword quotes and
+requested exact quotation remain guarded. Missing audit verdicts explicitly
+reject only the uncovered segments; they never become approvals or erase a
+separately valid reviewed segment. Semantic judgment remains fallible.
 
-`config/ghost_chat_evaluation.json` prepares new checks for historical fidelity,
-modern facts, false posthumous authorship, conditional reasoning, missing news
-and multi-turn opinion/source distinctions. A new opinion has no single
-historically correct reference answer; assess its coherence, documentary basis,
-transparency and usefulness separately. Do not score a post-1940 date as a
-failure merely because of its date.
-
-The seven real ghost smokes are verified, with the limitations described
-above. Local synthetic-backend tests establish implementation behavior, not
-real model quality; the first model results show the checker can be wrong.
-The new source-expansion smoke must be reviewed before claiming practical reliability.
-Both adapters remain experimental; training remains paused.
-
-The [next smoke-test protocol](GHOST_SMOKE.md) describes the prepared
-memory-first, ten-answer runs and result-dependent continuation. Its helper
-tests pass, and the user has explicitly approved bounded follow-up iterations
-on the same private notebook and payload categories.
-
-## What happened to the 1940 v2 trial
-
-The approved Kaggle v2 comparison stopped after **14 direct-control answers**,
-before its checked arm. A 6,546-token prompt exhausted the T4's 14.56 GiB device
-memory during attention prefill. The tokenizer budget had passed; token limits
-alone were not a sufficient memory test. The partial journals and exact error
-are preserved in `evaluation/runs/kaggle_grounded_chat_v2/` and are not a complete
-quality comparison. The old experiment was not rerun after the goal changed.
-
-Kaggle's original notebook title and URL were restored with saved version 3
-using `--no-run`. Version 1's completed run and version 2's failed run remain
-preserved. No extra inference was launched by the title restoration.
-
-The compact ghost inputs fit the measured 5,000-token probe; semantic quality
-still fails the development smoke. An A40's additional memory could help longer
-contexts and interactive work; the earlier claim that Kaggle had ample capacity
-applied to v1's smaller prompts. No paid GPU has been rented or provisioned.
-
-The historical `config/persona.json`, original seed data, training locks and
-saved adapters remain unchanged. This is an active application/persona change,
-not a silent reinterpretation of the old training or evaluation results.
-
-### Current routing follow-up
-
-After v5 was frozen/submitted, static inspection found that its fourth
-conversation turn requests a fictional view using wording the intent rule
-misses after facts-only mode. That finding is recorded before answer inspection
-in `evaluation/runs/ghost_smoke_v5/routing_preinspection.json`. The local follow-up
-recognizes fictional views, own reasoning and explicit disagreement; a full
-pipeline regression passes after basis reset. Frozen v5 does not contain this
-patch, so its model run cannot validate it.
-
-For a readable transcript of a verified run, use
-`python3 scripts/export_ghost_transcript.py --version ghost_smoke_vN`.
-This exports exact displayed replies and source metadata after checking the
-answer hash and frozen source/case payloads. It assigns no quality score.
-
-The v7 neutral auditor improves neither all factual inference nor all task
-handling: it still approves source overreach and partly rejects a new-view
-request by referring to an earlier facts-only turn. V8 makes the current request
-and candidate display explicit without removing source context or actual
-history. Fuller requests may use 110–180 words; shorter requests 35–60. These
-changes need runtime review, not just structural tests. Greetings, thanks,
-farewells and direct persona-identity questions use application metadata replies
-without model calls; they preserve source state and do not intercept a greeting
-followed by a substantive question.
-
-### Fresh controlled follow-up
-
-[Direct/checked comparison](GHOST_COMPARISON.md) documents the prepared new
-five-turn dialogue in two arms, ten answers and at most twenty evaluation calls.
-Both use the same pinned base, profile and fixed ILO/radio context; each carries
-its own actual displayed replies. It compares whole pipelines rather than
-individual components, with same-agent unblinded review. Direct replies remain
-explicitly unchecked research outputs. Source data and all transcripts stay
-local; no training or paid GPU is involved.
+A separate local test found that a definite reference to the study lost its prior
+ILO topic. The natural retriever now retains that source reference while explicit
+new subjects still win. This patch was made after v10 was frozen and is recorded
+separately: fixed-context GPU comparisons do not measure natural retrieval.
+The same inspected five-turn comparison is prepared as v10 to test application
+changes, not to claim fresh generalization.

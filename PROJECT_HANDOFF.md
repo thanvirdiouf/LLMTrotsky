@@ -1,135 +1,119 @@
 # Active goal: present-day Trotsky ghost — 26 October 2026
 
-The user wants a clearly fictional ghost of Leon Trotsky living in the present
-day, with no 1940 knowledge cutoff. Keep historical records, dated contemporary
-facts and newly imagined interpretations distinct. Training stays paused and
-both adapters remain experimental and unchanged. The user authorized autonomous
-result-dependent continuation, proper documentation, and milestone commits/pushes.
+Clearly fictional present-day Trotsky, no 1940 cutoff. Distinguish historical
+records, dated modern evidence and newly imagined views. Both adapters remain
+experimental and training stays paused. User authorized autonomous result-
+dependent continuation, proper documentation, milestone commits and pushes.
 
-## Current experiment
+## Immediate continuation
 
-Ghost smokes v1–v5, v7 and v8 are complete, downloaded, verified and reviewed.
-V8 ran as saved Kaggle version 10. V6 remains never-uploaded/unrun. V9 is frozen
-locally as a fresh direct/checked comparison, not another same-case smoke:
-five new dialogue turns per arm, ten answers, at most twenty evaluation requests
-plus one memory probe. Same base/profile/fixed ILO+radio available context, but
-separate actual histories. Submit under standing approval, then download the
-exact saved version and verify/review. No training, adapters or paid compute.
+V9 fresh direct/checked comparison completed as saved Kaggle version 11 and is
+verified/source-reviewed. V10 is frozen and staged in
+`training/kaggle_cli/ghost_smoke_v10/`, not yet submitted. Same five v9 questions,
+now inspected regressions, in two arms: ten answers, maximum twenty requests
+plus one memory probe. Direct is re-generated, not copied. Commit/push the
+completed application fixes/docs, submit under standing approval, then download
+the exact saved version and verify/review. No training/adapters/paid compute.
 
-- v1 / saved v4: 16 evaluation generations; eight structural blocks, one correct
-  refusal and one substantive answer with errors incorrectly approved by the
-  checker. Memory passed: 5,000 tokens, 11.32 GiB peak.
-- v2 / saved v5: 19 generations; three partial, five refusals, one approved and
-  one rejected answer. Canonical rendering fixes the vendor observation date,
-  and supporting source state survives follow-ups. False selection booleans and
-  unnecessarily complex drafting still discard useful answers.
-- v3 / saved v6: 19 generations; five blocks due to omitted empty quotes, one
-  filtered interpretation, one correct identity clarification, one correct
-  refusal and two approved fact answers (one irrelevant to endorsement). Only
-  three responses fulfill the request. Selection boolean ambiguity is fixed,
-  but useful conversation still fails.
-- v4 / saved v7: 19 generations; no schema, budget or truncation blocks. Five
-  clearly useful factual/identity/refusal answers. Interpretation still fails:
-  the checker catches one invented VRAM-history premise and approves other
-  unsupported cost/history comparisons. Shortening retains weak premises.
-- v5 / saved v8: 20 generations, nine approved/one identity, but only the four
-  single questions and identity clearly fulfill the request. Opinions assume
-  job loss or feelings not supplied; study-only turn adds historical context;
-  later depth/shortening requests repeat facts. All checks wrongly approve.
-- v6 unrun: only the intent rule differs from v5. Preserved as a prepared bundle,
-  replaced by v7 after the broader v5 audit-design failure was inspected.
-- v7 / saved v9: 22 generations, eight approved/one partial/one identity. Six
-  useful factual/scope/identity replies. Opinion source overreach persists;
-  full-view audit partly imports the earlier facts-only constraint and does not
-  see the actual rendered fictional label. Shorter request yields longer text.
-- v8 / saved v10: 21 generations; eight approved/one identity/one filtered.
-  Six useful factual/scope/identity replies. Fuller view now displays, but first
-  two opinions retain identical source overreach. Shortening prose writes raw
-  citations and packet IDs, so it is filtered before audit. Not reliable.
-- v9 prepared: fresh five-turn direct/checked comparison. `evaluate_ghost_comparison.py`
-  fixes two source packets/six available propositions across arms, separates
-  actual histories and records direct content as unchecked with no verified
-  memory. Whole pipelines differ; not a component ablation or blinded benchmark.
+V9: 16 generations; five direct unchecked, one checked partial, three checked
+approved and one block. All tokenizer/frozen replay checks pass, no budget or
+truncation failure, 11.32 GiB probe peak. Direct responds to modes but confuses
+adoption/automation/displacement and predicts unsupported inevitability. Checked
+preserves reviewed facts but misses new viewpoint wording, filters term styling
+and blocks all content when one of two verdicts is missing. It skips draft
+stages on return-to-outlook and condense turns. Neither arm is promoted. Review
+is same-agent and unblinded, not independent historian validation. See
+`evaluation/runs/ghost_smoke_v9/{QUALITY_REVIEW,TRANSCRIPT}.md` and response-bound
+`case_outcomes.jsonl`.
 
-Local run directories `evaluation/runs/ghost_smoke_v{1,2,3,4,5,6,7,8,9}/` retain journals,
-source payloads, model calls, verification and unblinded same-agent reviews.
-Checker approval is not a quality score or independent historical validation.
-Verify the next result with `.venv-tokenizer/bin/python
-scripts/verify_ghost_smoke.py --version ghost_smoke_v9 --tokenizer
-training/data_revision_v2/tokenizer_assets`. Download the specific saved
-version, not whichever notebook version is latest later. The verifier replays
-frozen helper code and reconstructs every prompt/output without model inference.
+V10 fixes: select returns facts/view/mixed and brief/normal/expanded, with a
+logged legacy fallback. No extra requests. Mixed replies use independently
+selected canonical modern statements; view-only mode avoids fact dumps. Full
+bounded source context is restored to drafting. Known trailing citations and
+single-term quote styling are normalized/logged; unknown references and exact
+quote requests remain guarded. Missing verdicts become explicit rejection for
+only uncovered segments, never approval; duplicate/invalid known verdicts fail.
+The source/profile/ledger/model-case payloads and direct evaluator match v9.
 
-Thirty-seven focused ghost/source/harness/comparison tests pass.
-The full suite ran 310 tests with the same two pre-existing historical pilot
-snapshot errors for `evaluation/README.md`. Do not rewrite historical locks to conceal this.
-Each smoke separately verifies the preserved helpers and both adapter hashes.
+A local natural-retrieval check AFTER v10 freeze found the definite study
+reference retrieved Blumkin/New Leader instead of the prior ILO/radio topic.
+The current helper corrects that retention and explicit subject changes still
+win; regression tests pass. This local patch is NOT in frozen v10, and the fixed-
+context experiment cannot test natural retrieval anyway. Do not rebuild or
+mutate the frozen bundle. Record `natural_retrieval_followup.json` has both helper
+hashes and before/after packet IDs. After download, check whether current-code
+fixed-context replay matches the frozen model requests/answers without inference.
 
-After v5 submission, static routing inspection found turn 4 misses opinion mode
-following a facts-only turn; turn 6 own-reasoning wording is also not recognized
-without prior basis. This was recorded before model answer inspection. Local
-patch recognizes fictional views, own reasoning and explicit disagreement; a
-full-pipeline synthetic regression passes. Do not attribute this patch to v5;
-v6 was prepared but remains unrun; v7 now targets the wider v5 findings. `export_ghost_transcript.py` exports
-verified exact replies/source links for human review, without inference.
+## Verification and archive
 
-## Active implementation and source boundary
+Forty-three focused ghost/source/harness/comparison tests pass. Full suite:
+316 tests, the same two pre-existing pilot snapshot errors for the already
+changed `evaluation/README.md`. Do not rewrite historical locks to conceal them.
+Current full output: `evaluation/runs/ghost_smoke_v10/local_tests.log`.
 
-`config/active_chat.json` selects `config/persona_ghost_expansion.json`, the
-`config/ghost_source_plan_v2.json` plan and `evaluation/ghost_chat_v2/`. The
-original profile/evidence remain preserved through source plan v1. The default
-builder now reproduces the active plan/output; an explicit plan requires an
-explicit output path. Building never changes the active pointer.
+Verify with `.venv-tokenizer/bin/python scripts/verify_ghost_smoke.py --version
+ghost_smoke_v10 --tokenizer training/data_revision_v2/tokenizer_assets` after
+exact-version download into `evaluation/runs/ghost_smoke_v10/download/`.
+`export_ghost_transcript.py --version ghost_smoke_v10` makes a readable verified
+transcript. Direct citations are model-written/unchecked, not renderer proofs.
+Verifier chooses the frozen comparison evaluator and reconstructs every token.
+Adapter and archived helper hashes remain checked. Do not equate run status
+or model approval with semantic quality. [Protocol](docs/GHOST_SMOKE.md),
+[comparison](docs/GHOST_COMPARISON.md), [failure analysis](docs/GHOST_FAILURE_ANALYSIS.md).
 
-Active collection: ten packets / 39 propositions. Original seven historical
-packets and the Runpod listing are unchanged (observed 25 October, updated
-8 October). Added: complete contiguous radio-speech blocks 25–28, delivered
-1 March 1926, excluding the later publisher introduction; and three complete
-ILO article paragraphs published 20 May 2025, observed 26 October. Nested
-Marconi attribution and predictions remain distinct from proved later events.
-The ILO exposure estimate is not actual job loss or a 2026 outcome. See
-`docs/GHOST_SOURCE_EXPANSION.md`. Raw source/hash and block fingerprints are
-checked; a preliminary annotation draft is preserved locally separately.
+Executed ghost history: v1/saved4 (16 calls), v2/saved5 (19), v3/saved6 (19),
+v4/saved7 (19), v5/saved8 (20), v7/saved9 (22), v8/saved10 (21), v9/saved11 (16).
+V6 was prepared but never uploaded/run. V1–v4 share initial inspected cases;
+v5 introduces new four singles/six conversation turns, then v7/v8 regress them;
+v9 introduces new five-turn paired questions, and v10 regresses them. These are
+source-exposed development studies, not held-out pretraining benchmarks.
 
-Final synthetic expansion preflight peaks at 3,464 tokens, below 5,120; it is
-not model quality or actual-history evidence. Broad news retrieval remains
-unimplemented. No persistent service is deployed; use the CLI with an
-operator-configured untouched-base endpoint. Endpoint names cannot attest
-revision or absence of adapters. The Kaggle workflow records those explicitly.
+## Active data and interface
 
-Facts render canonical reviewed statements. Quotes render exact source spans
-with recorded speaker. Fictional reasoning is labeled and kept out of verified
-fact memory. Selection, interpretation and semantic review still use the same
-fallible base model. Topic/basis state and actual displayed replies carry into
-follow-ups. Model prompts remain compact, with explicit input-budget rejection.
+`config/active_chat.json` selects the 26 October expansion profile, source plan
+v2 and `evaluation/ghost_chat_v2/`. Ten packets/39 propositions. Original seven
+historical packets and Runpod listing are unchanged; vendor observed 25 October
+with distinct 8 October update date. Added: complete contiguous speech blocks
+25–28 delivered 1 March 1926, excluding later publisher introduction; three ILO
+article paragraphs published 20 May 2025, observed 26 October. Preserve nested
+Marconi attribution, predictions and potential-exposure limits. Original ghost
+profile/evidence are retained as v1. Building an explicit plan requires a new
+output directory and never changes the active pointer. No live-news retrieval
+or persistent model service is deployed. The CLI uses an operator-configured
+untouched-base endpoint; model names alone cannot attest revision/adapters.
+Kaggle attests these explicitly. No local GPU inference.
 
-Publish code, persona, evaluation design and documentation only. Corpus,
-excerpts, reviewed propositions, generated notebooks, journals and model files
-remain ignored local research artifacts. Never force-add these to Git.
+Model input includes the most recent four actual conversation messages and an
+omission count. Topic/basis state is not unlimited semantic memory. Exact social
+acknowledgments and direct persona identity use metadata replies, preserve state
+and make no model calls. Fictional views never become verified-fact memory.
 
-## Standing authorization and publishing
+Publish code/profiles/case design/docs only. Corpus, excerpts, claims, notebooks,
+journals, transcripts and weights stay in the ignored local archive. Never
+force-add research artifacts. Both original adapters remain unchanged.
 
-The user explicitly approved the ghost smoke and bounded follow-up iterations
-on the existing private Kaggle notebook
-`thanvirdiouf/trotsky-grounded-base-chatbot` (numeric ID 140792344). Scope:
-project helpers/persona prompts, reviewed public historical/contemporary
-excerpts/propositions and evaluation questions; at most ten answers/thirty
-evaluation calls plus one short memory probe per run. No training, adapters or
-paid compute. Do not repeat the resolved initial upload-confirmation request.
-Keep the original notebook title to avoid changing its URL. Builder/verifier
-accept `--version ghost_smoke_vN` and preserve previous frozen experiments.
+## Standing authority and Git
 
-Origin remains SSH at the user's request. SSH signing needs an unlocked agent,
-but the user's re-authenticated `gh` works with network access. Publish using
-`git -c credential.helper='!gh auth git-credential' push
-https://github.com/thanvirdiouf/LLMTrotsky.git main`, retaining SSH origin. Do not
-print or request credentials. Source-expansion milestone `0aec137` and v4 milestone `b38eb11` are pushed. Routing/transcript milestone `68655ea` is pushed. Neutral-audit/scope milestone `d08a56f` is pushed. Current-request/depth/social milestone `56b8c06` is pushed. Commit/push the fresh-comparison harness and review docs before submitting v9. Earlier
-byte-identical API-published equivalents `14576a3` / `cfbce01` replaced local
-unpublished `e3ffbce` / `033c720` through normal rebase; do not resurrect them.
+The user explicitly approved the ghost smoke and bounded follow-ups on the
+same private Kaggle notebook `thanvirdiouf/trotsky-grounded-base-chatbot`, numeric
+ID 140792344. Payload categories: project helpers/persona prompts, reviewed
+public historical/contemporary excerpts/propositions and evaluation questions.
+At most ten answers/thirty requests plus one probe per run, no training/adapters
+or paid compute. V10 is tighter: ten answers/twenty requests plus one probe.
+Do not ask again inside that scope; preserve title and URL.
 
-The historical 1940 v2 trial failed before its checked arm: 14 direct answers,
-6,546-token T4 OOM. It remains a separate partial archive and is superseded by
-the active ghost goal. Compact ghost probes fit the free T4. No A40 was rented.
+Origin stays SSH at the user's request. Existing key is accepted but unavailable
+for signing without an unlocked agent. Re-authenticated gh works with network
+access: `git -c credential.helper='!gh auth git-credential' push
+https://github.com/thanvirdiouf/LLMTrotsky.git main`. Do not print/request secrets.
+Commits through `28f0011` are pushed. Current mode/normalization/retention fixes
+and consolidated docs need a milestone commit/push before v10 submission.
+
+The superseded 1940 v2 trial failed after fourteen direct answers, before its
+checked arm, at 6,546 input tokens. Saved version 3 restored the notebook title
+without execution. Compact 5,000-token probes fit free T4 at about 11.32 GiB;
+no A40 or other paid GPU was provisioned. Hardware capacity is separate from
+the observed interpretation and application failures.
 
 # Historical grounded base chatbot v2 — 25 October 2026
 

@@ -8,8 +8,9 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'scripts'))
 from build_ghost_chat import build
 from ghost_chat import (GhostChat, initial_state, request, claims_for_trace,
-                        validate_segments, render, EvidenceError,sanitize_selection,filter_segments,expand_draft)
-from grounded_chat_v2 import CHECKS
+                        validate_segments, render, EvidenceError,sanitize_selection,filter_segments,expand_draft,
+                        normalize_prose_format,complete_review_coverage)
+from grounded_chat_v2 import CHECKS,validate_review
 
 
 class GhostChatTest(unittest.TestCase):
@@ -124,7 +125,7 @@ class GhostChatTest(unittest.TestCase):
             return {'response':json.dumps(out),'finish_reason':'stop'}
         result=self.bot.answer('What is your political interpretation today?',generate)
         self.assertNotIn('secret letter',result['response'])
-        self.assertEqual(result['status'],'review_rejected')
+        self.assertEqual(result['status'],'application_filtered')
         self.assertFalse(result['state_after']['accepted_claim_ids'])
         self.assertFalse(result['state_after']['interpretation_basis_claim_ids'])
 
@@ -204,14 +205,15 @@ class GhostChatTest(unittest.TestCase):
         self.assertEqual(len(calls),2)
         self.assertIn(self.cards['rakovsky_limit']['statement'],result['response'])
 
-    def test_summary_drafting_is_explicit_and_audit_keeps_full_context(self):
+    def test_drafting_and_audit_keep_full_bounded_source_context(self):
         state=initial_state(self.collection,self.ledger)
         trace=self.bot.retriever.retrieve('How would you assess Runpod pricing?',state)
         cards=claims_for_trace(self.ledger,trace)
         draft=json.loads(request('draft',self.profile,'How would you assess Runpod pricing?',trace,cards,[],state)['messages'][1]['content'])
         audit=json.loads(request('check',self.profile,'How would you assess Runpod pricing?',trace,cards,[],state,[])['messages'][1]['content'])
-        self.assertIn('summaries only',draft['evidence_view'])
-        self.assertTrue(all('blocks' not in p for p in draft['source_packets']))
+        self.assertIn('full bounded source context',draft['evidence_view'])
+        self.assertTrue(all('blocks' in p for p in draft['source_packets']))
+        self.assertEqual(draft['source_packets'],audit['source_packets'])
         self.assertTrue(all('blocks' in p for p in audit['source_packets']))
         self.assertTrue(all('anchors' in p for p in audit['evidence_propositions']))
 
@@ -313,6 +315,49 @@ class GhostChatTest(unittest.TestCase):
         self.assertEqual(data['current_user_request'],'Explain your own fictional present-day view more fully.')
         self.assertIn('My present-day interpretation:',data['candidate_display'])
         self.assertIn('[newleader]',data['candidate_display'])
+
+    def test_model_task_mode_handles_unlisted_outlook_wording_after_factual_turn(self):
+        state=initial_state(self.collection,self.ledger)
+        state['active_packet_ids']=['runpod_pricing','newleader']
+        calls=[]
+        def generate(messages):
+            calls.append(messages)
+            if len(calls)==1:out={'answer_mode':'view','detail':'expanded','claim_ids':['runpod_a40_price','newleader_principles']}
+            elif len(calls)==2:
+                data=json.loads(messages[1]['content'])
+                self.assertEqual(data['turn_task'],{'answer_mode':'view','detail':'expanded'})
+                out={'facts':['runpod_a40_price'],'interpretation':'I would ask whether the group can influence the rules governing these tools.','quotes':[]}
+            else:out={'verdicts':[{'id':'s1','reason':'Synthetic mode routing fixture',**{k:True for k in CHECKS}}]}
+            return {'response':json.dumps(out),'finish_reason':'stop'}
+        result=self.bot.answer('Return to your own imagined outlook and explain it in more depth.',generate,state=state)
+        self.assertEqual(result['routing_source'],'model_selection')
+        self.assertEqual(result['answer_mode'],'view')
+        self.assertEqual([s['stage'] for s in result['stages']],['select','draft','check'])
+        self.assertIn('My present-day interpretation:',result['response'])
+        self.assertFalse(result['state_after']['accepted_claim_ids'])
+        self.assertNotIn('_answer_mode',result['state_after'])
+
+    def test_format_normalization_does_not_validate_unknown_citations_or_real_quotes(self):
+        selected={'newleader_principles':self.cards['newleader_principles']}
+        raw={'facts':[],'interpretation':"I would not wait for 'automatic' progress. [newleader]",'quotes':[]}
+        normalized,actions=normalize_prose_format(raw,selected)
+        self.assertEqual(normalized['interpretation'],'I would not wait for *automatic* progress.')
+        self.assertTrue(actions)
+        self.assertEqual(raw['interpretation'],"I would not wait for 'automatic' progress. [newleader]")
+        for text in ['I would act. [unknown_source]', 'I repeat "invented exact words".']:
+            draft,_=normalize_prose_format({'facts':[],'interpretation':text,'quotes':[]},selected)
+            with self.assertRaises(EvidenceError):
+                validate_segments({'segments':[{'id':'s1','kind':'interpretation','text':draft['interpretation'],'basis_claim_ids':list(selected)}]},selected)
+
+    def test_missing_verdict_rejects_only_unreviewed_segment_and_never_promotes_unknown(self):
+        segments=[{'id':'s1'},{'id':'s2'}]
+        verdict={'id':'s1','reason':'Synthetic valid verdict',**{k:True for k in CHECKS}}
+        normalized,missing,unknown=complete_review_coverage({'verdicts':[verdict,{**verdict,'id':'unknown'}]},segments)
+        self.assertEqual(validate_review(normalized,segments),{'s1'})
+        self.assertEqual(missing,['s2']);self.assertEqual(unknown,['unknown'])
+        self.assertTrue(all(normalized['verdicts'][1][k] is False for k in CHECKS))
+        with self.assertRaises(EvidenceError):complete_review_coverage({'verdicts':[verdict,verdict]},segments)
+        with self.assertRaises(EvidenceError):sanitize_selection({'claim_ids':[],'answer_mode':'truth','detail':'normal'},self.cards)
 
 
 if __name__=='__main__':unittest.main()

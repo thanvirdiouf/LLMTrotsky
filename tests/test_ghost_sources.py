@@ -101,5 +101,63 @@ class GhostSourceTest(unittest.TestCase):
         self.assertNotIn('[radio_science]',result['response'])
         self.assertFalse(result['state_after']['interpretation_basis_claim_ids'])
 
+    def test_model_classifies_new_study_only_wording_and_brief_canonical_facts(self):
+        profile,collection,ledger=build(source_plan=Path('config/ghost_source_plan_v2.json'))
+        bot=GhostChat(profile,collection,ledger);state=initial_state(collection,ledger)
+        state['active_packet_ids']=['ilo_genai_2025','radio_science'];state['interpretation_basis_claim_ids']=['radio_social_control']
+        calls=[]
+        def generate(messages):
+            calls.append(messages)
+            if len(calls)==1:out={'answer_mode':'facts','detail':'brief','claim_ids':['ilo_exposure_estimate','ilo_adoption_limit','radio_no_automatic_peace']}
+            else:
+                segment=json.loads(messages[1]['content'])['candidate_segments'][0]
+                self.assertEqual(segment['claim_ids'],['ilo_exposure_estimate'])
+                out={'verdicts':[{'id':'s1','reason':'Synthetic brief-facts fixture',**{k:True for k in CHECKS}}]}
+            return {'response':json.dumps(out),'finish_reason':'stop'}
+        result=bot.answer("Leave your politics aside and give only the study's dated finding in two sentences.",generate,state=state)
+        self.assertEqual(result['answer_mode'],'facts');self.assertEqual(result['detail'],'brief')
+        self.assertEqual([s['stage'] for s in result['stages']],['select','check'])
+        self.assertEqual(result['response'].count('.'),2)
+        self.assertNotIn('[radio_science]',result['response'])
+
+    def test_mixed_mode_materializes_selected_facts_and_preserves_valid_partial_review(self):
+        profile,collection,ledger=build(source_plan=Path('config/ghost_source_plan_v2.json'))
+        for complete in (False,True):
+            with self.subTest(complete=complete):
+                bot=GhostChat(profile,collection,ledger);calls=[]
+                def generate(messages):
+                    calls.append(messages)
+                    if len(calls)==1:
+                        out={'answer_mode':'mixed','detail':'normal','claim_ids':['ilo_exposure_estimate','ilo_adoption_limit','ilo_transformation_assessment','radio_social_control']}
+                    elif len(calls)==2:
+                        data=json.loads(messages[1]['content'])
+                        self.assertIn('ilo_transformation_assessment',[c['id'] for c in data['evidence_propositions']])
+                        out={'facts':['ilo_genai_2025'],'interpretation':"I would not wait for 'automatic' progress. [radio_science][ilo_genai_2025]",'quotes':[]}
+                    else:
+                        segments=json.loads(messages[1]['content'])['candidate_segments']
+                        self.assertEqual(segments[0]['claim_ids'],['ilo_exposure_estimate','ilo_adoption_limit'])
+                        self.assertEqual(segments[1]['text'],'I would not wait for *automatic* progress.')
+                        reviewed=segments if complete else segments[:1]
+                        out={'verdicts':[{'id':s['id'],'reason':'Synthetic mixed-mode fixture',**{k:True for k in CHECKS}} for s in reviewed]}
+                    return {'response':json.dumps(out),'finish_reason':'stop'}
+                result=bot.answer('How would you separate the ILO findings from your own judgment?',generate)
+                self.assertEqual(result['state_after']['accepted_claim_ids'],['ilo_exposure_estimate','ilo_adoption_limit'])
+                self.assertTrue(result['application_format_normalizations'])
+                if complete:
+                    self.assertIn('*automatic*',result['response']);self.assertFalse(result['missing_verdict_ids'])
+                else:
+                    self.assertEqual(result['status'],'partial');self.assertEqual(result['missing_verdict_ids'],['s2'])
+                    self.assertNotIn('*automatic*',result['response']);self.assertFalse(result['state_after']['interpretation_basis_claim_ids'])
+
+    def test_definite_study_reference_retains_context_but_explicit_new_subject_wins(self):
+        profile,collection,ledger=build(source_plan=Path('config/ghost_source_plan_v2.json'))
+        bot=GhostChat(profile,collection,ledger);state=initial_state(collection,ledger)
+        state['active_packet_ids']=['ilo_genai_2025','radio_science']
+        question="For a moment, leave your politics aside and give only the study's dated finding and its uncertainty in two sentences."
+        trace=bot.retriever.retrieve(question,state)
+        self.assertEqual({m['packet']['id'] for m in trace['matches']},{'ilo_genai_2025','radio_science'})
+        switched=bot.retriever.retrieve('Change the subject: what does the Blumkin article say about its chronology?',state)
+        self.assertEqual([m['packet']['id'] for m in switched['matches']],['blumkin'])
+
 
 if __name__=='__main__':unittest.main()

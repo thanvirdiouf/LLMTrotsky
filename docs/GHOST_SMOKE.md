@@ -1,214 +1,159 @@
-# Present-day ghost smoke: protocol and continuation
+# Ghost inference protocol and continuation
 
-This is the next bounded test of the active fictional present-day persona.
-It makes no training updates and attaches neither experimental adapter.
+This workflow tests the clearly fictional present-day persona with the pinned
+untouched Qwen base. It makes no training updates and attaches neither adapter.
+A successful run, structural check or model approval is not a quality score.
 
-## Frozen experiment
+## Current state — 26 October 2026
 
-The bundle contains six single questions and one four-turn conversation from
-`config/ghost_chat_evaluation.json`: ten displayed answers, at most thirty
-evaluation-stage requests, and one separate memory probe. Source checks and
-rubrics are withheld from model cases. Smokes v1–v4 use the same seven historical packets, dated Runpod vendor excerpt
-and 33 reviewed propositions. V5 uses active evidence v2 (ten packets/39
-propositions) and a separately frozen four-single/six-conversation case set. The model,
-revision, NF4 stack and nonthinking greedy policy remain pinned.
+Ghost v1–v5, v7 and v8 are complete, downloaded, verified and source-reviewed.
+V6 is preserved as a prepared routing-only bundle, **never uploaded or run**.
+V9 is the completed fresh matched-source direct/checked comparison, saved
+Kaggle version 11. V10 is a prepared regression on those same questions. [Active guide](PRESENT_DAY_GHOST.md),
+[comparison design](GHOST_COMPARISON.md), [failure analysis](GHOST_FAILURE_ANALYSIS.md).
 
-Before evaluation, an unscored 5,000-token synthetic request generates at most
-16 tokens to test prefill memory. It never becomes a conversation turn or a
-quality score. Real stage inputs have a 5,120-token cap. Over-budget requests
-are recorded without calling the model; incomplete stage output is blocked
-before display. These are operational outcomes, not successful semantic checks.
-The generation cap is 1,024 tokens per evaluation call. CUDA cache is released
-between calls; no source paragraphs or model inputs are silently truncated.
+| Local version | Saved Kaggle version | Evaluation calls | Source/case scope |
+|---|---:|---:|---|
+| ghost_smoke_v1 | 4 | 16 | Initial 8 packets/33 claims, initial ten turns |
+| ghost_smoke_v2 | 5 | 19 | Same inspected cases |
+| ghost_smoke_v3 | 6 | 19 | Same inspected cases |
+| ghost_smoke_v4 | 7 | 19 | Same inspected cases |
+| ghost_smoke_v5 | 8 | 20 | 10 packets/39 claims; four new singles and six-turn conversation |
+| ghost_smoke_v6 | none | 0 | Prepared, unrun |
+| ghost_smoke_v7 | 9 | 22 | Inspected v5 regressions |
+| ghost_smoke_v8 | 10 | 21 | Inspected v5 regressions |
+| ghost_smoke_v9 | 11 | 16 | Five new dialogue turns in each of two matched-source arms |
+| ghost_smoke_v10 | pending | at most 20 | Inspected v9 regressions with task/format/coverage fixes |
 
-The failed 1940 v2 trial is a separate archive. It had 14 direct-control
-answers, no checked answers and a T4 OOM at 6,546 input tokens. The ghost smoke
-tests compact context in the actual runtime rather than assuming the tokenizer
-budget establishes GPU memory capacity.
+V1–v4 retain a frozen reference date of 25 October; later versions use 26 October.
+Execution occurred on 26 October. Do not silently change dates, helpers or
+sources in a frozen experiment. Source/card/profile files, journals, raw outputs,
+verification and response-bound judgments remain local under
+`evaluation/runs/ghost_smoke_vN/`.
 
-## Rebuild and inspect
+## Standing authorization and bounds
+
+After the initial automatic-review upload block, the user explicitly approved
+the ghost smoke and bounded follow-up iterations on 26 October 2026. Scope:
+the same private notebook `thanvirdiouf/trotsky-grounded-base-chatbot`, numeric
+ID 140792344; project helpers/persona prompts, reviewed public historical and
+contemporary excerpts/propositions, and evaluation questions. At most ten
+answers/thirty evaluation requests plus one short memory probe per run. No
+training, adapters or paid compute. Do not repeat the resolved permission
+question within that scope. Preserve the original notebook title/URL.
+
+The ordinary smoke uses at most three stages per answer. The comparison has
+five direct and five checked turns, at most twenty evaluation requests. Both
+include one separate unscored memory probe. The builder rejects excessive case
+sets. Expected checks/rubrics are excluded from model cases.
+
+Before evaluation, a synthetic 5,000-token request generates at most sixteen
+tokens to test prefill capacity. Its reply never enters conversation or a score.
+Probe errors are recorded. Each real request has a 5,120-token input cap and
+1,024-token generation cap. Over-budget requests are journaled without calling
+the model. Incomplete stages fail closed. No source paragraph is silently
+truncated; CUDA cache is released between calls. The measured probe peaks near
+11.32 GiB on Kaggle GPU0 Tesla T4.
+
+The superseded historical 1940 v2 trial is separate: fourteen direct answers,
+no checked-arm answers, and OOM at 6,546 input tokens. Its partial archive is
+not a completed comparison. Saved version 3 restored the original notebook
+title with no execution. No paid GPU was rented.
+
+## Build and inspect
+
+Use the complete local research archive and cached tokenizer assets:
 
 ```bash
-.venv-tokenizer/bin/python scripts/build_ghost_smoke.py
-python3 -m unittest discover -s tests -p test_ghost_smoke.py -v
+.venv-tokenizer/bin/python scripts/build_ghost_smoke.py \
+  --version ghost_smoke_vN \
+  --evaluation-spec config/ghost_chat_evaluation_v2.json
+python3 -m unittest discover -s tests -p 'test_ghost*.py' -v
 ```
 
-The complete local research archive and tokenizer assets are required.
-The builder preserves frozen files and refuses a changed rebuild. Its initial
-preflight draft is archived separately; the final bundle adds explicit probe
-failure reporting and separate counts for inference versus budget rejections.
-It preserves the existing Kaggle notebook title and numeric identity to avoid
-renaming its URL again.
+For the fresh direct/checked experiment, use
+`--evaluation-spec config/ghost_comparison_evaluation_v1.json`. The model,
+revision, packages, greedy/nonthinking policy and no-adapter checks remain pinned.
+An existing frozen version cannot be rebuilt with changed inputs. Use a new
+version rather than replacing its notebook, lock, protocol or payloads.
 
-Prepared local artifacts:
+Local artifacts include `evaluation/ghost_smoke_vN/{protocol,evaluation_spec,bundle_lock}.json`
+and `training/kaggle_cli/ghost_smoke_vN/`. The generic notebook copy is a working
+convenience; the per-version staged notebook is the verification source.
 
-- `evaluation/ghost_smoke_v1/protocol.json`, `evaluation_spec.json`, `bundle_lock.json`.
-- `training/kaggle_cli/ghost_smoke_v1/` and `notebooks/kaggle_ghost_smoke.ipynb`.
-- `scripts/evaluate_ghost_smoke.py`: immediate per-stage journaling and replay.
-- `scripts/kaggle_ghost_smoke.py`: pinned GPU runtime and memory probe.
-- `scripts/verify_ghost_smoke.py`: frozen-code local replay and tokenizer checks.
+- `evaluate_ghost_smoke.py` journals stages and exact displayed history.
+- `evaluate_ghost_comparison.py` keeps matched source context and separate arms.
+- `kaggle_ghost_smoke.py` verifies the pinned stack/base and runs on Kaggle only.
+- `verify_ghost_smoke.py` reconstructs tokens and replays frozen helpers.
 
-After the initial automatic-review block, the user explicitly approved this
-smoke and bounded follow-up iterations on 26 October 2026. This covers the
-same private notebook, project helpers/persona prompts, reviewed public-source
-excerpts/propositions and evaluation questions, with at most thirty evaluation
-calls plus one short memory probe per run. It excludes training, adapters and
-paid compute. The builder rejects case sets exceeding ten answers.
+The user authorized milestone commits/pushes. Publish helpers, profiles, case
+design and documentation; retain excerpts, ledgers, notebooks, outputs and
+weights in the ignored research archive. Origin remains SSH. The working gh
+credential helper can push through an explicit HTTPS URL without exposing
+credentials; direct SSH signing still needs an unlocked agent. Never request
+or print a passphrase/token.
 
-Saved Kaggle version 4 ran at the original private notebook URL.
-The frozen persona reference date is 25 October; execution is on 26 October.
-Keep that distinction in reports rather than silently changing a running
-experiment. Use `--version ghost_smoke_v2` on the builder and verifier for a
-subsequent changed experiment; previous bundles stay immutable.
+## Download and verify
 
-### Results and bounded follow-up
-
-Version 4 completed: the 5,000-token probe passed at 11.32 GiB peak and all
-journals replay and tokenize exactly. Its sixteen evaluation generations
-produced eight structural blocks, one appropriate missing-evidence refusal and
-one inaccurate substantive answer. Four selection errors and four draft
-structural failures are separated from semantic quality; no memory or token
-budget failure occurred. The model checker incorrectly approved the wrong
-observation date in the substantive answer.
-
-The local reports and records are in `evaluation/runs/ghost_smoke_vN/`.
-V2 (saved version 5) completed with nineteen calls: three partial answers, five
-refusals, one approved and one rejected. It fixes the canonical observation date
-and source retention but exposes an ambiguous answerable boolean and complex
-drafting failures. V3 (saved version 6) also completed with nineteen calls:
-two approved, one identity clarification, one rejected, five schema blocks and
-one refusal. Five drafts omit only the empty quotes field; opinions still
-retell old disputes and add unsupported premises. Only three responses fulfill
-their request. One approved vendor-fact answer is irrelevant to endorsement.
-
-V4 targets these observed failures with optional empty quotes, direct canonical
-fact materialization, identity clarification without a prior-success dependency,
-and explicitly summary-only drafting. Selection/audit retain full blocks and
-all traces preserve the original retrieval. The same ten inspected cases remain
-development regressions. These are combined interventions, not ablations or
-fresh generalization measurements. V4 completes with nineteen calls and no schema blocks: five clearly useful
-factual/identity/refusal answers, but source/interpretation failures persist.
-The checker correctly catches one unsupported VRAM-history claim and wrongly
-approves other cost/history comparisons. V5 targets coverage and basis selection
-with reviewed radio/ILO sources, explicit historical basis membership and
-facts-only routing. Its four single questions and six-turn conversation are
-newly authored development cases, not pretraining/source-held-out validation.
-[Source expansion](GHOST_SOURCE_EXPANSION.md).
-
-## Verification and decisions after the run
-
-Download the specific saved version into `evaluation/runs/ghost_smoke_v1/download/`
-and verify it without loading model weights locally:
+Download the exact saved Kaggle version into the corresponding local run
+folder; do not rely on whichever version becomes latest later. Then:
 
 ```bash
 .venv-tokenizer/bin/python scripts/verify_ghost_smoke.py \
+  --version ghost_smoke_vN \
   --tokenizer training/data_revision_v2/tokenizer_assets
+python3 scripts/export_ghost_transcript.py --version ghost_smoke_vN
 ```
 
-The verifier checks submitted/downloaded payloads, preserved artifacts,
-generation bounds, the memory probe and both journals. It replays the frozen
-application in a separate local process, so a later active-code change cannot
-silently redefine the old run. All prompts and decoded model replies can be
-reconstructed through the tokenizer.
+Verification checks submitted/downloaded bytes, preserved historical helpers and
+adapter hashes, model identity and frozen parameters, journal coverage/hashes,
+probe/generation bounds, and exact prompt/output tokenization. Replay executes
+the frozen ordinary or comparison evaluator in a separate CPU process with no
+inference. Later active code changes cannot redefine an old run.
 
-Review every displayed answer and candidate segment against the source. Count
-real factual failures, rejected supported content, missing modern evidence,
-fiction/history confusion, citation/quotation errors, refusals of answerable
-questions, input-budget blocks and malformed/truncated stages separately.
-Inspect checker approvals and rejections instead of treating them as gold
-judgments. Review usefulness, voice, explanation depth and continuity alongside
-source faithfulness. Any review by the authoring agent is unblinded and not
-independent historian validation.
+The transcript preserves exact displayed answers and links source metadata.
+Direct-arm citation references are labeled as model-written and unchecked;
+references outside supplied context or unknown IDs are flagged. The exporter
+verifies the answer journal and frozen source/case bytes, assigns no scores,
+and leaves the research transcript excluded from public Git.
 
-If the memory probe fails, record it and adjust context/runtime or reassess
-hardware before another bounded run. If structured output fails, fix the
-specific schema interaction and measure it again. If safe answers mostly
-refuse, improve evidence selection and coverage rather than claiming grounding
-success. If supported answers are useful and the checker handles the observed
-traps, expand to additional reviewed contemporary source families and longer
-conversations. Preserve all inspected questions as development regressions.
-Do not resume training merely because the application executes successfully.
+## Review and result-dependent decisions
 
-## Git milestone
+Inspect every displayed answer and candidate against the source. Count factual
+errors, source certainty, speaker/date preservation, unsupported opinion
+premises, rejected supported content, unnecessary refusal, relevance, voice,
+depth, actual shortening and continuity separately. An opinion has no unique
+historically correct reference answer. Strong normative views are allowed;
+new descriptive claims still need evidence or an explicit hypothetical.
+Record ambiguous rhetoric as ambiguity. Same-agent review is not independent
+historian validation.
 
-Implementation commit `14576a3` and smoke-workflow commit `cfbce01` are published
-on GitHub main. HTTPS pushing had no usable credentials. At the user's request,
-`origin` now uses SSH. GitHub accepts the existing public key, but signing fails
-without an unlocked agent in this session; `gh` reports an invalid token.
+Inspect stage presence and filter reasons: a `review_rejected` status can arise
+from an application format filter before any model audit. Missing draft stages
+are routing failures, not evidence that the model failed a task it never saw.
+A source-faithful but irrelevant fact dump does not satisfy a conversation.
+Correct refusals of unavailable evidence differ from refusing answerable turns.
 
-The connected GitHub account provided a working publication route: the reviewed
-file trees were uploaded and checked against their exact local tree SHAs, then
-committed with expected-head leases. Local unpublished counterparts `e3ffbce`
-and `033c720` were rebased onto the byte-identical published equivalents. Main
-is synchronized and the SSH remote remains configured. An SSH unlock is not
-needed for this completed publication, though future direct SSH pushes still
-need a usable agent. Do not ask for or record passphrases or tokens. Research
-source excerpts and model artifacts remain excluded.
+V1–v4 locate schema, date rendering, source-state and drafting problems. V5
+shows that relevant technology sources alone do not fix conversational control
+or unsupported assumptions. V7 fixes study-only scope and skipped drafting,
+but the audit partly applies old constraints and still accepts bad inferences.
+V8 displays a fuller view with the correct fictional label, yet the same source
+overreach passes and shortening is filtered for raw citation markup. Further
+tuning of these inspected questions cannot establish general reliability.
+The fresh comparison tests whether the complete pipeline improves faithfulness
+at the expense of useful conversation, with the same available evidence.
 
-On 26 October the user re-authenticated `gh`. A network-enabled check confirmed
-the account is valid, and documentation commit `af18185` was pushed using the
-`gh` credential helper with an explicit HTTPS push URL. Origin remains SSH.
-Future publishing can use this working helper without copying credentials into
-code, arguments or logs.
+Keep training paused and both adapters experimental until that distinction is
+clearer on fresh evidence. Memory feasibility does not justify a training run
+or deployment, and a checker approval is never a semantic guarantee.
 
-## Readable transcripts
-
-After verification, `python3 scripts/export_ghost_transcript.py --version
-ghost_smoke_vN` writes `evaluation/runs/ghost_smoke_vN/TRANSCRIPT.md` with exact
-displayed replies and linked source metadata. It checks the verified answer
-journal and frozen source/case bytes, makes no model calls and assigns no score.
-Transcripts remain local research artifacts under the publication policy.
-
-V5 is submitted as saved Kaggle version 8. A post-submission static check found
-a missed opinion-mode transition after facts-only mode; this is recorded before
-answer inspection. A separately tested local routing patch recognizes fictional
-views, own reasoning and explicit disagreement. Preserve v5 and use a new
-version to validate that patch; never edit the submitted experiment in place.
-
-## V5 review and revised continuation
-
-Saved version 8 is complete and verified: twenty calls, no budget/schema/length
-failures, 11.32 GiB probe peak. Four single answers and identity clarification
-fulfill the request; conversation adds unsupported personal circumstances,
-includes an unrelated historical argument in study-only mode, and misses later
-opinion requests. Nine model approvals are not nine successful answers.
-
-The routing-only v6 is frozen locally but **never uploaded or run**. V5 review
-also identified persona conditioning of the audit. V7 combines the routing fix
-with a neutral audit role, limits on personal assumptions and explicit removal
-of unrelated historical context from study-only answers. It uses the same v5
-questions as inspected regressions, not fresh validation or a causal ablation.
-
-## V7 review and current-request regression
-
-Saved version 9 completed with twenty-two calls, no schema/budget/truncation
-failures, and exact frozen/tokenizer verification. Study-only scope and draft
-routing work; four single answers, study-only findings and identity are useful.
-Opinions still conflate adoption with displacement or add unsupported causal
-claims. The fuller-view audit wrongly invokes a prior facts-only instruction;
-its draft also has weak premises, so it is not established as wholly valid.
-The last reply is longer than the preceding actual display despite approval.
-
-V8 keeps the same source/profile/case payloads. Audit input explicitly repeats
-the current request and mode, and includes the prospective rendered display
-with its fictional label. Depth/shorter instructions adapt to the current turn.
-This remains a combined regression intervention, not fresh validation. Exact
-social/identity application replies make no inference calls. Their local
-post-v7 patch replays all ten v7 answers and requests exactly before subsequent
-audit-input changes; the record is metadata_followup_replay.json.
-
-## V8 result and fresh comparison
-
-Saved version 10 is verified: twenty-one generations, no input-budget or
-truncation failures, 11.32 GiB probe peak. The fuller view now displays, but its
-semantic premises remain weak. The first two opinions are identical to v7 and
-still wrongly approved; the last draft is removed for raw citation markup
-before any model audit. Its review_rejected status is an application format
-filter in this case, not an auditor verdict. Count actual stages and filters.
-
-The next `ghost_smoke_v9` is a distinct matched-source direct/checked comparison:
-five new dialogue turns in each arm, ten answers and at most twenty requests
-plus one probe. [Protocol and controls](GHOST_COMPARISON.md). The runtime and
-frozen-code verifier explicitly select the comparison evaluator by protocol
-purpose; ordinary frozen smoke verification remains supported. No source,
-model or training changes are introduced by that comparison.
+V9 separates base interpretation errors from application failures: direct
+misstates adoption/displacement limits and predicts inevitability; checked
+skips drafting for new viewpoint wording, filters a stylistic term and blocks
+valid content when one verdict is missing. V10 classifies facts/view/mixed and
+detail in the existing select call, restores full context to drafting, normalizes
+narrow format mistakes, and fails closed only on unreviewed segments. Same
+questions, sources, profile and model; direct control is re-generated.
+Natural definite-source retention is separately unit-tested outside the frozen
+fixed-context experiment. No source-data or training changes are involved.

@@ -40,14 +40,19 @@ def export(version,root=ROOT):
         if row.get('validation_error'):lines.extend(['Application error: '+row['validation_error'],''])
         for rejected in row.get('rejected_segments',[]):lines.extend(['Filtered candidate: '+rejected['reason'],''])
         cited=[pid for pid in packets if '['+pid+']' in row['response']]
+        direct=row.get('arm')=='direct'
+        supplied={m['packet']['id'] for m in row['retrieval']['matches']}
         if cited:
-            lines.extend(['Sources cited by the renderer:',''])
+            lines.extend(['Source references written by the unchecked model (not verified):' if direct else 'Sources cited by the renderer:',''])
             for pid in cited:
                 packet=packets[pid];interval=packet['composition_date_interval']
                 observed='; observed '+packet['observed_date'] if 'observed_date' in packet else ''
                 kinds=', '.join(e['kind'] for e in packet['composition_date_evidence'])
-                lines.append(f"- [{pid}]({packet['url']}): {packet['author']}; {interval['earliest']}–{interval['latest']} ({kinds}){observed}.")
+                outside=' **Not in the supplied context.**' if pid not in supplied else ''
+                lines.append(f"- [{pid}]({packet['url']}): {packet['author']}; {interval['earliest']}–{interval['latest']} ({kinds}){observed}.{outside}")
             lines.append('')
+        unknown=sorted(set(re.findall(r'\[([a-zA-Z0-9_]+)\]',row['response']))-packets.keys())
+        if direct and unknown:lines.extend(['Unknown source references: '+', '.join(unknown)+'.',''])
     for pid,packet in packets.items():lines.append(f"[{pid}]: {packet['url']}")
     path=run/'TRANSCRIPT.md';path.write_text('\n'.join(lines)+'\n')
     return path

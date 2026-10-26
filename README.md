@@ -16,12 +16,13 @@ python3 scripts/build_ghost_chat.py
 python3 scripts/ghost_chat.py --dry-run --question "How would you assess renting an A40 on Runpod today?"
 ```
 
-Thirty-seven focused ghost/source/harness/comparison tests pass. Seven
-real smokes verify compact T4 memory feasibility and source-limit handling;
-conversation still exposes unsupported personal assumptions and routing errors.
-The active collection has ten packets/39 reviewed propositions. Current-request handling and fuller replies improve, but shortening and
-semantic checks remain unreliable. A fresh matched-source direct/checked
-five-turn comparison is prepared. Training remains paused.
+Forty-three focused ghost/source/harness/comparison tests pass. The fresh
+matched-source comparison separates two failures: direct replies engage with
+the conversation but invent certainty, while checked replies preserve reviewed
+facts but miss task changes or reject formatting. The next regression classifies
+the current task in the existing selection call and tests those application
+fixes. The active collection has ten packets/39 propositions. Training remains
+paused; neither pipeline is promoted as reliably grounded.
 [Measured progress](docs/PRESENT_DAY_GHOST.md).
 
 The following describes the preserved historical research archive.

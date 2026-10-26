@@ -25,6 +25,8 @@ def reflection_requested(question):
 
 
 def interpretation_requested(question,state):
+    if state.get('_answer_mode') in {'facts','view','mixed'}:
+        return state['_answer_mode'] in {'view','mixed'}
     return not facts_only_requested(question) and (reflection_requested(question) or bool(state.get('interpretation_basis_claim_ids')))
 
 
@@ -37,7 +39,8 @@ class GhostRetriever:
 
     def retrieve(self, question, state, *, top_k=2, max_chars=22000):
         trace = self.base.retrieve(question, state, top_k=top_k, max_chars=max_chars)
-        if (facts_only_requested(question) and re.match(r'\s*(?:now|then)\b',question,re.I)
+        contextual_reference=bool(re.search(r'\b(?:its|these|the (?:study|report))\b',question,re.I))
+        if ((contextual_reference or (facts_only_requested(question) and re.match(r'\s*(?:now|then)\b',question,re.I)))
                 and not trace['explicit_packet_ids'] and not trace['topic_reset'] and state['active_packet_ids']):
             # A mode change can refer to the prior topic without saying "that".
             chosen,omitted,used=[],[],0
@@ -45,7 +48,7 @@ class GhostRetriever:
                 packet=self.base.packets[pid];size=len(json.dumps(packet,ensure_ascii=False))
                 if used+size>max_chars:omitted.append(pid);continue
                 chosen.append({'packet':deepcopy(packet),'score':None,'matched_terms':[],
-                               'selection_reason':'retained_topic_facts_only'});used+=size
+                               'selection_reason':'retained_topic_source_reference'});used+=size
             trace.update(matches=chosen,retained_packet_ids=list(state['active_packet_ids']),
                          active_packet_ids=[m['packet']['id'] for m in chosen],budget_omitted=omitted,
                          status='candidates_require_interpretation' if chosen else 'insufficient_evidence')
@@ -54,7 +57,8 @@ class GhostRetriever:
         anchored=trace['explicit_packet_ids'] or trace['retained_packet_ids']
         if anchored and not reflection_requested(question):
             trace['matches']=[m for m in trace['matches'] if m['packet']['id'] in anchored]
-        if reflection_requested(question) and (not anchored or any(self.base.packets[pid]['domain']=='contemporary_evidence' for pid in anchored)):
+        modern_anchor=any(self.base.packets[pid]['domain']=='contemporary_evidence' for pid in anchored)
+        if (reflection_requested(question) or modern_anchor) and (not anchored or modern_anchor):
             cards = {c['id']: c for c in self.ledger['claims']}
             basis_packets = list(dict.fromkeys(cards[cid]['packet_id'] for cid in self.ledger['reflection_basis_claim_ids']))
             order = list(dict.fromkeys(anchored + basis_packets + [m['packet']['id'] for m in trace['matches']]))
@@ -92,8 +96,11 @@ def compact_evidence(trace, cards):
 
 def sanitize_selection(plan,available):
     """Discard invalid references, never promote a packet ID into a claim."""
-    if set(plan) not in ({'claim_ids'},{'answerable','claim_ids'}) or ('answerable' in plan and type(plan['answerable']) is not bool) or not isinstance(plan['claim_ids'],list):
+    if ('claim_ids' not in plan or set(plan)-{'claim_ids','answerable','answer_mode','detail'}
+            or ('answerable' in plan and type(plan['answerable']) is not bool) or not isinstance(plan['claim_ids'],list)):
         raise EvidenceError('Invalid evidence-selection schema')
+    if 'answer_mode' in plan and plan['answer_mode'] not in ('facts','view','mixed'):raise EvidenceError('Unknown answer mode')
+    if 'detail' in plan and plan['detail'] not in ('brief','normal','expanded'):raise EvidenceError('Unknown detail level')
     if any(not isinstance(c,str) for c in plan['claim_ids']):raise EvidenceError('Claim IDs must be strings')
     # The old boolean was confused with the truth of a yes/no question. Evidence
     # IDs can support a negative answer; relevance is audited downstream.
@@ -136,7 +143,10 @@ def request(stage, profile, question, trace, cards, history, state, segments=Non
                 'Evaluate the candidate_display including its application-added interpretation label and citations. A faithful irrelevant fact is not a relevant answer. ')
     if stage == 'select':
         task = ('Select relevant supplied claim IDs. For a contemporary opinion, use relevant historical principles as a basis and modern sources for any modern factual premises. User-supplied scenarios can be treated conditionally. '
-                'Use only evidence_propositions.id values, never packet IDs. Select only 1-4 claims actually needed. Sources can support a negative answer or a premise correction. Do not select unrelated facts simply to avoid refusal. Return {"claim_ids":["an actual claim ID"]}, or {"claim_ids":[]} if no useful evidence is available. Do not output an answerable boolean.')
+                'Use only evidence_propositions.id values, never packet IDs. Select only 1-4 claims actually needed. Sources can support a negative answer or a premise correction. Do not select unrelated facts simply to avoid refusal. '
+                'Classify the CURRENT request independently of whether its premise is true: answer_mode is facts for factual questions, premise corrections or study-only findings; view for newly imagined reasoning; mixed when both facts and a new judgment are requested. '
+                'detail is brief, normal or expanded according to the CURRENT request. Earlier turn restrictions do not override a later switch. '
+                'Return exactly three fields: answer_mode (facts, view or mixed), detail (brief, normal or expanded), claim_ids (array of actual claim IDs, empty if no useful evidence). Do not output an answerable boolean.')
     elif stage == 'draft':
         task = ('Return exactly {"facts":["actual claim IDs, or none"],"interpretation":"one short first-person paragraph, or empty string","quotes":[]}. '
                 'The application inserts canonical factual statements, so do not write factual prose in the facts field. '
@@ -147,9 +157,9 @@ def request(stage, profile, question, trace, cards, history, state, segments=Non
                 'Keep the interpretation to 40-90 words, shorter if requested. Never type quotation marks or citations in prose; use italics for short terms. No signoff or unsolicited historical quotation. Use actual IDs, never copy placeholder text.')
         if re.search(r'\b(quot[ea]|quotation|exact words|verbatim)\b',question,re.I):
             task+=' For a requested exact quote, quotes may contain {"claim_id":"actual claim ID","anchor_index":0}.'
-        if re.search(r'\b(more fully|more deeply|in depth|expand|in detail|fuller)\b',question,re.I):
+        if state.get('_detail')=='expanded' or (not state.get('_detail') and re.search(r'\b(more fully|more deeply|in depth|expand|in detail|fuller)\b',question,re.I)):
             task+=' For this request for depth, use 110-180 words instead of the default length; develop the reasoning rather than repeat the same conclusion.'
-        elif re.search(r'\b(shorter|brief|briefly)\b',question,re.I):
+        elif state.get('_detail')=='brief' or (not state.get('_detail') and re.search(r'\b(shorter|brief|briefly)\b',question,re.I)):
             task+=' For this shorter reply, use 35-60 words and preserve the evidence/interpretation distinction.'
     elif stage == 'check':
         task = ('Audit every segment against source context and selected evidence. For facts/quotes require support, correct attribution/date/status and relevance. '
@@ -166,19 +176,20 @@ def request(stage, profile, question, trace, cards, history, state, segments=Non
             'question': question, 'conversation': history[-4:], 'conversation_messages_omitted': max(0,len(history)-4),
             'previous_verified_fact_claim_ids': state['accepted_claim_ids'], **compact_evidence(trace,cards)}
     if stage=='draft':
-        # Drafting expresses a new view; the old text repeatedly induced
-        # retrospective monologues. Selection and audit still see every block.
-        data['evidence_view']='reviewed proposition summaries only; original context remains in selection and audit'
-        data['source_packets']=[{k:v for k,v in p.items() if k!='blocks'} for p in data['source_packets']]
-        for proposition in data['evidence_propositions']:
-            proposition.pop('anchors')
+        # The matched-source comparison showed that summaries plus schema
+        # control did not solve interpretation. Keep the surrounding adoption
+        # and human-input limits visible while drafting, within the same cap.
+        data['evidence_view']='full bounded source context with reviewed propositions and offset anchors'
         task+=' Use the supplied propositions as starting points for reasoning about this question, without retelling their source-era events. Write as the fictional persona now; do not describe past personal actions.'
     if segments is not None:
         data['candidate_segments'] = segments
         data['candidate_display']=render(segments,{s['id'] for s in segments},cards)[0]
     if stage=='check':
-        data['requested_answer_mode']='facts_only' if facts_only_requested(question) else 'fictional_interpretation' if interpretation_requested(question,state) else 'factual'
+        data['requested_answer_mode']='fictional_interpretation' if interpretation_requested(question,state) else 'factual'
         data['current_user_request']=question
+    if stage in ('draft','check') and state.get('_answer_mode'):
+        data['turn_task']={'answer_mode':state['_answer_mode'],'detail':state['_detail']}
+    if stage=='select':data['current_user_request']=question
     messages = [{'role':'system','content':common+task}, {'role':'user','content':json.dumps(data,ensure_ascii=False,separators=(',',':'))}]
     return {'stage': stage, 'messages': messages, 'prompt_sha256': fingerprint(messages)}
 
@@ -190,6 +201,11 @@ def expand_draft(draft,selected,question,state):
     if set(draft)!={'facts','interpretation','quotes'} or not isinstance(draft['facts'],list) or not isinstance(draft['interpretation'],str) or not isinstance(draft['quotes'],list):
         raise EvidenceError('Invalid compact answer schema')
     facts=list(dict.fromkeys(c for c in draft['facts'] if isinstance(c,str) and c in selected))[:4]
+    if state.get('_answer_mode')=='view':facts=[]
+    elif state.get('_answer_mode')=='mixed':
+        # Facts are independently selected reviewed records, not a promotion of
+        # a model-written packet ID into an invented claim.
+        facts=[cid for cid,c in selected.items() if c['domain']=='contemporary_evidence'][:1 if state.get('_detail')=='brief' else 2]
     interpret=interpretation_requested(question,state)
     source_question=bool(re.search(r'\b(letter|historical|record|transcript|wrote|said|radio speech|1926)\b',question,re.I))
     if interpret and not source_question:
@@ -203,6 +219,43 @@ def expand_draft(draft,selected,question,state):
     if re.search(r'\b(quot[ea]|quotation|exact words|verbatim)\b',question,re.I):
         for quote in draft['quotes'][:1]:segments.append({'kind':'quote','quote':quote})
     return {'segments':[dict(s,id='s'+str(i+1)) for i,s in enumerate(segments)]}
+
+
+def normalize_prose_format(draft,selected):
+    """Normalize narrow styling only; unknown citations/real quotes still fail."""
+    draft=deepcopy(draft);actions=[]
+    fields=[]
+    if isinstance(draft.get('interpretation'),str):fields.append((draft,'interpretation'))
+    for segment in draft.get('segments',[]):
+        if isinstance(segment,dict) and segment.get('kind')=='interpretation' and isinstance(segment.get('text'),str):fields.append((segment,'text'))
+    packets={c['packet_id'] for c in selected.values()}
+    for obj,key in fields:
+        original=obj[key];text=original
+        tail=re.search(r'(?:\s*\[[a-zA-Z0-9_]+\])+\s*$',text)
+        if tail:
+            ids=re.findall(r'\[([a-zA-Z0-9_]+)\]',tail.group())
+            if set(ids)<=packets:text=text[:tail.start()].rstrip()
+        text=re.sub(r"(?<!\w)'([A-Za-z][A-Za-z-]{0,24})'(?!\w)",r'*\1*',text)
+        if text!=original:
+            obj[key]=text;actions.append({'kind':'styling_only','before_sha256':fingerprint(original),'after_sha256':fingerprint(text)})
+    return draft,actions
+
+
+def complete_review_coverage(review,segments):
+    """Missing segment verdicts become explicit rejection, never approval."""
+    if set(review)!={'verdicts'} or not isinstance(review['verdicts'],list):raise EvidenceError('Invalid review envelope')
+    ids=[s['id'] for s in segments];by_id={};unknown=[]
+    for verdict in review['verdicts']:
+        if not isinstance(verdict,dict) or not isinstance(verdict.get('id'),str):raise EvidenceError('Invalid verdict entry')
+        vid=verdict['id']
+        if vid not in ids:unknown.append(vid);continue
+        if vid in by_id:raise EvidenceError('Duplicate verdict ID')
+        validate_review({'verdicts':[verdict]},[next(s for s in segments if s['id']==vid)])
+        by_id[vid]=verdict
+    missing=[vid for vid in ids if vid not in by_id]
+    keys=('supported','certainty_preserved','attribution_preserved','temporal_safe','relevant','no_extra_claims')
+    normalized={'verdicts':[by_id.get(vid,{'id':vid,'reason':'Application rejection: model omitted this segment verdict',**{k:False for k in keys}}) for vid in ids]}
+    return normalized,missing,unknown
 
 
 def validate_segments(draft, selected, maximum=3):
@@ -299,46 +352,63 @@ class GhostChat:
         available=claims_for_trace(self.ledger,trace)
         selected,stages,segments,accepted,error={},[],[],set(),None
         rejected_claim_ids,rejected_segments,added_basis,excluded_context=[],[],[],[]
+        request_state=state
+        format_actions,missing_verdicts,unknown_verdicts=[],[],[]
+        routing_source='not_called'
         def call(stage,candidate=None):
-            req=request(stage,self.profile,question,trace,available if stage=='select' else selected,history,state,candidate)
+            req=request(stage,self.profile,question,trace,available if stage=='select' else selected,history,request_state,candidate)
             out=generate(req['messages']);stages.append({**req,'output':out})
             if not isinstance(out,dict) or out.get('finish_reason')!='stop' or not isinstance(out.get('response'),str):
                 raise EvidenceError('Ghost stage incomplete or truncated')
             return parse_object(out['response'])
         try:
             if available:
-                plan,rejected_claim_ids=sanitize_selection(call('select'),available)
+                selection=call('select')
+                plan,rejected_claim_ids=sanitize_selection(selection,available)
+                if 'answer_mode' in selection:
+                    mode='facts' if facts_only_requested(question) else selection['answer_mode']
+                    request_state={**state,'_answer_mode':mode,'_detail':selection.get('detail','normal')}
+                    routing_source='model_selection' if 'detail' in selection else 'model_mode_default_detail'
+                    if mode!=selection['answer_mode']:routing_source='explicit_facts_override'
+                else:routing_source='legacy_keyword_fallback'
                 selected={c['id']:c for c in validate_plan(plan,available)}
-                if (facts_only_requested(question) and re.search(r'\bstudy findings\b',question,re.I)
+                factual_request=request_state.get('_answer_mode')=='facts' or facts_only_requested(question)
+                if (factual_request and re.search(r'\b(study|report|research)\b',question,re.I)
+                        and not re.search(r'\b(historical|radio|1926|letter|transcript)\b',question,re.I)
                         and any(c['domain']=='contemporary_evidence' for c in selected.values())):
                     excluded_context=[cid for cid,c in selected.items() if c['domain']=='historical_record']
                     selected={cid:c for cid,c in selected.items() if cid not in excluded_context}
-                if selected and interpretation_requested(question,state):
+                if selected and interpretation_requested(question,request_state):
                     # The model repeatedly omitted the historical basis and
                     # invented one from a vendor price. These IDs were already
                     # reviewed and retrieved; this is explicit application
                     # selection, never newly inferred documentary evidence.
                     basis=[c for c in self.ledger['reflection_basis_claim_ids'] if c in available][:2]
                     added_basis=[c for c in basis if c not in selected]
-                    ids=list(dict.fromkeys(basis+list(selected)))[:4]
+                    ids=list(dict.fromkeys(basis+list(selected)))[:5 if request_state.get('_answer_mode') else 4]
                     selected={c:available[c] for c in ids}
                 if selected:
                     maximum=1 if re.search(r'\bone sentence\b',question,re.I) else 2 if re.search(r'\b(brief|briefly|shorter)\b',question,re.I) else 3
+                    if request_state.get('_detail')=='brief':maximum=min(maximum,2)
                     quote_requested=bool(re.search(r'\b(quot[ea]|quotation|exact words|verbatim)\b',question,re.I))
-                    interpret=interpretation_requested(question,state)
+                    interpret=interpretation_requested(question,request_state)
                     # Factual wording is already reviewed and immutable. Do not
                     # make a redundant generation a dependency of rendering it.
-                    raw=call('draft') if interpret or quote_requested else {'facts':list(selected),'interpretation':'','quotes':[]}
-                    draft=expand_draft(raw,selected,question,state)
+                    fact_ids=list(selected)[:1 if request_state.get('_detail')=='brief' else 4]
+                    raw=call('draft') if interpret or quote_requested else {'facts':fact_ids,'interpretation':'','quotes':[]}
+                    if not quote_requested:raw,format_actions=normalize_prose_format(raw,selected)
+                    draft=expand_draft(raw,selected,question,request_state)
                     segments,rejected_segments=filter_segments(draft,selected,question,maximum)
-                    if segments:accepted=validate_review(call('check',segments),segments)
+                    if segments:
+                        review,missing_verdicts,unknown_verdicts=complete_review_coverage(call('check',segments),segments)
+                        accepted=validate_review(review,segments)
         except (EvidenceError,KeyError,TypeError) as exc:
             error=str(exc);accepted=set()
         text,facts,basis=render(segments,accepted,selected)
         if not text:
             text=REVIEW_FAILURE if error or selected else REFUSAL
         elif len(accepted)<len(segments):
-            text+='\n\nThese sources do not establish the remaining factual details.'
+            text+='\n\nI could not support the rest of the requested answer.'
         used_packets=list(dict.fromkeys(trace['active_packet_ids']+[selected[c]['packet_id'] for c in facts+basis]))[:2]
         next_state={**state,'active_packet_ids':used_packets,'accepted_claim_ids':facts,
                     'interpretation_basis_claim_ids':basis,'turns':state['turns']+1}
@@ -349,7 +419,9 @@ class GhostChat:
                 'rejected_claim_ids':rejected_claim_ids,'rejected_segments':rejected_segments,
                 'application_added_basis_claim_ids':added_basis,
                 'application_excluded_context_claim_ids':excluded_context,
-                'status':'blocked' if error else 'review_rejected' if selected and not accepted else 'abstained' if not facts and not basis else 'partial' if len(accepted)<len(segments) or rejected_segments else 'supported_by_model_review',
+                'answer_mode':request_state.get('_answer_mode'),'detail':request_state.get('_detail'),'routing_source':routing_source,
+                'application_format_normalizations':format_actions,'missing_verdict_ids':missing_verdicts,'unknown_verdict_ids':unknown_verdicts,
+                'status':'blocked' if error else 'application_filtered' if selected and not segments and rejected_segments else 'review_rejected' if selected and not accepted else 'abstained' if not facts and not basis else 'partial' if len(accepted)<len(segments) or rejected_segments else 'supported_by_model_review',
                 'validation_error':error,'semantic_guarantee':False,'model':MODEL,'training_steps':0,'adapters_loaded':[]}
 
 

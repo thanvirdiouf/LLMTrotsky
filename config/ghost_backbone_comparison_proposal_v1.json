@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "Writer-only synthesisv2 submitted as private saved41; queued; previous source/completeness defects keep transfer gated",
+  "status": "Synthesisv2/saved41 verified five displays, but source/completeness review keeps transfer gated; targeted checker diagnostic next",
   "reason": "Current9B factual self-audit false acceptance/rejection and thinking-output budget failures; not a claim that every model configuration fails",
   "candidate": {
     "model_id": "Qwen/Qwen3.5-27B",
@@ -137,6 +137,8 @@
     "writer_revision": "config/ghost_candidate_writer_revision_v2.json",
     "latest_submitted_version": "ghost_candidate_synthesis_v2",
     "latest_saved_version": 41,
-    "latest_status": "Queued; output review pending"
+    "latest_status": "Complete and verified; source/completeness defects remain",
+    "latest_result_sha256": "251a3368705db65c0088b287ec4276b37639fffad99f21919876c5275294d7f1",
+    "latest_model_approved": 5
   }
 }

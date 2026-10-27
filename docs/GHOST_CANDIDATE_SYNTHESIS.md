@@ -169,3 +169,36 @@ runtime/checker/probe helpers are byte-identical to v1 and only the writer
 system suffix changes. Inputs are2,404/3,040/3,051/2,177/1,202tokens. All121
 focused tests pass; full394 retains the two known historical README errors.
 No v2 output or fresh-transfer result is claimed yet.
+
+## Saved41 result and next diagnostic
+
+Saved41 passed exact frozen-input, token, scope, finite-logit, backend-coverage
+and pipeline/answer replay verification. Ten evaluation calls plus one probe
+completed in 1,267.87 seconds. All five answers were displayed after checker
+approval, with no quote blocks or truncation. The writer revision fixed the
+observed formatting problem; it did not establish factual reliability.
+
+Unblinded implementing-agent review found that the hearing replacement field
+still calls for three or four resident secretaries, although the source range
+describes total secretaries and explicitly excludes the Russian secretary from
+the house. The later admission that residency is unknown does not repair that
+field. The checker also explains its approval by saying Trotsky corrected 1902
+to 1897. His actual self-correction is 1887 to 1897; Goldman retracts 1902 in his
+own opening statement. This is a clear checker interpretation error.
+
+The ILO answer now provides a useful arithmetic/date/denominator explanation
+with local composition, task and adoption limitations. Eastman and Blumkin
+answers still omit requested distinctions, and the Rakovsky reconstruction
+retains compressed qualifications despite improving the earlier death-location
+wording. Five model-approved answers therefore do not mean five source-faithful,
+complete answers. The local hash-bound review records each case; it is not
+independent or human validation. Fresh transfer remains gated.
+
+The next step is a targeted checker diagnostic with two hearing failure pairs
+and three familiar calibration pairs. It should test whether the checker can
+distinguish the actual source errors from corrected versions, rather than add
+another broad writer prompt. It preserves the neutral checker, candidate runtime
+and limits. Generated output remains ignored; only a source/hash-based blueprint
+and reviewed corrections belong in Git. Expected decisions stay local. The
+extra hearing context on old controls must be disclosed, and results cannot
+be treated as independent validation or grounds for activation/training.

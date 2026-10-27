@@ -1,3 +1,40 @@
+# Current continuation — 27 October 2026
+
+**Synthesisv2 / private saved41 COMPLETE and exact verified. Do not resubmit.**
+Ten evaluation calls +one5,000/16 probe,5/5 model-approved displays, no quote
+blocks/truncations/thinking markers. Runtime1267.87s, peaks10.59/9.77GiB.
+Result SHA256 `251a3368705db65c0088b287ec4276b37639fffad99f21919876c5275294d7f1`.
+Frozen system-only revision, original questions/sources/expectations, tokens,
+finite logits/backend coverage and exact pipeline/answer replay verified.
+
+Unblinded source/completeness review: formatting fixed and ILO answer useful,
+but fresh transfer NOT justified. Hearing field still incorrectly recommends
+three-or-four resident secretaries even though that is total-secretary range;
+Russian secretary is nonresident and later prose admits exact residency unknown.
+Checker reason explicitly says Trotsky corrected1902to1897; actual self-correction
+is1887to1897, Goldman corrects1902. This is a concrete source-fidelity failure.
+Eastman own-initiative/risk detail and Blumkin full reform/duty advice remain
+incomplete; Rakovsky report/reconstruction qualifiers remain compressed, though
+v1death-at-Polar-Circle mislocation is improved. Five checker approvals are NOT
+five source/completeness passes. Local SOURCE_REVIEW.json binds all reply hashes.
+Review is implementing-agent development review, not independent/human validation.
+
+Next justified step: freeze a ten-candidate checker stress diagnostic, using
+these two concrete hearing failures (field range and self-correction dates)
+paired with source-reviewed corrections, plus three familiar v30 calibration
+pairs (first name, explicit hypothesis, informant-vs-subject) as controls.
+Keep full three-source context fixed across ten candidates and disclose that
+old controls now have added hearing context; no bit-identical-control claim.
+Generated paragraph stays ignored; tracked blueprint may reference its source
+hash/segment, never copy private outputs into Git. Original fresh-transfer
+questions remain unrun. Use unchanged candidate audit runtime/checker/model/
+budgets, local-only expected decisions; preserve all archived runs.
+This separates checker interpretation failure from writer formatting/completeness.
+Do not launch a third broad writer revision, train or activate a route based on
+this result. Implement/test/freeze diagnostic under existing bounded approval.
+
+Earlier notes follow (saved41 pending statements superseded):
+
 # Latest submitted run — 27 October 2026
 
 **`ghost_candidate_synthesis_v2` submitted as private Kaggle saved41,

@@ -21,8 +21,21 @@ def probe(output):
         key,value=line.split(':',1)
         if key in ('MemTotal','MemAvailable'):memory[key]=int(value.strip().split()[0])*1024
     disk=shutil.disk_usage('/kaggle/working')
-    result={'schema_version':1,'purpose':'hardware_inventory_only','probe_source_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+    working_device=Path('/kaggle/working').stat().st_dev
+    try:
+        from huggingface_hub.constants import HF_HUB_CACHE
+        cache=Path(HF_HUB_CACHE);cache_source='huggingface_hub.constants'
+    except ImportError:
+        cache=Path(os.path.expanduser('~'))/'.cache/huggingface/hub';cache_source='fallback_default_not_sdk_verified'
+    while not cache.exists():cache=cache.parent
+    storage={}
+    for label,path in [('model_cache_filesystem',cache),('home_filesystem',Path(os.path.expanduser('~'))),('temporary_filesystem',Path('/tmp'))]:
+        usage=shutil.disk_usage(path)
+        storage[label]={'total':usage.total,'free':usage.free,'same_filesystem_as_working':path.stat().st_dev==working_device}
+
+    result={'schema_version':2,'purpose':'hardware_inventory_only','probe_source_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         'gpu_count':len(devices),'devices':devices,'ram_bytes':memory,'working_disk_bytes':{'total':disk.total,'free':disk.free},
+        'storage_locations':storage,'cache_location_source':cache_source,
         'software':{'python':platform.python_version(),'torch':torch.__version__,'cuda':torch.version.cuda},
         'model_weights_loaded':False,'model_calls':0,'training_steps':0,'adapters_loaded':[]}
     output=Path(output);output.parent.mkdir(parents=True,exist_ok=True)

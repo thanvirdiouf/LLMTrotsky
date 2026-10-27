@@ -22,7 +22,7 @@ def verify(version='ghost_hardware_v1',root=ROOT):
     downloaded=(run/'download/ghost_hardware_bundle/ghost_hardware_probe.py').read_bytes()
     if source!=downloaded or sha(source)!=lock['probe_source_sha256']:raise ValueError('Downloaded probe source differs')
     result=json.loads((run/'download/ghost_hardware_results/result.json').read_text())
-    if (result['schema_version']!=1 or result['purpose']!='hardware_inventory_only' or result['probe_source_sha256']!=sha(source)
+    if (result['schema_version'] not in (1,2) or result['purpose']!='hardware_inventory_only' or result['probe_source_sha256']!=sha(source)
             or result['model_weights_loaded'] is not False or type(result['model_calls']) is not int or result['model_calls']!=0
             or result['training_steps']!=0 or result['adapters_loaded']!=[]):raise ValueError('Unexpected probe result')
     devices=result['devices']
@@ -36,8 +36,18 @@ def verify(version='ghost_hardware_v1',root=ROOT):
             raise ValueError('Inconsistent GPU memory inventory')
     for values in (result['ram_bytes'],result['working_disk_bytes']):
         if not values or any(type(v) is not int or v<0 for v in values.values()):raise ValueError('Invalid RAM/disk inventory')
+    storage=result.get('storage_locations',{})
+    if result['schema_version']==2:
+        expected={'model_cache_filesystem','home_filesystem','temporary_filesystem'}
+        if set(storage)!=expected or result.get('cache_location_source') not in ('huggingface_hub.constants','fallback_default_not_sdk_verified'):
+            raise ValueError('Missing model-cache filesystem inventory')
+        for value in storage.values():
+            if (type(value.get('total')) is not int or type(value.get('free')) is not int
+                    or not 0<=value['free']<=value['total'] or type(value.get('same_filesystem_as_working')) is not bool):
+                raise ValueError('Invalid storage inventory')
     return {'status':'verified_inventory','model_calls':0,'model_weights_loaded':False,'gpu_count':len(devices),'devices':devices,
         'ram_bytes':result['ram_bytes'],'working_disk_bytes':result['working_disk_bytes'],
+        **({'storage_locations':storage,'cache_location_source':result['cache_location_source']} if result['schema_version']==2 else {}),
         'larger_model_fit_established':False,'result_sha256':sha((run/'download/ghost_hardware_results/result.json').read_bytes())}
 
 

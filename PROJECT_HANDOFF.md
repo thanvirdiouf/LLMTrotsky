@@ -1,3 +1,27 @@
+# Current continuation — 27 October 2026
+
+Hardware ghost_hardware_v1/saved34 COMPLETE, downloaded exact two neededfiles
+and verify_ghost_hardware_probe verified source+inventory. TwoTeslaT4, each
+15,636,037,632totalbytes and15,526,068,224free; aggregate28.9GiBfree, notcontiguous.
+RAMavailable31,836,827,648bytes (29.65GiB). Workingdiskfree20,940,546,048bytes
+(19.50GiB). Model_fit NOTestablished. No modelcalls/weights/training.
+
+Publicmetadataat27Bpin shows11weightshards totaling55,563,022,432bytes=51.75GiB.
+No weightsdownloaded. Workingdiskcannotfit, butruntimeusesHFdefaultcache
+elsewhere, notworkingdir. Need actualcachefilesystem beforeconcludingno fit
+or proposingpaidcompute. Updatedproposalwith exactinventoryhashandsizes.
+
+Implemented offline hardware_v2: SDKconfiguredcache/home/tmp filesystem
+free/total, samefilesystemasworkingbool, no actualpaths/envvalues. SDKabsent
+fallbacklabellednotverified. Stillinternetoff/zero modelcalls. Schema2storage
+checks; frozenv1 verifiesunchanged. Staged training/kaggle_cli/ghost_hardware_v2.
+102focusedpass/full375same2historicalREADMEerrors; actualv1 backwardverified. Commit/pushthen submithardware_v2understanding
+privatefreezero-inferencepreparation. Exactdownloadthen hardwareverifier.
+No largerbackboneinference orsourcepromotion; proposalpendingconcretescope
+decisionafterinventory. Existingpinned9B/activev3/trainingpausedunchanged.
+
+Earlier notes follow:
+
 # Latest submitted run — 27 October 2026
 
 **Hardware-only probe** `ghost_hardware_v1` submitted as private Kaggle saved

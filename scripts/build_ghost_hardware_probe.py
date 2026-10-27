@@ -37,5 +37,5 @@ def build(version='ghost_hardware_v1',root=ROOT):
 
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--version',default='ghost_hardware_v1')
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--version',default='ghost_hardware_v2')
     print(build(parser.parse_args().version))

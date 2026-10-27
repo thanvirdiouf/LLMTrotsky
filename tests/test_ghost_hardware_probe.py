@@ -57,6 +57,18 @@ class HardwareProbeTest(unittest.TestCase):
             (path.parent.parent/'ghost_hardware_bundle/ghost_hardware_probe.py').write_text('changed source')
             with self.assertRaises(ValueError):verify(root=root)
 
+    def test_new_storage_schema_is_required_and_old_inventory_still_verifies(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp);_,_,path,result=self.fixture(root)
+            self.assertEqual(verify(root=root)['gpu_count'],2)
+            result['schema_version']=2;path.write_text(json.dumps(result))
+            with self.assertRaises(ValueError):verify(root=root)
+            result['storage_locations']={k:{'total':100,'free':80,'same_filesystem_as_working':False} for k in ('model_cache_filesystem','home_filesystem','temporary_filesystem')}
+            result['cache_location_source']='huggingface_hub.constants';path.write_text(json.dumps(result))
+            self.assertIn('storage_locations',verify(root=root))
+            result['storage_locations']['model_cache_filesystem']['free']=101;path.write_text(json.dumps(result))
+            with self.assertRaises(ValueError):verify(root=root)
+
     def test_local_execution_fails_before_torch_import_or_output(self):
         with patch('ghost_hardware_probe.Path.is_dir',return_value=False),self.assertRaises(RuntimeError):probe('/tmp/not-created-ghost-probe.json')
 
@@ -64,10 +76,12 @@ class HardwareProbeTest(unittest.TestCase):
         fake=SimpleNamespace(__version__='test',version=SimpleNamespace(cuda='test'),cuda=SimpleNamespace(
             device_count=lambda:2,get_device_properties=lambda i:SimpleNamespace(name='Tesla T4',total_memory=100,major=7,minor=5),
             mem_get_info=lambda i:(90,100)))
-        def paths(value):return SimpleNamespace(is_dir=lambda:True) if str(value)=='/kaggle/working' else Path(value)
+        def paths(value):return SimpleNamespace(is_dir=lambda:True,stat=lambda:SimpleNamespace(st_dev=123)) if str(value)=='/kaggle/working' else Path(value)
         with tempfile.TemporaryDirectory() as temp,patch.dict(sys.modules,torch=fake),patch('ghost_hardware_probe.Path',side_effect=paths),patch('ghost_hardware_probe.shutil.disk_usage',return_value=SimpleNamespace(total=100,free=80)):
             output=Path(temp)/'result.json';result=probe(output)
             self.assertEqual(json.loads(output.read_text()),result);self.assertEqual(result['gpu_count'],2)
+            self.assertEqual(set(result['storage_locations']),{'model_cache_filesystem','home_filesystem','temporary_filesystem'})
+            self.assertNotIn('path',json.dumps(result['storage_locations']))
             self.assertEqual(result['model_calls'],0);self.assertFalse(result['model_weights_loaded'])
             self.assertEqual(result['probe_source_sha256'],sha((ROOT/'scripts/ghost_hardware_probe.py').read_bytes()))
 

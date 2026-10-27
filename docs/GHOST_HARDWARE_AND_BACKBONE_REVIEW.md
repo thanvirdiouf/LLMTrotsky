@@ -57,3 +57,36 @@ snapshot errors. No protected lock or archived adapter has been changed.
 The hardware-only probe was submitted as private Kaggle saved34 after e156d54
 was committed and pushed. Inventory results are pending; no larger model has
 been loaded or run.
+
+## Verified inventory and cache-filesystem follow-up
+
+Saved34 verifies two Tesla T4 devices, each with14.56GiB total and14.46GiB free
+at probe time. The two GPUs provide about28.9GiB free in aggregate, not one
+contiguous GPU allocation. Earlier model runs used GPU0 only. Available host RAM
+was29.65GiB. The working output filesystem had19.50GiB free.
+
+Public file metadata at the proposed27B revision totals55,563,022,432bytes across
+11safetensors shards, about51.75GiB before tokenizer/cache overhead. No weights
+were downloaded. They would not fit the working output filesystem. However,
+the existing loader uses Hugging Face's default cache location rather than
+`/kaggle/working`, so the working-disk reading alone cannot establish download
+feasibility or justify paid compute.
+
+The next hardware-only `ghost_hardware_v2` therefore records the actual SDK
+cache filesystem, home and temporary filesystem capacities and whether each is
+the same filesystem as the working directory. It reports no actual path or
+environment variable value. If the SDK is unavailable, the fallback is explicitly
+labelled as unverified rather than claimed to be the real configured cache.
+It still disables internet, downloads no model, makes zero generation calls and
+changes no active route. The verifier accepts frozen v1 inventory as before and
+requires the additional storage fields for schema2.
+
+Build new source as `--version ghost_hardware_v2`; do not rebuild frozen v1 with
+changed source. Its memory/cache measurements still cannot prove model fit:
+a larger-model experiment would require correct sharding and a real bounded
+load/probe before scoring. A new test checks storage schema consistency while
+preserving backward verification of saved34.
+
+Current checks:102 focused tests pass; full375 retains the same two historical
+README snapshot errors. The updated verifier also re-verifies the actual saved34
+source and inventory unchanged.

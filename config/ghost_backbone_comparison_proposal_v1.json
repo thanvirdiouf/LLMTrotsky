@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "Approved targeted candidatev2 feasibility submitted as private saved37 after verified GPU1OOM in saved36; active9B unchanged",
+  "status": "Approved candidatev2/saved37 verified GPU0 forwardOOM; same-weight/map/budget efficient-attentionv3 prepared",
   "reason": "Current9B factual self-audit false acceptance/rejection and thinking-output budget failures; not a claim that every model configuration fails",
   "candidate": {
     "model_id": "Qwen/Qwen3.5-27B",
@@ -35,21 +35,25 @@
     "frozen_local_version": "ghost_candidate_probe_v1",
     "saved_version": 36,
     "last_result": {
-      "local_version": "ghost_candidate_probe_v1",
-      "saved_version": 36,
+      "local_version": "ghost_candidate_probe_v2",
+      "saved_version": 37,
       "status": "blocked",
       "phase": "single_unscored_memory_probe",
       "error_type": "OutOfMemoryError",
-      "automatic_layer_split": [
-        29,
-        35
+      "layer_split": [
+        34,
+        30
+      ],
+      "loaded_allocated_bytes": [
+        9231722496,
+        8437393408
       ],
       "memory_success": false
     },
-    "next_prepared_version": "ghost_candidate_probe_v2",
+    "next_prepared_version": "ghost_candidate_probe_v3",
     "next_placement_policy": "fixed_34_30",
     "caps_unchanged": true,
-    "next_saved_version": 37
+    "next_attention_policy": "repeat_kv_efficient_sdpa"
   },
   "phase_b": {
     "prerequisite": "PhaseA verified memory/placement succeeds and benchmark implementation frozen",
@@ -95,5 +99,5 @@
     "prior_review": "Initial automatic approval review rejected new27B submission as outside pinned9B permission. No workload was submitted. Direct human approval now resolves that scope requirement."
   },
   "weights_downloaded_locally": false,
-  "remote_weight_load_status": "V1 weights loaded across bothT4s; unscored forward OOM; no successful probe or quality results"
+  "remote_weight_load_status": "V2 weights loaded bothGPUs but forwardOOM onGPU0; no successful probe or source-quality results"
 }

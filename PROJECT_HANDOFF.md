@@ -1,3 +1,32 @@
+# Current continuation — 27 October 2026
+
+Candidatev2/saved37 COMPLETE andexactbundleverifiedBLOCKED. Weightsloaded
+GPU0allocated9231722496 (8.60GiB),GPU18437393408 (7.86GiB). ForwardOOMnowGPU0
+request574MiB/free290.81MiB; peakGPU014984577536bytes=13.96GiB whileGPU1
+peak~7.98GiB. No fit/qualityclaim. Redistributiondidnotresolveforwardmemory.
+
+Source-guidednextfix: pinnedTF5.20.2 usesnativeGQA forunmaskedhead256; Torch2.11
+docs/source limit nativeGQA toflash/math andFlash requiresSM80 vsT4SM75.
+LikelymathSDPA transientmatrixmemory; notdirectlyprofiled before. Newcandidate
+efficient-attention adapter explicitlyrepeatsKV, moduleproxygroups1, forces
+EFFICIENT_ATTENTION backend, sameHFsdpa helperandmaskregistryalias. No fallback
+tomath or droppedmask; pagedcacheunsupportedfails. SmallCUDAequivalencechecks
+(3modes*2GPUs, atol.002/rtol.01) beforecheckpointdownload. No extra modelcalls.
+Actualmodelbackendcallcoverage16layers*generatedtokens enforced.
+
+V3frozen: samepin/same34/30map/byte-identical5000input16output/13GiBweight
+budgeteach/timeouts/packages. Newattentionpolicyonly +diagnostics/freshoutput
+guard; no allocator/contextbudgetchanges. Candidatehelper includesbackendfile.
+Sourceframesnamedonfailure, no originalinputprivatecontent. Existingresultfile
+refusesautomaticrerun. Fournewtests pass;111focused/full384same2historical
+READMEerrors. Updatedverifier re-verifiesactualV2blockedresult. CPUpreflight confirms5000tokens/byte-identicalprobe/unchangedlimits.
+Nextcommit/push andsubmitv3underexplicitapproved27Bboundedscope.
+Docs GHOST_EFFICIENT_ATTENTION_PROBE.md primarysourceslinked.
+
+No memorypass=>no factualaudit/freshtransfer/training/active9Bchange.
+
+Earlier notes follow:
+
 # Latest submitted run — 27 October 2026
 
 **Approved targeted probe** `ghost_candidate_probe_v2` submitted successfully

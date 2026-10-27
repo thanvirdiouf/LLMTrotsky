@@ -6,6 +6,7 @@ from pathlib import Path
 import shutil
 import signal
 import time
+import traceback
 
 CANDIDATE={'model_id':'Qwen/Qwen3.5-27B','revision':'fc05daec18b0a78c049392ed2e771dde82bdf654'}
 GIB=1024**3
@@ -16,6 +17,9 @@ def sha(raw):return hashlib.sha256(raw).hexdigest()
 
 def validate_protocol(protocol):
     device_map_for(protocol.get('placement_policy','auto'))
+    attention=protocol.get('attention_policy','default_sdpa')
+    if attention not in ('default_sdpa','repeat_kv_efficient_sdpa') or (attention!='default_sdpa' and protocol.get('placement_policy')!='fixed_34_30'):
+        raise ValueError('Unknown candidate attention policy or incompatible placement')
     if (protocol['purpose']!='candidate_memory_probe_only' or protocol['model']!=CANDIDATE
             or protocol['maximum_model_calls']!=1 or protocol['training_steps']!=0
             or protocol['adapters_loaded']!=[] or protocol['runtime_timeout_seconds']!=2700
@@ -56,10 +60,16 @@ def resource_gate(devices,cache_free,ram_available,weight_bytes):
     if cache_free<int(weight_bytes*1.15)+GIB:raise ValueError('Insufficient model-cache disk space')
 
 
+def ensure_fresh_output(output):
+    if (Path(output)/'result.json').exists():
+        raise RuntimeError('Candidate result already exists; inspect it instead of rerunning the probe')
+
+
 def run(bundle,output):
     if not Path('/kaggle/working').is_dir():raise RuntimeError('Candidate inference remains on Kaggle')
     bundle,output=Path(bundle),Path(output);output.mkdir(parents=True,exist_ok=True)
     protocol=json.loads((bundle/'protocol.json').read_text());validate_protocol(protocol)
+    ensure_fresh_output(output)
     for name,expected in protocol['files'].items():
         if sha((bundle/name).read_bytes())!=expected:raise ValueError('Frozen candidate file changed')
     import fcntl
@@ -92,7 +102,19 @@ def run(bundle,output):
         cache_free=shutil.disk_usage(cache).free
         result['resources_before']={'cache_free_bytes':cache_free,'ram_available_bytes':ram}
         resource_gate(devices,cache_free,ram,protocol['weight_file_bytes'])
-        result['devices_before']=devices;result['phase']='download_pinned_candidate';save()
+        result['devices_before']=devices
+        attention_policy=protocol.get('attention_policy','default_sdpa');attention_name='sdpa';attention_stats=None
+        result['attention_policy']=attention_policy
+        if attention_policy=='repeat_kv_efficient_sdpa':
+            from candidate_efficient_attention import register_backend,cuda_equivalence_checks
+            result['phase']='validate_attention_backend';save()
+            attention_stats={};attention_name,backend=register_backend(attention_stats)
+            result['attention_runtime_stats']=attention_stats
+            result['attention_equivalence_checks']=cuda_equivalence_checks(backend,torch)
+            attention_stats['calls']=0;attention_stats['expanded_kv_calls']=0
+            for i in (0,1):
+                with torch.cuda.device(i):torch.cuda.empty_cache()
+        result['phase']='download_pinned_candidate';save()
         snapshot=snapshot_download(CANDIDATE['model_id'],revision=CANDIDATE['revision'],token=False,
             allow_patterns=['*.json','*.jinja','*.txt','*.safetensors'],max_workers=2)
         if Path(snapshot).name!=CANDIDATE['revision']:raise ValueError('Candidate revision differs')
@@ -110,7 +132,7 @@ def run(bundle,output):
         result['placement_policy']=policy
         result['phase']='load_sharded_candidate';save()
         model=AutoModelForCausalLM.from_pretrained(snapshot,local_files_only=True,trust_remote_code=False,
-            dtype=torch.float16,device_map=selected_map,max_memory={0:13*GIB,1:13*GIB},attn_implementation='sdpa',
+            dtype=torch.float16,device_map=selected_map,max_memory={0:13*GIB,1:13*GIB},attn_implementation=attention_name,
             quantization_config=BitsAndBytesConfig(load_in_4bit=True,bnb_4bit_quant_type='nf4',bnb_4bit_use_double_quant=True,bnb_4bit_compute_dtype=torch.float16))
         model.requires_grad_(False);model.eval();result['model_weights_loaded']=True
         result['parameter_devices']=placement(model);result['device_map']={name:str(device) for name,device in model.hf_device_map.items()}
@@ -131,6 +153,8 @@ def run(bundle,output):
         if not generated.logits or len(generated.logits)!=len(tokens) or any(not torch.isfinite(step).all().item() for step in generated.logits):
             raise ValueError('Probe produced non-finite or missing raw logits')
         result['finite_logits']=True
+        if attention_stats is not None and (attention_stats['calls']!=16*len(tokens) or attention_stats['expanded_kv_calls']!=16*len(tokens)):
+            raise ValueError('Validated efficient backend did not cover every full-attention layer')
         for i in (0,1):torch.cuda.synchronize(i)
         if not tokens or len(tokens)>16:raise ValueError('Invalid probe output bounds')
         result['probe']={'purpose':'memory/placement only, not a chatbot answer','input_token_ids':ids,'token_ids':tokens,
@@ -140,6 +164,7 @@ def run(bundle,output):
         result['status']='memory_probe_passed';result['phase']='complete'
     except Exception as exc:
         result['status']='blocked';result['error_type']=type(exc).__name__;result['error']=str(exc)
+        result['error_frames']=[{'file':Path(frame.filename).name,'function':frame.name,'line':frame.lineno} for frame in traceback.extract_tb(exc.__traceback__)[-8:]]
         if 'torch' in locals():
             try:
                 result['memory_after_failure']={str(i):{'allocated_bytes':torch.cuda.memory_allocated(i),'reserved_bytes':torch.cuda.memory_reserved(i),'peak_allocated_bytes':torch.cuda.max_memory_allocated(i)} for i in (0,1)}

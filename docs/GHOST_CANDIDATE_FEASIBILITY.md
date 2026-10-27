@@ -114,3 +114,8 @@ and unchanged model, software and resource limits.
 The targeted candidatev2 probe was submitted as private Kaggle saved37 after
 a3ac1ed was committed and pushed. Results are pending; no memory success or
 source-quality improvement is claimed.
+
+Candidatev2/saved37 also blocked: GPU0 now exceeded forward memory while both
+weights remained resident. The next targeted test uses
+[candidate-only efficient attention](GHOST_EFFICIENT_ATTENTION_PROBE.md), keeping
+the same model, context, layer map and resource limits. No quality run yet.

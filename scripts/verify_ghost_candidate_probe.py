@@ -67,6 +67,16 @@ def verify(version='ghost_candidate_probe_v1',root=ROOT,tokenizer=None):
         raise ValueError('Invalid candidate output/generation')
     finish='stop' if ids[-1]==generation['eos_token_id'] else 'length'
     if probe['finish_reason']!=finish or (finish=='length' and len(ids)!=16):raise ValueError('Candidate stop differs')
+    if protocol.get('attention_policy','default_sdpa')=='repeat_kv_efficient_sdpa':
+        if result.get('attention_policy')!='repeat_kv_efficient_sdpa':raise ValueError('Attention policy differs')
+        checks=result.get('attention_equivalence_checks',[])
+        expected_checks={(device,case) for device in (0,1) for case in ('prefill_causal','decode','masked_prefill')}
+        if len(checks)!=6 or {(v.get('device'),v.get('case')) for v in checks}!=expected_checks or any(v.get('passed') is not True or v.get('atol')!=0.002 or v.get('rtol')!=0.01 for v in checks):
+            raise ValueError('Missing kernel equivalence checks')
+        stats=result.get('attention_runtime_stats',{})
+        if (stats.get('backend')!='EFFICIENT_ATTENTION' or stats.get('native_gqa') is not False or stats.get('mask_function')!='sdpa_mask'
+                or stats.get('calls')!=16*len(ids) or stats.get('expanded_kv_calls')!=16*len(ids)):
+            raise ValueError('Efficient attention coverage differs')
     peaks=result['peak_allocated_bytes']
     if set(peaks)!={'0','1'} or any(type(v) is not int or v<=0 for v in peaks.values()):raise ValueError('Missing GPU peaks')
     if any(peaks[str(d['index'])]>d['total_memory_bytes'] for d in result['devices_before']):raise ValueError('Impossible GPU peak')

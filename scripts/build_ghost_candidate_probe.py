@@ -16,7 +16,7 @@ def enc(value):return (json.dumps(value,sort_keys=True,ensure_ascii=False,indent
 def sha(raw):return hashlib.sha256(raw).hexdigest()
 
 
-def build(version='ghost_candidate_probe_v1',root=ROOT,tokenizer=None,placement_policy='auto'):
+def build(version='ghost_candidate_probe_v1',root=ROOT,tokenizer=None,placement_policy='auto',attention_policy='default_sdpa'):
     if not re.fullmatch(r'ghost_candidate_probe_v[1-9][0-9]*',version):raise ValueError('Invalid candidate probe version')
     assets=root/'evaluation'/version/'tokenizer_assets'
     if tokenizer is None:
@@ -40,6 +40,8 @@ def build(version='ghost_candidate_probe_v1',root=ROOT,tokenizer=None,placement_
         if sha((root/name).read_bytes())!=digest:raise ValueError('Protected archive changed: '+name)
     payload={'candidate_base_probe.py':(root/'scripts/candidate_base_probe.py').read_bytes(),
         'memory_probe.json':enc({'purpose':'unscored memory/placement only','messages':messages,'input_token_ids':ids})}
+    if attention_policy=='repeat_kv_efficient_sdpa':
+        payload['candidate_efficient_attention.py']=(root/'scripts/candidate_efficient_attention.py').read_bytes()
     protocol={'purpose':'candidate_memory_probe_only','model':CANDIDATE,'packages':prior['packages'],
         'maximum_model_calls':1,'max_input_tokens':5120,'max_output_tokens':16,'enable_thinking':False,'finite_logits_required':True,
         'runtime_timeout_seconds':2700,'installation_timeout_seconds':600,'gpu_ids':[0,1],
@@ -49,6 +51,7 @@ def build(version='ghost_candidate_probe_v1',root=ROOT,tokenizer=None,placement_
         'chat_template_sha256':sha(tokenizer.chat_template.encode()),'preserved_files':preserved,
         'files':{name:sha(raw) for name,raw in payload.items()}}
     if placement_policy!='auto':protocol['placement_policy']=placement_policy
+    if attention_policy!='default_sdpa':protocol['attention_policy']=attention_policy
     validate_protocol(protocol);payload['protocol.json']=enc(protocol)
     packed={name:base64.b85encode(lzma.compress(raw)).decode() for name,raw in payload.items()}
     unpack='import base64,lzma,sys\nfrom pathlib import Path\npacked='+repr(packed)+'\nbundle=Path("/kaggle/working/ghost_candidate_bundle")\nbundle.mkdir(exist_ok=True)\nfor name,data in packed.items():\n    (bundle/name).write_bytes(lzma.decompress(base64.b85decode(data)))\nsys.path.insert(0,str(bundle))\nfrom candidate_base_probe import run\nrun(bundle,"/kaggle/working/ghost_candidate_results")\n'
@@ -70,5 +73,5 @@ def build(version='ghost_candidate_probe_v1',root=ROOT,tokenizer=None,placement_
 
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--version',default='ghost_candidate_probe_v2');parser.add_argument('--placement-policy',choices=('auto','fixed_34_30'),default='fixed_34_30')
-    args=parser.parse_args();print(build(args.version,placement_policy=args.placement_policy))
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--version',default='ghost_candidate_probe_v3');parser.add_argument('--placement-policy',choices=('auto','fixed_34_30'),default='fixed_34_30');parser.add_argument('--attention-policy',choices=('default_sdpa','repeat_kv_efficient_sdpa'),default='repeat_kv_efficient_sdpa')
+    args=parser.parse_args();print(build(args.version,placement_policy=args.placement_policy,attention_policy=args.attention_policy))

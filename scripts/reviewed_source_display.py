@@ -34,6 +34,8 @@ def records_for_packets(collection,ledger,packet_ids):
                 'context_boundary':packet['context_boundary'],'packet_fingerprint':fingerprint(packet),'block_refs':refs},
             'semantic_support_independently_verified':False}
         if 'observed_date' in packet:item['source']['observed_date']=packet['observed_date']
+        for key in ('review_kind','review_note','derivation','scope_block_ids'):
+            if key in claim:item[key]=deepcopy(claim[key])
         item['record_fingerprint']=fingerprint(item);result[item['id']]=item
     return result
 

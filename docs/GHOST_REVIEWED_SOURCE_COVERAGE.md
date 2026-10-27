@@ -77,3 +77,11 @@ selection relevance and displayed task coverage independently of source wording.
 No free-form factual rewriting or self-checker approval should promote a fact.
 Fresh transfer, sustained conversation and voice remain later gates; training,
 adapters and active9B/v3 remain unchanged.
+
+The identified representation gaps now have nine additions in a separate
+51-claim opt-in ledger. Original42claims, packets and previous display
+fingerprints are preserved. New records distinguish source paraphrases,
+bounded-source inferences and application arithmetic. A frozen five-question
+ID-selector trial receives all available summaries/full passages without
+oracle selections or evaluation answers. See [the new ledger and selector
+experiment](GHOST_REVIEWED_SELECTION.md) for validation and submission state.

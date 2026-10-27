@@ -1,0 +1,9 @@
+{
+  "added_claim_count": 9,
+  "base_collection_fingerprint": "ee5b2bf7a91b5ff417976339a212141346462ed821e537eb0629a7ed83f049e5",
+  "base_ledger_fingerprint": "f8ae2e96be42ea7a211847923a564e8f219cafec3bb0231c744973b3010426e5",
+  "base_source_plan": "config/ghost_source_plan_v4.json",
+  "schema_version": 1,
+  "status": "Opt-in development-reviewed proposition extension; original42claims and packets unchanged; no activation/training/independent-validation claim",
+  "supplements_file": "evaluation/ghost_reviewed_coverage_v2/proposition_supplements.json"
+}

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "Saved42 focused checker failures verified; offline reviewed-record rendering/coverage audited, no new GPU run",
+  "status": "Opt-in51claim source coverage reviewed, original42 preserved; five-question immutable-wording selector frozen, not submitted",
   "reason": "Current9B factual self-audit false acceptance/rejection and thinking-output budget failures; not a claim that every model configuration fails",
   "candidate": {
     "model_id": "Qwen/Qwen3.5-27B",
@@ -185,5 +185,21 @@
     "full_tests": 401,
     "known_historical_errors": 2,
     "new_gpu_run_submitted": false
+  },
+  "phase_f": {
+    "purpose": "New source-reviewed coverage and ID-only deterministic factual display",
+    "ledger_plan": "config/ghost_reviewed_ledger_plan_v1.json",
+    "original_claims_preserved": 42,
+    "added_claims": 9,
+    "total_claims": 51,
+    "frozen_inputs": "evaluation/ghost_reviewed_selector_inputs_v1",
+    "frozen_local_version": "ghost_reviewed_selection_v1",
+    "status": "Prepared, not submitted",
+    "evaluation_calls_maximum": 5,
+    "separate_memory_probe_calls_maximum": 1,
+    "model_audit_performed": false,
+    "generated_factual_text_used": false,
+    "active_model_changed": false,
+    "fresh_transfer_run": false
   }
 }

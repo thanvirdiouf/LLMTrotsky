@@ -1,3 +1,51 @@
+# Current continuation — 27 October 2026
+
+Offline coverage expansion complete: NEW51claim opt-in ledger at
+`evaluation/ghost_reviewed_coverage_v2/`, tracked plan
+`config/ghost_reviewed_ledger_plan_v1.json`. Original42claims and source packets
+unchanged, verified; old oracle display fingerprints also unchanged. Nine new
+claims:5source paraphrases (including author inference),3bounded-source
+assessments,1application arithmetic. Absence and arithmetic labelled inference;
+no invented author admissions or reported10.4source number. Decimal metadata
+5.7+4.7=10.4 checked; semantic scope/wording reviewed by coding agent, NOT human
+or independent validation. New mixed-domain builder does not alter historical-
+only supplement guard. Raw claims/anchors and review stay ignored.
+
+Frozen selector inputs: `evaluation/ghost_reviewed_selector_inputs_v1/`.
+Same5original questions/controlled sources, every available reviewed summary,
+no oracle IDs/expected answers in messages. Inputs2612/3686/3697/2470/1440tokens.
+Input locks, source/ledger fingerprints and candidate-token reconstruction pass.
+Local SOURCE_REVIEW.json in coveragev2 binds curation+input lock; do NOT modify
+it after execution to add model results. Inference review belongs in run dir.
+
+Executable `ghost_reviewed_selection_v1` is FROZEN, NOT YET SUBMITTED.
+Exact5selector calls +one5,000/16 probe, source-record IDs only, no generated
+factual wording/self-audit gate, no selected fact omitted or promoted to memory.
+Strict unknown/duplicate/extra-text/truncation blocks; empty selection does NOT
+mean corpus lacks evidence. Shared loader/attention helpers byte-identical to
+saved41; same pinned27B/freeprivate2T4/600s setup/2700s runtime/1024output caps.
+10new tests/138focused pass; full411 retains the same two historical README
+snapshot errors, original locks unchanged. CPU verifier preflight
+with SYNTHETIC ID outputs and real tokenizer passes and rejects changed display
+even with updated hashes. Synthetic fixture was temporary, never real download;
+no GPU/model quality established. Docs GHOST_REVIEWED_SELECTION.md.
+
+Next finish checks, commit/push milestones, submit frozen selector ONCE under
+existing explicit bounded27B approval, record actual saved version. After
+COMPLETE download exact version's `ghost_reviewed_selection_bundle/*` and
+`ghost_reviewed_selection_results/*` into
+`evaluation/runs/ghost_reviewed_selection_v1/download/`, then:
+`.venv-tokenizer/bin/python scripts/verify_reviewed_selection.py --version
+ghost_reviewed_selection_v1 --tokenizer evaluation/ghost_reviewed_selector_inputs_v1/tokenizer_assets`.
+Use dedicated selector verifier. Review actual wording AND selection relevance/
+requested-task coverage/refusal/readability separately, as unblinded source
+review, not independent/human validation. No automatic activation/training or
+fresh transfer from immutable-wording checks. Fresh original transfer remains
+unrun; active9B/v3 and all old inputs/outputs untouched. No current Kaggle job
+until this prepared new selector is actually submitted; saved42 remains complete.
+
+Earlier notes follow (prior pending curation instructions superseded):
+
 # Ready for next offline step — 27 October 2026
 
 Offline reviewed-proposition rendering/coverage milestone is COMPLETE,

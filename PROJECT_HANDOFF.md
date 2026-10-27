@@ -1,3 +1,37 @@
+# Current continuation — 27 October 2026
+
+Hardwarev2/saved35 COMPLETE, exactsource/result downloaded and verified. Cache
+SDKconstantresolved; cache/home/tmp filesystem differsfromworking and reports
+1,126,141,267,968bytes free (~1.02TiB). TwoT4 each14.46GiBfree,working19.5GiB.
+Original27B55,563,022,432byteweights clearreporteddiskheadroom; GPUfitnotproved.
+No jobcurrentlyrunning asof status35complete.
+
+Prepared next separatecandidate feasibility withinhuman's direct autonomous
+result-dependent instructions plusfree/private/boundedinference limits. This
+is NOT changingactive9Bpin oractivatingnewmodel. No additionalauthority inferred
+fromautomation. Proposalupdatedwith thisscopeassessment andverifiedcachedata.
+No localweightsdownload; publictokenizer/configonly. Candidate27Bpin remains
+fc05daec18b0a78c049392ed2e771dde82bdf654.
+
+New candidate_base_probe.py, builder, verifier and3tests. Frozen local
+ghost_candidate_probe_v1: twoT4,13GiBweightbudgeteach, NF4/fp16/SDPA fresh
+inference-onlyloader (noPEFT andno oldhelperchanges), allparametersGPU0/1
+orfail, noCPU/diskoffload, one5000input/16output unscoredprobe, finitelogits,
+GPUpeaks. Installtimeout600s/runtime2700s, thenexit/no server. Resourcegate
+requiresactualcache/RAM/GPUheadroom. No sourceanswers/qualityscores/training.
+Verifierhashes exactbundle/protocol/tokenizer/probe andprotectedoldarchive.
+CPUpreflight exactly5000inputs and resourcegate passes;105focusedpass/
+full378same2historicalREADMEerrors. Next commit/push->upload
+probeonlyunderfreeprivateboundedresearchscope; automaticreviewcanresolveany
+remainingtoolpermissionissue withoutbypassingit.
+
+After candidatejobresult do NOT use model-smoke/hardware verifier; use
+verify_ghost_candidate_probe.py withlocalcandidate tokenizer_assets. Onpass
+consider tenfixedneutral-sourcejudgmentsbeforefreshtransfer orconversation.
+No activepromotion/training/paidcompute. Docs GHOST_CANDIDATE_FEASIBILITY.md.
+
+Earlier notes follow:
+
 # Latest submitted run — 27 October 2026
 
 **Hardware-only** `ghost_hardware_v2` submitted as private Kaggle saved

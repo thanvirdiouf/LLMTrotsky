@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "Proposal only: two-T4 inventory verified; model-cache filesystem capacity pending; no larger-backbone run submitted",
+  "status": "Separate candidate-only feasibility probe frozen for bounded free/private inference; active9B unchanged; no candidate weights downloaded or run submitted yet",
   "reason": "Current9B factual self-audit false acceptance/rejection and thinking-output budget failures; not a claim that every model configuration fails",
   "candidate": {
     "model_id": "Qwen/Qwen3.5-27B",
@@ -18,8 +18,8 @@
     "score": "4correct approvals,1correct rejection,1false approval,1false rejection,3format blocks"
   },
   "phase_a": {
-    "purpose": "Memory feasibility only after separate scope approval",
-    "hardware": "Existing private free Kaggle target; inspect inventory first",
+    "purpose": "One separate unscored memory/placement/numerical-health probe under result-dependent free/private research scope; no change to the controlled9B baseline",
+    "hardware": "Verified same private free Kaggle two-T4 target; SDK model-cache filesystem headroom measured",
     "model_calls_maximum": 1,
     "probe_input_tokens": 5000,
     "probe_output_tokens": 16,
@@ -30,7 +30,10 @@
       "Would require paid compute or CPU/disk offload for scored evaluation"
     ],
     "training_steps": 0,
-    "adapters_loaded": []
+    "adapters_loaded": [],
+    "runtime_timeout_seconds": 2700,
+    "installation_timeout_seconds": 600,
+    "frozen_local_version": "ghost_candidate_probe_v1"
   },
   "phase_b": {
     "prerequisite": "PhaseA verified memory/placement succeeds and benchmark implementation frozen",
@@ -50,19 +53,26 @@
   "adapters_loaded": [],
   "prerequisites": [
     "Hardware inventory verified",
-    "User explicitly approves changing the currently pinned9B backbone for this experiment",
-    "Separate loader/preparation handles shard placement without altering frozen9B helper",
+    "Current active9B pin/control and frozen archive remain unchanged",
+    "Separate frozen inference-only loader validates dual-GPU placement and finite logits",
     "New model/tokenizer/template and exact protocol hashed before upload"
   ],
-  "scope_change_required": "Existing repeated-run authorization fixes the current pinned Qwen base; public metadata lookup does not authorize new weight inference.",
   "hardware_inventory": {
-    "local_version": "ghost_hardware_v1",
-    "saved_version": 34,
-    "result_sha256": "3c5eeea6b69a1413ed8181b86209682c2db5b5c2ec28df566f183e6db911b480",
+    "local_version": "ghost_hardware_v2",
+    "saved_version": 35,
+    "result_sha256": "54600f43efb57c14a8f9042e7e8d68db99a1401825982ae31b274fc2650fe525",
     "gpu_count": 2,
     "free_gpu_memory_bytes": 31052136448,
     "working_disk_free_bytes": 20940546048,
     "cache_disk_fit_established": false,
-    "note": "TwoGPU memory is not one contiguous device; existing9B runs usedGPU0. Working output filesystem does not fit original27B weights, but actual model-cache filesystem has not yet been measured."
+    "note": "Cache is separate from working output volume and reports sufficient raw download headroom; model memory fit remains unestablished. Two GPU memories require proper sharding.",
+    "cache_disk_free_bytes": 1126141267968,
+    "cache_location_source": "huggingface_hub.constants",
+    "cache_disk_download_headroom_reported": true
+  },
+  "authorization_review": {
+    "direct_human_instruction": "Do that. And when you are done, assess the next step, do that, and repeat.",
+    "standing_limits": "Same private notebook; bounded free inference, no training/adapters/paid compute/public uploads.",
+    "decision": "Separate candidate-only feasibility is a result-dependent reversible experiment within those limits; no active baseline replacement or model promotion is authorized by this probe."
   }
 }

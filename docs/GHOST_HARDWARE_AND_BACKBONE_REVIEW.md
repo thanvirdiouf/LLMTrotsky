@@ -93,3 +93,9 @@ source and inventory unchanged.
 
 Hardwarev2 submitted as private Kaggle saved35 after6d3c9ea was committed and
 pushed. Cache-filesystem results are pending; no larger weights are loaded.
+
+Saved35 verifies SDK cache/home/tmp on a separate filesystem with roughly1.02TiB
+reported free. Original candidate weights fit that reported download headroom;
+GPU fit remains unestablished. The next bounded step is a
+[separate candidate feasibility probe](GHOST_CANDIDATE_FEASIBILITY.md), preserving
+the active9B setup and all private/free/no-training limits.

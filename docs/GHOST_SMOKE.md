@@ -242,3 +242,8 @@ Hardware-only ghost_hardware_v1 submitted as private saved34; zero model calls.
 
 Hardware-only ghost_hardware_v2 submitted as private saved35 to inspect model-
 cache filesystem capacity. Zero model calls; saved34 remains verified.
+
+Hardwarev2/saved35 verified separate SDK cache with ~1.02TiB reported free.
+A separate ghost_candidate_probe_v1 stages one unscored pinned27B feasibility
+probe on the same private free two-T4 target. Active9B stays unchanged. Use
+verify_ghost_candidate_probe.py; see GHOST_CANDIDATE_FEASIBILITY.md.

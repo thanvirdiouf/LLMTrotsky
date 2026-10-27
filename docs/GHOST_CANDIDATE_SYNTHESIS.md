@@ -132,3 +132,32 @@ independent or human validation. The next experiment should revise writer
 instructions on these same questions, preserving sources, expectations,
 literal-quote checks, neutral auditor, model/backend and budgets. It remains
 post-hoc development, with fresh transfer, activation and training gated.
+
+## Writer-only revision
+
+`ghost_candidate_synthesis_v2` appends the instruction in
+`config/ghost_candidate_writer_revision_v2.json` to the original writer system
+message. It asks for unquoted field replacements and label corrections, full
+requested precision/coverage, actual advice distinct from future examples,
+and careful scope for hypothetical consequences and missing outcomes. The
+instruction contains no supplied answer values, names or source dates. It is
+an explicitly post-hoc development response to saved40, not fresh validation.
+
+All five questions, source/user messages and original expectations are
+unchanged. Runtime helpers, parser, literal-quote gate, neutral checker,
+candidate pin, quantization, map, generation settings, call/time caps and the
+memory probe are unchanged. The exact instruction file is frozen in the new
+bundle, and verification reconstructs the permitted system-only mutation.
+The builder requires verified saved40 artifacts plus their hash-bound local
+source/completeness review. Existing saved40 continues to verify unchanged.
+
+```bash
+.venv-tokenizer/bin/python scripts/build_ghost_candidate_synthesis.py --version ghost_candidate_synthesis_v2 --writer-revision
+.venv-tokenizer/bin/python scripts/verify_ghost_candidate_synthesis.py --version ghost_candidate_synthesis_v2 --tokenizer evaluation/ghost_candidate_synthesis_v2/tokenizer_assets
+```
+
+Download the exact submitted version to the corresponding v2 run directory
+before verification. Judge source support and requested-task coverage on the
+actual displayed replies, retaining blocked cases as unavailable answers.
+Model approval is experimental feedback. Fresh transfer still requires usable
+synthesis, not merely a larger number of model-approved paragraphs.

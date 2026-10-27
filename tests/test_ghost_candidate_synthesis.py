@@ -10,6 +10,7 @@ from candidate_synthesis import evaluate,validate_protocol
 from candidate_audit import reserve_call,CANDIDATE
 from verify_ghost_candidate_synthesis import replay
 from test_ghost_candidate_audit import protocol
+from build_ghost_candidate_synthesis import revised_messages
 
 
 def jobs():
@@ -29,6 +30,16 @@ def verdict(messages,*,missing=False,reject=False):
 
 
 class CandidateSynthesisTests(unittest.TestCase):
+    def test_writer_revision_changes_only_system_and_keeps_user_sources_questions_exact(self):
+        revision=json.loads((ROOT/'config/ghost_candidate_writer_revision_v2.json').read_text())
+        original=jobs()[0]['messages'];before=copy.deepcopy(original)
+        revised=revised_messages(original,revision)
+        self.assertEqual(original,before);self.assertEqual(revised[1:],before[1:])
+        self.assertEqual(revised[0]['content'],before[0]['content']+'\n\n'+revision['instruction'])
+        self.assertEqual(revised_messages(original),original)
+        for key,val in [('policy','unknown'),('instruction',''),('instruction','x'*2501)]:
+            with self.subTest(key=key),self.assertRaises(ValueError):revised_messages(original,{**revision,key:val})
+
     def test_same_source_context_dependent_audit_and_frozen_replay(self):
         requests=[]
         def generate(messages):

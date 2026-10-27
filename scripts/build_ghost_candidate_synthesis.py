@@ -2,6 +2,7 @@
 import argparse
 import ast
 import base64
+from copy import deepcopy
 import json
 import lzma
 import re
@@ -14,6 +15,18 @@ from candidate_audit import input_ids
 
 CONTROL='ghost_smoke_v27'
 AUDIT='ghost_candidate_audit_v1'
+
+
+def revised_messages(messages,revision=None):
+    result=deepcopy(messages)
+    if revision is None:return result
+    if (set(revision)!={'schema_version','policy','status','instruction'} or revision['schema_version']!=1
+            or revision['policy']!='source_task_coverage_v2' or not isinstance(revision['instruction'],str)
+            or not revision['instruction'].strip() or len(revision['instruction'])>2500
+            or len(result)!=2 or result[0]['role']!='system' or result[1]['role']!='user'):
+        raise ValueError('Unknown writer instruction revision')
+    result[0]['content']+='\n\n'+revision['instruction']
+    return result
 
 
 def control(root=ROOT):
@@ -37,7 +50,7 @@ def control(root=ROOT):
     return cases,drafts,expected,binding
 
 
-def build(version='ghost_candidate_synthesis_v1',root=ROOT,tokenizer=None):
+def build(version='ghost_candidate_synthesis_v1',root=ROOT,tokenizer=None,writer_revision=False):
     if not re.fullmatch(r'ghost_candidate_synthesis_v[1-9][0-9]*',version):raise ValueError('Invalid synthesis version')
     if tokenizer is None:
         from transformers import AutoTokenizer
@@ -48,7 +61,19 @@ def build(version='ghost_candidate_synthesis_v1',root=ROOT,tokenizer=None):
     source_review=json.loads((root/'evaluation/runs'/AUDIT/'SOURCE_REVIEW.json').read_text())
     if source_review['judgments_sha256']!=audit['judgments_sha256'] or source_review['result_sha256']!=audit['result_sha256'] or source_review['decisions_supported_on_bounded_sources']!=10:raise ValueError('Source review binding absent')
     cases,calls,expected,binding=control(root)
-    jobs=[{'case_id':c['id'],'question':c['question'],'messages':call['messages'],'input_token_ids':input_ids(tokenizer,call['messages'])} for c,call in zip(cases,calls)]
+    revision_raw=None;revision=None;prerequisite=None
+    if writer_revision:
+        from verify_ghost_candidate_synthesis import verify
+        previous=verify('ghost_candidate_synthesis_v1',root,tokenizer)
+        reviewed=json.loads((root/'evaluation/runs/ghost_candidate_synthesis_v1/SOURCE_REVIEW.json').read_text())
+        if previous['status']!='verified' or reviewed['answers_sha256']!=previous['answers_sha256'] or reviewed['result_sha256']!=previous['result_sha256'] or reviewed['fresh_transfer_justified'] is not False:
+            raise ValueError('Verified synthesis failure review required for revision')
+        revision_raw=(root/'config/ghost_candidate_writer_revision_v2.json').read_bytes();revision=json.loads(revision_raw)
+        prerequisite={'local_version':'ghost_candidate_synthesis_v1','saved_version':40,'result_sha256':previous['result_sha256'],'answers_sha256':previous['answers_sha256']}
+    jobs=[]
+    for case,call in zip(cases,calls):
+        messages=revised_messages(call['messages'],revision)
+        jobs.append({'case_id':case['id'],'question':case['question'],'messages':messages,'input_token_ids':input_ids(tokenizer,messages)})
     probe=probe_payloads('ghost_candidate_probe_v3',root)
     p=json.loads((root/'evaluation'/AUDIT/'protocol.json').read_text())
     p={k:v for k,v in p.items() if k not in ('files','local_scorer_sha256','control','prerequisite_probe','evaluation_spec_sha256','quality_policy')}
@@ -58,6 +83,9 @@ def build(version='ghost_candidate_synthesis_v1',root=ROOT,tokenizer=None):
     names=['candidate_audit.py','candidate_base_probe.py','candidate_efficient_attention.py','candidate_synthesis.py',
         'source_reading.py','source_audit.py','ghost_chat.py','grounded_chat.py','grounded_chat_v2.py']
     payload={n:(root/'scripts'/n).read_bytes() for n in names}
+    if revision_raw is not None:
+        payload['writer_revision.json']=revision_raw
+        p.update(writer_policy=revision['policy'],writer_revision_sha256=sha(revision_raw),prerequisite_synthesis=prerequisite)
     for n in ('candidate_base_probe.py','candidate_efficient_attention.py'):
         if payload[n]!=probe[n]:raise ValueError('Proven GPU placement/attention helper changed')
     payload.update({'audit_inputs.json':enc(jobs),'memory_probe.json':probe['memory_probe.json']})
@@ -66,8 +94,11 @@ def build(version='ghost_candidate_synthesis_v1',root=ROOT,tokenizer=None):
     install='import subprocess,sys\nsubprocess.run([sys.executable,"-m","pip","install","-q",'+','.join(repr(k+'=='+v) for k,v in p['packages'].items() if k!='torch')+'],check=True,timeout=600)\n'
     unpack='import base64,lzma,sys\nfrom pathlib import Path\npacked='+repr(packed)+'\nbundle=Path("/kaggle/working/ghost_candidate_synthesis_bundle")\nbundle.mkdir(exist_ok=True)\nfor name,value in packed.items():\n    (bundle/name).write_bytes(lzma.decompress(base64.b85decode(value)))\nsys.path.insert(0,str(bundle))\nfrom candidate_synthesis import run\nrun(bundle,"/kaggle/working/ghost_candidate_synthesis_results")\n'
     for code in (install,unpack):ast.parse(code)
+    intro='# Experimental27B factual source synthesis\nFive exact archived9B writer prompts, dependent neutral-source checking, at most10 evaluation calls and five displayed research replies plus one16-token memory probe. Original expectations stay local. Two free T4s, pinned untouched base, no training/adapters/paid compute/active9B change. Installation600s, workload2700s caps. No trusted factual memory or deployment.\n'
+    if revision_raw:
+        intro=intro.replace('Five exact archived9B writer prompts','Five archived9B questions and exact source/user messages; post-hoc writer-system instruction revision')
     nb={'nbformat':4,'nbformat_minor':5,'metadata':{'kernelspec':{'name':'python3','language':'python','display_name':'Python 3'}},'cells':[
-        {'cell_type':'markdown','id':'scope','metadata':{},'source':['# Experimental27B factual source synthesis\nFive exact archived9B writer prompts, dependent neutral-source checking, at most10 evaluation calls and five displayed research replies plus one16-token memory probe. Original expectations stay local. Two free T4s, pinned untouched base, no training/adapters/paid compute/active9B change. Installation600s, workload2700s caps. No trusted factual memory or deployment.\n']},
+        {'cell_type':'markdown','id':'scope','metadata':{},'source':[intro]},
         *[{'cell_type':'code','id':i,'metadata':{},'source':code.splitlines(True),'execution_count':None,'outputs':[]} for i,code in [('install',install),('run',unpack)]]]}
     stage=root/'training/kaggle_cli'/version;record=root/'evaluation'/version
     meta=json.loads((root/'training/kaggle_cli'/AUDIT/'kernel-metadata.json').read_text());meta['code_file']='kaggle_ghost_candidate_synthesis.ipynb'
@@ -85,5 +116,5 @@ def build(version='ghost_candidate_synthesis_v1',root=ROOT,tokenizer=None):
 
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--version',default='ghost_candidate_synthesis_v1')
-    print(build(parser.parse_args().version))
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--version',default='ghost_candidate_synthesis_v1');parser.add_argument('--writer-revision',action='store_true')
+    args=parser.parse_args();print(build(args.version,writer_revision=args.writer_revision))

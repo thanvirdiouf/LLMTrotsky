@@ -1,5 +1,41 @@
 # Current continuation — 27 October 2026
 
+Saved40 results/source limits committed at `b94f9e2`. No fresh transfer:
+3 model-approved displays included incomplete advice and miscast source
+uncertainty/chronology;2 answerable tasks blocked by quotation formatting.
+
+`ghost_candidate_synthesis_v2` is frozen, NOT YET SUBMITTED. Only change is
+appended writer-system instruction from tracked
+`config/ghost_candidate_writer_revision_v2.json`: unquoted field/user-label
+paraphrases, all requested subparts/precision, actual advice separate from
+future illustrations, hypothetical consequences/local unknowns scoped.
+Post-hoc development revision; no fresh-validation claim. All five original
+questions/user+source messages/expected checks unchanged, no answers leaked.
+All runtime/parser/neutral-checker/GPU helpers and5,000/16 probe byte-identical
+tov1; model/map/packages/generation/budgets unchanged. Frozen suffix carried
+in writer_revision.json and verifier reconstructs exact permitted mutation.
+Builder requires verified saved40 +hash-bound local SOURCE_REVIEW.json.
+
+121 focused tests pass, including new system-only revision test. Full394 has
+the same two historical README snapshot errors. CPU preflight confirms all
+runtime/checker/probe files and questions/sources/expectations unchanged; only
+system suffix differs. Inputs2404/3040/3051/2177/1202 tokens. Building v2 re-verifies actual old saved40.
+Next finish checks/docs, commit/push and submit once under explicit approved
+bounded27B scope. Do not weaken quote/source validation or blindly increase
+budgets. Active9B/v3 untouched, no adapters/training/paid compute.
+After submission record actual saved version. On COMPLETE download exact
+`ghost_candidate_synthesis_bundle/*` and `ghost_candidate_synthesis_results/*`
+into `evaluation/runs/ghost_candidate_synthesis_v2/download/`, then:
+`.venv-tokenizer/bin/python scripts/verify_ghost_candidate_synthesis.py --version
+ghost_candidate_synthesis_v2 --tokenizer evaluation/ghost_candidate_synthesis_v2/tokenizer_assets`.
+Review displayed source support, original task completeness and refusal
+necessity separately from model approval, as unblinded implementing-agent
+review. Fresh transfer remains gated; preserve original fixed questions.
+
+Earlier notes follow (preparation states superseded):
+
+# Current continuation — 27 October 2026
+
 **Candidate synthesisv1 / private saved40 COMPLETE and exact verified. Do not
 resubmit.** Eight evaluation calls +one5,000/16 probe, five displayed outcomes:
 3 model-approved readings,2 quote-guard refusals, no truncated generations.

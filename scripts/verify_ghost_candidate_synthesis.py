@@ -11,7 +11,7 @@ import sys
 import tempfile
 from pathlib import Path
 from build_ghost_candidate_probe import ROOT,sha
-from build_ghost_candidate_synthesis import control
+from build_ghost_candidate_synthesis import control,revised_messages
 from candidate_synthesis import validate_protocol
 from candidate_audit import CANDIDATE,GIB,device_map_for,resource_gate
 from verify_ghost_candidate_audit import verify_generated
@@ -62,7 +62,11 @@ def verify(version='ghost_candidate_synthesis_v1',root=ROOT,tokenizer=None):
     cases,old_calls,expected,binding=control(root)
     if binding!=p['control'] or sha(expected)!=p['evaluation_spec_sha256'] or expected!=(root/'evaluation'/version/'evaluation_spec.json').read_bytes():raise ValueError('Original control or expectations differ')
     jobs=json.loads(frozen['audit_inputs.json'])
-    if len(jobs)!=5 or [j['messages'] for j in jobs]!=[c['messages'] for c in old_calls] or [j['case_id'] for j in jobs]!=[c['id'] for c in cases] or [j['question'] for j in jobs]!=[c['question'] for c in cases]:raise ValueError('Exact writer inputs differ')
+    revision=None
+    if 'writer_policy' in p:
+        raw=frozen['writer_revision.json'];revision=json.loads(raw)
+        if sha(raw)!=p['writer_revision_sha256'] or revision['policy']!=p['writer_policy']:raise ValueError('Writer revision differs')
+    if len(jobs)!=5 or [j['messages'] for j in jobs]!=[revised_messages(c['messages'],revision) for c in old_calls] or [j['case_id'] for j in jobs]!=[c['id'] for c in cases] or [j['question'] for j in jobs]!=[c['question'] for c in cases]:raise ValueError('Exact writer inputs differ')
     output=d/'ghost_candidate_synthesis_results';result_path=output/'result.json';r=json.loads(result_path.read_text())
     if any(r.get(k)!=p[k] for k in ('model','purpose','training_steps','adapters_loaded','active_model_changed','enable_thinking')) or r.get('quality_validated') is not False or r['protocol_sha256']!=sha(frozen['protocol.json']):raise ValueError('Candidate identity differs')
     if type(r['evaluation_calls']) is not int or not 0<=r['evaluation_calls']<=10 or type(r['memory_probe_calls']) is not int or not 0<=r['memory_probe_calls']<=1:raise ValueError('Call limits differ')

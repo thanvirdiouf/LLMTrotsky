@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "status": "Post-hoc source-authored checker stress diagnostic; implementing agent saw failures; not independent/human gold or fresh transfer",
+  "reference_date": "2026-10-26",
+  "source_packet_ids": [
+    "hearing",
+    "rakovsky",
+    "bessedovsky"
+  ],
+  "source_run": {
+    "local_version": "ghost_candidate_synthesis_v2",
+    "saved_version": 41,
+    "result_sha256": "251a3368705db65c0088b287ec4276b37639fffad99f21919876c5275294d7f1",
+    "answers_sha256": "7a79d792c8e7c7bf0368a6ee8f997467c7c055e859dddf9c134cb3b5c6f29c88"
+  },
+  "generated_pair": {
+    "pair_id": "d01_resident_field",
+    "question": "Does this proposed replacement correctly distinguish the resident-secretary field from the total-secretary range and the precision the hearing supplies?",
+    "case_id": "reading_hearing_fields",
+    "segment_id": "s2",
+    "text_sha256": "17f81e22cf91636a927618a4318325ffd084c9b957623886891742f8dba399c2",
+    "corrected_text": "The replacement resident-secretary field should state that the exact count is not established by this excerpt. Trotsky answers that he has three or four secretaries, then specifies that his Russian secretary does not live in the house. That total-secretary range is not itself a three-or-four resident count. The answer does not enumerate the residence of every remaining secretary, so the field should retain the precision limit rather than claim either an exact total of residents or that resident range.",
+    "rationale": "The original proposed resident field uses a total-secretary range; later acknowledgment of missing precision does not repair that substitution."
+  },
+  "authored_pair": {
+    "pair_id": "d02_self_correction",
+    "question": "Does this account correctly identify which date Trotsky corrected in his own answer and which date Goldman retracted from his opening statement?",
+    "incorrect_text": "During direct examination Trotsky corrected his own date from 1902 to 1897. Goldman separately admitted that the 1902 starting date in his opening statement was mistaken.",
+    "corrected_text": "During direct examination Trotsky first said March 1887 and corrected himself to 1897 in that answer. Goldman separately retracted his own opening-statement claim that revolutionary activity began in 1902. Trotsky connected 1902 to publication in London of his first article against terrorists.",
+    "rationale": "The first sentence of the negative reproduces the checker reason's factual confusion in ordinary claim form. Trotsky corrected1887, not1902; Goldman corrected his opening1902."
+  },
+  "control_pair_ids": [
+    "p01",
+    "p03",
+    "p05"
+  ],
+  "control_context_note": "All ten candidates receive all three fixed packets. Familiar control questions/candidates/expectations are preserved, but added hearing context means no bit-identical prompt/control claim.",
+  "privacy": "Generated negative paragraph is loaded by hash from ignored saved41 output; blueprint does not copy its text. Corrected propositions are coding-agent source judgments."
+}

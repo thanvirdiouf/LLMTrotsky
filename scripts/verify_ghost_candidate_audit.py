@@ -98,10 +98,19 @@ def verify(version='ghost_candidate_audit_v1',root=ROOT,tokenizer=None):
         if sha((root/name).read_bytes())!=digest:raise ValueError('Protected archive changed')
     if sha((root/'scripts/summarize_ghost_calibration.py').read_bytes())!=p['local_scorer_sha256']:raise ValueError('Scorer changed')
     values,old,spec,expected,calls,binding=control(root)
+    diagnostic=p.get('generated_diagnostic')
+    diagnostic_jobs=None
+    if diagnostic:
+        from generated_audit_design import load
+        spec,expected,diagnostic_jobs,actual=load(root,values,spec,tokenizer)
+        if actual!=diagnostic:raise ValueError('Generated diagnostic design differs')
     if binding!=p['control'] or sha((root/'evaluation'/version/'evaluation_spec.json').read_bytes())!=p['evaluation_spec_sha256'] or expected!=(root/'evaluation'/version/'evaluation_spec.json').read_bytes():raise ValueError('Control/expectations changed')
     jobs=json.loads(frozen['audit_inputs.json'])
-    if tokenizer is not None and jobs!=freeze_inputs(spec,calls,tokenizer):raise ValueError('Control prompt messages differ')
-    if [j['messages'] for j in jobs]!=[c['messages'] for c in calls] or [j['case_id'] for j in jobs]!=[c['id'] for c in spec['cases']]:raise ValueError('Fixed candidate inputs differ')
+    if diagnostic_jobs is not None:
+        if [{'case_id':j['case_id'],'messages':j['messages']} for j in jobs]!=diagnostic_jobs:raise ValueError('Diagnostic source/candidate inputs differ')
+    else:
+        if tokenizer is not None and jobs!=freeze_inputs(spec,calls,tokenizer):raise ValueError('Control prompt messages differ')
+        if [j['messages'] for j in jobs]!=[c['messages'] for c in calls] or [j['case_id'] for j in jobs]!=[c['id'] for c in spec['cases']]:raise ValueError('Fixed candidate inputs differ')
     result_path=download/'ghost_candidate_audit_results/result.json';result=json.loads(result_path.read_text())
     if any(result.get(k)!=p[k] for k in ('model','purpose','training_steps','adapters_loaded','active_model_changed','enable_thinking')) or result.get('quality_validated') is not False or result['protocol_sha256']!=sha(frozen['protocol.json']):raise ValueError('Result identity differs')
     if type(result['evaluation_calls']) is not int or not 0<=result['evaluation_calls']<=10 or type(result['memory_probe_calls']) is not int or not 0<=result['memory_probe_calls']<=1:raise ValueError('Run call limits differ')
@@ -130,13 +139,20 @@ def verify(version='ghost_candidate_audit_v1',root=ROOT,tokenizer=None):
     if stats.get('backend')!='EFFICIENT_ATTENTION' or stats.get('native_gqa') is not False or stats.get('mask_function')!='sdpa_mask' or stats.get('calls')!=16*steps or stats.get('expanded_kv_calls')!=16*steps:raise ValueError('Total backend coverage differs')
     peaks=result['peak_allocated_bytes']
     if set(peaks)!={'0','1'} or any(type(peaks[str(d['index'])]) is not int or not 0<peaks[str(d['index'])]<=d['total_memory_bytes'] for d in result['devices_before']):raise ValueError('GPU peaks differ')
-    replayed=replay(values,jobs,rows);scores=score_rows(spec,replayed)
+    if diagnostic:
+        from generated_audit_design import replay as replay_generated
+        replayed=replay_generated(values,spec,rows)
+    else:replayed=replay(values,jobs,rows)
+    scores=score_rows(spec,replayed)
     if tokenizer is None:raise ValueError('Scoring requires local tokenizer reconstruction')
     if sha(tokenizer.chat_template.encode())!=p['chat_template_sha256']:raise ValueError('Candidate template differs')
     report.update(status='verified',tokenizer_reconstructed_locally=True,frozen_parser_replayed=True,judgments_sha256=sha(raw),
         control=p['control'],peak_gib={k:v/GIB for k,v in peaks.items()},evaluation_input_tokens=[len(j['input_token_ids']) for j in jobs],
         truncated_judgments=sum(r['output']['finish_reason']=='length' for r in rows),scores=scores,
         quality_policy=p['quality_policy'])
+    if diagnostic:
+        from generated_audit_design import pair_groups
+        report.update(generated_diagnostic=diagnostic,diagnostic_pair_groups=pair_groups(scores))
     return report
 
 

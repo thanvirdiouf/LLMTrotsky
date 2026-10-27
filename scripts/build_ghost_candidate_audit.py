@@ -49,7 +49,7 @@ def control(root=ROOT):
     return values,{**p,'generation':manifest['identity']['generation']},spec,expected,calls,binding
 
 
-def build(version='ghost_candidate_audit_v1',root=ROOT,tokenizer=None):
+def build(version='ghost_candidate_audit_v1',root=ROOT,tokenizer=None,generated_diagnostic=False):
     if not re.fullmatch(r'ghost_candidate_audit_v[1-9][0-9]*',version):raise ValueError('Invalid candidate audit version')
     if tokenizer is None:
         from transformers import AutoTokenizer
@@ -58,7 +58,12 @@ def build(version='ghost_candidate_audit_v1',root=ROOT,tokenizer=None):
     if verified.get('memory_success') is not True or not verified.get('tokenizer_reconstructed_locally'):raise ValueError('Verified candidate memory success required')
     probed=probe_payloads(PROBE,root);probe_p=json.loads(probed['protocol.json'])
     values,old,spec,expected,calls,binding=control(root)
-    jobs=freeze_inputs(spec,calls,tokenizer)
+    diagnostic=None
+    if generated_diagnostic:
+        from generated_audit_design import load
+        spec,expected,prepared,diagnostic=load(root,values,spec,tokenizer)
+        jobs=[{**j,'input_token_ids':input_ids(tokenizer,j['messages'])} for j in prepared]
+    else:jobs=freeze_inputs(spec,calls,tokenizer)
     names=['candidate_audit.py','candidate_base_probe.py','candidate_efficient_attention.py']
     payload={name:(root/'scripts'/name).read_bytes() for name in names}
     for name in names[1:]:
@@ -72,13 +77,16 @@ def build(version='ghost_candidate_audit_v1',root=ROOT,tokenizer=None):
         evaluation_spec_sha256=sha(expected),files={name:sha(raw) for name,raw in payload.items()},
         local_scorer_sha256=sha((root/'scripts/summarize_ghost_calibration.py').read_bytes()),
         quality_policy='Fixed development diagnostic; coding-agent expectations are not independent or human validation. No automatic activation.')
+    if diagnostic:p['generated_diagnostic']=diagnostic
     validate_protocol(p);payload['protocol.json']=enc(p)
     packed={name:base64.b85encode(lzma.compress(raw)).decode() for name,raw in payload.items()}
     install='import subprocess,sys\nsubprocess.run([sys.executable,"-m","pip","install","-q",'+','.join(repr(k+'=='+v) for k,v in p['packages'].items() if k!='torch')+'],check=True,timeout=600)\n'
     unpack='import base64,lzma,sys\nfrom pathlib import Path\npacked='+repr(packed)+'\nbundle=Path("/kaggle/working/ghost_candidate_audit_bundle")\nbundle.mkdir(exist_ok=True)\nfor name,data in packed.items():\n    (bundle/name).write_bytes(lzma.decompress(base64.b85decode(data)))\nsys.path.insert(0,str(bundle))\nfrom candidate_audit import run\nrun(bundle,"/kaggle/working/ghost_candidate_audit_results")\n'
     for code in (install,unpack):ast.parse(code)
+    intro='# Separate27B neutral-source audit comparison\nTen exact archived9B source/question/candidate prompts. Non-thinking, greedy, at most10 evaluation calls plus one16-token memory probe. Expected decisions stay local. Two free T4s, no training/adapters/paid compute/active9B replacement. Install cap10minutes, workload cap45minutes. Fixed development diagnostic, not independent validation.\n'
+    if diagnostic:intro=intro.replace('Ten exact archived9B source/question/candidate prompts.','Ten post-hoc source-checker candidates: two hearing failure pairs and three familiar controls. All have the same three-source context; no exact-control or fresh-validation claim.')
     notebook={'nbformat':4,'nbformat_minor':5,'metadata':{'kernelspec':{'name':'python3','language':'python','display_name':'Python 3'}},'cells':[
-        {'cell_type':'markdown','id':'scope','metadata':{},'source':['# Separate27B neutral-source audit comparison\nTen exact archived9B source/question/candidate prompts. Non-thinking, greedy, at most10 evaluation calls plus one16-token memory probe. Expected decisions stay local. Two free T4s, no training/adapters/paid compute/active9B replacement. Install cap10minutes, workload cap45minutes. Fixed development diagnostic, not independent validation.\n']},
+        {'cell_type':'markdown','id':'scope','metadata':{},'source':[intro]},
         *[{'cell_type':'code','id':cid,'metadata':{},'source':code.splitlines(True),'execution_count':None,'outputs':[]} for cid,code in [('install',install),('run',unpack)]]]}
     stage=root/'training/kaggle_cli'/version;record=root/'evaluation'/version
     metadata=json.loads((root/'training/kaggle_cli'/PROBE/'kernel-metadata.json').read_text());metadata['code_file']='kaggle_ghost_candidate_audit.ipynb'
@@ -98,5 +106,5 @@ def build(version='ghost_candidate_audit_v1',root=ROOT,tokenizer=None):
 
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--version',default='ghost_candidate_audit_v1')
-    print(build(parser.parse_args().version))
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--version',default='ghost_candidate_audit_v1');parser.add_argument('--generated-diagnostic',action='store_true')
+    args=parser.parse_args();print(build(args.version,generated_diagnostic=args.generated_diagnostic))

@@ -1,5 +1,47 @@
 # Current continuation — 27 October 2026
 
+Saved41 source/completeness milestone committed at `b19245f`: all5displayed,
+but wrong resident field and checker date confusion keep transfer gated.
+
+`ghost_candidate_audit_v2` is frozen, NOT YET SUBMITTED. Ten post-hoc neutral
+checker candidates: actual saved41 resident paragraph vs reviewed correction;
+checker-derived1902/1887 self-correction confusion vs source correction; plus
+three unchanged v30 pairs (first name, hypothesis, informant). All10receive
+same complete hearing/rakovsky/bessedovsky context. Old controls have added
+hearing context, so no bit-identical-control or fresh-validation claim.
+Generated paragraph loaded by hash from ignored output; tracked blueprint
+`config/ghost_generated_audit_design_v1.json` does not copy it. Expected
+labels/rationales/pairs stay local; runtime IDs do not encode validity.
+
+Neutral system prompt identical tov30; runtime/placement/attention/probe
+byte-identical tosaved41. Same pinned27B/freeT4/private scope,10calls/1024cap
++one5,000/16 probe,600s install/2700s workload, no training/active change.
+Inputs3659/3666/3614/3638/3576/3574/3591/3591/3590/3591 tokens. CPU preflight
+reproduces all old v30 parser outcomes and saved39's five correct pairs using
+archived parser/coverage code, with no new inference. Three new tests/124
+focused pass; full397 has only the same two historical README snapshot errors,
+locks unchanged. Docs GHOST_GENERATED_AUDIT_DIAGNOSTIC.md.
+
+Next finish tests/docs, commit/push, submit once under approved bounded27B
+scope and record actual saved version. After COMPLETE download its exact
+`ghost_candidate_audit_bundle/*` and `ghost_candidate_audit_results/*` into
+`evaluation/runs/ghost_candidate_audit_v2/download/`, then:
+`.venv-tokenizer/bin/python scripts/verify_ghost_candidate_audit.py --version
+ghost_candidate_audit_v2 --tokenizer evaluation/ghost_candidate_audit_v2/tokenizer_assets`.
+Use audit verifier, not synthesis/probe verifier. It checks provenance, tokens,
+scope/logits/backend and archived parser; report new hearing/control groups
+separately. Inspect final reasons and actual candidate wording against sources
+as unblinded implementing-agent review, not independent/human validation.
+Focused questions change task framing: evenperfect scores do not repair
+original synthesis; could justify task decomposition experiment on same
+questions. A focused miss further limits self-checker reliance. Do not run
+fixed fresh-transfer tasks, activate a route, train, or broad-prompt-tweak again
+without meaningful evidence. Active9B/v3 and frozen outputs remain unchanged.
+
+Earlier notes follow (preparation states superseded):
+
+# Current continuation — 27 October 2026
+
 **Synthesisv2 / private saved41 COMPLETE and exact verified. Do not resubmit.**
 Ten evaluation calls +one5,000/16 probe,5/5 model-approved displays, no quote
 blocks/truncations/thinking markers. Runtime1267.87s, peaks10.59/9.77GiB.

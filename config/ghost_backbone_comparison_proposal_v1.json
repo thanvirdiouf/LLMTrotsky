@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "Synthesisv2/saved41 verified five displays, but source/completeness review keeps transfer gated; targeted checker diagnostic next",
+  "status": "Saved41 source review keeps transfer gated; post-hoc checker diagnostic auditv2 frozen, not submitted",
   "reason": "Current9B factual self-audit false acceptance/rejection and thinking-output budget failures; not a claim that every model configuration fails",
   "candidate": {
     "model_id": "Qwen/Qwen3.5-27B",
@@ -140,5 +140,15 @@
     "latest_status": "Complete and verified; source/completeness defects remain",
     "latest_result_sha256": "251a3368705db65c0088b287ec4276b37639fffad99f21919876c5275294d7f1",
     "latest_model_approved": 5
+  },
+  "phase_d": {
+    "purpose": "Two hearing failure pairs plus three familiar checker calibration pairs in fixed three-packet context",
+    "frozen_local_version": "ghost_candidate_audit_v2",
+    "status": "Prepared, not submitted",
+    "blueprint": "config/ghost_generated_audit_design_v1.json",
+    "evaluation_calls_maximum": 10,
+    "separate_memory_probe_calls_maximum": 1,
+    "fresh_transfer_run": false,
+    "active_model_changed": false
   }
 }

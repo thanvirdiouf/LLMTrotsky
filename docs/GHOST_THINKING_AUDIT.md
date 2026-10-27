@@ -59,3 +59,6 @@ CPU preflight constructs ten thinking requests, maximum1,911 input tokens;
 auditor message lists are identical to actual V30 calls. Candidate strings and
 expectations match exactly. Synthetic intermediate text is excluded from the
 scored response. None of this establishes factual model quality.
+
+V31 submitted as private Kaggle saved33 after f1e4f00 was committed and pushed.
+Results are pending; the default chatbot and audit policies are unchanged.

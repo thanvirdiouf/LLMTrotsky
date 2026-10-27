@@ -230,3 +230,5 @@ V30/saved32 verified10calls with one false approval and one false rejection,
 three format blocks. V31 stages the identical ten candidates with the same
 pinned base, thinking enabled and4,096 combined output tokens; at most10calls
 plus probe1. See GHOST_THINKING_AUDIT.md.
+
+V31 submitted as private saved33, thinking-mode diagnostic results pending.

@@ -1,3 +1,30 @@
+# Latest submitted run — 27 October 2026
+
+Local **ghost_smoke_v31** submitted successfully as private Kaggle saved
+version **33**, after `f1e4f00` was pushed. Do not resubmit. Check saved33 next,
+then exact download, frozen/token verification and calibration summary. The
+same ten V30 candidates now use the same pinned9B with thinking enabled and
+a4,096-token combined reasoning/final cap. Ten calls plus probe1, no new
+backbone/adapter/training/paid compute. Only final JSON is scored; avoid printing
+raw intermediate reasoning from private stage journals into user-facing output.
+
+Current checks:97focused pass; full370 same two historical README snapshot
+errors. Old V30 verifies with updated verifier. Thinking CPU preflight ten
+requests max1911inputs, same messages as actual V30, expected labels withheld.
+Runtime inputcap5120 and strict channel/final parsing. Activev3 unchanged.
+
+V30/saved32 verified but fails neutral-audit calibration:4correct approvals,
+1correct rejection,1false approval,1false rejection,3formatblocks;0of5pairs
+both correct. No synthesis integration or fresh transfer. Source inspection
+is now usable without inference: `python3 scripts/ghost_chat.py --evidence-only
+--source-id hearing --source-format json`. Original blocks/roles/dates/context
+and zero generated claims; docs GHOST_SOURCE_INSPECTION.md.
+
+Docs GHOST_THINKING_AUDIT.md describe the next result-dependent decision.
+No automatic promotion from this small, coder-authored calibration.
+
+Earlier continuation notes (staging statements below superseded):
+
 # Current continuation — 27 October 2026
 
 V30/saved32 COMPLETE: exactdownload eventually recovered after transient

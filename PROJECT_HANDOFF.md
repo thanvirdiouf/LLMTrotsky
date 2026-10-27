@@ -1,3 +1,36 @@
+# Latest submitted run — 27 October 2026
+
+**`ghost_candidate_audit_v1` is RUNNING as private Kaggle saved39. Do not
+resubmit.** Submitted after pushed commit `d58f419`. Fetched exact saved39;
+all three normalized cell types/source texts match the frozen local notebook.
+Receipt: ignored `evaluation/runs/ghost_candidate_audit_v1/submission.json`.
+The heartbeat was updated for this new audit job and its dedicated verifier.
+
+Next check saved39; after COMPLETE download exact saved39
+`ghost_candidate_audit_bundle/*` and `ghost_candidate_audit_results/*` into
+`evaluation/runs/ghost_candidate_audit_v1/download/`. Then run:
+`.venv-tokenizer/bin/python scripts/verify_ghost_candidate_audit.py --version
+ghost_candidate_audit_v1 --tokenizer evaluation/ghost_candidate_audit_v1/tokenizer_assets`.
+Do NOT use the candidate-memory or9B-smoke verifier for this audit job.
+Inspect final judgments/source fidelity separately from frozen developer
+expectation scores. No generated factual answer, fresh transfer, training or
+active9B/v3 replacement has been validated or enabled. Still ten evaluation
+calls plus one16-token memory probe, free/private,600s setup/2700s workload.
+
+Verified prerequisite: candidatev3/saved38 fit the5,000/16 probe with finite
+logits and10.59/9.77GiB peaks. Six synthetic checks and256 efficient-attention
+calls passed. This establishes feasibility only. Exact messages/tokenIDs and
+complete greedy generation config match archived9B control v30/saved32.
+CPU replay reproduced its ten original outcomes and0/5 correct pairs.
+116 focused tests pass; full389 has the same two historical README errors.
+
+Human clarified that asking why27B was used was because they forgot the
+prior discussion, NOT a cancellation; existing explicit approval remains.
+All sources/results/tokenizers/notebooks stay ignored; no public upload.
+Details: `docs/GHOST_CANDIDATE_AUDIT_COMPARISON.md`.
+
+Earlier preparation notes follow (submission statements superseded):
+
 # Current continuation — 27 October 2026
 
 **Candidate `ghost_candidate_probe_v3` / private saved38 is COMPLETE and

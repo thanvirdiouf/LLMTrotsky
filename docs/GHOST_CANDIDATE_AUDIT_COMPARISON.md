@@ -103,3 +103,9 @@ bounded synthesis experiment with reviewed sources, then the already fixed
 transfer questions if synthesis quality warrants it. Sustained conversation
 and voice evaluation follow usable factual synthesis. Training and both adapters
 remain paused/experimental throughout.
+
+The frozen comparison was submitted as private Kaggle saved39 after commit
+`d58f419` was pushed. The fetched saved39 notebook's three normalized cell
+sources and types match the local submission exactly. Status at confirmation:
+RUNNING. This records submission, with no factual-quality result yet. The
+heartbeat now uses the dedicated candidate-audit verifier and exact saved39.

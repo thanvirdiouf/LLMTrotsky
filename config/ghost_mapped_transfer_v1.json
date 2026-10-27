@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "reference_date": "2026-10-26",
+  "status": "Source-authored development transfer design saved before V28 results; primary coder has inspected prior outputs, not independent heldout validation. Questions/checks fixed before inference.",
+  "factual_comparison": {
+    "arms": [
+      "reading",
+      "mapped"
+    ]
+  },
+  "cases": [
+    {
+      "id": "hearing_procedural_roles",
+      "question": "A museum caption says Dewey asked for political issues to be excluded altogether, while Goldman promised there would be no irrelevant questions. Using only this hearing excerpt, replace both categorical claims with what each speaker actually requested or undertook. Explain who would decide when questioning should stop and why this is a procedural account rather than proof that every later question complied.",
+      "source_packet_ids": [
+        "hearing"
+      ],
+      "checks": [
+        "Dewey distinguishes political issues closely related to the charges from unrelated political material; does not exclude every political issue.",
+        "Goldman will try to limit himself, says boundary is difficult, and will desist when Commission deems a question irrelevant and asks him to stop.",
+        "Do not invent evidence of later compliance or an unconditional promise. Attribute Commission request and counsel response separately."
+      ]
+    },
+    {
+      "id": "blumkin_missing_confession",
+      "question": "An archivist asks for the exact words Blumkin used after arrest and the name of the interrogator who recorded them. Does this account supply either? Explain what qualified inference it offers instead and distinguish that inference from the conversation the author identifies with confidence. Give the useful supported answer without inventing a confession transcript.",
+      "source_packet_ids": [
+        "blumkin"
+      ],
+      "checks": [
+        "Exact post-arrest words and interrogator name are not supplied.",
+        "Apparently qualifies suggested post-arrest disclosure and explanation; no authenticated confession.",
+        "Author confidently identifies unnamed-visitor allegation with his conversation with Blumkin; confidence does not independently verify arrest disclosure."
+      ]
+    },
+    {
+      "id": "radio_future_outcome_missing",
+      "question": "Use this radio passage alone to verify an exhibition label claiming Marconi personally promised an end to all wars and that Trotsky subsequently witnessed the future bloody chapter he described. Which parts can the passage establish, which need qualification, and which require later evidence? Separate the reported Berlin remarks, the speaker's own argument, and the time of the speech.",
+      "source_packet_ids": [
+        "radio_science"
+      ],
+      "checks": [
+        "Speech delivered 1 March 1926; Marconi Berlin remarks are reported by Trotsky, not supplied independently as Marconi transcript.",
+        "Trotsky rejects technological automatic pacifism, argues class control affects use, predicts a more bloody chapter.",
+        "Prediction is not passage evidence of later witnessed outcomes; no outside later-war events or authenticated exact Marconi promise."
+      ]
+    },
+    {
+      "id": "ilo_counterfactual_workforce",
+      "question": "For a purely hypothetical worksheet, suppose a workforce contains 200 women and we deliberately apply the article's combined female-employment exposure share to that group. Show the combined percentage and the arithmetic result, explain what that illustrative number measures, and say why it cannot be reported as a measured count of dismissals at this workplace. Do not assume we have local task or adoption data.",
+      "source_packet_ids": [
+        "ilo_genai_2025"
+      ],
+      "checks": [
+        "5.7 plus 4.7 equals 10.4 percent of female employment in gradients3and4; 200times0.104equals20.8 illustrative job-equivalents/expected arithmetic count, not fractional actual person dismissal.",
+        "Application to local200 is explicitly imposed hypothetical assumption, not sourced workplace estimate; no implied validated local representativeness.",
+        "Potential exposure rather than observed impact/dismissals; full implementation upper threshold and adoption/task limits."
+      ]
+    },
+    {
+      "id": "bessedovsky_verification_boundary",
+      "question": "A reader concludes from this letter that Trotsky knew none of Bessedovsky's subject matter firsthand and personally witnessed the embassy-cell purge. Check those two conclusions separately. State the limits he actually gives on checking the memoirs and how he introduces the purge information, including whether this excerpt identifies the person who told him.",
+      "source_packet_ids": [
+        "bessedovsky"
+      ],
+      "checks": [
+        "First conclusion false: author says personally acquainted with at least a dozen facts, other material unknown even by hearsay; cannot verify all information, not knowsnothing.",
+        "Purge account introduced as information he is told, not personal witnessing; informant not identified in bounded excerpt.",
+        "Keep criticism as author assessment rather than independent blanket proof all memoir facts false."
+      ]
+    }
+  ],
+  "conversation": [],
+  "provenance": {
+    "author": "Primary coding agent; no independent or human validation",
+    "source_basis": "Full bounded hearing, Blumkin, radio, ILO and Bessedovsky packets; no new corpus excerpts or training",
+    "held_out_claim": false,
+    "intent": "New procedural topic, missing transcript, reported speech and prediction, explicit hypothetical arithmetic, partial firsthand familiarity and unnamed informant."
+  }
+}

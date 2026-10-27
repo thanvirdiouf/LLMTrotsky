@@ -1,3 +1,11 @@
+# Submitted evidence-map comparison — 27 October 2026
+
+V28 submitted successfully as private Kaggle saved30, commit d3b2737 pushed.
+Monitor saved30, do not resubmit. Log follower session37262.
+Fresh five-case transfer design config/ghost_mapped_transfer_v1.json saved
+before reading V28 outputs, primary coder/source-authored not heldout. Run
+only if V28 path is usable.25calls+probe max per trial, no paid/training.
+
 # Current continuation — 27 October 2026
 
 User explicitly authorized implement next step, assess, continue repeated result-

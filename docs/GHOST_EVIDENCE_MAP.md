@@ -56,3 +56,13 @@ source cases next, followed by sustained follow-ups and disagreement. If it mere
 moves errors into the map or fails the format budget, fix the measured bottleneck
 before conversation integration. Keep both adapters experimental and training
 paused; a paid GPU does not repair interpretation or application policy.
+
+A separate five-task transfer design, ghost_mapped_transfer_v1.json, was authored
+from full bounded sources before inspecting V28 results. It tests procedural
+speaker roles, a missing confession transcript, reported speech versus a later
+outcome, explicitly assumed numerical application, and partial firsthand
+familiarity versus an unnamed informant. The primary coder knows earlier
+failures; this is source-authored development transfer, not independent heldout
+validation. Its expectations are removed from model payloads. Run it only after
+V28 establishes whether the new path is technically usable; preserve original
+questions and expectations if later implementation fixes are needed.

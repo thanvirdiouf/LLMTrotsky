@@ -8,7 +8,7 @@ import unittest
 from unittest.mock import patch
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'scripts'))
-from candidate_base_probe import CANDIDATE,GIB,placement,resource_gate,run,validate_protocol
+from candidate_base_probe import CANDIDATE,GIB,placement,resource_gate,run,validate_protocol,device_map_for
 from build_ghost_candidate_probe import build,ASSETS,enc,sha
 from verify_ghost_candidate_probe import payloads,verify
 from grounded_chat import MODEL
@@ -42,6 +42,46 @@ class CandidateProbeTest(unittest.TestCase):
             'peak_allocated_bytes':{'0':12*GIB,'1':12*GIB}}
         path=download/'ghost_candidate_results/result.json';path.parent.mkdir(parents=True);path.write_text(json.dumps(result))
         return path,result,protocol
+
+    def test_targeted_fixed_map_preserves_workload_and_memory_caps(self):
+        mapping=device_map_for('fixed_34_30')
+        layers=[v for k,v in mapping.items() if k.startswith('model.layers.')]
+        self.assertEqual(layers.count(0),34);self.assertEqual(layers.count(1),30)
+        self.assertEqual(mapping['model.embed_tokens'],0);self.assertEqual(mapping['lm_head'],1)
+        for policy,count in [('unknown',64),('fixed_34_30',63)]:
+            with self.assertRaises(ValueError):device_map_for(policy,count)
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp);_,_,old=self.fixture(root)
+            assets=root/'evaluation/ghost_candidate_probe_v2/tokenizer_assets';assets.mkdir(parents=True)
+            for name in ASSETS:(assets/name).write_text('fixture')
+            build('ghost_candidate_probe_v2',root,TokenizerFixture(),placement_policy='fixed_34_30')
+            frozen=payloads('ghost_candidate_probe_v2',root);new=json.loads(frozen['protocol.json'])
+            self.assertEqual(new['placement_policy'],'fixed_34_30')
+            for key in ('model','maximum_model_calls','max_input_tokens','max_output_tokens','per_gpu_weight_budget_bytes','runtime_timeout_seconds'):
+                self.assertEqual(old[key],new[key])
+            old_probe=json.loads(payloads('ghost_candidate_probe_v1',root)['memory_probe.json'])
+            self.assertEqual(old_probe,json.loads(frozen['memory_probe.json']))
+
+    def test_verifier_enforces_fixed_split_and_same_weight_memory_budget(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp);_,result,_=self.fixture(root)
+            assets=root/'evaluation/ghost_candidate_probe_v2/tokenizer_assets';assets.mkdir(parents=True)
+            for name in ASSETS:(assets/name).write_text('fixture')
+            build('ghost_candidate_probe_v2',root,TokenizerFixture(),placement_policy='fixed_34_30')
+            frozen=payloads('ghost_candidate_probe_v2',root)
+            dest=root/'evaluation/runs/ghost_candidate_probe_v2/download';bundle=dest/'ghost_candidate_bundle';bundle.mkdir(parents=True)
+            for name,raw in frozen.items():(bundle/name).write_bytes(raw)
+            result.update(protocol_sha256=sha(frozen['protocol.json']),placement_policy='fixed_34_30',
+                device_map={name:str(device) for name,device in device_map_for('fixed_34_30').items()},
+                memory_after_load={str(i):{'allocated_bytes':12*GIB,'reserved_bytes':12*GIB} for i in (0,1)})
+            path=dest/'ghost_candidate_results/result.json';path.parent.mkdir(parents=True);path.write_text(json.dumps(result))
+            self.assertTrue(verify('ghost_candidate_probe_v2',root,TokenizerFixture())['memory_success'])
+            for variant in ('split','weight_memory'):
+                bad=copy.deepcopy(result)
+                if variant=='split':bad['device_map']['model.layers.33']='1'
+                else:bad['memory_after_load']['0']['allocated_bytes']=14*GIB
+                path.write_text(json.dumps(bad))
+                with self.subTest(variant=variant),self.assertRaises(ValueError):verify('ghost_candidate_probe_v2',root,TokenizerFixture())
 
     def test_resource_and_placement_gates_do_not_allow_offload_training_or_adapters(self):
         devices=[{'name':'Tesla T4','free_memory_bytes':15*GIB} for _ in (0,1)]

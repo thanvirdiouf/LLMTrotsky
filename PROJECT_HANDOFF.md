@@ -1,3 +1,29 @@
+# Current continuation — 27 October 2026
+
+Candidatev1/saved36 COMPLETE, exactbundle/result downloaded andverified with
+localcandidate tokenizer. BLOCKED actualforward: GPU1OOM requesting574MiB
+with110.81MiBfree. Weights DIDload, allparametersGPU0/1, no adapters/training.
+Oneattemptedunscoredcall; runtime545.4seconds. No memorysuccess/qualityclaim.
+Recordedmap: embedding+layers0–28 GPU0 (29), layers29–63+head GPU1 (35).
+
+Diagnosed placement-headroom hypothesis, notprovedcausewithoutGPU0stats.
+Prepared targeted candidatev2 fixed34/30split (5layersoffGPU1), same5000input/
+16output/13GiBweightbudgeteach/timeout/packages/modelpin. No budgetincrease
+orcontextreduction. Newpost-loadactualallocated<=13GiBguard andload/failure
+per-GPUallocated/reserved/peakdiagnostics. No CPU/diskoffload, noactivechange.
+Builder andverifier accept oldauto policy andnewfixed; actualsaved36 backward
+verifies. Twoadditionaltests checkmap/caps/integrity. Candidatev2 frozen;
+CPUpreflight confirmsbyte-identicalinputs/model/budgets;107focusedpass/
+full380same2historicalREADMEerrors. Actualv1 backwardverified. Next commit/push->submit
+exactpreparedv2 underexplicit approved27Bprobe/boundedtestscope. No factual
+audit until a realmemoryprobe passes. Userapproval retained; no re-askneeded
+for this measured, bounded feasibility repair.
+
+Docs GHOST_CANDIDATE_FEASIBILITY.md updated. Preserveactive9B, alloldarchives,
+sourceprivacy andpausedtraining. No modelweights downloadedlocally.
+
+Earlier notes follow:
+
 # Latest submitted run — 27 October 2026
 
 **Approved candidate-only probe** `ghost_candidate_probe_v1` successfully

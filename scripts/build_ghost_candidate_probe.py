@@ -16,7 +16,7 @@ def enc(value):return (json.dumps(value,sort_keys=True,ensure_ascii=False,indent
 def sha(raw):return hashlib.sha256(raw).hexdigest()
 
 
-def build(version='ghost_candidate_probe_v1',root=ROOT,tokenizer=None):
+def build(version='ghost_candidate_probe_v1',root=ROOT,tokenizer=None,placement_policy='auto'):
     if not re.fullmatch(r'ghost_candidate_probe_v[1-9][0-9]*',version):raise ValueError('Invalid candidate probe version')
     assets=root/'evaluation'/version/'tokenizer_assets'
     if tokenizer is None:
@@ -48,6 +48,7 @@ def build(version='ghost_candidate_probe_v1',root=ROOT,tokenizer=None):
         'tokenizer_files':{name:sha((assets/name).read_bytes()) for name in ASSETS},
         'chat_template_sha256':sha(tokenizer.chat_template.encode()),'preserved_files':preserved,
         'files':{name:sha(raw) for name,raw in payload.items()}}
+    if placement_policy!='auto':protocol['placement_policy']=placement_policy
     validate_protocol(protocol);payload['protocol.json']=enc(protocol)
     packed={name:base64.b85encode(lzma.compress(raw)).decode() for name,raw in payload.items()}
     unpack='import base64,lzma,sys\nfrom pathlib import Path\npacked='+repr(packed)+'\nbundle=Path("/kaggle/working/ghost_candidate_bundle")\nbundle.mkdir(exist_ok=True)\nfor name,data in packed.items():\n    (bundle/name).write_bytes(lzma.decompress(base64.b85decode(data)))\nsys.path.insert(0,str(bundle))\nfrom candidate_base_probe import run\nrun(bundle,"/kaggle/working/ghost_candidate_results")\n'
@@ -69,5 +70,5 @@ def build(version='ghost_candidate_probe_v1',root=ROOT,tokenizer=None):
 
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--version',default='ghost_candidate_probe_v1')
-    print(build(parser.parse_args().version))
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--version',default='ghost_candidate_probe_v2');parser.add_argument('--placement-policy',choices=('auto','fixed_34_30'),default='fixed_34_30')
+    args=parser.parse_args();print(build(args.version,placement_policy=args.placement_policy))

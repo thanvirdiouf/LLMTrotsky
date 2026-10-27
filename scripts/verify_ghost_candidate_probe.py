@@ -7,7 +7,7 @@ import lzma
 from pathlib import Path
 import re
 from build_ghost_candidate_probe import ROOT,sha
-from candidate_base_probe import CANDIDATE,validate_protocol,resource_gate
+from candidate_base_probe import CANDIDATE,validate_protocol,resource_gate,device_map_for
 
 
 def payloads(version,root=ROOT):
@@ -50,6 +50,14 @@ def verify(version='ghost_candidate_probe_v1',root=ROOT,tokenizer=None):
     resources=result['resources_before'];resource_gate(result['devices_before'],resources['cache_free_bytes'],resources['ram_available_bytes'],protocol['weight_file_bytes'])
     if result['parameter_devices']!=['cuda:0','cuda:1'] or any(v not in ('0','1','cuda:0','cuda:1') for v in result['device_map'].values()):
         raise ValueError('Candidate placement differs')
+    policy=protocol.get('placement_policy','auto')
+    if policy=='fixed_34_30':
+        expected_map={name:str(device) for name,device in device_map_for(policy).items()}
+        if result.get('placement_policy')!=policy or result['device_map']!=expected_map:
+            raise ValueError('Explicit placement policy differs')
+        memory=result.get('memory_after_load',{})
+        if set(memory)!={'0','1'} or any(type(v.get('allocated_bytes')) is not int or not 0<v['allocated_bytes']<=protocol['per_gpu_weight_budget_bytes'] for v in memory.values()):
+            raise ValueError('Weight-memory budget or diagnostics differ')
     probe=result['probe'];expected=json.loads(frozen['memory_probe.json'])
     if probe['input_token_ids']!=expected['input_token_ids'] or not 4900<=len(probe['input_token_ids'])<=5120:
         raise ValueError('Candidate probe inputs differ')

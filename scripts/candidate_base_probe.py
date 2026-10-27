@@ -15,6 +15,7 @@ def sha(raw):return hashlib.sha256(raw).hexdigest()
 
 
 def validate_protocol(protocol):
+    device_map_for(protocol.get('placement_policy','auto'))
     if (protocol['purpose']!='candidate_memory_probe_only' or protocol['model']!=CANDIDATE
             or protocol['maximum_model_calls']!=1 or protocol['training_steps']!=0
             or protocol['adapters_loaded']!=[] or protocol['runtime_timeout_seconds']!=2700
@@ -23,6 +24,13 @@ def validate_protocol(protocol):
             or protocol['enable_thinking'] is not False or protocol['weight_file_bytes']!=55563022432
             or protocol['finite_logits_required'] is not True):
         raise ValueError('Candidate probe scope differs from frozen limits')
+
+
+def device_map_for(policy,num_layers=64):
+    if policy=='auto':return 'auto'
+    if policy!='fixed_34_30' or num_layers!=64:raise ValueError('Unknown candidate placement policy or architecture')
+    return {'model.embed_tokens':0,**{'model.layers.'+str(i):0 if i<34 else 1 for i in range(64)},
+        'model.norm':1,'model.rotary_emb':1,'lm_head':1}
 
 
 def placement(model):
@@ -72,7 +80,7 @@ def run(bundle,output):
         import torch
         from huggingface_hub import snapshot_download
         from huggingface_hub.constants import HF_HUB_CACHE
-        from transformers import AutoModelForCausalLM,AutoTokenizer,BitsAndBytesConfig,GenerationConfig,set_seed
+        from transformers import AutoModelForCausalLM,AutoTokenizer,BitsAndBytesConfig,GenerationConfig,AutoConfig,set_seed
         if torch.cuda.device_count()!=2:raise ValueError('Expected exactly two selected GPUs')
         devices=[]
         for i in (0,1):
@@ -96,12 +104,19 @@ def run(bundle,output):
         ids=tokenizer.apply_chat_template(probe['messages'],tokenize=True,add_generation_prompt=True,enable_thinking=False,return_dict=False)
         if ids!=probe['input_token_ids'] or not 4900<=len(ids)<=5120:raise ValueError('Probe input reconstruction differs')
         set_seed(42);torch.set_num_threads(2);torch.backends.cuda.matmul.allow_tf32=False;torch.backends.cudnn.benchmark=False
+        config=AutoConfig.from_pretrained(snapshot,local_files_only=True,trust_remote_code=False)
+        policy=protocol.get('placement_policy','auto')
+        selected_map=device_map_for(policy,config.get_text_config(decoder=True).num_hidden_layers)
+        result['placement_policy']=policy
         result['phase']='load_sharded_candidate';save()
         model=AutoModelForCausalLM.from_pretrained(snapshot,local_files_only=True,trust_remote_code=False,
-            dtype=torch.float16,device_map='auto',max_memory={0:13*GIB,1:13*GIB},attn_implementation='sdpa',
+            dtype=torch.float16,device_map=selected_map,max_memory={0:13*GIB,1:13*GIB},attn_implementation='sdpa',
             quantization_config=BitsAndBytesConfig(load_in_4bit=True,bnb_4bit_quant_type='nf4',bnb_4bit_use_double_quant=True,bnb_4bit_compute_dtype=torch.float16))
         model.requires_grad_(False);model.eval();result['model_weights_loaded']=True
         result['parameter_devices']=placement(model);result['device_map']={name:str(device) for name,device in model.hf_device_map.items()}
+        result['memory_after_load']={str(i):{'allocated_bytes':torch.cuda.memory_allocated(i),'reserved_bytes':torch.cuda.memory_reserved(i)} for i in (0,1)}
+        if policy=='fixed_34_30' and any(v['allocated_bytes']>protocol['per_gpu_weight_budget_bytes'] for v in result['memory_after_load'].values()):
+            raise ValueError('Fixed placement exceeds the unchanged per-GPU weight-memory budget')
         result['preparation']='Fresh inference-only loader; no PEFT preparation and no changes to the archived single-GPU helper'
         input_device=model.get_input_embeddings().weight.device
         if str(input_device) not in ('cuda:0','cuda:1'):raise ValueError('Input embedding placement differs')
@@ -125,6 +140,10 @@ def run(bundle,output):
         result['status']='memory_probe_passed';result['phase']='complete'
     except Exception as exc:
         result['status']='blocked';result['error_type']=type(exc).__name__;result['error']=str(exc)
+        if 'torch' in locals():
+            try:
+                result['memory_after_failure']={str(i):{'allocated_bytes':torch.cuda.memory_allocated(i),'reserved_bytes':torch.cuda.memory_reserved(i),'peak_allocated_bytes':torch.cuda.max_memory_allocated(i)} for i in (0,1)}
+            except Exception:pass
     finally:
         signal.alarm(0);signal.signal(signal.SIGALRM,previous);save()
     print(json.dumps({k:result[k] for k in ('purpose','status','phase','model_calls','quality_evaluated')}),flush=True)

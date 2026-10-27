@@ -76,3 +76,37 @@ After explicit user approval for the probe and bounded27B follow-ups, the exact
 prepared candidate probe was submitted as private Kaggle saved36. The first
 automatic-review rejection did not submit a workload; the approved submission
 succeeded. Results are pending.
+
+## Verified v1 result and targeted placement test
+
+Candidatev1/saved36 completed in about9.1minutes in the probe program, including download/loading. Exact payload,
+model revision and scope verification passed, but the memory probe failed:
+weights loaded across both GPUs, then the5,000-token generation ran out of
+memory on GPU1 while requesting574MiB. About111MiB was free there. No source
+quality was evaluated, and no successful fit is claimed.
+
+The recorded automatic map assigned29 decoder layers plus embeddings to GPU0,
+and35 layers plus the output head to GPU1. This suggests a placement-headroom
+hypothesis worth testing before changing hardware or context limits; the first
+probe did not record enough per-GPU allocation detail to prove the cause.
+
+Candidatev2 fixes the64-layer map at34layers on GPU0 and30 on GPU1, keeping the
+embedding and output head on their original respective GPUs. This moves five
+layers off the device that ran out of memory. All5,000 input tokens,16 output
+cap,13GiB per-GPU weight budget, packages, model revision and runtime limits are
+unchanged. The explicit placement additionally checks actual allocated memory
+after loading against the same weight budget. It records per-GPU allocation and
+reservation after loading and on failure, so another block can be diagnosed.
+No input is removed, no scored questions are run, and there is no CPU/disk
+fallback. The old automatic-map run remains frozen and verifiable.
+
+Two additional tests check the exact34/30 map, architecture guard, unchanged
+probe/model/budgets, and verifier rejection of a wrong split or exceeded weight
+budget. CPU preflight confirms the v2 probe is byte-identical to v1. This is one
+targeted feasibility test of an observed failure, not a blind retry or an
+increase in resource/output allowances.
+
+Current checks:107 focused tests pass; full380 retains the same two historical
+README snapshot errors. The updated verifier re-verifies the actual saved36
+blocked result. Candidatev2 CPU preflight confirms byte-identical probe inputs
+and unchanged model, software and resource limits.

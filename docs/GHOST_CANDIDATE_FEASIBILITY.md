@@ -110,3 +110,7 @@ Current checks:107 focused tests pass; full380 retains the same two historical
 README snapshot errors. The updated verifier re-verifies the actual saved36
 blocked result. Candidatev2 CPU preflight confirms byte-identical probe inputs
 and unchanged model, software and resource limits.
+
+The targeted candidatev2 probe was submitted as private Kaggle saved37 after
+a3ac1ed was committed and pushed. Results are pending; no memory success or
+source-quality improvement is claimed.

@@ -1,3 +1,34 @@
+# Latest submitted run — 27 October 2026
+
+**Approved targeted probe** `ghost_candidate_probe_v2` submitted successfully
+as private Kaggle saved version **37**, after `a3ac1ed` was pushed. Do not
+resubmit. Same27B pin,5000-input/16-output probe,13GiB weight budget perGPU,
+600s installation and2700s runtime caps. Explicit fixed34/30 decoder-layer
+placement tests the observed GPU1OOM; it does not increase memory or cut context.
+
+Next check saved37. After COMPLETE download exact37 into
+`evaluation/runs/ghost_candidate_probe_v2/download/`, then run:
+`.venv-tokenizer/bin/python scripts/verify_ghost_candidate_probe.py --version
+ghost_candidate_probe_v2 --tokenizer evaluation/ghost_candidate_probe_v2/tokenizer_assets`.
+This verifies the explicit map and actual post-load weight allocation as well
+as frozen source/model/tokenizer/probe, finite logits and peaks. A blocked result
+remains failure. Inspect new per-GPU load/failure stats before further changes.
+
+V1/saved36 verifiedblocked: weights loaded allGPU0/1, oneforward attemptOOM
+onGPU1 allocating574MiB with110.81MiBfree, about545s includingdownload/load.
+Auto map29layersGPU0/35GPU1. That suggests placement-headroom hypothesis;
+GPU0 allocation detail was absent, so cause is not conclusively proven. V2
+moves5layers offGPU1 and adds diagnostics. CPUprobe byte-identical toV1.
+107focusedpass/full380same2historicalREADMEerrors; actualV1backwardverified.
+
+Humanapproval for27Bprobe andboundedtests retained. No factualaudit until
+memorypass. If it passes, next ten fixed neutral-auditor candidates/messages/
+expected checks fromV30/saved32, using separate27Bruntime; not activepromotion.
+No training/adapters/paidcompute/active9B replacement. Old protected9B helpers
+and activev3 unchanged. No local model weights.
+
+Earlier notes (pending-submission statements superseded):
+
 # Current continuation — 27 October 2026
 
 Candidatev1/saved36 COMPLETE, exactbundle/result downloaded andverified with

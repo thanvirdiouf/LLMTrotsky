@@ -250,3 +250,7 @@ verify_ghost_candidate_probe.py; see GHOST_CANDIDATE_FEASIBILITY.md.
 
 Candidate-only ghost_candidate_probe_v1 submitted as private saved36 after
 explicit user approval. One unscored memory probe; active9B unchanged.
+
+Candidatev1/saved36 verified a GPU1OOM during the probe. Targeted
+ghost_candidate_probe_v2 submitted as private saved37 with fixed34/30 layers;
+model/workload/budgets unchanged.

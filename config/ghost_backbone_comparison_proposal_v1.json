@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "Approved candidatev1/saved36 loaded weights but failed5000-token forward on GPU1; targeted fixed-placementv2 prepared, active9B unchanged",
+  "status": "Approved targeted candidatev2 feasibility submitted as private saved37 after verified GPU1OOM in saved36; active9B unchanged",
   "reason": "Current9B factual self-audit false acceptance/rejection and thinking-output budget failures; not a claim that every model configuration fails",
   "candidate": {
     "model_id": "Qwen/Qwen3.5-27B",
@@ -48,7 +48,8 @@
     },
     "next_prepared_version": "ghost_candidate_probe_v2",
     "next_placement_policy": "fixed_34_30",
-    "caps_unchanged": true
+    "caps_unchanged": true,
+    "next_saved_version": 37
   },
   "phase_b": {
     "prerequisite": "PhaseA verified memory/placement succeeds and benchmark implementation frozen",

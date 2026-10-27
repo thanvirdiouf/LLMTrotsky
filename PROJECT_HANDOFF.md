@@ -1,3 +1,40 @@
+# Current continuation — 27 October 2026
+
+**`ghost_candidate_audit_v1` / private saved39 COMPLETE and verified. Do not
+resubmit.** Ten evaluation calls +one5,000/16 memory probe. All ten stopped
+normally (110–227 tokens), no truncation/format blocks, finite logits and
+full efficient backend coverage. Frozen payloads/control messages/tokens and
+archived parser replay verified. Result SHA256:
+`78dedb7bd4d2ff87a8a3a4cfea63e781483b5868e74fdcabca5b76c34c2d91b8`.
+Five correct approvals +five correct rejections;5/5 complete pairs correct.
+Archived9B v30/saved32:4 correct approvals/1 correct rejection/1 false approval/
+1 false rejection/3 blocks;0/5 pairs correct. Whole-system comparison, not
+isolated model-size evidence. Runtime941.91s; GPU peaks10.59/9.77GiB.
+
+Unblinded coding-agent source review supports all ten bounded decisions.
+Two rationale limitations remain: neutral04 adds an extra political label
+(active Stalinist purger) beyond the cited sentence; neutral05 locates the
+hypothesis-warning quotation in block5 instead of block4. Do not promote
+these reasons as facts or exact citations. Local hash-bound SOURCE_REVIEW.json
+records per-case review; this is not independent/human validation. Only two
+familiar historical excerpts/five development pairs; no modern evidence,
+fresh retrieval, generated-answer completeness, sustained voice or refusal
+calibration established. Intermediate thinking was disabled; no markers.
+
+Next justified step: a separate bounded five-question source-synthesis trial
+using exact archived9B factual-writer prompts and original expectations,
+followed by the now-calibrated neutral checker as experimental feedback.
+At most five drafts/checks =10 evaluation calls +one16-token probe, five
+independent displayed research replies. Preserve literal-quote, paragraph,
+missing-evidence and partial-answer checks; manually review actual displayed
+answers separately from model approval. No checker activation or active9B/v3
+replacement. Preserve fixed fresh transfer questions unrun until synthesis
+quality justifies using them; then sustained dialogue/voice. Training paused.
+First implement/test/freeze this controlled synthesis path; do not blindly
+reuse the10-independent-audit-job runtime for dependent draft/check calls.
+
+Earlier notes follow (saved39 running statements superseded):
+
 # Latest submitted run — 27 October 2026
 
 **`ghost_candidate_audit_v1` is RUNNING as private Kaggle saved39. Do not

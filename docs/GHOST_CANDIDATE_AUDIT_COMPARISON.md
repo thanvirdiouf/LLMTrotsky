@@ -109,3 +109,35 @@ The frozen comparison was submitted as private Kaggle saved39 after commit
 sources and types match the local submission exactly. Status at confirmation:
 RUNNING. This records submission, with no factual-quality result yet. The
 heartbeat now uses the dedicated candidate-audit verifier and exact saved39.
+
+## Saved39 result and source review
+
+The completed run passed exact payload, token, generation, GPU placement,
+finite-logit, efficient-backend coverage and archived-parser replay checks.
+It made ten evaluation calls and one separate memory probe in 941.91 seconds.
+All ten judgments ended normally, using 110–227 tokens; none was truncated or
+blocked by format. GPU peaks were 10.59/9.77 GiB.
+
+All five valid candidates were approved and all five invalid candidates were
+rejected, giving five of five complete pairs correct against the original fixed
+development expectations. The archived 9B control had five correct decisions,
+two incorrect decisions and three blocks, with zero complete pairs correct.
+Different runtime/preparation paths mean this remains a whole-system comparison.
+
+The implementing agent reviewed each final judgment against the supplied
+sources. All ten decisions are defensible within those bounded excerpts.
+However, the rejection reason for `neutral_04` adds the political description
+“active Stalinist purger,” stronger than the cited sentence establishes. The
+approval reason for `neutral_05` places the hypothesis-warning quotation in
+block 5 when it is in block 4. Its substantive qualification is correct, but
+the locator is wrong. These reasons must not become accepted facts or exact
+citations. The local `SOURCE_REVIEW.json` binds this unblinded review to the
+verified output hashes; it is not independent or human validation.
+
+This narrow success justifies a bounded synthesis experiment using the original
+five factual-writer questions and prompts. The neutral checker can supply
+experimental feedback, while actual displayed answers still require source
+and completeness review. Two familiar historical excerpts and fixed candidate
+judgments do not establish performance on modern evidence, new sources,
+retrieval, free-form synthesis, dialogue or voice. Active 9B/v3 and training
+remain unchanged; the fixed fresh transfer tasks remain unrun.

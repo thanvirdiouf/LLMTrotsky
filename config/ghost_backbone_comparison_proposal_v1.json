@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "Candidatev3/saved38 verified memory success; exact-control ten-candidate auditv1 submitted as private saved39",
+  "status": "Candidate auditv1/saved39 verified 10/10 expected decisions, 5/5 pairs; bounded synthesis justified, no activation",
   "reason": "Current9B factual self-audit false acceptance/rejection and thinking-output budget failures; not a claim that every model configuration fails",
   "candidate": {
     "model_id": "Qwen/Qwen3.5-27B",
@@ -65,9 +65,20 @@
     "generation": "Greedy baseline initially; runtime/size changes mean whole-system comparison, not a single-variable capacity experiment",
     "activation": "No automatic active-pointer or source-reader promotion",
     "frozen_local_version": "ghost_candidate_audit_v1",
-    "status": "Submitted; running; quality results pending",
+    "status": "Complete and verified; unblinded source review notes two rationale limitations",
     "saved_version": 39,
-    "verification_script": "scripts/verify_ghost_candidate_audit.py"
+    "verification_script": "scripts/verify_ghost_candidate_audit.py",
+    "result_sha256": "78dedb7bd4d2ff87a8a3a4cfea63e781483b5868e74fdcabca5b76c34c2d91b8",
+    "counts": {
+      "correct_approval": 5,
+      "correct_rejection": 5
+    },
+    "pairs_both_correct": 5,
+    "pairs_total": 5,
+    "reason_limitations": [
+      "Extra political characterization in neutral04",
+      "Incorrect block locator in neutral05"
+    ]
   },
   "privacy": "Same existing private notebook; reviewed public passages and candidate test data; source/output artifacts ignored locally",
   "paid_compute": false,

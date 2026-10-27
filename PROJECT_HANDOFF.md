@@ -1,5 +1,28 @@
 # Current continuation — 27 October 2026
 
+User explicitly authorized implement next step, assess, continue repeated result-
+dependent work. No subagents newly delegated. V27/saved29 exact replay/token
+verified22calls/10replies/no budget/truncation/11.32GiB. Reading3/5displayed,
+2nonliteralquote blocks, remaining role/certainty errors. No promotion/training.
+
+New MappedSourceReadingChat: map->compose->check, full passages each stage.
+Exact anchors/metadata checks, <=5 units, every ID composed exactly once,
+map coverage/entailment explicitly unverified. No generated facts in trusted
+memory, independent cases only. Existing reader/default engine unchanged.
+New config ghost_mapped_reading_comparison_v1 compares reading/mapped on five
+reused questions, <=25calls+probe. V28 frozen/preflight25syntheticrequests,
+max4690input tokens, paired retrieval identical. Actual requests capped5120.
+86focused tests pass. Full359 has same2historical READMEerrors; no new failures.
+Next commit/push and submit authorized private/free Kaggle V28, then verify
+exact saved version and review source quality separately from checker status.
+Docs GHOST_EVIDENCE_MAP.md. Follow results with fresh missing/misleading-source
+tasks and sustained dialogue only if justified. Activev3, adapters/training
+paused, no paid compute. Preserve frozen reference date26Oct2026.
+
+Older handoff (superseded staging statements):
+
+# Current continuation — 27 October 2026
+
 User resumed after explicit pause. HEADfe2adfc was pushed; V26/saved28 completed
 and exact download/frozen replay/token verification passed: ten replies20calls,
 no budget/truncation,11.32GiB peak. Review/transcript exports and unblinded root

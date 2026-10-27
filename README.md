@@ -144,3 +144,6 @@ This uses a single connection, saved robots policy and delay, redirect checks, a
 This paragraph preserves the earlier planning snapshot; the 500-example pilot and subsequent audit/comparison have since completed, and the current v2 experiment above supersedes its pending statements.
 
 The original paired review and concise follow-up are complete. The [verified concise run](evaluation/runs/kaggle_361242522/README.md) finished all six pairs without truncation; its 112–141-word answers retain source benefits but still contain conceptual errors and unsupported self-revisions. This does not evaluate retrieval or broad historical reliability. The next concrete step is the standalone QLoRA smoke-test notebook, followed by an initial pilot using the existing 500 examples. The two-step compatibility smoke test passed; the full 500-example pilot has not run. The inspected six questions are development evidence; fresh evaluation across other works and failure types is required before broad conclusions or scaling.
+
+Experimental [task-to-evidence mapping](docs/GHOST_EVIDENCE_MAP.md) tests whether
+explicit source anchors and per-task composition improve factual coverage.

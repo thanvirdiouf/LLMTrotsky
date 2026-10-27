@@ -209,3 +209,6 @@ adapter promotion remain paused.
 
 V27 was submitted as private saved version29 with revised reading-writer instructions; same ten replies and
 at-most25-call limit, plus one probe. See GHOST_SOURCE_READING_COMPARISON.md.
+
+V27/saved29 verified22calls. V28 stages reader versus mapped reader, ten replies
+and at most25calls+probe1; see GHOST_EVIDENCE_MAP.md.

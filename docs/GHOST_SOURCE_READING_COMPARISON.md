@@ -98,3 +98,10 @@ and inspected questions remain development data. All81 focused tests pass. The
 run permits at most25 evaluation calls plus one memory probe on free Kaggle.
 Assess whether format failures decrease separately from factual completeness and
 certainty; more model approvals alone cannot justify integration or training.
+
+V27/saved29 is now COMPLETE and frozen/token verified:22 evaluation calls,
+ten replies, no budget/truncation,11.32GiB peak. Reading displays three of five,
+with two nonliteral-quote blocks. Displayed replies still blur allegation and
+inference scope and reported source support. More approvals do not establish
+quality. The next diagnostic is [task-to-evidence mapping](GHOST_EVIDENCE_MAP.md),
+compared against this unchanged reader on the same inspected tasks.

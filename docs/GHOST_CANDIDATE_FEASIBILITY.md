@@ -8,10 +8,11 @@ reported cache headroom clears the download-size check. None of these figures
 proves that a sharded model or its activations will fit.
 
 The next experiment is a separate feasibility candidate, leaving the active
-9B pin, source plan, archived helpers and adapters unchanged. The user's direct
-instruction to implement the next justified step and repeat, together with the
-private/free/inference-only limits, is the scope for this bounded research step.
-It does not authorize paid hardware, training or automatic model promotion.
+9B pin, source plan, archived helpers and adapters unchanged. The initial automatic approval review rejected submission because the earlier
+permission covered pinned9B. Nothing was submitted. On27October2026 the user
+explicitly approved the prepared27B probe and bounded27B inference follow-ups
+if it fits, retaining the10reply/30call-plus-probe limits, private/free target,
+no paid hardware, training, adapters or active9B replacement.
 
 Candidate: [Qwen3.5-27B](https://huggingface.co/Qwen/Qwen3.5-27B), revision
 `fc05daec18b0a78c049392ed2e771dde82bdf654`. Only public tokenizer/config assets have

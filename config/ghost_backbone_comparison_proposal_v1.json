@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "Separate candidate-only feasibility probe frozen for bounded free/private inference; active9B unchanged; no candidate weights downloaded or run submitted yet",
+  "status": "Explicit human approval received for prepared27B probe and bounded27B inference follow-ups; first upload not executed; authorized submission pending",
   "reason": "Current9B factual self-audit false acceptance/rejection and thinking-output budget failures; not a claim that every model configuration fails",
   "candidate": {
     "model_id": "Qwen/Qwen3.5-27B",
@@ -71,8 +71,11 @@
     "cache_disk_download_headroom_reported": true
   },
   "authorization_review": {
-    "direct_human_instruction": "Do that. And when you are done, assess the next step, do that, and repeat.",
-    "standing_limits": "Same private notebook; bounded free inference, no training/adapters/paid compute/public uploads.",
-    "decision": "Separate candidate-only feasibility is a result-dependent reversible experiment within those limits; no active baseline replacement or model promotion is authorized by this probe."
+    "direct_human_approval": "Approve probe and bounded27B tests",
+    "approved_date": "2026-10-27",
+    "approved_scope": "Prepared private Qwen3.5-27B feasibility probe and subsequent bounded inference tests if it fits; two free T4s; no paid compute, training, adapters or active9B replacement",
+    "probe_limits": "One5000-input/16-output-token call; setup10minutes/runtime45minutes",
+    "follow_up_limits": "At most10 replies/30evaluation calls plus one short probe per run",
+    "prior_review": "Initial automatic approval review rejected new27B submission as outside pinned9B permission. No workload was submitted. Direct human approval now resolves that scope requirement."
   }
 }

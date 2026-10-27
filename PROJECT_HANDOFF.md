@@ -1,3 +1,19 @@
+# Explicit candidate approval — 27 October 2026
+
+Initial27Bprobe upload was rejected by automaticapprovalreview as outside
+pinned9Bscope; no workload submitted. User immediately explicitly answered:
+**Approve probe and bounded27B tests**. This resolves the scope requirement.
+Approved prepared27Bprobe onexistingprivatefree2T4target andifitfits bounded
+follow-ups <=10replies/30evaluationcalls+oneprobe perrun. No paidcompute,
+training, adapters oractive9Breplacement. Exactprobe unchanged andfrozen;
+105focusedpass/full378same2historicalREADMEerrors, CPUpreflight5000/16,
+setup600s/runtime2700s, oneunscoredmemorycall/finitelogits. Newauthorized
+submissionpending, then recordexactsavedversion/updateheartbeatforcandidate
+verifier. Do not treat originalrejection as a submittedjob or bypassauthority;
+newdirecthumanapprovalis the basis for the next upload.
+
+Earlier notes follow:
+
 # Current continuation — 27 October 2026
 
 Hardwarev2/saved35 COMPLETE, exactsource/result downloaded and verified. Cache

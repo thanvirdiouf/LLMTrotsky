@@ -239,3 +239,6 @@ disabled, zero model calls and no weights; use verify_ghost_hardware_probe.py,
 not the model-smoke verifier, for that result.
 
 Hardware-only ghost_hardware_v1 submitted as private saved34; zero model calls.
+
+Hardware-only ghost_hardware_v2 submitted as private saved35 to inspect model-
+cache filesystem capacity. Zero model calls; saved34 remains verified.

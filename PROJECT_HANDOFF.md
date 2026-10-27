@@ -1,3 +1,33 @@
+# Latest submitted run — 27 October 2026
+
+**Hardware-only** `ghost_hardware_v2` submitted as private Kaggle saved
+version **35**, after `6d3c9ea` was pushed. Do not resubmit. Zero model calls
+or weights; internet disabled. After COMPLETE download exact35 into
+`evaluation/runs/ghost_hardware_v2/download/`, then run:
+`python3 scripts/verify_ghost_hardware_probe.py --version ghost_hardware_v2`.
+Only ghost_hardware_bundle/probe.py and ghost_hardware_results/result.json
+are needed (actual source filename ghost_hardware_probe.py).
+
+V2 checks actual SDK cache/home/tmp filesystem capacity and whether each is
+the same filesystem as working. It prints no paths/environment values; SDK
+missing fallback is explicitly notverified. The automation now handles any
+hardware version.102focused pass/full375 same two historical README errors.
+The updated verifier re-verifies actual v1/saved34 unchanged.
+
+V1 verified twoT4 GPUs,14.46GiBfree each (28.9aggregate, notcontiguous),
+29.65GiBavailable RAM,19.50GiB working-disk free. The candidate27B original
+11weightshards total51.75GiB, metadata only/no weight download. The existing
+loader uses a different/default HFcache path, so v2 resolves the remaining
+filesystem question before any fit claim. Proposal config and docs updated
+with exact inventory and weight-size metadata. Existing9B runs used GPU0 only.
+
+No new backbone inference, model promotion, fresh transfer, adapters, training
+or paid compute. Activev3/source inspection remain available. Prepare concrete
+next comparison from inventory, assess direct user scope before changing
+controlled backbone, preserve frozen single-GPU helper.
+
+Earlier notes (pending-submission statements below superseded):
+
 # Current continuation — 27 October 2026
 
 Hardware ghost_hardware_v1/saved34 COMPLETE, downloaded exact two neededfiles

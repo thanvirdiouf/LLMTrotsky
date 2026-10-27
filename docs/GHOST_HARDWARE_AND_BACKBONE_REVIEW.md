@@ -90,3 +90,6 @@ preserving backward verification of saved34.
 Current checks:102 focused tests pass; full375 retains the same two historical
 README snapshot errors. The updated verifier also re-verifies the actual saved34
 source and inventory unchanged.
+
+Hardwarev2 submitted as private Kaggle saved35 after6d3c9ea was committed and
+pushed. Cache-filesystem results are pending; no larger weights are loaded.

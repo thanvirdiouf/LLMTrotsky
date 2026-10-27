@@ -161,3 +161,11 @@ before verification. Judge source support and requested-task coverage on the
 actual displayed replies, retaining blocked cases as unavailable answers.
 Model approval is experimental feedback. Fresh transfer still requires usable
 synthesis, not merely a larger number of model-approved paragraphs.
+
+The writer-only revision was submitted as private saved41 after commit
+`1a2984e` was pushed. Fetched normalized cell sources/types match the frozen
+local notebook. Status at confirmation: QUEUED. CPU preflight confirms all
+runtime/checker/probe helpers are byte-identical to v1 and only the writer
+system suffix changes. Inputs are2,404/3,040/3,051/2,177/1,202tokens. All121
+focused tests pass; full394 retains the two known historical README errors.
+No v2 output or fresh-transfer result is claimed yet.

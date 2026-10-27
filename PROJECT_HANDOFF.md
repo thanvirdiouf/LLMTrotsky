@@ -1,3 +1,40 @@
+# Latest submitted run — 27 October 2026
+
+**`ghost_candidate_synthesis_v2` submitted as private Kaggle saved41,
+QUEUED at exact-source confirmation. Do not resubmit.** Submitted after
+pushed `1a2984e`. Fetched exact41; all three normalized cell source texts and
+types match local frozen notebook. Receipt ignored locally at
+`evaluation/runs/ghost_candidate_synthesis_v2/submission.json`. Heartbeat
+updated for this saved version/dedicated synthesis verifier and v1 defects.
+
+Next check saved41. After COMPLETE download exact41
+`ghost_candidate_synthesis_bundle/*` and `ghost_candidate_synthesis_results/*`
+into `evaluation/runs/ghost_candidate_synthesis_v2/download/`, then run:
+`.venv-tokenizer/bin/python scripts/verify_ghost_candidate_synthesis.py --version
+ghost_candidate_synthesis_v2 --tokenizer evaluation/ghost_candidate_synthesis_v2/tokenizer_assets`.
+Inspect output metadata first for unexpected reasoning and keep it private.
+Review actual displayed source support and original task coverage separately
+from model approval, including roles/dates/hypothesis scope, invented claims
+and necessary/inappropriate refusals. Review is unblinded implementation
+review, not independent/human validation. Fresh transfer remains gated.
+
+Only writer-system suffix changed; same5questions/source-user messages/
+expectations, all runtime/parser/quote gate/neutral checker/probe helpers
+byte-identical tov1. Model/map/packages/generation/budgets unchanged.
+Inputs2404/3040/3051/2177/1202 tokens.121 focused tests pass; full394 same2
+historical README snapshot errors, locks unchanged. Actual saved40 backward
+verification and CPU diff/token preflight pass. No new outputs yet.
+
+Saved40 verified3 model-approved displays/2 quote refusals, but unblinded
+review found incomplete advice and miscast report certainty/chronology.
+This writer-only repair is post-hoc development, not fresh validation.
+At most10evaluation calls/five displayed research replies +one5,000/16 probe;
+free private twoT4/pinned27B,600s install/2700s workload. Active9B/v3 unchanged,
+no training/adapters/paid compute/public upload. Source/output artifacts ignored.
+Docs: `docs/GHOST_CANDIDATE_SYNTHESIS.md`.
+
+Earlier notes follow (submission statements superseded):
+
 # Current continuation — 27 October 2026
 
 Saved40 results/source limits committed at `b94f9e2`. No fresh transfer:

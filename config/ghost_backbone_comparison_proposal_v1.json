@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "Verified synthesisv1 defects; writer-only revision synthesisv2 frozen, not submitted; transfer gated",
+  "status": "Writer-only synthesisv2 submitted as private saved41; queued; previous source/completeness defects keep transfer gated",
   "reason": "Current9B factual self-audit false acceptance/rejection and thinking-output budget failures; not a claim that every model configuration fails",
   "candidate": {
     "model_id": "Qwen/Qwen3.5-27B",
@@ -134,6 +134,9 @@
     },
     "fresh_transfer_justified": false,
     "next_prepared_version": "ghost_candidate_synthesis_v2",
-    "writer_revision": "config/ghost_candidate_writer_revision_v2.json"
+    "writer_revision": "config/ghost_candidate_writer_revision_v2.json",
+    "latest_submitted_version": "ghost_candidate_synthesis_v2",
+    "latest_saved_version": 41,
+    "latest_status": "Queued; output review pending"
   }
 }

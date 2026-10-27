@@ -1,3 +1,36 @@
+# Latest submitted run — 27 October 2026
+
+**`ghost_candidate_synthesis_v1` submitted as private Kaggle saved40,
+QUEUED at exact-source confirmation. Do not resubmit.** Submitted after
+pushed `f92b314`; fetched exact saved40, all three normalized cell types and
+source texts match frozen local submission. Receipt ignored locally at
+`evaluation/runs/ghost_candidate_synthesis_v1/submission.json`. Heartbeat
+updated for this synthesis job and dedicated verifier.
+
+Next check saved40. After COMPLETE download exact40
+`ghost_candidate_synthesis_bundle/*` and `ghost_candidate_synthesis_results/*`
+into `evaluation/runs/ghost_candidate_synthesis_v1/download/`, then run:
+`.venv-tokenizer/bin/python scripts/verify_ghost_candidate_synthesis.py --version
+ghost_candidate_synthesis_v1 --tokenizer evaluation/ghost_candidate_synthesis_v1/tokenizer_assets`.
+Use this dedicated verifier, not the probe/audit/old9B smoke verifiers.
+Review actual displayed coverage/roles/dates/certainty/unsupported claims and
+necessary/inappropriate refusals separately from model approval. Unexpected
+intermediate reasoning stays private. Source review is unblinded coding-agent
+review, not independent/human validation. Only useful synthesis warrants fixed
+fresh transfer, then sustained dialogue/voice; no active model promotion.
+
+Five exact archived9B writer prompts with original local expectations and
+identical tokenIDs (2180,2816,2827,1953,978), neutral dependent checker; at most
+10 evaluation calls/five displayed research replies +one5,000/16 probe.
+Same pinned27B/freeT4/private scope,600s install/2700s workload caps.
+120 focused tests pass, full393 same2 historical README errors, no lock edits.
+CPU preflight and old saved39 backward verification pass; new GPU outputs
+pending. Saved39 audit10/10 decisions/5pairs and its two rationale limits are
+recorded below. Active9B/v3 untouched; no adapters/training/paid compute.
+Docs: `docs/GHOST_CANDIDATE_SYNTHESIS.md`.
+
+Earlier preparation notes follow (submission statements superseded):
+
 # Current continuation — 27 October 2026
 
 Saved39 audit milestone documented and pushed at `2a43c8f`:10/10 bounded

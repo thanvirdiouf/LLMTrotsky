@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "Auditv1/saved39 verified with source-review limits; bounded five-question synthesisv1 frozen, not yet submitted",
+  "status": "Verified auditv1/saved39 supports bounded synthesisv1; private saved40 submitted and queued",
   "reason": "Current9B factual self-audit false acceptance/rejection and thinking-output budget failures; not a claim that every model configuration fails",
   "candidate": {
     "model_id": "Qwen/Qwen3.5-27B",
@@ -116,13 +116,15 @@
   "phase_c": {
     "purpose": "Five exact archived9B factual-writer questions/prompts plus experimental neutral-source checking",
     "frozen_local_version": "ghost_candidate_synthesis_v1",
-    "status": "Prepared, not submitted",
+    "status": "Submitted; queued; no synthesis result yet",
     "control_local_version": "ghost_smoke_v27",
     "control_saved_version": 29,
     "maximum_displayed_answers": 5,
     "evaluation_calls_maximum": 10,
     "separate_memory_probe_calls_maximum": 1,
     "fresh_transfer_run": false,
-    "active_model_changed": false
+    "active_model_changed": false,
+    "saved_version": 40,
+    "verification_script": "scripts/verify_ghost_candidate_synthesis.py"
   }
 }

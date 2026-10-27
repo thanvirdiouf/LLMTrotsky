@@ -89,3 +89,10 @@ Usable synthesis can justify the fixed fresh transfer questions, followed by
 sustained conversations and voice. Checker approval alone cannot. Failed or
 incomplete synthesis requires diagnosis; it does not justify automatic
 activation, training or a blind rerun with larger budgets.
+
+The frozen trial was submitted as private saved40 after commit `f92b314` was
+pushed. The fetched notebook's three normalized cell sources/types match the
+local submission exactly. Status at confirmation: QUEUED. The heartbeat uses
+this saved version and dedicated verifier; no synthesis quality result yet.
+CPU preflight confirmed all five writer input token sequences match the old
+9B control and the full generation configuration round-trips unchanged.

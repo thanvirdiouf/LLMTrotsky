@@ -111,3 +111,6 @@ All86 focused tests pass. Actual generated maps/prose are still runtime-capped.
 
 The schema2 full359-test run retains only the same two historical README
 snapshot errors. Frozen historical locks and fixtures are unchanged.
+
+V29 was submitted as private Kaggle saved31 after c0b2698 was committed and
+pushed. Results are pending; the fresh transfer remains unrun.

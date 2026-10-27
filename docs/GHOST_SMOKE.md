@@ -216,3 +216,5 @@ and at most25calls+probe1; see GHOST_EVIDENCE_MAP.md.
 V28/saved30 verified13calls: all five mapped outputs block before composition.
 V29 stages a block-reference map revision, same ten tasks and25call/probe limits.
 See GHOST_EVIDENCE_MAP.md for causes and the unchanged validation boundary.
+
+V29 submitted as private saved31; results pending.

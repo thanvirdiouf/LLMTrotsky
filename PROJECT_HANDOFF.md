@@ -1,3 +1,20 @@
+# Latest submitted run — 27 October 2026
+
+Local ghost_smoke_v29 submitted as private Kaggle saved31 successfully.
+Commit c0b2698 pushed. Do not resubmit. Current app heartbeat updated to read
+latest run here rather than hardcode oldsaved30. Check saved31 next.
+V28/saved30 verified13calls: all5maps blocked beforecomposition, unchanged
+readercontrols. No freshtransfer run oractivepromotion. Schema2 now selects
+sourceblockIDs andappfills metadata; exact source remainsincontext.
+86focusedpass/full359 same2historicalREADMEerrors. CPU synthetic25requests
+max4749token, runtimecap5120, no modelqualityclaim.
+Next exact31download/frozen/tokenverify thenreview displayedresponses and
+map/source/coverage errors. Run config/ghost_mapped_transfer_v1.json only if
+justified; otherwise fixmeasuredfailure withnewfreeze. No training/adapters/
+paidcompute. Activev3/reference26Oct2026unchanged.
+
+Earlier continuation notes (superseded pending-submission statements):
+
 # Current result and next comparison — 27 October 2026
 
 Heartbeat received; currentgit wasclean. V28/saved30 COMPLETE downloaded exact30,

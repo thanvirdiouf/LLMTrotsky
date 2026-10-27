@@ -1,3 +1,19 @@
+# Autonomous follow-up enabled — 27 October 2026
+
+App heartbeat continue-trotsky-chatbot-evaluations created ACTIVE every20minutes
+in this same chat, per user's repeated-work request. Quiet unchanged state;
+notify meaningful results/failures/action. Respect later user pause/cancel.
+V28/saved30 still running at last log, memoryprobe passed, control hearing
+blocked and Eastman model-approved. Do NOT infer quality or resubmit.
+Source map code/tests in pushed d3b2737; fresh fixed transfer in980d435.
+86focused pass/full359 same2historicalREADMEerrors. CPU retrieval preflight
+for fresh5 finds intendedsource5/5, extras3cases/no omissions; not broad recall.
+After saved30 COMPLETE download exact30, frozen/tokenverify/export and review.
+Run fresh transfer only if mappedpathusable; otherwise fix measured failure
+with new frozen version. No default activation/training/paidcompute.
+V27 detailed unblinded root review hashes now stored implementation_review.json;
+all five canonicalcontrols byte-identicalV26/V27.
+
 # Submitted evidence-map comparison — 27 October 2026
 
 V28 submitted successfully as private Kaggle saved30, commit d3b2737 pushed.

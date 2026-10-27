@@ -66,3 +66,11 @@ failures; this is source-authored development transfer, not independent heldout
 validation. Its expectations are removed from model payloads. Run it only after
 V28 establishes whether the new path is technically usable; preserve original
 questions and expectations if later implementation fixes are needed.
+
+CPU retrieval preflight on the five transfer questions includes the intended
+packet in every case without budget omission. Three cases also retrieve an
+extra packet. This is a small source-specific retrieval diagnostic, not broad
+recall validation. The paired inference test still fixes identical context so
+retrieval differences cannot explain a reader/mapped-reader difference. Natural
+retrieval plus dialogue remains a later end-to-end check. Local traces are in
+evaluation/ghost_mapped_transfer_v1/retrieval_preflight.json.

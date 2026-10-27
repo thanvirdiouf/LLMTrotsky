@@ -207,5 +207,5 @@ unsupported historical universal. Local report/transcript/neutral worksheet are
 in `evaluation/runs/ghost_smoke_v14/`. No further run is queued. Training and
 adapter promotion remain paused.
 
-V27 repeats V26 with revised reading-writer instructions; same ten replies and
+V27 was submitted as private saved version29 with revised reading-writer instructions; same ten replies and
 at-most25-call limit, plus one probe. See GHOST_SOURCE_READING_COMPARISON.md.

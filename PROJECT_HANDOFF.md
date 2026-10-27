@@ -1,3 +1,42 @@
+# Latest submitted run — 27 October 2026
+
+**`ghost_candidate_audit_v2` is RUNNING as private Kaggle saved42. Do not
+resubmit.** Submitted after pushed `25775be`; fetched exact42, all three
+normalized cell source texts/types match local frozen notebook. Receipt:
+ignored `evaluation/runs/ghost_candidate_audit_v2/submission.json`. Heartbeat
+updated for this diagnostic, dedicated audit verifier and separated pair groups.
+
+Next check saved42. On COMPLETE download exact42
+`ghost_candidate_audit_bundle/*` and `ghost_candidate_audit_results/*` into
+`evaluation/runs/ghost_candidate_audit_v2/download/`, then run:
+`.venv-tokenizer/bin/python scripts/verify_ghost_candidate_audit.py --version
+ghost_candidate_audit_v2 --tokenizer evaluation/ghost_candidate_audit_v2/tokenizer_assets`.
+Use audit verifier, not synthesis/probe. It verifies hash-bound design/source
+requests, frozen payloads, tokens, scope/logits/GPU coverage, archived parser
+and expected decisions. Report two new hearing pairs separately from three
+familiar controls. Inspect metadata first for unexpected thinking; keep any
+intermediate reasoning private. Review actual final reasons against sources
+as unblinded implementing-agent review, not independent/human validation.
+
+Ten candidates share full hearing/rakovsky/bessedovsky source context; old
+control prompts therefore have added context, no exact-control claim.
+Actual saved41 resident paragraph is loaded by hash from ignored output;
+no private generated paragraph copied into Git. Local expectations withheld.
+Neutral system prompt identical tov30; runtime/helpers/probe byte-identical
+tosaved41.10evaluation calls+one5,000/16 probe,1024evaluation cap,600s install/
+2700s workload, same freeT4/pinned27B/private scope. Inputs3574–3666tokens.
+124 focused tests pass; full397 same2 historical README errors; locks unchanged.
+CPU parser parity reproduces v30 outcomes and saved39's5correctpairs, no inference.
+
+Saved41 formatting improved (all5displayed) but a wrong resident field and
+checker self-correction date confusion remain. The focused diagnostic can
+justify task-decomposition testing on original questions if useful, not claim
+original synthesis repaired. A focused failure further limits self-checker
+reliance. No third broad writer tweak, fresh transfer, activation or training.
+Active9B/v3 unchanged. Docs: GHOST_GENERATED_AUDIT_DIAGNOSTIC.md.
+
+Earlier preparation notes follow (submission statements superseded):
+
 # Current continuation — 27 October 2026
 
 Saved41 source/completeness milestone committed at `b19245f`: all5displayed,

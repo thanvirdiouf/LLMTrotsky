@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "Saved41 source review keeps transfer gated; post-hoc checker diagnostic auditv2 frozen, not submitted",
+  "status": "Post-hoc checker diagnostic auditv2 running as private saved42; source-faithful synthesis/fresh transfer still gated",
   "reason": "Current9B factual self-audit false acceptance/rejection and thinking-output budget failures; not a claim that every model configuration fails",
   "candidate": {
     "model_id": "Qwen/Qwen3.5-27B",
@@ -144,11 +144,13 @@
   "phase_d": {
     "purpose": "Two hearing failure pairs plus three familiar checker calibration pairs in fixed three-packet context",
     "frozen_local_version": "ghost_candidate_audit_v2",
-    "status": "Prepared, not submitted",
+    "status": "Submitted and running",
     "blueprint": "config/ghost_generated_audit_design_v1.json",
     "evaluation_calls_maximum": 10,
     "separate_memory_probe_calls_maximum": 1,
     "fresh_transfer_run": false,
-    "active_model_changed": false
+    "active_model_changed": false,
+    "saved_version": 42,
+    "verification_script": "scripts/verify_ghost_candidate_audit.py"
   }
 }

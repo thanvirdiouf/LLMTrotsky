@@ -86,3 +86,9 @@ justify testing task decomposition on the same synthesis questions. Failure on
 the focused pairs would further limit reliance on the self-checker. Neither
 outcome permits automatic activation, training or fresh transfer. Fresh transfer
 continues to depend on actual source-faithful, useful synthesis.
+
+The frozen diagnostic was submitted as private saved42 after commit `25775be`
+was pushed. Exact saved42 normalized notebook cell sources/types match the
+local submission. Status at confirmation: RUNNING. The heartbeat now uses this
+saved version and the dedicated audit verifier. No diagnostic quality result
+is claimed yet; original source-synthesis and fresh-transfer gates remain.

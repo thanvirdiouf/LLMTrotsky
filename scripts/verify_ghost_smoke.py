@@ -36,6 +36,12 @@ def frozen_payloads(root=ROOT,version='ghost_smoke_v1'):
 def verify(download,tokenizer=None,version='ghost_smoke_v1'):
     download=Path(download);payloads=frozen_payloads(version=version);protocol=json.loads(payloads['protocol.json'])
     bundle=download/'ghost_smoke_bundle';results=download/'ghost_smoke_results'
+    thinking=protocol.get('enable_thinking',False)
+    if type(thinking) is not bool:raise ValueError('Invalid thinking policy')
+    if thinking:
+        control=json.loads(payloads['model_cases.json']).get('audit_calibration',{})
+        if protocol['purpose']!='ghost_audit_calibration' or control.get('policy')!='neutral_source' or control.get('thinking') is not True:
+            raise ValueError('Thinking policy differs from frozen cases')
     for n,b in payloads.items():
         if (bundle/n).read_bytes()!=b:raise ValueError('Downloaded bundle differs: '+n)
     for n,h in protocol['files'].items():
@@ -47,7 +53,7 @@ def verify(download,tokenizer=None,version='ghost_smoke_v1'):
         or manifest['model_calls']>protocol['maximum_model_calls'] or identity['model']!=MODEL
         or identity['packages']!=protocol['packages'] or identity['adapters_loaded']!=[]
         or identity['optimizer_updates']!=0 or not manifest['all_base_parameters_frozen']
-        or identity['protocol_sha256']!=sha(payloads['protocol.json']) or identity['enable_thinking'] is not False):
+        or identity['protocol_sha256']!=sha(payloads['protocol.json']) or identity['enable_thinking'] is not thinking):
         raise ValueError('Incomplete or mixed ghost execution')
     for k,v in protocol['generation'].items():
         if identity['generation'].get(k)!=v:raise ValueError('Generation changed')
@@ -116,7 +122,7 @@ assert len(a)==len(json.loads((p/'coverage.json').read_text())['answers'])
             finish='stop' if tokens[-1]==protocol['generation']['eos_token_id'] else 'length'
             if out['finish_reason']!=finish or (finish=='length' and len(tokens)!=limit):raise ValueError('Invalid stop record')
         if tokenizer:
-            if tokenizer.apply_chat_template(messages,tokenize=True,add_generation_prompt=True,enable_thinking=False,return_dict=False)!=ids:
+            if tokenizer.apply_chat_template(messages,tokenize=True,add_generation_prompt=True,enable_thinking=thinking,return_dict=False)!=ids:
                 raise ValueError('Prompt reconstruction differs')
             if tokenizer.decode(tokens,skip_special_tokens=True)!=out['response']:raise ValueError('Decoded output differs')
     return {'status':'verified','answers':len(answers),'evaluation_stage_requests':len(calls),

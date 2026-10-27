@@ -19,6 +19,9 @@ def evaluate(profile,collection,ledger,spec,generate,output,identity):
     if spec.get('conversation') or not 1<=len(spec['cases'])<=10:raise ValueError('Expected at most ten independent audit cases')
     policy=spec['audit_calibration'].get('policy','ghost')
     if policy not in ('ghost','neutral_source'):raise ValueError('Unknown audit policy')
+    thinking=spec['audit_calibration'].get('thinking',False)
+    if type(thinking) is not bool or (thinking and (policy!='neutral_source' or identity.get('enable_thinking') is not True)):
+        raise ValueError('Thinking calibration identity differs')
     if len({c['id'] for c in spec['cases']})!=len(spec['cases']):raise ValueError('Duplicate audit case ID')
     class AuditBot(GhostChat):
         def __init__(self,*args):
@@ -43,13 +46,19 @@ def evaluate(profile,collection,ledger,spec,generate,output,identity):
                 req=source_audit_request(self.profile,question,trace,segments)
             else:
                 req=request('check',self.profile,question,trace,selected,case.get('history',[]),temp,segments)
-            out=generate(req['messages']);error=None;accepted=set();missing=[];unknown=[]
+            out=generate(req['messages']);error=None;accepted=set();missing=[];unknown=[];channel=None
+            response='' if thinking else out['response']
             try:
                 if out.get('finish_reason')!='stop':raise ValueError('Incomplete audit generation')
-                review,missing,unknown=complete_review_coverage(parse_object(out['response']),segments)
+                if thinking:
+                    try:
+                        from .source_audit import thinking_final
+                    except ImportError:
+                        from source_audit import thinking_final
+                    response,channel=thinking_final(out['response'])
+                review,missing,unknown=complete_review_coverage(parse_object(response),segments)
                 accepted=validate_review(review,segments)
             except (ValueError,KeyError,TypeError) as exc:error=str(exc)
-            response=out['response']
             return {'mode':'reviewer_calibration','display_label':self.profile['display_label'],'reference_date':self.profile['reference_date'],
                 'historical_knowledge_cutoff':None,'response':response,'response_sha256':fingerprint(response),
                 'state_before':state,'state_after':{**state,'turns':state['turns']+1},'retrieval':trace,'segments':segments,
@@ -57,5 +66,5 @@ def evaluate(profile,collection,ledger,spec,generate,output,identity):
                 'audit_candidate_display':json.loads(req['messages'][1]['content']).get('candidate_display','\n\n'.join(s['text'] for s in segments)),
                 'missing_verdict_ids':missing,'unknown_verdict_ids':unknown,
                 'status':'blocked' if error else 'audit_approved' if len(accepted)==len(segments) else 'audit_rejected',
-                'validation_error':error,'semantic_guarantee':False,'model':MODEL,'training_steps':0,'adapters_loaded':[]}
+                'validation_error':error,**({'thinking_output_metadata':channel} if thinking else {}),'semantic_guarantee':False,'model':MODEL,'training_steps':0,'adapters_loaded':[]}
     return journal_evaluate(profile,collection,ledger,spec,generate,output,identity,bot_factory=AuditBot)

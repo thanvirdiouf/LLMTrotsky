@@ -147,3 +147,8 @@ The original paired review and concise follow-up are complete. The [verified con
 
 Experimental [task-to-evidence mapping](docs/GHOST_EVIDENCE_MAP.md) tests whether
 explicit source anchors and per-task composition improve factual coverage.
+
+Use [model-free source inspection](docs/GHOST_SOURCE_INSPECTION.md) to read
+complete bounded passages with original speaker and date metadata. The current
+self-audit failures and next inference test are documented in
+[thinking-mode audit](docs/GHOST_THINKING_AUDIT.md).

@@ -62,3 +62,9 @@ semantic audit results.
 
 V30 was submitted as private Kaggle saved32 after fe4b739 was committed and
 pushed. Results are pending; the neutral auditor remains a diagnostic only.
+
+V30/saved32 is now verified:4correct approvals/1correct rejection/1false
+approval/1false rejection/3format blocks;0of5pairs both correct. No integration.
+See [thinking-mode audit diagnostic](GHOST_THINKING_AUDIT.md) for the next
+same-base inference test and [source inspection](GHOST_SOURCE_INSPECTION.md)
+for the new model-free evidence view.

@@ -28,6 +28,15 @@ def classify(case,row):
     return outcome,approved,[v['reason'] for v in review['verdicts']]
 
 
+def judgment_hashes(row):
+    """Bind raw generation and scored final text separately for thinking runs."""
+    raw=row['stages'][0]['output']['response'] if 'thinking_output_metadata' in row else row['response']
+    result={'raw_output_sha256':hashlib.sha256(raw.encode()).hexdigest()}
+    if 'thinking_output_metadata' in row:
+        result['judgment_text_sha256']=hashlib.sha256(row['response'].encode()).hexdigest()
+    return result
+
+
 def summarize(version,root=ROOT):
     payload=frozen_payloads(root=root,version=version);protocol=json.loads(payload['protocol.json'])
     if protocol['purpose']!='ghost_audit_calibration':raise ValueError('Expected a checker calibration')
@@ -51,7 +60,7 @@ def summarize(version,root=ROOT):
         rows.append({'case_id':case['id'],'expected_approved':case['expected_approved'],
             'actual_approved':approved,'outcome':outcome,'reasons':reasons,
             'candidate_segments_fingerprint':fingerprint(case['segments']),
-            'raw_output_sha256':hashlib.sha256(row['response'].encode()).hexdigest(),
+            **judgment_hashes(row),
             'response_fingerprint':row['response_sha256']})
     byid={r['case_id']:r for r in rows};pairs=[]
     for pair in spec.get('reviewer_only_pairs',[]):

@@ -1,3 +1,42 @@
+# Current continuation — 27 October 2026
+
+V30/saved32 COMPLETE: exactdownload eventually recovered after transient
+remote disconnects. Agent interrupted a stalled download, then downloaded only
+missing/hash-mismatched frozen files; no inference resubmitted. Frozen/token
+verified10calls/no budget/truncation/11.32GiB. Scored4correctapprove/1correctreject/
+1falseapprove/1falsereject/3formatblocks,0/5pairsbothcorrect. Rawblockedintent
+not counted assemanticrejection. Rootunblindedreview hashes archivedlocally.
+Do not integrate neutralselfaudit orrunfreshtransfer basedonthis.
+
+Completed next usable feature: ghost_evidence.py + CLI --evidence-only, optional
+--source-id (<=2), --source-format json|markdown. Noendpoint/modelcalls; original
+fullboundedblocks/authors/speakers/dates/context, literal display, unchanged
+state. Source candidates notclaimsorverifiedanswers. Five transfer retrieval/
+displaycases includeintendedpackets; examplesignoredlocal evaluation/ghost_source_inspection.
+Defaultchat/activev3 unchanged. Docs GHOST_SOURCE_INSPECTION.md.
+
+Nextinferencepolicy test stayssamepinned9B/freeGPU, notnewweights: V31 FROZEN,
+config/ghost_neutral_thinking_calibration_v1.json copiesV30tenexactcandidates/
+expectations, enablesQwen thinking and4096combinedoutputtokens. Samegreedy/
+fullsources/10calls+probe1. Onlyfinalafteronecomplete </think> scored; raw
+privatejournalretained. Truncated/missing/ambiguous/finalmalformedblock; no
+formatrepair. Thinkingflagallowedonlyneutralcalibration. Runtime/verifier
+bindflags andtokenizer. Raw/finalhashesseparate. Official9Bmodelcard supports
+thinking; no27Bmodeldownload or backbonechange. Docs GHOST_THINKING_AUDIT.md.
+
+97focusedpass/full370same2historicalREADMEerrors. BackwardV30frozen/token
+verificationpassesupdatedverifier. CPUV31tenrequestsmax1911inputs, messages
+identicalV30, intermediatefixtureexcludedfromjudgment. Commit/push+submit
+V31 understandingfreeprivateboundedauthorization. Activev3, no training,
+adapters or paidcompute; frozenreference26Oct2026.
+
+If thinkingpolicyimproves testactualgeneratedcandidatesbeforefreshtransfer;
+ifstillfails simplesourcecontrasts do notkeeptrustingselfaudit ortrainonit.
+Sourceinspectionprovidesinspectablecontextwhileindependentsynthesis/evaluator
+changesareassessed. No automaticactivationfromsmallcalibration.
+
+Earlier notes (staging statements below superseded):
+
 # Latest submitted run — 27 October 2026
 
 Local `ghost_smoke_v30` was submitted successfully as private Kaggle saved

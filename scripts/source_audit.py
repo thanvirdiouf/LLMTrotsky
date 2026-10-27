@@ -27,3 +27,21 @@ def source_audit_request(profile,question,trace,segments):
         'candidate_segments':segments,'current_user_request':question}
     messages=[{'role':'system','content':system},{'role':'user','content':json.dumps(data,ensure_ascii=False,separators=(',',':'))}]
     return {'stage':'check','messages':messages,'prompt_sha256':fingerprint(messages)}
+
+
+def thinking_final(text):
+    """Separate a single Qwen reasoning channel; never judge its scratch text."""
+    try:
+        from .grounded_chat_v2 import EvidenceError
+    except ImportError:
+        from grounded_chat_v2 import EvidenceError
+    if not isinstance(text,str) or text.count('</think>')!=1:
+        raise EvidenceError('Expected one complete Qwen thinking separator')
+    reasoning,final=text.split('</think>')
+    if '<think>' in final or '</think>' in final or not final.strip():
+        raise EvidenceError('Missing or ambiguous final audit response')
+    if reasoning.count('<think>')>1 or ('<think>' in reasoning and not reasoning.startswith('<think>')):
+        raise EvidenceError('Ambiguous Qwen thinking channel')
+    final=final.strip()
+    return final,{'channel':'qwen_thinking_final','reasoning_characters':len(reasoning),
+        'raw_output_fingerprint':fingerprint(text),'final_output_fingerprint':fingerprint(final)}

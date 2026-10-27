@@ -11,7 +11,7 @@ sys.path.insert(0,str(ROOT/'scripts'))
 from build_ghost_smoke import model_cases
 from grounded_chat import fingerprint
 from grounded_chat_v2 import CHECKS
-from summarize_ghost_calibration import classify,summarize
+from summarize_ghost_calibration import classify,summarize,judgment_hashes
 
 
 class CalibrationSummaryTest(unittest.TestCase):
@@ -24,6 +24,16 @@ class CalibrationSummaryTest(unittest.TestCase):
         row={'case_id':'c1','mode':'reviewer_calibration','turn':1,'segments':case['segments'],
             'status':'audit_approved','accepted_segment_ids':['s1'],'response':response,'response_sha256':fingerprint(response)}
         return case,row
+
+    def test_thinking_raw_and_final_hashes_are_distinct_and_non_thinking_unchanged(self):
+        _,row=self.fixture();final=row['response'];raw='Untrusted intermediate.</think>'+final
+        original=judgment_hashes(row)
+        self.assertEqual(original,{'raw_output_sha256':hashlib.sha256(final.encode()).hexdigest()})
+        row.update(thinking_output_metadata={},stages=[{'output':{'response':raw}}])
+        hashes=judgment_hashes(row)
+        self.assertEqual(hashes['raw_output_sha256'],hashlib.sha256(raw.encode()).hexdigest())
+        self.assertEqual(hashes['judgment_text_sha256'],hashlib.sha256(final.encode()).hexdigest())
+        self.assertNotEqual(hashes['raw_output_sha256'],hashes['judgment_text_sha256'])
 
     def test_false_acceptance_is_not_hidden_by_application_approval(self):
         case,row=self.fixture()

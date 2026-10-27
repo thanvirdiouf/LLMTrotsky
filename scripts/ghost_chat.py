@@ -676,7 +676,25 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--question');parser.add_argument('--dry-run',action='store_true')
     parser.add_argument('--base-url');parser.add_argument('--log',type=Path)
+    parser.add_argument('--evidence-only',action='store_true',help='Inspect source packets without model inference')
+    parser.add_argument('--source-id',action='append',help='Inspect one or two exact source IDs; requires --evidence-only')
+    parser.add_argument('--source-format',choices=('markdown','json'),default='markdown')
     args=parser.parse_args();bot=load_active()
+    if args.source_id and not args.evidence_only:
+        parser.error('--source-id requires --evidence-only')
+    if args.evidence_only:
+        if args.log:
+            parser.error('--log records answer journals; redirect source inspection output instead')
+        try:
+            from .ghost_evidence import evidence_view,render_evidence
+        except ImportError:
+            from ghost_evidence import evidence_view,render_evidence
+        try:
+            view=evidence_view(bot,args.question or '',args.source_id)
+        except EvidenceError as exc:
+            parser.error(str(exc))
+        print(json.dumps(view,ensure_ascii=False,indent=2) if args.source_format=='json' else render_evidence(view))
+        return
     if not args.dry_run and not args.base_url:
         parser.error('Use --dry-run or a configured remote base-model endpoint')
     import os,requests

@@ -30,9 +30,12 @@ def model_cases(source_spec):
                       'comparison_arm':arm,'paired_case_id':c['id']} for arm in source_spec['factual_comparison']['arms'] for c in source_spec['cases']]}
     if 'audit_calibration' in source_spec:
         control=source_spec['audit_calibration']
+        thinking=control.get('thinking',False)
+        if type(thinking) is not bool or (thinking and control.get('policy')!='neutral_source'):
+            raise ValueError('Thinking calibration requires the neutral factual-audit policy')
         if control.get('policy','ghost') not in ('ghost','neutral_source'):
             raise ValueError('Unknown audit policy')
-        return {'audit_calibration':{k:control[k] for k in ('packet_ids','policy') if k in control},'conversation':[],
+        return {'audit_calibration':{k:control[k] for k in ('packet_ids','policy','thinking') if k in control},'conversation':[],
             'cases':[{k:c[k] for k in ('id','question','claim_ids','segments','history') if k in c} for c in source_spec['cases']]}
     if 'comparison' not in source_spec:
         result={'cases':[{'id':c['id'],'question':c['question']} for c in source_spec['cases']],
@@ -62,6 +65,9 @@ def build(version='ghost_smoke_v1', evaluation_spec=None, constrain_selection=Fa
     if sha(tokenizer.chat_template.encode())!=prior['chat_template_sha256']:raise ValueError('Tokenizer changed')
     source_spec=json.loads((ROOT/(evaluation_spec or 'config/ghost_chat_evaluation.json')).read_text())
     model_spec=model_cases(source_spec)
+    thinking=model_spec.get('audit_calibration',{}).get('thinking',False)
+    if type(thinking) is not bool or (thinking and model_spec.get('audit_calibration',{}).get('policy')!='neutral_source'):
+        raise ValueError('Thinking diagnostic requires the neutral factual-audit policy')
     if len(model_spec['cases'])+len(model_spec['conversation'])>10:
         raise ValueError('Standing approval permits at most ten answers/thirty evaluation calls per run')
     state=initial_state(bot.collection,bot.ledger)
@@ -76,7 +82,7 @@ def build(version='ghost_smoke_v1', evaluation_spec=None, constrain_selection=Fa
     def padded(count):
         messages=deepcopy(probe['messages']);value={**data,'memory_probe_only':'padding '*count}
         messages[1]['content']=json.dumps(value,ensure_ascii=False,separators=(',',':'))
-        ids=tokenizer.apply_chat_template(messages,tokenize=True,add_generation_prompt=True,enable_thinking=False,return_dict=False)
+        ids=tokenizer.apply_chat_template(messages,tokenize=True,add_generation_prompt=True,enable_thinking=thinking,return_dict=False)
         return messages,ids
     low,high=0,6000
     while low<high:
@@ -103,6 +109,9 @@ def build(version='ghost_smoke_v1', evaluation_spec=None, constrain_selection=Fa
         evaluation_spec_sha256=sha(enc(source_spec)),files={n:sha(b) for n,b in payload.items()},
         interpretation_policy='Fictional contemporary opinions are allowed, historical/modern factual premises need sources; no 1940 knowledge cutoff.',
         preserved_files=json.loads((ROOT/'evaluation/grounded_chat_v2/preserved_v1_and_adapters.json').read_text()))
+    if thinking:
+        protocol['enable_thinking']=True
+        protocol['generation']['max_new_tokens']=4096
     if 'comparison' in model_spec:
         protocol.update(purpose='ghost_direct_checked_comparison',maximum_model_calls=sum(1 if c['arm']=='direct' else 3 for c in model_spec['cases']))
     if 'audit_calibration' in model_spec:
@@ -128,6 +137,8 @@ def build(version='ghost_smoke_v1', evaluation_spec=None, constrain_selection=Fa
         intro='# Fictional ghost auditor calibration\nTen fixed candidate test inputs, at most ten checker calls plus one memory probe. Candidates include deliberately false assertions and are never displayed as chatbot answers or trusted memory. Expected decisions are withheld from the model. Untouched base, no training/adapters/paid compute. Development diagnostic, not independent validation.\n'
     if 'factual_comparison' in model_spec:
         intro='# Matched factual source-reading comparison\nFive independent questions in two explicitly named factual pipelines, ten displayed replies total, at most25 calls plus one unscored memory probe. Same pinned base/full source packets; no training/adapters/paid compute. Generated readings remain fallible and never become verified claim memory.\n'
+    if thinking:
+        intro+='This diagnostic enables Qwen thinking with a 4096-token combined reasoning/final cap. Only the final JSON is scored; raw outputs remain in private journals. No training or backbone change.\n'
     add('markdown','intro',intro)
     add('code','install','%pip install -q '+' '.join(f'{k}=={v}' for k,v in protocol['packages'].items() if k!='torch')+'\n')
     packed={n:{'sha256':sha(b),'data':base64.b85encode(lzma.compress(b)).decode()} for n,b in payload.items()}

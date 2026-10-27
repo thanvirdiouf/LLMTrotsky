@@ -47,6 +47,9 @@ def run(bundle, output):
     collection = json.loads((bundle/'collection.json').read_text())
     profile = json.loads((bundle/'profile.json').read_text())
     spec = json.loads((bundle/'model_cases.json').read_text())
+    thinking=protocol.get('enable_thinking',False)
+    if type(thinking) is not bool or (thinking and (protocol['purpose']!='ghost_audit_calibration' or spec.get('audit_calibration',{}).get('policy')!='neutral_source' or spec['audit_calibration'].get('thinking') is not True)):
+        raise ValueError('Unsupported thinking policy')
     evaluator=evaluate
     if protocol['purpose']=='ghost_direct_checked_comparison':
         from evaluate_ghost_comparison import evaluate as evaluator
@@ -66,7 +69,7 @@ def run(bundle, output):
                 'model': MODEL, 'packages': actual, 'generation': generation.to_dict(),
                 'gpu': torch.cuda.get_device_name(0), 'gpu_ids_used': [0], 'seed': 42,
                 'quantization': 'NF4 double quantization; float16 compute; sdpa',
-                'adapters_loaded': [], 'optimizer_updates': 0, 'enable_thinking': False,
+                'adapters_loaded': [], 'optimizer_updates': 0, 'enable_thinking': thinking,
                 'purpose': protocol['purpose']}
     if 'selection_constraints' in protocol:identity['selection_constraints']=protocol['selection_constraints']
     manifest_path = output/'run_manifest.json'
@@ -85,7 +88,7 @@ def run(bundle, output):
     constraint_cache={}
     def generate(messages):
         ids = tokenizer.apply_chat_template(messages, tokenize=True, add_generation_prompt=True,
-                                            enable_thinking=False, return_dict=False)
+                                            enable_thinking=thinking, return_dict=False)
         if not isinstance(ids, list) or not ids or any(type(i) is not int for i in ids):
             raise ValueError('Invalid token list')
         if len(ids)>protocol['max_input_tokens']:

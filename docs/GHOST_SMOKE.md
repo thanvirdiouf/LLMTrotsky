@@ -225,3 +225,8 @@ ten evaluation calls plus probe1; see GHOST_NEUTRAL_SOURCE_AUDIT.md.
 
 V30 submitted as private saved32: ten neutral-source audit candidates, results
 pending.
+
+V30/saved32 verified10calls with one false approval and one false rejection,
+three format blocks. V31 stages the identical ten candidates with the same
+pinned base, thinking enabled and4,096 combined output tokens; at most10calls
+plus probe1. See GHOST_THINKING_AUDIT.md.

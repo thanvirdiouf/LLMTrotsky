@@ -212,3 +212,7 @@ at-most25-call limit, plus one probe. See GHOST_SOURCE_READING_COMPARISON.md.
 
 V27/saved29 verified22calls. V28 stages reader versus mapped reader, ten replies
 and at most25calls+probe1; see GHOST_EVIDENCE_MAP.md.
+
+V28/saved30 verified13calls: all five mapped outputs block before composition.
+V29 stages a block-reference map revision, same ten tasks and25call/probe limits.
+See GHOST_EVIDENCE_MAP.md for causes and the unchanged validation boundary.

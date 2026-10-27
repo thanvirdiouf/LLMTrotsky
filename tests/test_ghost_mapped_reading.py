@@ -19,23 +19,27 @@ class MappedReadingTest(unittest.TestCase):
         self.bot.retriever=FixedRetriever(self.bot,['ilo_genai_2025'])
         self.trace=self.bot.retriever.retrieve('ILO',initial_state(self.bot.collection,self.bot.ledger))
         p=self.trace['matches'][0]['packet'];b=p['blocks'][0]
-        self.mapping={'units':[{'id':'u1','task':'Explain exposure denominator','support':'supported','certainty':'calculation',
-            'answer':'A synthetic proposed calculation, not validated semantics.',
-            'anchors':[{'packet_id':p['id'],'block_id':b['block_id'],'text':b['text'][:90]}]},
-            {'id':'u2','task':'Explain missing local data','support':'missing','certainty':'explicit_limit',
-             'answer':'Local occupational data are not supplied.','anchors':[]}]}
+        self.mapping={'units':[{'id':'u1','task':'Explain exposure denominator',
+            'block_refs':[{'packet_id':p['id'],'block_id':b['block_id']}],'missing_evidence':''},
+            {'id':'u2','task':'Explain missing local data','block_refs':[],
+             'missing_evidence':'Local occupational data are not supplied.'}]}
 
-    def test_anchor_membership_metadata_and_missing_support_contract(self):
-        value=validate_map(self.mapping,self.trace);a=value['units'][0]['anchors'][0]
-        self.assertEqual(a['speaker'],self.trace['matches'][0]['packet']['blocks'][0]['speaker'])
+    def test_block_membership_metadata_and_missing_support_contract(self):
+        value=validate_map(self.mapping,self.trace);a=value['units'][0]['block_refs'][0]
+        block=self.trace['matches'][0]['packet']['blocks'][0]
+        self.assertEqual(a['speaker'],block['speaker'])
+        self.assertIn('block_text_sha256',a)
         self.assertFalse(value['task_coverage_verified']);self.assertFalse(value['units'][0]['semantic_support_verified'])
         variants=[]
-        v=copy.deepcopy(self.mapping);v['units'][0]['anchors'][0]['text']='INVENTED SOURCE SPAN';variants.append(v)
-        v=copy.deepcopy(self.mapping);v['units'][0]['anchors'][0]['speaker']='invented';variants.append(v)
+        v=copy.deepcopy(self.mapping);v['units'][0]['block_refs'][0]['packet_id']='unknown';variants.append(v)
+        v=copy.deepcopy(self.mapping);v['units'][0]['block_refs'][0]['block_id']=99999;variants.append(v)
+        v=copy.deepcopy(self.mapping);v['units'][0]['block_refs'][0]['speaker']='invented';variants.append(v)
+        v=copy.deepcopy(self.mapping);v['units'][0]['block_refs'][0]['block_id']=True;variants.append(v)
+        v=copy.deepcopy(self.mapping);v['units'][0]['block_refs']*=2;variants.append(v)
         v=copy.deepcopy(self.mapping);v['units'][0]['id']='u2';variants.append(v)
-        v=copy.deepcopy(self.mapping);v['units'][0]['anchors']=[];variants.append(v)
-        v=copy.deepcopy(self.mapping);v['units'][1]['anchors']=copy.deepcopy(self.mapping['units'][0]['anchors']);variants.append(v)
-        v=copy.deepcopy(self.mapping);v['units'][0]['certainty']='verified_fact';variants.append(v)
+        v=copy.deepcopy(self.mapping);v['units'][0]['block_refs']=[];variants.append(v)
+        v=copy.deepcopy(self.mapping);v['units'][1]['missing_evidence']='';variants.append(v)
+        v=copy.deepcopy(self.mapping);v['units'][0]['answer']='invented proposal';variants.append(v)
         for v in variants:
             with self.subTest(v=v),self.assertRaises(EvidenceError):validate_map(v,self.trace)
 

@@ -1,3 +1,27 @@
+# Current result and next comparison — 27 October 2026
+
+Heartbeat received; currentgit wasclean. V28/saved30 COMPLETE downloaded exact30,
+frozen/tokenverified13calls/10replies/no budget/truncation/11.32GiB. All5reader
+controls byte-identicalV27; all5mapped cases block atmap. Invalid lengths/enums/
+fields and nonliteral/invented anchors. Hiddenmaps also semanticerrors. No
+mappedanswer/noqualitygain/no promotion; fresh transfer remainsunrun. Root
+unblinded hash-boundreview+exports in evaluation/runs/ghost_smoke_v28.
+
+Implemented map schema2: <=5 taskunits, source block_refs IDs (<=3each),
+missing_evidence string. App resolves originalauthor/speaker/date/textfingerprint;
+no modelcopiedliteralspans/proposedanswers/supportcertaintyenums. EveryIDstill
+composedonce; strictJSON, quoteguards, sourceaudit andemptytrustedmemoryunchanged.
+V29 FROZEN withsame inspectedfivequestions, reading/mapped <=25calls+probe1.
+86focusedpass. Full359 retains same2historicalREADMEerrors, no new failures.
+CPU preflight25requests/max4749, matchedretrieval/emptyverifiedmemory. Commit/push then submitunderstandingprivatefreeapproval.
+Preserve activev3, no adapters/training/paidcompute.
+
+Automationview initiallyreview-timedout, explicitlyallowedretry succeeded.
+No unresolved unsafe rejection; update heartbeatprompt after nextsubmission to
+read currentrunfromhandoff rather than hardcode oldsaved30.
+
+Older handoff follows:
+
 # Autonomous follow-up enabled — 27 October 2026
 
 App heartbeat continue-trotsky-chatbot-evaluations created ACTIVE every20minutes

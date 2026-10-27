@@ -1,3 +1,25 @@
+# Ready for next offline step — 27 October 2026
+
+Offline reviewed-proposition rendering/coverage milestone is COMPLETE,
+committed and pushed at `83608c5`.128focused tests pass; full401 retains the
+same2historical README snapshot errors, no lock edits. Actual CPU audit:
+42unchangedv4claims,4question representation gaps,2oracle sequences with
+hidden legacy packing loss. New opt-in renderer preserves all selected IDs
+and provenance; active9B/v3 unchanged, relevance/completeness unverified.
+
+No Kaggle notebook is running; saved42 is COMPLETE and already verified with
+2falseapprovals on both new hearing negatives. Do not resubmit or poll the
+completed job as if pending. Heartbeat updated for OFFLINE source-proposition
+coverage work next. Read GHOST_REVIEWED_SOURCE_COVERAGE.md and ignored
+coverage.json, then create new opt-in reviewed coverage without altering old
+42claims/packets/questions/expectations. Distinguish arithmetic inference from
+source statements, and review anchors/roles/dates/limits. Do not feed oracle
+selection lists or expected answers to any later model. Only freeze a bounded
+selector test after coverage is usable; no new GPU submission yet.
+Training/adapters/active replacement/fresh transfer remain gated.
+
+Earlier notes follow (pending milestone instructions superseded):
+
 # Current continuation — 27 October 2026
 
 **Saved42 is COMPLETE, exact downloaded/verified; no Kaggle job is running or

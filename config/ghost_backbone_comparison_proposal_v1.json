@@ -179,6 +179,11 @@
     "cases_with_statement_gaps": 4,
     "oracle_sequences_with_hidden_packing_loss": 2,
     "active_model_changed": false,
-    "next_gate": "New opt-in source-reviewed proposition coverage before bounded selector inference"
+    "next_gate": "New opt-in source-reviewed proposition coverage before bounded selector inference",
+    "status": "Completed offline audit and opt-in renderer; committed/pushed83608c5",
+    "focused_tests": 128,
+    "full_tests": 401,
+    "known_historical_errors": 2,
+    "new_gpu_run_submitted": false
   }
 }

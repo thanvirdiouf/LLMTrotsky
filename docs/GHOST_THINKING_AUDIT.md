@@ -62,3 +62,12 @@ scored response. None of this establishes factual model quality.
 
 V31 submitted as private Kaggle saved33 after f1e4f00 was committed and pushed.
 Results are pending; the default chatbot and audit policies are unchanged.
+
+## Verified outcome
+
+V31/saved33 verified ten calls with nine output-cap truncations and one complete
+correct rejection;0of5pairs both formally correct. No input rejection, peak
+11.32GiB. Truncated calls are not semantic rejections and raw intermediate text
+was not displayed. The tested greedy thinking policy is not integrated. Next
+preparation is [hardware inventory and a backbone review](GHOST_HARDWARE_AND_BACKBONE_REVIEW.md),
+not an automatic increase to reasoning budget.

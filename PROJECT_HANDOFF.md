@@ -1,3 +1,33 @@
+# Current continuation — 27 October 2026
+
+V31/saved33 COMPLETE exacttargetdownloaded with ignored resumefile. Frozen/token
+verified10calls/9outputtruncations/1correct finalrejection, noinputreject,11.32GiB.
+All9blocked at4096tokens,5.6–5.8min/call. No chainofreasoningprinted, no semantic
+rejectionclaimedfortruncation. Raw/finalhashes properlyseparate. Review/scoring
+local. No newreader integration, freshtransfer ortraining.
+
+Next preparation: hardware-only ghost_hardware_v1, no modelweights/inference/
+training, internetoff, sameprivatefreeT4notebook. Builder freezes notebook/
+metadata/source; verifier checks exactsource+inventoryconsistency anddoesNOT
+claimlargermodelfit. Fourtestsimplemented;101focusedpass/full374same2historicalREADMEerrors.
+Staged training/kaggle_cli/ghost_hardware_v1. Commit/pushthen submit. After
+COMPLETE download exactsaved hardwareoutput and runverify_ghost_hardware_probe.py
+(instead of modelsmokeverifier). CollectGPUcount/freeVRAM/RAM/disk only.
+
+Possiblebackbone proposal config/ghost_backbone_comparison_proposal_v1.json
+is notsubmitted andhasnodownloadedweights. PublicHFmetadataonly confirms
+Qwen3.5-27B revisionfc05daec18b0a78c049392ed2e771dde82bdf654/Apache2.0.
+Hardwareinventoryneededbeforeconcretefitclaims; old9B kbithelperissingleGPU
+andmustnotbealteredforashardedloader. Docs GHOST_HARDWARE_AND_BACKBONE_REVIEW.md.
+No paidhardware, adapters, newbackboneinference oractivepromotion. Existing
+pinned9B/activev3/sourceinspection stayunchanged. Trainingpaused.
+
+Next heartbeat prompt must handle hardwareprobe specially, then use inventory
+to prepare a bounded backbone comparison decision; do not blindly runanother
+9Bself-auditpromptrevision or resubmit oldmodeljobs.
+
+Earlier notes follow:
+
 # Latest submitted run — 27 October 2026
 
 Local **ghost_smoke_v31** submitted successfully as private Kaggle saved

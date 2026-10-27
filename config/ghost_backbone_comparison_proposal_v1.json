@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "status": "Proposal only: GPU inventory pending; larger-backbone inference is not authorized or submitted",
+  "reason": "Current9B factual self-audit false acceptance/rejection and thinking-output budget failures; not a claim that every model configuration fails",
+  "candidate": {
+    "model_id": "Qwen/Qwen3.5-27B",
+    "revision": "fc05daec18b0a78c049392ed2e771dde82bdf654",
+    "license": "apache-2.0"
+  },
+  "model_card": "https://huggingface.co/Qwen/Qwen3.5-27B",
+  "weights_downloaded": false,
+  "current_control_run": {
+    "local_version": "ghost_smoke_v30",
+    "saved_version": 32,
+    "candidate_file": "config/ghost_neutral_source_calibration_v1.json",
+    "score": "4correct approvals,1correct rejection,1false approval,1false rejection,3format blocks"
+  },
+  "phase_a": {
+    "purpose": "Memory feasibility only after separate scope approval",
+    "hardware": "Existing private free Kaggle target; inspect inventory first",
+    "model_calls_maximum": 1,
+    "probe_input_tokens": 5000,
+    "probe_output_tokens": 16,
+    "quantization": "Proposed NF4 double quantization/float16 compute/SDPA; validate actual load and distributed placement",
+    "abort_conditions": [
+      "Insufficient free GPU RAM, host RAM or disk",
+      "Model load or preparation fails",
+      "Would require paid compute or CPU/disk offload for scored evaluation"
+    ],
+    "training_steps": 0,
+    "adapters_loaded": []
+  },
+  "phase_b": {
+    "prerequisite": "PhaseA verified memory/placement succeeds and benchmark implementation frozen",
+    "cases": "Same ten neutral-source calibration candidates, questions and expectations; no fresh-question claim",
+    "evaluation_calls_maximum": 10,
+    "displayed_judgments_maximum": 10,
+    "separate_memory_probe_calls_maximum": 1,
+    "input_cap_tokens": 5120,
+    "output_cap_tokens": 1024,
+    "thinking": false,
+    "generation": "Greedy baseline initially; runtime/size changes mean whole-system comparison, not a single-variable capacity experiment",
+    "activation": "No automatic active-pointer or source-reader promotion"
+  },
+  "privacy": "Same existing private notebook; reviewed public passages and candidate test data; source/output artifacts ignored locally",
+  "paid_compute": false,
+  "training_steps": 0,
+  "adapters_loaded": [],
+  "prerequisites": [
+    "Hardware inventory verified",
+    "User explicitly approves changing the currently pinned9B backbone for this experiment",
+    "Separate loader/preparation handles shard placement without altering frozen9B helper",
+    "New model/tokenizer/template and exact protocol hashed before upload"
+  ],
+  "scope_change_required": "Existing repeated-run authorization fixes the current pinned Qwen base; public metadata lookup does not authorize new weight inference."
+}

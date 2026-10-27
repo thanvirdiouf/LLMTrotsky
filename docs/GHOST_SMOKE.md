@@ -232,3 +232,8 @@ pinned base, thinking enabled and4,096 combined output tokens; at most10calls
 plus probe1. See GHOST_THINKING_AUDIT.md.
 
 V31 submitted as private saved33, thinking-mode diagnostic results pending.
+
+V31/saved33 verified10calls,9truncations,1correct final rejection. No integration.
+A separate ghost_hardware_v1 notebook stages hardware inventory only, internet
+disabled, zero model calls and no weights; use verify_ghost_hardware_probe.py,
+not the model-smoke verifier, for that result.

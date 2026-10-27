@@ -22,7 +22,7 @@ establish. One is application arithmetic. Review kind describes the processing;
 certainty remains separately represented by status and attribution. Bounded
 assessments are labelled inferences, not invented source admissions. The ILO
 sum is explicitly derived, not a separately reported source number. Decimal
-metadata checks verify5.7+4.7=10.4 and source-token occurrence; population,
+metadata checks verify 5.7 + 4.7 = 10.4 and source-token occurrence; population,
 category and wording semantics still require source review. A stipulated
 hypothetical calculation remains distinct from an empirical office estimate.
 
@@ -40,7 +40,7 @@ python3 scripts/audit_reviewed_coverage_extension.py --output evaluation/runs/gh
 .venv-tokenizer/bin/python scripts/prepare_reviewed_selector.py --output evaluation/ghost_reviewed_selector_inputs_v1
 ```
 
-The result has51claims. Coding-agent source review is unblinded development
+The result has 51 claims. Coding-agent source review is unblinded development
 review, not independent or human validation. The local `SOURCE_REVIEW.json`
 binds the supplements, ledger and input lock. Oracle displays demonstrate
 representation and preservation only:4/4/7/9/6 inspected statements, with no
@@ -53,7 +53,7 @@ are excluded from the model messages and executable bundle.
 `ghost_reviewed_selection_v1` uses the same five original questions and controlled
 source packets as the earlier factual trials. The model receives full bounded
 passages and every available reviewed summary for those packets, including
-status and attribution. It outputs only `{"claim_ids":[...]}` with at most12
+status and attribution. It outputs only `{"claim_ids":[...]}` with at most 12
 distinct known IDs. Source text and user premises remain data, not instructions.
 Unknown IDs, extra model text, duplicate IDs or incomplete output block the case
 without retry. Empty selection says summaries were not selected; it does not
@@ -72,10 +72,10 @@ Retrieval is controlled, not measured. The fixed fresh-transfer questions remain
 unrun; conversation and voice come after usable factual behavior.
 
 The loader and efficient-attention helpers are byte-identical to saved41.
-The same pinned Qwen3.5-27B revision, NF4/FP16, fixed34/30split, two freeT4s,
+The same pinned Qwen3.5-27B revision, NF4/FP16, fixed 34/30 split, two free T4s,
 private notebook, no CPU/disk parameter offload, and600s/2700s caps apply.
-There are exactly five evaluation calls capped at1,024output tokens and one
-separate5,000-input/16-output memory probe. Input lengths are
+There are exactly five evaluation calls capped at 1,024 output tokens and one
+separate 5,000-input/16-output memory probe. Input lengths are
 2,612/3,686/3,697/2,470/1,440tokens. No training, adapters, paid compute,
 public upload or active model change is permitted.
 
@@ -96,11 +96,11 @@ rejects changed displayed text even if journal hashes were recomputed.
 Ten new tests across ledger, input and runtime modules cover scope/metadata
 preservation, arithmetic and absence typing, the unchanged historical guard,
 withheld oracle/expected answers, strict ID-only selection, no factual rewriting,
-blocked output, call limits and frozen replay. All138 focused tests pass.
+blocked output, call limits and frozen replay. All 138 focused tests pass.
 CPU preflight used synthetic ID outputs and the real tokenizer to exercise the
 verifier; it did not perform model inference or establish model quality/GPU
 execution. Synthetic artifacts were confined to temporary test directories.
-Full411 retains the same two historical README snapshot errors; original
+The full suite of 411 tests retains the same two historical README snapshot errors; original
 locks were not changed. Actual submission state is recorded in the handoff.
 
 ## Review after completion
@@ -114,3 +114,9 @@ do not modify the frozen curation/input review. Source-record quality remains
 unblinded implementing-agent review unless a separate reviewer actually reviews it.
 Neither a successful run nor complete selection permits automatic activation,
 training or a claim of independent/human validation.
+
+The frozen trial was submitted as private Kaggle saved43 after commit
+`32dfc5e` was pushed. Fetched normalized notebook cell sources/types match
+local input exactly. Status at confirmation: RUNNING. The heartbeat uses this
+saved version and dedicated verifier. No actual selector-quality result is
+claimed yet; active9B/v3, training and fresh-transfer gates are unchanged.

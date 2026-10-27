@@ -1,3 +1,45 @@
+# Latest submitted run — 27 October 2026
+
+**`ghost_reviewed_selection_v1` is RUNNING as private Kaggle saved43. Do not
+resubmit.** Submitted after pushed commit `32dfc5e`. Fetched exact saved43;
+all three normalized cell source texts/types match the frozen local notebook.
+Receipt: ignored `evaluation/runs/ghost_reviewed_selection_v1/submission.json`.
+Heartbeat updated for the selector run and its dedicated verifier.
+
+Next check saved43. On COMPLETE download exact43
+`ghost_reviewed_selection_bundle/*` and `ghost_reviewed_selection_results/*`
+into `evaluation/runs/ghost_reviewed_selection_v1/download/`, then run:
+`.venv-tokenizer/bin/python scripts/verify_reviewed_selection.py --version
+ghost_reviewed_selection_v1 --tokenizer evaluation/ghost_reviewed_selector_inputs_v1/tokenizer_assets`.
+Use this dedicated selector verifier, not audit/synthesis/probe. It checks
+frozen inputs/ledger, tokens, scope/logits/backend and exact selection/display
+replay. Review actual source wording AND selection relevance, requested-task
+fulfillment, unnecessary refusals, redundancy and readability independently.
+Immutable wording is not proof of truth, relevance or complete answers.
+Review is unblinded implementing-agent review, not human/independent validation.
+Put inference review in the RUN directory; do not modify frozen curation review
+`evaluation/ghost_reviewed_coverage_v2/SOURCE_REVIEW.json` or input locks.
+
+Five selector calls/five research replies +one 5,000-input/16-output probe.
+Model outputs IDs only; application preserves all selected reviewed statements
+and provenance, no factual rewriting/self-audit gate or memory promotion.
+Same pinned 27B/free private two T4s/600s installation/2700s workload/1024output
+caps. Inputs2612/3686/3697/2470/1440 tokens. Loader/attention helpers identical
+tosaved41. 138 focused tests pass; full411 same two historical README errors,
+no lock edits. CPU verifier preflight used synthetic IDs/real tokenizer only,
+no GPU or model-quality evidence. No actual new output yet.
+
+Source representation: new opt-in51claim ledger preserves all original42
+claims and packets, adds9 reviewed items (5 paraphrases/3 bounded-source
+inferences/1 arithmetic derivation). Curation review is not human gold.
+All available summaries/full sources in prompts; no oracle ID lists or expected
+answers. Actual source-selection quality remains unmeasured. Saved42's two
+focused false approvals motivate this architecture, not a third broad writer
+patch. Active9B/v3 untouched; training/adapters/fresh transfer remain gated.
+Docs: `docs/GHOST_REVIEWED_SELECTION.md`.
+
+Earlier preparation notes follow (submission states superseded):
+
 # Current continuation — 27 October 2026
 
 Offline coverage expansion complete: NEW51claim opt-in ledger at

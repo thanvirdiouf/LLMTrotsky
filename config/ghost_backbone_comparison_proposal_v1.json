@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "Opt-in51claim source coverage reviewed, original42 preserved; five-question immutable-wording selector frozen, not submitted",
+  "status": "Reviewed-source ID-only selector submitted as private saved43; source selection/task quality pending; active9B unchanged",
   "reason": "Current9B factual self-audit false acceptance/rejection and thinking-output budget failures; not a claim that every model configuration fails",
   "candidate": {
     "model_id": "Qwen/Qwen3.5-27B",
@@ -194,12 +194,14 @@
     "total_claims": 51,
     "frozen_inputs": "evaluation/ghost_reviewed_selector_inputs_v1",
     "frozen_local_version": "ghost_reviewed_selection_v1",
-    "status": "Prepared, not submitted",
+    "status": "Submitted and running",
     "evaluation_calls_maximum": 5,
     "separate_memory_probe_calls_maximum": 1,
     "model_audit_performed": false,
     "generated_factual_text_used": false,
     "active_model_changed": false,
-    "fresh_transfer_run": false
+    "fresh_transfer_run": false,
+    "saved_version": 43,
+    "verification_script": "scripts/verify_reviewed_selection.py"
   }
 }

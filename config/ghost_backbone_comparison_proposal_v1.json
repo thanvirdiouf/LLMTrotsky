@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "Approved candidatev2/saved37 verified GPU0 forwardOOM; same-weight/map/budget efficient-attentionv3 prepared",
+  "status": "Approved candidatev3/saved38 running efficient-attention feasibility probe after verified v2 GPU0 forward OOM",
   "reason": "Current9B factual self-audit false acceptance/rejection and thinking-output budget failures; not a claim that every model configuration fails",
   "candidate": {
     "model_id": "Qwen/Qwen3.5-27B",
@@ -53,7 +53,9 @@
     "next_prepared_version": "ghost_candidate_probe_v3",
     "next_placement_policy": "fixed_34_30",
     "caps_unchanged": true,
-    "next_attention_policy": "repeat_kv_efficient_sdpa"
+    "next_attention_policy": "repeat_kv_efficient_sdpa",
+    "latest_submitted_version": "ghost_candidate_probe_v3",
+    "latest_saved_version": 38
   },
   "phase_b": {
     "prerequisite": "PhaseA verified memory/placement succeeds and benchmark implementation frozen",

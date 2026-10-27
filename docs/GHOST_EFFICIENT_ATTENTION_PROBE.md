@@ -66,3 +66,8 @@ snapshot errors. The updated verifier re-verifies the actual saved37 failure.
 Candidatev3 CPU preflight reconstructs exactly5,000 tokens, with byte-identical
 probe data and unchanged model, map, packages and resource/time caps. CUDA
 backend equivalence is explicitly pending the real notebook execution.
+
+Candidatev3 was submitted as private saved38 after commit `94bf667` was pushed.
+The fetched saved38 cell types and source text match the frozen notebook after
+normalizing Kaggle's string/list serialization. Status at confirmation: RUNNING.
+This records submission only; GPU checks and memory success remain pending.

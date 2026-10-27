@@ -1,3 +1,29 @@
+# Latest submitted run — 27 October 2026
+
+**Candidate `ghost_candidate_probe_v3` is running as private Kaggle saved
+version38. Do not resubmit.** Submitted after pushed commit `94bf667`. The
+exact saved38 notebook was fetched: all three cell types and normalized source
+text match frozen v3 byte-for-byte. Kaggle serializes source lists as strings;
+raw notebook JSON hashes therefore differ. Receipt is ignored locally at
+`evaluation/runs/ghost_candidate_probe_v3/submission.json`.
+
+This tests the source-guided efficient-attention fix described below with the
+same approved27B pin, fixed34/30 placement, 5,000-input/16-output call,13GiB
+weight budget perGPU and600s installation/2700s runtime limits. It stops after
+the finite probe; no server. Synthetic CUDA checks precede weight download.
+No memory success or source-quality result yet.
+
+Next check saved38. When COMPLETE, download exact38 into
+`evaluation/runs/ghost_candidate_probe_v3/download/` and run:
+`.venv-tokenizer/bin/python scripts/verify_ghost_candidate_probe.py --version
+ghost_candidate_probe_v3 --tokenizer evaluation/ghost_candidate_probe_v3/tokenizer_assets`.
+Inspect kernel equivalence, actual backend coverage, placement, tokens, finite
+logits and failure/memory diagnostics. A blocked result requires diagnosis,
+not blind resubmission. Only a verified pass permits preparing the ten fixed
+neutral-audit candidates against archived9B controls. Activev3/9B unchanged.
+
+Earlier preparation notes follow (submission statements superseded):
+
 # Current continuation — 27 October 2026
 
 Candidatev2/saved37 COMPLETE andexactbundleverifiedBLOCKED. Weightsloaded

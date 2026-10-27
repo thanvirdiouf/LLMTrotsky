@@ -1,3 +1,23 @@
+# Current continuation — 27 October 2026
+
+User resumed after explicit pause. HEADfe2adfc was pushed; V26/saved28 completed
+and exact download/frozen replay/token verification passed: ten replies20calls,
+no budget/truncation,11.32GiB peak. Review/transcript exports and unblinded root
+implementation review with hashes are in evaluation/runs/ghost_smoke_v26.
+Reading blocks4/5 before audit for nonliteral quotes; one displayed reading
+misstates hypothesis scope and source confirmation despite checker approval.
+Canonical replies remain incomplete. No active-pointer/training promotion.
+
+V27 frozen from same five matched questions/sourceplanv4, <=25calls+probe1.
+Only reading writer instructions revised: no quotation marks, preserve dependent
+hypothesis scope, speaker/inference subjects, numerical denominator. Validation
+and auditing unchanged.81 focused tests pass. Commit/push and submit under
+standing private/free inference authorization, then exact-version verify and
+review quality separately from format and model approval. No paid GPU/adapters.
+Historical I once guard unchanged. Frozen reference date stays26October2026.
+
+Older handoff follows (staging statements below superseded):
+
 # Active goal: present-day Trotsky ghost — 26 October 2026
 
 Clearly fictional present-day Trotsky, no 1940 cutoff. Distinguish historical

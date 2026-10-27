@@ -73,3 +73,28 @@ necessary limits, unnecessary refusals and format failures separately. Partial
 blinding is unavoidable where response labels/style reveal a method difference.
 Choose later integration from those results; neither model approval nor this
 small comparison establishes reliable factual synthesis.
+
+## Verified V26 result and V27 follow-up
+
+V26 completed as private saved version28. Frozen replay and local tokenizer
+reconstruction verified ten replies,20 evaluation calls, no input rejection or
+truncation, and11.32GiB peak. Four reading drafts stopped before auditing because
+they contained nonliteral quotations. The one displayed reading lost hypothesis
+scope and overstated source confirmation despite all-positive model verdicts.
+Canonical replies also omitted requested fields, inference distinctions and the
+ILO calculation. Neither pipeline establishes reliable full task completion.
+
+An unblinded implementation review, bound to all ten displayed-response hashes,
+is retained locally in ghost_smoke_v26/implementation_review.json. It distinguishes
+displayed replies from hidden drafts; it is neither independent nor human review.
+No source-reading promotion or active-pointer change follows these results.
+
+V27 repeats the same five matched development questions and source packets. Only
+the experimental reading writer instructions change: paraphrases without quote
+marks, explicit hypothesis scope, speaker/inference subjects, and percentage
+denominators. Quote validation, auditing, immutable canonical arm and limits stay
+unchanged. This is a combined prompt revision, not a single-instruction ablation,
+and inspected questions remain development data. All81 focused tests pass. The
+run permits at most25 evaluation calls plus one memory probe on free Kaggle.
+Assess whether format failures decrease separately from factual completeness and
+certainty; more model approvals alone cannot justify integration or training.

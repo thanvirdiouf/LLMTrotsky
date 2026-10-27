@@ -92,3 +92,34 @@ was pushed. Exact saved42 normalized notebook cell sources/types match the
 local submission. Status at confirmation: RUNNING. The heartbeat now uses this
 saved version and the dedicated audit verifier. No diagnostic quality result
 is claimed yet; original source-synthesis and fresh-transfer gates remain.
+
+## Saved42 result
+
+The completed diagnostic passed frozen design/source-request, token, runtime,
+finite-logit, backend and archived-parser checks. Ten evaluation calls and one
+memory probe completed in 1,051.86 seconds. All generations stopped normally,
+with no thinking markers, truncation or format blocks.
+
+Both new incorrect hearing candidates were approved, as were their corrections:
+zero of two new pairs had both decisions right. All six familiar controls were
+correct, giving three of three familiar pairs right. Aggregate scores are five
+correct approvals, three correct rejections and two false approvals. Reporting
+only eight correct decisions would hide the specific failure being tested.
+
+The implementing agent's source review confirms the false approvals. The
+resident-field reason silently repairs the candidate into the safe distinction
+between totals and residents, ignoring its actual proposed resident range. The
+date reason mentions the initial 1887 value yet still approves a 1902-to-1897
+self-correction. It also cites a nearby block for Goldman's wording. One familiar
+hypothesis reason again uses the wrong block locator. Reasons are therefore
+fallible source interpretations, not independent verification. The local
+hash-bound review records these limits; it is not human or independent validation.
+
+There is no justification for checker activation, fresh transfer, training or a
+third broad writer patch. The next step is an offline audit of the existing
+reviewed-proposition path: preserve immutable statement wording and provenance,
+prevent selected facts from silently disappearing during packing, and measure
+which requested details the ledger does not represent. Another GPU trial should
+wait for a usable source-record representation. This trades unconstrained
+factual rewriting for inspectable records; it does not prove relevance,
+completeness or the correctness of the underlying development-reviewed ledger.

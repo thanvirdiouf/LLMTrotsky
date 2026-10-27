@@ -1,3 +1,88 @@
+# Current continuation — 27 October 2026
+
+**Saved42 is COMPLETE, exact downloaded/verified; no Kaggle job is running or
+new submission prepared. Do not resubmit it.** Results:2falseapprovals on both
+new hearing negatives (0/2pairs); familiar controls3/3pairs. Hash-bound
+unblinded source review records repaired-candidate reasoning and date confusion,
+plus rationale locator errors. Not independent/human validation; self-checker
+insufficient as factual safety gate. ResultSHA:
+52ee23132ceabc879239e56f2a7c2be9c63d476e0e7646182ef5b150d63ae49e.
+
+Implemented an OFFLINE opt-in source-record renderer in
+scripts/reviewed_source_display.py: IDs-only selection, verbatim reviewed
+statements, preserve all selected records (explicit12limit, no silent cap4),
+source author/date/status/attribution/anchor-speaker-role/context fingerprints,
+no generated factual prose, no self-audit gate, no accepted memory updates.
+Source/relevance/task completeness remain unverified; source-reviewed ledger
+is not human gold. Activev3 and old GhostChat renderer untouched.
+
+CPU audit scripts/audit_reviewed_source_coverage.py reads unchanged42claim
+v4ledger and original5questions. Ignored output:
+evaluation/runs/ghost_reviewed_coverage_v1/{coverage,oracle_displays}.json.
+Two oracle six-record sequences expose hidden old packing cap4 (Blumkin drops
+reform/prediction, two-letter sequence drops Bessedovsky); new renderer keeps
+all6. Oracle lists are inspection only, NOT runtime task routing or model
+selection accuracy. Four questions have immutable-statement representation gaps
+(March date, Eastman initiative/risk, two-source transport confidence/bounded
+unknowns, ILO gradient numbers/arithmetic/local requirements). Full passages
+contain evidence; do not call this corpus/retrieval insufficiency.
+
+Four new tests/128focused pass. Full401 has only the same two historical
+README snapshot errors; original locks unchanged. No model
+calls/uploads/training this offline phase; source data/records/examples ignored.
+Docs: GHOST_REVIEWED_SOURCE_COVERAGE.md, GHOST_GENERATED_AUDIT_DIAGNOSTIC.md.
+Next: finish checks/document/commit/push offline milestone; then fill only
+source-justified reviewed-proposition gaps in NEW opt-in ledger with original
+statements/packets untouched. Directly review anchors and distinguish arithmetic
+inference from source statements. No CPU/GPU model or training needed for
+curation. Only after adequate representation freeze bounded selector experiment
+(fullpassages+reviewedprops, no oracle IDs/expected answers, no freeformfactual
+writer/self-audit gate). Source wording, relevance and completeness scored
+separately. Fresh fixed transfer questions remain unrun until actual usable
+synthesis; dialogue/voice later. Active9B/v3/no adapters/training unchanged.
+
+Earlier notes follow (prior next-step states superseded):
+
+# Current continuation — 27 October 2026
+
+**Checker diagnostic auditv2 / private saved42 COMPLETE and verified. Do not
+resubmit.**10evaluation calls+one5,000/16 probe, all stopped normally, no
+thinking markers/truncations/formatblocks. Runtime1051.86s, peaks10.59/9.77GiB.
+Five correct approvals/three correct rejections/TWO FALSE APPROVALS.
+Both new hearing pairs fail (0/2 complete); familiar controls pass3/3.
+Exact frozen requests/design/tokens/runtime/logits/backend and archived-parser
+verification pass. Result SHA256 52ee23132ceabc879239e56f2a7c2be9c63d476e0e7646182ef5b150d63ae49e.
+
+Unblinded source review confirms false approvals: resident-field reason repairs
+candidate into safe unknown count while ignoring proposed3or4residentfield;
+date reason mentions initial1887 yet still approves1902to1897self-correction.
+Both positive corrections are also approved, so opposite incompatible versions
+pass. Familiar decisions sound but neutral05 again has block5/4locator error;
+d02negative quotesGoldman107wording while citing105. Model approval/source
+reasoning therefore not a factual safety guarantee even on focused questions.
+Local SOURCE_REVIEW.json binds output hashes; not independent/human validation.
+
+Next justified step is OFFLINE reviewed-proposition coverage/rendering audit,
+not another broad writer patch or new GPU run. Existingv4 has42reviewedclaims
+and source packets already contain needed evidence, but canonical planner/
+packing caps4facts and can omit even selected facts. Some needed facts (ILO
+category arithmetic, exact month, transfer confidence/initiative distinctions)
+are absent from immutable statement forms. Build an opt-in deterministic
+renderer preserving all selected reviewed statements and source metadata, with
+no free-form factual model text or self-audit gate. Quantify representation
+and packing gaps on the original five questions before paying another inference
+run in quota. This is an experimental source-record path; selection relevance,
+completeness and reviewed claims themselves still require source review.
+No active9B/v3 replacement or trusted-memory promotion.
+
+Implement/test/document this offline milestone and preserve original ledgers,
+source packets/questions/expectations and ignored output privacy. Then add only
+justified reviewed proposition coverage (new opt-in ledger, not training) and
+freeze a bounded selector experiment if coverage is usable. Fresh transfer,
+voice/dialogue and training remain gated. No subagents without authorization.
+
+Earlier notes follow (saved42 pending statements superseded):
+
 # Latest submitted run — 27 October 2026
 
 **`ghost_candidate_audit_v2` is RUNNING as private Kaggle saved42. Do not

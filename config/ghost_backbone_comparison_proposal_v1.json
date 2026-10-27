@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "Post-hoc checker diagnostic auditv2 running as private saved42; source-faithful synthesis/fresh transfer still gated",
+  "status": "Saved42 focused checker failures verified; offline reviewed-record rendering/coverage audited, no new GPU run",
   "reason": "Current9B factual self-audit false acceptance/rejection and thinking-output budget failures; not a claim that every model configuration fails",
   "candidate": {
     "model_id": "Qwen/Qwen3.5-27B",
@@ -144,13 +144,41 @@
   "phase_d": {
     "purpose": "Two hearing failure pairs plus three familiar checker calibration pairs in fixed three-packet context",
     "frozen_local_version": "ghost_candidate_audit_v2",
-    "status": "Submitted and running",
+    "status": "Complete and verified; both new failure pairs failed",
     "blueprint": "config/ghost_generated_audit_design_v1.json",
     "evaluation_calls_maximum": 10,
     "separate_memory_probe_calls_maximum": 1,
     "fresh_transfer_run": false,
     "active_model_changed": false,
     "saved_version": 42,
-    "verification_script": "scripts/verify_ghost_candidate_audit.py"
+    "verification_script": "scripts/verify_ghost_candidate_audit.py",
+    "result_sha256": "52ee23132ceabc879239e56f2a7c2be9c63d476e0e7646182ef5b150d63ae49e",
+    "counts": {
+      "false_acceptance": 2,
+      "correct_approval": 5,
+      "correct_rejection": 3
+    },
+    "pair_groups": {
+      "new_hearing_failures": {
+        "pairs_both_correct": 0,
+        "pairs_total": 2
+      },
+      "familiar_controls_with_added_context": {
+        "pairs_both_correct": 3,
+        "pairs_total": 3
+      }
+    },
+    "fresh_transfer_justified": false
+  },
+  "phase_e": {
+    "purpose": "Offline opt-in reviewed-proposition rendering and representation/packing audit",
+    "source_plan": "config/ghost_source_plan_v4.json",
+    "claim_count": 42,
+    "model_calls": 0,
+    "oracle_selections_are_not_runtime_routing": true,
+    "cases_with_statement_gaps": 4,
+    "oracle_sequences_with_hidden_packing_loss": 2,
+    "active_model_changed": false,
+    "next_gate": "New opt-in source-reviewed proposition coverage before bounded selector inference"
   }
 }

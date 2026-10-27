@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "Verified auditv1/saved39 supports bounded synthesisv1; private saved40 submitted and queued",
+  "status": "Synthesisv1/saved40 verified: three model-approved, two quote blocks; source/completeness defects keep fresh transfer gated",
   "reason": "Current9B factual self-audit false acceptance/rejection and thinking-output budget failures; not a claim that every model configuration fails",
   "candidate": {
     "model_id": "Qwen/Qwen3.5-27B",
@@ -116,7 +116,7 @@
   "phase_c": {
     "purpose": "Five exact archived9B factual-writer questions/prompts plus experimental neutral-source checking",
     "frozen_local_version": "ghost_candidate_synthesis_v1",
-    "status": "Submitted; queued; no synthesis result yet",
+    "status": "Complete and verified; unblinded review finds unsupported/qualified claims and incomplete tasks",
     "control_local_version": "ghost_smoke_v27",
     "control_saved_version": 29,
     "maximum_displayed_answers": 5,
@@ -125,6 +125,13 @@
     "fresh_transfer_run": false,
     "active_model_changed": false,
     "saved_version": 40,
-    "verification_script": "scripts/verify_ghost_candidate_synthesis.py"
+    "verification_script": "scripts/verify_ghost_candidate_synthesis.py",
+    "result_sha256": "0292a874f812a4f1edcc0b2b12550b985d1710ef7426905bdaf67097286017a9",
+    "evaluation_calls": 8,
+    "displayed_statuses": {
+      "blocked": 2,
+      "supported_by_model_review": 3
+    },
+    "fresh_transfer_justified": false
   }
 }

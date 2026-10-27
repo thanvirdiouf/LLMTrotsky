@@ -1,3 +1,38 @@
+# Current continuation — 27 October 2026
+
+**Candidate synthesisv1 / private saved40 COMPLETE and exact verified. Do not
+resubmit.** Eight evaluation calls +one5,000/16 probe, five displayed outcomes:
+3 model-approved readings,2 quote-guard refusals, no truncated generations.
+Runtime1082.16s, peaks10.59/9.77GiB. Result SHA256:
+`0292a874f812a4f1edcc0b2b12550b985d1710ef7426905bdaf67097286017a9`.
+Frozen sources/inputs/tokens, finite logits, full backend coverage and exact
+dependent pipeline/answer replay verified. No thinking markers in outputs.
+
+Unblinded implementing-agent source/completeness review DOES NOT justify
+fresh transfer. Hearing and ILO tasks are answerable but never displayed:
+hearing drafts quote new field values; ILO quotes a user label with ASCII vs
+curly apostrophe. Literal gate retained, no silent typography/source relax.
+Eastman display is useful but omits own-initiative/risk detail in frozen rubric.
+Blumkin display distinguishes the two inferences but omits the fuller actual
+revolutionary-duty and reform-not-revolution advice. Rakovsky/Bessedovsky
+gets dates/report-vs-hypothesis/informant distinctions largely right, but
+unqualified subsequent-deportation wording and a died-or-survived-Polar-Circle
+story miscast source certainty/chronology. Both paragraphs were checker-approved.
+Ten fixed audit successes therefore did NOT establish generated-answer support
+or completeness. Hash-bound local SOURCE_REVIEW.json records per-case checks.
+This is development review, not independent/human validation.
+
+Next justified fix: same five questions/sources/expectations, writer-instruction
+revision to avoid quoted field labels/user-label repetition, explicitly cover
+requested subparts and preserve local unknowns/hypothesis consequences without
+inventing a specific admission or later-outcome story. Keep literal quote gate,
+neutral checker, pinned model/backend and all budgets unchanged. Freeze as a
+new version; label this post-hoc development revision, not fresh validation.
+Do not run fixed transfer tasks yet, activate a model/checker or train adapters.
+Implement/test/replay oldv1, then bounded private follow-up under existing approval.
+
+Earlier notes follow (saved40 queued/running statements superseded):
+
 # Latest submitted run — 27 October 2026
 
 **`ghost_candidate_synthesis_v1` submitted as private Kaggle saved40,

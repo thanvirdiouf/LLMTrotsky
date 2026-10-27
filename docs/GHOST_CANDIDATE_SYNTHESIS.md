@@ -96,3 +96,39 @@ local submission exactly. Status at confirmation: QUEUED. The heartbeat uses
 this saved version and dedicated verifier; no synthesis quality result yet.
 CPU preflight confirmed all five writer input token sequences match the old
 9B control and the full generation configuration round-trips unchanged.
+
+## Saved40 result and review
+
+Saved40 completed in 1,082.16 seconds with eight evaluation calls plus one
+memory probe. Exact payloads, token reconstruction, finite logits, backend
+coverage and dependent pipeline/answer replay verified. All generations stopped
+normally. Three readings were displayed after model approval; two cases showed
+the application refusal after literal-quotation validation failed.
+
+The implementing agent's source and completeness review found useful progress
+but does not justify fresh transfer. The hearing draft quoted newly proposed
+field values, which are not literal source quotations. The ILO draft quoted a
+user label with an ASCII apostrophe where the question uses a curly apostrophe.
+Both tasks were answerable, yet neither displayed its supported explanation.
+Their refusal is not evidence that the collection lacks the relevant facts.
+
+The Eastman answer preserves dates, reported pressure and theoretical differences
+but omits the own-initiative/risk distinction requested by the frozen rubric.
+The Blumkin answer correctly separates the two inferences and retains a dated
+future conditional, but substitutes the advanced-posts example for the fuller
+revolutionary-duty and reform-not-revolution advice.
+
+The Rakovsky/Bessedovsky answer largely preserves dates, reported sources,
+hypothesis and unnamed-informant distinctions. However, its subsequent-deportation
+phrase loses explicit hypothetical scope. Its claim that the text admits not
+knowing whether Rakovsky died or survived the Polar Circle recasts the actual
+conflicting hospital-death/cure reports into a different location/outcome story.
+Both paragraphs were model-approved. The ten fixed-candidate audit successes
+did not establish support or completeness for newly generated answers.
+
+The ignored `SOURCE_REVIEW.json` binds each displayed reply's raw UTF-8 hash and
+the result/journal hashes to this unblinded development review. It is not
+independent or human validation. The next experiment should revise writer
+instructions on these same questions, preserving sources, expectations,
+literal-quote checks, neutral auditor, model/backend and budgets. It remains
+post-hoc development, with fresh transfer, activation and training gated.

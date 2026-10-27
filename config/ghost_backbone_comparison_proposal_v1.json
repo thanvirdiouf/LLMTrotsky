@@ -212,5 +212,21 @@
       5
     ],
     "fresh_transfer_justified_yet": false
+  },
+  "phase_g": {
+    "purpose": "Offline presentation replay of actual saved43 reviewed-source selections",
+    "status": "Implemented and tested; visual usability and completeness unvalidated",
+    "script": "scripts/preview_reviewed_selection.py",
+    "source_saved_version": 43,
+    "case_count": 5,
+    "selected_statements_preserved": 22,
+    "model_calls": 0,
+    "selection_changed": false,
+    "active_model_changed": false,
+    "readability_validated": false,
+    "fresh_transfer_run": false,
+    "new_focused_tests": 4,
+    "reviewed_source_tests_passed": 18,
+    "next_gate": "Separate available selection omissions from immutable summary precision before a new frozen task-coverage experiment"
   }
 }

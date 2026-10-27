@@ -1,3 +1,33 @@
+# Offline presentation milestone — 27 October 2026
+
+New opt-in `scripts/preview_reviewed_selection.py` replays actual saved43
+selections as a static HTML source-summary panel. All22 statements across five
+questions retain exact wording/order/status/attribution; sources grouped once
+per case, full original records in expandable provenance. No model calls,
+selection changes, factual rewriting, source/expectation edits, trusted-memory
+promotion or active-route change. Original question/scope/available-record
+fingerprints and every original display field checked before output. Existing
+trial directories cannot be overwritten. Four new integrity/escaping/replay
+checks pass; all18 reviewed-source tests pass.
+
+Ignored latest artifact: evaluation/runs/ghost_reviewed_selection_v1/presentation_v2/
+preview.html and replay.json. Browser policy rejected local-file access; no
+workaround attempted. Visual layout/usability/readability are NOT validated.
+Code/HTML structure validation is not user validation. Details and three-way
+coverage diagnosis: docs/GHOST_REVIEWED_PRESENTATION.md. Future preview outputs
+must use a new directory. Original dedicated GPU verifier remains necessary;
+the presentation script is not a substitute.
+
+Saved43 remains COMPLETE/verified, no notebook running. Next: separate available
+but unselected records (March and Blumkin reform) from Eastman immutable-form
+precision, then design/freeze a bounded task-coverage selector experiment using
+full sources/all menus and original questions, no oracle IDs/rubrics in runtime.
+Do not imply presentation fixes omissions. Source-form detail needs a separate
+new reviewed opt-in extension, not edits to frozen51claim ledger. Fixed fresh
+transfer remains unrun; original archives, active9B/v3 and training stay unchanged.
+
+Earlier saved43 status/review follows:
+
 # Current status — 27 October 2026
 
 **Selectorv1 / private saved43 COMPLETE and exact verified. No Kaggle notebook

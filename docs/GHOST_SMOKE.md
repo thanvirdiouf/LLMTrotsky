@@ -247,3 +247,6 @@ Hardwarev2/saved35 verified separate SDK cache with ~1.02TiB reported free.
 A separate ghost_candidate_probe_v1 stages one unscored pinned27B feasibility
 probe on the same private free two-T4 target. Active9B stays unchanged. Use
 verify_ghost_candidate_probe.py; see GHOST_CANDIDATE_FEASIBILITY.md.
+
+Candidate-only ghost_candidate_probe_v1 submitted as private saved36 after
+explicit user approval. One unscored memory probe; active9B unchanged.

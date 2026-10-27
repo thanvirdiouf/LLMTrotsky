@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "Explicit human approval received for prepared27B probe and bounded27B inference follow-ups; first upload not executed; authorized submission pending",
+  "status": "Explicitly approved candidate-only feasibility probe submitted as private saved36; result pending; active9B unchanged",
   "reason": "Current9B factual self-audit false acceptance/rejection and thinking-output budget failures; not a claim that every model configuration fails",
   "candidate": {
     "model_id": "Qwen/Qwen3.5-27B",
@@ -10,7 +10,6 @@
     "safetensors_total_bytes": 55563022432
   },
   "model_card": "https://huggingface.co/Qwen/Qwen3.5-27B",
-  "weights_downloaded": false,
   "current_control_run": {
     "local_version": "ghost_smoke_v30",
     "saved_version": 32,
@@ -33,7 +32,8 @@
     "adapters_loaded": [],
     "runtime_timeout_seconds": 2700,
     "installation_timeout_seconds": 600,
-    "frozen_local_version": "ghost_candidate_probe_v1"
+    "frozen_local_version": "ghost_candidate_probe_v1",
+    "saved_version": 36
   },
   "phase_b": {
     "prerequisite": "PhaseA verified memory/placement succeeds and benchmark implementation frozen",
@@ -77,5 +77,7 @@
     "probe_limits": "One5000-input/16-output-token call; setup10minutes/runtime45minutes",
     "follow_up_limits": "At most10 replies/30evaluation calls plus one short probe per run",
     "prior_review": "Initial automatic approval review rejected new27B submission as outside pinned9B permission. No workload was submitted. Direct human approval now resolves that scope requirement."
-  }
+  },
+  "weights_downloaded_locally": false,
+  "remote_weight_load_status": "Pending exact candidate-probe result"
 }

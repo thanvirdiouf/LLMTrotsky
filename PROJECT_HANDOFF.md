@@ -1,3 +1,44 @@
+# Latest submitted run — 27 October 2026
+
+**Approved candidate-only probe** `ghost_candidate_probe_v1` successfully
+submitted as private Kaggle saved version **36**. Initial upload was rejected
+for pinned9B-only scope and did not execute. User explicitly replied
+**Approve probe and bounded27B tests**; the unchanged prepared bundle was then
+submitted under that new direct approval. Exact27Bpin below; active9B unchanged.
+
+Scope: same private/free twoT4 notebook; one5000-input/16-output unscored probe,
+600s install cap and2700s runtime cap, no server. If it fits, approved follow-ups
+<=10replies/30evaluationcalls plus one short probe perrun. No paidcompute,
+training, adapters oractive9Breplacement. No authority inferredfromautomation.
+
+Next check saved36. After COMPLETE download exact36 into
+`evaluation/runs/ghost_candidate_probe_v1/download/`, then:
+`.venv-tokenizer/bin/python scripts/verify_ghost_candidate_probe.py --version
+ghost_candidate_probe_v1 --tokenizer evaluation/ghost_candidate_probe_v1/tokenizer_assets`.
+Do not use smoke/hardware verifier. Finite logits, placement on GPU0/1 and exact
+probe/token reconstruction checked. Memory success does not establish quality.
+On ERROR or blockedresult diagnose finiteprobe/loader/resource outcome before
+any justified fix; do not blindly repeat the55GB download or increase budgets.
+
+105focused pass/full378 same twohistorical READMEerrors. Candidatecode in
+`bacb7fe`, explicitapprovalrecord in`5a21040`. CPUpreflight exactly5000inputs;
+resourcegate passes reported inventory; no local modelweights loaded/downloaded.
+Official model Qwen3.5-27B pinfc05daec18b0a78c049392ed2e771dde82bdf654,
+NF4/fp16/SDPA, fresh inference-only sharded loader, no PEFT/oldhelper changes.
+
+Hardwarev2/saved35 is verified and finished: twoT4,28.9GiBaggregatefreeVRAM,
+~29.7GiBavailableRAM, SDKmodel-cache filesystem separate fromworking and
+~1.02TiBfree. Active9B experiments used GPU0 only. Candidateoriginalweights
+51.75GiB clear reported cacheheadroom; real GPUfit is what saved36 tests.
+
+If probe passes, next freeze standalone ten-candidate factual audit with27B,
+same messages/questions/candidates/expectations as V30/saved32. Preserve old9B
+controls and report whole-runtime/model comparison, not capacityalone. Only
+useful sourcefidelity warrants freshtransfer then sustaineddialogue. No
+automatic modelpromotion/training. Sourceinspection works withoutmodel/GPU.
+
+Earlier notes (pending submission statements superseded):
+
 # Explicit candidate approval — 27 October 2026
 
 Initial27Bprobe upload was rejected by automaticapprovalreview as outside

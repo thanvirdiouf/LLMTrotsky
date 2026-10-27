@@ -71,3 +71,8 @@ All105 focused tests pass; full378 retains the same two historical README
 snapshot errors. CPU preflight reconstructs exactly5,000 candidate-tokenizer
 input tokens, validates frozen limits and passes measured hardware through
 the resource gate. No local model weights have been loaded or downloaded.
+
+After explicit user approval for the probe and bounded27B follow-ups, the exact
+prepared candidate probe was submitted as private Kaggle saved36. The first
+automatic-review rejection did not submit a workload; the approved submission
+succeeded. Results are pending.

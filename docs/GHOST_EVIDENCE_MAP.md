@@ -114,3 +114,14 @@ snapshot errors. Frozen historical locks and fixtures are unchanged.
 
 V29 was submitted as private Kaggle saved31 after c0b2698 was committed and
 pushed. Results are pending; the fresh transfer remains unrun.
+
+## Verified V29 outcome
+
+V29/saved31 verified18calls/ten replies, no input rejection/truncation,11.32GiB
+peak. Five controls identical to V28. Three maps pass structural validation;
+two composed answers display, both with substantive unsupported details approved
+by the checker. Other cases block on quotes, incomplete JSON or a field limit.
+No fresh transfer or activation follows. The next isolated diagnostic is a
+[standalone factual-source audit](GHOST_NEUTRAL_SOURCE_AUDIT.md), rather than
+another mapping prompt change. Raw maps and unblinded source-review notes remain
+in the ignored research archive with verified answer hashes.

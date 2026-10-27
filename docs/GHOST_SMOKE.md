@@ -218,3 +218,7 @@ V29 stages a block-reference map revision, same ten tasks and25call/probe limits
 See GHOST_EVIDENCE_MAP.md for causes and the unchanged validation boundary.
 
 V29 submitted as private saved31; results pending.
+
+V29/saved31 verified18calls with two displayed mapped answers containing
+unsupported details. V30 stages ten neutral factual-auditor candidates, at most
+ten evaluation calls plus probe1; see GHOST_NEUTRAL_SOURCE_AUDIT.md.

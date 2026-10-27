@@ -29,7 +29,10 @@ def model_cases(source_spec):
             'cases':[{'id':arm+'_'+c['id'],'question':c['question'],'source_packet_ids':c['source_packet_ids'],
                       'comparison_arm':arm,'paired_case_id':c['id']} for arm in source_spec['factual_comparison']['arms'] for c in source_spec['cases']]}
     if 'audit_calibration' in source_spec:
-        return {'audit_calibration':{'packet_ids':source_spec['audit_calibration']['packet_ids']},'conversation':[],
+        control=source_spec['audit_calibration']
+        if control.get('policy','ghost') not in ('ghost','neutral_source'):
+            raise ValueError('Unknown audit policy')
+        return {'audit_calibration':{k:control[k] for k in ('packet_ids','policy') if k in control},'conversation':[],
             'cases':[{k:c[k] for k in ('id','question','claim_ids','segments','history') if k in c} for c in source_spec['cases']]}
     if 'comparison' not in source_spec:
         result={'cases':[{'id':c['id'],'question':c['question']} for c in source_spec['cases']],
@@ -87,6 +90,7 @@ def build(version='ghost_smoke_v1', evaluation_spec=None, constrain_selection=Fa
            'evaluate_grounded_chat_v2.py','kaggle_ghost_smoke.py','kaggle_grounding.py','kbit_preparation.py']
     if 'comparison' in model_spec or 'conversation_source_packet_ids' in model_spec:names.append('evaluate_ghost_comparison.py')
     if 'audit_calibration' in model_spec:names.extend(['evaluate_ghost_comparison.py','evaluate_ghost_audit.py'])
+    if model_spec.get('audit_calibration',{}).get('policy')=='neutral_source':names.append('source_audit.py')
     if 'factual_comparison' in model_spec:names.extend(['evaluate_ghost_comparison.py','source_reading.py','mapped_source_reading.py','evaluate_ghost_factual_comparison.py'])
     if constrain_selection:names.append('selection_constraints.py')
     payload={n:(ROOT/'scripts'/n).read_bytes() for n in names}

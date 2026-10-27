@@ -1,0 +1,258 @@
+{
+  "schema_version": 1,
+  "reference_date": "2026-10-26",
+  "mode": "ghost_audit_calibration",
+  "status": "Preregistered factual-auditor development diagnostic after inspected V29 failures; not fresh validation",
+  "audit_calibration": {
+    "packet_ids": [
+      "rakovsky",
+      "bessedovsky"
+    ],
+    "policy": "neutral_source"
+  },
+  "conversation": [],
+  "cases": [
+    {
+      "id": "neutral_01",
+      "question": "Does the supplied account give Rakovsky a first name?",
+      "claim_ids": [],
+      "segments": [
+        {
+          "id": "s1",
+          "kind": "source_analysis",
+          "text": "The supplied account refers to Rakovsky by surname without supplying his first name."
+        }
+      ],
+      "expected_approved": true,
+      "local_rationale": "Bounded Rakovsky blocks4–8 and packet metadata do not supply that first name. This tests source support, not his actual biography.",
+      "reviewer_only": {
+        "pair_id": "p01",
+        "topic": "unsupported_first_name",
+        "candidate_text_sha256": "0cb32a530f35c457a0f26a1e6735fdb82300ab14d7dd62b8f81b220a69ef98d7",
+        "judgment_status": "Primary coding-agent source judgment, not independent or human gold"
+      }
+    },
+    {
+      "id": "neutral_02",
+      "question": "Does the supplied account give Rakovsky a first name?",
+      "claim_ids": [],
+      "segments": [
+        {
+          "id": "s1",
+          "kind": "source_analysis",
+          "text": "The supplied account identifies Rakovsky by the first name Nikolai."
+        }
+      ],
+      "expected_approved": false,
+      "local_rationale": "Bounded Rakovsky blocks4–8 and packet metadata do not supply that first name. This tests source support, not his actual biography.",
+      "reviewer_only": {
+        "pair_id": "p01",
+        "topic": "unsupported_first_name",
+        "candidate_text_sha256": "813eb1fbfb02e62f67a322f9ff00570cfa1b88543555cd53b95d79937f4c2e2e",
+        "judgment_status": "Primary coding-agent source judgment, not independent or human gold"
+      }
+    },
+    {
+      "id": "neutral_03",
+      "question": "What does the letter establish about Bessedovsky and the Paris embassy purge?",
+      "claim_ids": [],
+      "segments": [
+        {
+          "id": "s1",
+          "kind": "source_analysis",
+          "text": "Trotsky says he was told Bessedovsky played a leading role in the purge commission; this excerpt does not establish earlier membership of the Opposition."
+        }
+      ],
+      "expected_approved": true,
+      "local_rationale": "Bessedovsky block4 introduces purge information as reported to the author. It does not state prior Opposition membership.",
+      "reviewer_only": {
+        "pair_id": "p02",
+        "topic": "unsupported_membership",
+        "candidate_text_sha256": "313994e78ad8aa3f56194f09c2180808524dce2fb917ffbdbd36705a8a0a43e9",
+        "judgment_status": "Primary coding-agent source judgment, not independent or human gold"
+      }
+    },
+    {
+      "id": "neutral_04",
+      "question": "What does the letter establish about Bessedovsky and the Paris embassy purge?",
+      "claim_ids": [],
+      "segments": [
+        {
+          "id": "s1",
+          "kind": "source_analysis",
+          "text": "Trotsky says he was told Bessedovsky played a leading role in the purge commission and establishes that Bessedovsky was a former Oppositionist."
+        }
+      ],
+      "expected_approved": false,
+      "local_rationale": "Bessedovsky block4 introduces purge information as reported to the author. It does not state prior Opposition membership.",
+      "reviewer_only": {
+        "pair_id": "p02",
+        "topic": "unsupported_membership",
+        "candidate_text_sha256": "cf848df18bc66abe4072647fd11b089d3fca68c86ec978e28034bf63343dae6d",
+        "judgment_status": "Primary coding-agent source judgment, not independent or human gold"
+      }
+    },
+    {
+      "id": "neutral_05",
+      "question": "Does this account independently verify the reconstructed pressure on Rakovsky and its outcome?",
+      "claim_ids": [],
+      "segments": [
+        {
+          "id": "s1",
+          "kind": "source_analysis",
+          "text": "Trotsky offers a hypothesis requiring verification: pressure for a declaration, refusal, and deportation to the Polar Circle as the proposed consequence."
+        }
+      ],
+      "expected_approved": true,
+      "local_rationale": "Rakovsky blocks4–6 explicitly call for verification of a reconstruction; confident rhetoric is not independent confirmation.",
+      "reviewer_only": {
+        "pair_id": "p03",
+        "topic": "hypothesis_scope",
+        "candidate_text_sha256": "029777843378f8173f2afebfbd1576976485fb40124219726aa9559421b1a1bf",
+        "judgment_status": "Primary coding-agent source judgment, not independent or human gold"
+      }
+    },
+    {
+      "id": "neutral_06",
+      "question": "Does this account independently verify the reconstructed pressure on Rakovsky and its outcome?",
+      "claim_ids": [],
+      "segments": [
+        {
+          "id": "s1",
+          "kind": "source_analysis",
+          "text": "Trotsky independently verifies the complete sequence: pressure for a declaration, refusal, and deportation to the Polar Circle as the established consequence."
+        }
+      ],
+      "expected_approved": false,
+      "local_rationale": "Rakovsky blocks4–6 explicitly call for verification of a reconstruction; confident rhetoric is not independent confirmation.",
+      "reviewer_only": {
+        "pair_id": "p03",
+        "topic": "hypothesis_scope",
+        "candidate_text_sha256": "6de7735c18ca46763527f88a34eec0502200c21ec848f43476f796bbed2af0b5",
+        "judgment_status": "Primary coding-agent source judgment, not independent or human gold"
+      }
+    },
+    {
+      "id": "neutral_07",
+      "question": "How does Trotsky introduce information about Bessedovsky and the purge?",
+      "claim_ids": [],
+      "segments": [
+        {
+          "id": "s1",
+          "kind": "source_analysis",
+          "text": "Trotsky introduces the purge account as information he was told, rather than something he says he personally witnessed."
+        }
+      ],
+      "expected_approved": true,
+      "local_rationale": "Bessedovsky block4 starts with the reported-information formulation. Personal acquaintance with some other memoir facts in block3 does not establish witnessing this purge.",
+      "reviewer_only": {
+        "pair_id": "p04",
+        "topic": "reported_vs_witnessed",
+        "candidate_text_sha256": "2973c4f6f7e34c6abf105efc6b48a3ce02531bc194805e91443d0c6521e1b0ad",
+        "judgment_status": "Primary coding-agent source judgment, not independent or human gold"
+      }
+    },
+    {
+      "id": "neutral_08",
+      "question": "How does Trotsky introduce information about Bessedovsky and the purge?",
+      "claim_ids": [],
+      "segments": [
+        {
+          "id": "s1",
+          "kind": "source_analysis",
+          "text": "Trotsky introduces the purge account as something he personally witnessed, rather than information he was told."
+        }
+      ],
+      "expected_approved": false,
+      "local_rationale": "Bessedovsky block4 starts with the reported-information formulation. Personal acquaintance with some other memoir facts in block3 does not establish witnessing this purge.",
+      "reviewer_only": {
+        "pair_id": "p04",
+        "topic": "reported_vs_witnessed",
+        "candidate_text_sha256": "632d3b394d2a32ec69b13a6c6cd76e46462d18bf2533e7ff9b8fe8b106083c44",
+        "judgment_status": "Primary coding-agent source judgment, not independent or human gold"
+      }
+    },
+    {
+      "id": "neutral_09",
+      "question": "Does the bounded letter identify who told Trotsky about the embassy-cell purge?",
+      "claim_ids": [],
+      "segments": [
+        {
+          "id": "s1",
+          "kind": "source_analysis",
+          "text": "The letter does not identify the person who told Trotsky about the embassy-cell purge; Bessedovsky is the subject of that report."
+        }
+      ],
+      "expected_approved": true,
+      "local_rationale": "Bessedovsky block4 leaves the informant unnamed; the subject of the reported information is not thereby the informant.",
+      "reviewer_only": {
+        "pair_id": "p05",
+        "topic": "anonymous_informant",
+        "candidate_text_sha256": "e693f44427e3d595e302b9546cdcf4841364e54c5dabfdb194e6236d032a4e72",
+        "judgment_status": "Primary coding-agent source judgment, not independent or human gold"
+      }
+    },
+    {
+      "id": "neutral_10",
+      "question": "Does the bounded letter identify who told Trotsky about the embassy-cell purge?",
+      "claim_ids": [],
+      "segments": [
+        {
+          "id": "s1",
+          "kind": "source_analysis",
+          "text": "The letter identifies Bessedovsky as the person who told Trotsky about the embassy-cell purge; he is the named informant for that report."
+        }
+      ],
+      "expected_approved": false,
+      "local_rationale": "Bessedovsky block4 leaves the informant unnamed; the subject of the reported information is not thereby the informant.",
+      "reviewer_only": {
+        "pair_id": "p05",
+        "topic": "anonymous_informant",
+        "candidate_text_sha256": "d1389246a24494ed6359705287ec895bf9ca4f8413ffa5b9bfe684ddbe87fabe",
+        "judgment_status": "Primary coding-agent source judgment, not independent or human gold"
+      }
+    }
+  ],
+  "reviewer_only_pairs": [
+    {
+      "pair_id": "p01",
+      "case_ids": [
+        "neutral_01",
+        "neutral_02"
+      ]
+    },
+    {
+      "pair_id": "p02",
+      "case_ids": [
+        "neutral_03",
+        "neutral_04"
+      ]
+    },
+    {
+      "pair_id": "p03",
+      "case_ids": [
+        "neutral_05",
+        "neutral_06"
+      ]
+    },
+    {
+      "pair_id": "p04",
+      "case_ids": [
+        "neutral_07",
+        "neutral_08"
+      ]
+    },
+    {
+      "pair_id": "p05",
+      "case_ids": [
+        "neutral_09",
+        "neutral_10"
+      ]
+    }
+  ],
+  "provenance": {
+    "author": "Primary coding agent, aware of V29 failures; unblinded development design",
+    "intent": "Test standalone factual audit before enabling it in synthesis. No maps, canonical cards, expected labels or prior verdicts supplied to model.",
+    "training": false
+  }
+}

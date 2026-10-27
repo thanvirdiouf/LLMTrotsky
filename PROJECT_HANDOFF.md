@@ -1,3 +1,28 @@
+# Current audit diagnostic — 27 October 2026
+
+Heartbeat statusreview timedout; permitted once retry succeeded. V29/saved31
+COMPLETE exactdownload/frozen/tokenverified18calls/10replies/no inputbudget
+rejection ortruncation/11.32GiB. Reader5controls byte-identicalV28. Three maps
+structuralvalid, two answersdisplay but checker approves unsupportedNikolai/
+formerOppositionist/settleddeportation and inventeduser10.2. Otherblocks:
+nonliteralquote, missingJSONbrace, overlongmissingnote. Noqualitypromotion
+or freshtransfer. Review/transcript/rootunblindedhashreview exportedlocally.
+
+Next isolateschecker insteadofmoremapprompttweaks: new source_audit.py neutral
+factual checker with fullsources/candidate only, no map/cards/personafiction.
+Optional calibrationpolicy neutral_source; default/readerchecks unchanged.
+V30 frozen from config/ghost_neutral_source_calibration_v1.json: five true/false
+pairs onRakovsky+Bessedovsky (names/membership/hypothesis/witness/informant),
+10judgmentcalls+probe1. Primarycoderdevelopmentexpectations, nothuman/heldout.
+Scorer supports frozenexpected metadata. Candidatesneverdisplayedaschatfacts.
+88focusedpass/full361same2historicalREADMEerrors. CPU10requestsmax1913,
+labelswithheld/emptytrustedmemory. Commit/push+submitunderstandingfreeprivateauthorization.
+No activev3/training/adapters/paidchanges. Freshtransferremainsunrun.
+Docs GHOST_NEUTRAL_SOURCE_AUDIT.md. If calibrationworks testoptinauditonreader;
+if falseacceptancepersists do not trustselfaudit ortrainonitsjudgments.
+
+Older handoff follows:
+
 # Latest submitted run — 27 October 2026
 
 Local ghost_smoke_v29 submitted as private Kaggle saved31 successfully.

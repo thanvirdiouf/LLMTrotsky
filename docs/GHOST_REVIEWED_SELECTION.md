@@ -120,3 +120,29 @@ The frozen trial was submitted as private Kaggle saved43 after commit
 local input exactly. Status at confirmation: RUNNING. The heartbeat uses this
 saved version and dedicated verifier. No actual selector-quality result is
 claimed yet; active9B/v3, training and fresh-transfer gates are unchanged.
+
+## Saved43 result
+
+The completed trial passed exact source/input/ledger, token, scope, finite-logit,
+backend and frozen selection/display replay verification. Five selector calls
+plus one memory probe completed in630.61seconds. All five outputs were valid,
+selecting4/4/4/5/5records; none was truncated. All selected statements appeared
+without model rewriting, omitted selected records or trusted-memory promotion.
+
+Initial unblinded implementing-agent review found useful source grounding but
+remaining completeness and presentation limits. The hearing response preserves
+the correct self-correction and resident-count uncertainty, yet omits the available
+March-date record. The Blumkin response omits the available reform-not-revolution
+record. Eastman initiative and theoretical disagreement are now included, while
+some precise season/actor/group detail remains compressed in the immutable
+statement forms. Selection alone cannot recover wording the records lack.
+The report/hypothesis and ILO responses provide useful requested information
+without upgrading certainty. No unnecessary refusals occurred.
+
+The source-summary panels repeat extensive metadata and include some unrequested
+records. Five valid selections do not establish five complete, readable answers,
+and immutable wording does not independently validate the curated source
+interpretations. Hash-bound initial review is in the run's `SOURCE_REVIEW.json`;
+the frozen curation/input review remains unchanged. No notebook is currently
+running. Fresh transfer, conversation/voice and activation remain gated while
+selection completeness, representation precision and presentation are addressed.

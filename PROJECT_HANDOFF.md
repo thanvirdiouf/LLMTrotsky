@@ -1,3 +1,48 @@
+# Current status — 27 October 2026
+
+**Selectorv1 / private saved43 COMPLETE and exact verified. No Kaggle notebook
+is running; do not resubmit43.** Five selector calls +one5,000/16probe;
+all five selections valid/stopped normally,4/4/4/5/5records, no truncations or
+thinking markers. Runtime630.61s, peaks10.59/9.77GiB. ResultSHA:
+`b115e5a5e36609cf5d5153ede554a584d633a348a9039346d3579354f5311723`.
+Source/input/ledger locks, real tokens, scope/logits/backend, immutable wording
+and exact selection/display replay verified. No free factual text or self-audit
+gate; no selected records lost or trusted memory updated. Actual new results
+are in evaluation/runs/ghost_reviewed_selection_v1/, not the frozen curation dir.
+
+Initial unblinded implementing-agent review (not human/independent validation):
+No unnecessary refusals. Hearing roles/year/count uncertainty now preserved,
+but available March-date record not selected; residence card adds noise and
+source panel is not literal replacement-field format. Blumkin key inferences
+and duty selected but reform-not-revolution record omitted. Eastman initiative/
+theory now included, but autumn1925/PB actor/group detail still compressed in
+immutable forms. Report/hypothesis and ILO tasks have useful requested source
+information with uncertainty retained. All replies are metadata-heavy; ILO
+adds unrequested quarter-global context. FIVE VALID SELECTIONS IS NOT FIVE
+COMPLETE, READABLE ANSWERS. Raw reply hashes/per-case notes in run SOURCE_REVIEW.
+Original source curation is not independent truth validation. Fresh transfer
+remains gated pending selection completeness and usable presentation.
+
+Human asked current status/future steps during completion check. Answer scope:
+experimental grounding/selection stage, base27B fits freeKaggle, active9B/v3
+unchanged, training/adapters paused; latest run verified but detail omissions/
+presentation remain. Then fix selection coverage and separate remaining source-
+form precision (do not claim a selector can supply absent text), test frozen
+fresh questions incl insufficient/misleading evidence, then sustained dialogue/
+voice/interface. No new inference job submitted while responding to status.
+
+Next justified development: bounded task-coverage selection using existing
+reviewed IDs without factual prose/self-audit truth gate; first characterize
+available omissions versus immutable representation gap, no oracle mapping
+in runtime. Deterministic compact provenance presentation may be tested by
+replaying saved43 without new model calls, keeping original outputs immutable.
+Any changed model pass/prompt/ledger requires new frozen version, source review,
+appropriate tests and original questions/expectations preserved. Keep curation
+review/input locks untouched; new review in new run dirs. No automatic
+activation/training, no paid compute, original fresh transfer still unrun.
+
+Earlier notes follow (saved43 pending statements superseded):
+
 # Latest submitted run — 27 October 2026
 
 **`ghost_reviewed_selection_v1` is RUNNING as private Kaggle saved43. Do not

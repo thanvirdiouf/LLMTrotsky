@@ -1,5 +1,43 @@
 # Current continuation — 27 October 2026
 
+Saved39 audit milestone documented and pushed at `2a43c8f`:10/10 bounded
+expected decisions/5pairs, with extra-label and block-locator limits retained.
+No independent/human validation or active promotion.
+
+Next trial is frozen as `ghost_candidate_synthesis_v1`, NOT YET SUBMITTED.
+Five exact archived9B writer messages/questions from v27/saved29, followed by
+experimental neutral checking of each valid draft. Original local expectations
+unchanged; fresh transfer remains unrun. At most10 evaluation calls, five
+independent displayed research replies +one5,000/16 probe. Same pinned27B,
+free private twoT4 target, fixed34/30 map, efficient backend,600s install/
+2700s workload caps. No model/training/adapter/activev3 change.
+
+The shared candidate runtime now accepts a frozen experiment module and
+reserves actual calls centrally. Successful GPU placement/attention helpers
+are byte-identical; archived saved39 helper remains frozen and verifies.
+Draft literal-quote/paragraph limits retained; missing verdicts reject, no
+trusted factual memory updates. New dedicated source-synthesis verifier
+reconstructs tokens and replays dependent requests and displayed replies in
+an isolated process. Four new tests/120 focused pass; full393 retains the same two historical
+evaluation/README.md snapshot errors. Original locks unchanged.
+Docs: `docs/GHOST_CANDIDATE_SYNTHESIS.md`. Finish CPU preflight/full tests,
+commit/push then submit once under existing explicit bounded27B approval.
+
+After submission record actual saved version; after COMPLETE download its
+`ghost_candidate_synthesis_bundle/*` and `ghost_candidate_synthesis_results/*`
+into `evaluation/runs/ghost_candidate_synthesis_v1/download/`, then run:
+`.venv-tokenizer/bin/python scripts/verify_ghost_candidate_synthesis.py --version
+ghost_candidate_synthesis_v1 --tokenizer evaluation/ghost_candidate_synthesis_v1/tokenizer_assets`.
+Use this dedicated verifier. Inspect metadata first for unexpected thinking
+markers and keep intermediate reasoning private. Review actual displayed task
+coverage, roles, dates, certainty, unsupported claims and necessary/inappropriate
+refusals separately from model approval. Only usable synthesis justifies the
+fixed fresh transfer tasks, then sustained dialogue/voice. No automatic activation.
+
+Earlier notes follow (latest preparation state supersedes prior next-step text):
+
+# Current continuation — 27 October 2026
+
 **`ghost_candidate_audit_v1` / private saved39 COMPLETE and verified. Do not
 resubmit.** Ten evaluation calls +one5,000/16 memory probe. All ten stopped
 normally (110–227 tokens), no truncation/format blocks, finite logits and

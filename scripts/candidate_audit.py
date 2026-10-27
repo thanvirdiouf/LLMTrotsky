@@ -32,14 +32,23 @@ def input_ids(tokenizer,messages,limit=5120):
 
 
 def fresh_output(output):
-    if any((output/name).exists() for name in ('result.json','judgments.jsonl','memory_probe.json')):
+    if any((output/name).exists() for name in ('result.json','judgments.jsonl','memory_probe.json','answers.jsonl','model_calls.jsonl')):
         raise ValueError('Existing candidate audit artifacts; do not rerun or resume automatically')
 
 
-def run(bundle,output):
+def reserve_call(result,protocol,cap,*,memory_probe=False):
+    counter='memory_probe_calls' if memory_probe else 'evaluation_calls'
+    maximum=1 if memory_probe else protocol['evaluation_calls']
+    if cap!=(16 if memory_probe else 1024) or type(result[counter]) is not int or not 0<=result[counter]<maximum:
+        raise ValueError('Generation call/output budget exceeded')
+    result[counter]+=1
+
+
+def run(bundle,output,*,experiment=None):
     if not Path('/kaggle/working').is_dir():raise RuntimeError('Candidate inference stays on Kaggle')
     bundle,output=Path(bundle),Path(output);output.mkdir(parents=True,exist_ok=True)
-    p=json.loads((bundle/'protocol.json').read_text());validate_protocol(p);fresh_output(output)
+    p=json.loads((bundle/'protocol.json').read_text())
+    (validate_protocol if experiment is None else experiment.validate_protocol)(p);fresh_output(output)
     for name,digest in p['files'].items():
         if sha((bundle/name).read_bytes())!=digest:raise ValueError('Frozen audit payload changed: '+name)
     import fcntl
@@ -86,7 +95,8 @@ def run(bundle,output):
         tokenizer=AutoTokenizer.from_pretrained(snapshot,local_files_only=True,trust_remote_code=False)
         if sha(tokenizer.chat_template.encode())!=p['chat_template_sha256']:raise ValueError('Template differs')
         jobs=json.loads((bundle/'audit_inputs.json').read_text());probe=json.loads((bundle/'memory_probe.json').read_text())
-        if len(jobs)!=10 or len({j['case_id'] for j in jobs})!=10:raise ValueError('Candidate coverage differs')
+        expected=10 if experiment is None else 5
+        if len(jobs)!=expected or len({j['case_id'] for j in jobs})!=expected:raise ValueError('Candidate coverage differs')
         for job in [probe,*jobs]:
             if input_ids(tokenizer,job['messages'])!=job['input_token_ids']:raise ValueError('Frozen input reconstruction differs')
         set_seed(42);torch.set_num_threads(2);torch.backends.cuda.matmul.allow_tf32=False;torch.backends.cudnn.benchmark=False
@@ -109,8 +119,9 @@ def run(bundle,output):
                 if not torch.isfinite(scores).all().item():raise ValueError('Non-finite generation logits')
                 self.steps+=1
                 return scores
-        def generate(job,cap):
+        def generate(job,cap,*,memory_probe=False):
             ids=input_ids(tokenizer,job['messages']);generation.max_new_tokens=cap
+            reserve_call(result,p,cap,memory_probe=memory_probe);save()
             for i in (0,1):
                 with torch.cuda.device(i):torch.cuda.empty_cache()
             tensor=torch.tensor([ids],device=input_device);finite=FiniteScores();before=stats['calls'];before_groups=stats['expanded_kv_calls'];start=time.monotonic()
@@ -121,17 +132,19 @@ def run(bundle,output):
             return {'input_token_ids':ids,'token_ids':tokens,'token_count':len(tokens),'response':tokenizer.decode(tokens,skip_special_tokens=True),
                 'finish_reason':'stop' if tokens[-1]==generation.eos_token_id else 'length','seconds':time.monotonic()-start,
                 'finite_logits':True,'finite_logit_steps':finite.steps,'efficient_attention_calls':stats['calls']-before,'expanded_kv_calls':stats['expanded_kv_calls']-before_groups}
-        result['phase']='memory_probe';result['memory_probe_calls']=1;save()
-        probe_out=generate(probe,16);(output/'memory_probe.json').write_text(json.dumps(probe_out)+'\n')
-        result['phase']='fixed_neutral_audit';save()
-        with (output/'judgments.jsonl').open('x') as journal:
-            for index,job in enumerate(jobs,1):
-                result['evaluation_calls']=index;save()
-                out=generate(job,1024)
-                row={'case_id':job['case_id'],'model':CANDIDATE,'input_sha256':sha(json.dumps(job['messages'],ensure_ascii=False,sort_keys=True,separators=(',',':')).encode()),'output':out}
-                journal.write(json.dumps(row,ensure_ascii=False)+'\n');journal.flush()
-                print(job['case_id'],out['finish_reason'],len(out['token_ids']),flush=True)
-        result['judgments_sha256']=sha((output/'judgments.jsonl').read_bytes());result['memory_probe_sha256']=sha((output/'memory_probe.json').read_bytes())
+        result['phase']='memory_probe';save()
+        probe_out=generate(probe,16,memory_probe=True);(output/'memory_probe.json').write_text(json.dumps(probe_out)+'\n')
+        result['phase']='fixed_neutral_audit' if experiment is None else 'experimental_source_synthesis';save()
+        if experiment is None:
+            with (output/'judgments.jsonl').open('x') as journal:
+                for job in jobs:
+                    out=generate(job,1024)
+                    row={'case_id':job['case_id'],'model':CANDIDATE,'input_sha256':sha(json.dumps(job['messages'],ensure_ascii=False,sort_keys=True,separators=(',',':')).encode()),'output':out}
+                    journal.write(json.dumps(row,ensure_ascii=False)+'\n');journal.flush()
+                    print(job['case_id'],out['finish_reason'],len(out['token_ids']),flush=True)
+            result['judgments_sha256']=sha((output/'judgments.jsonl').read_bytes())
+        else:result.update(experiment.evaluate(jobs,lambda messages:generate({'messages':messages},1024),output))
+        result['memory_probe_sha256']=sha((output/'memory_probe.json').read_bytes())
         result['status']='complete';result['phase']='complete'
     except Exception as exc:
         result['status']='blocked';result['error_type']=type(exc).__name__;result['error']=str(exc)

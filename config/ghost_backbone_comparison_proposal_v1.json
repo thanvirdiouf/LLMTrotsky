@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "Candidate auditv1/saved39 verified 10/10 expected decisions, 5/5 pairs; bounded synthesis justified, no activation",
+  "status": "Auditv1/saved39 verified with source-review limits; bounded five-question synthesisv1 frozen, not yet submitted",
   "reason": "Current9B factual self-audit false acceptance/rejection and thinking-output budget failures; not a claim that every model configuration fails",
   "candidate": {
     "model_id": "Qwen/Qwen3.5-27B",
@@ -112,5 +112,17 @@
     "prior_review": "Initial automatic approval review rejected new27B submission as outside pinned9B permission. No workload was submitted. Direct human approval now resolves that scope requirement."
   },
   "weights_downloaded_locally": false,
-  "remote_weight_load_status": "Successful 5000-input/16-output probe on both GPUs with efficient attention; no source-quality results yet"
+  "remote_weight_load_status": "Successful 5000-input/16-output probe on both GPUs with efficient attention; no source-quality results yet",
+  "phase_c": {
+    "purpose": "Five exact archived9B factual-writer questions/prompts plus experimental neutral-source checking",
+    "frozen_local_version": "ghost_candidate_synthesis_v1",
+    "status": "Prepared, not submitted",
+    "control_local_version": "ghost_smoke_v27",
+    "control_saved_version": 29,
+    "maximum_displayed_answers": 5,
+    "evaluation_calls_maximum": 10,
+    "separate_memory_probe_calls_maximum": 1,
+    "fresh_transfer_run": false,
+    "active_model_changed": false
+  }
 }

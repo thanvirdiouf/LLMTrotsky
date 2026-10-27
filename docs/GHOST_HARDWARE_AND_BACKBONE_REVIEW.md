@@ -53,3 +53,7 @@ GPU inventory, and the explicit absence of a model-fit claim.
 
 All101 focused tests pass; full374 retains the same two historical README
 snapshot errors. No protected lock or archived adapter has been changed.
+
+The hardware-only probe was submitted as private Kaggle saved34 after e156d54
+was committed and pushed. Inventory results are pending; no larger model has
+been loaded or run.

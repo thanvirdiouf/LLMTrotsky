@@ -237,3 +237,5 @@ V31/saved33 verified10calls,9truncations,1correct final rejection. No integratio
 A separate ghost_hardware_v1 notebook stages hardware inventory only, internet
 disabled, zero model calls and no weights; use verify_ghost_hardware_probe.py,
 not the model-smoke verifier, for that result.
+
+Hardware-only ghost_hardware_v1 submitted as private saved34; zero model calls.

@@ -1,3 +1,36 @@
+# Latest submitted run — 27 October 2026
+
+**Hardware-only probe** `ghost_hardware_v1` submitted as private Kaggle saved
+version **34** after `e156d54` was pushed. Do not resubmit. Zero model weights,
+zero inference calls, no training or adapters, internet disabled. It inventories
+GPU count/free VRAM, RAM and working disk on the existing free notebook.
+
+Next: check saved34; after completion download exact34 into
+`evaluation/runs/ghost_hardware_v1/download/` (only ghost_hardware_bundle and
+ghost_hardware_results needed), then run:
+`python3 scripts/verify_ghost_hardware_probe.py --version ghost_hardware_v1`.
+Do not use verify_ghost_smoke.py for this hardware-only run. Inventory consistency
+and exact source are checked; model fit is explicitly NOT established.
+
+Current code:101focused tests pass, full374 same2historical README errors.
+App heartbeat updated to handle hardware probes and read current version here.
+Current synthesis source/activev3 remain unchanged, training paused.
+
+V31/saved33 thinking verified10calls:9output-cap truncations,1correct final
+rejection,0/5pairs both correct. No semantic success attributed to truncation.
+No integration, fresh transfer or automatic reasoning-budget increase. Sources
+can be inspected with --evidence-only without a GPU.
+
+Public-metadata-only candidate proposal is in
+`config/ghost_backbone_comparison_proposal_v1.json`, Qwen3.5-27B revision
+fc05daec18b0a78c049392ed2e771dde82bdf654. No new weights/run submitted. Use
+actual inventory to prepare a concrete comparison decision. Before changing
+the controlled9B backbone, assess direct user scope; do not infer authorization
+from the automation alone. A future sharded loader cannot reuse/alter the frozen
+single-GPU9B preparation helper. No paid compute, adapters or training.
+
+Earlier notes (pending submission statements below superseded):
+
 # Current continuation — 27 October 2026
 
 V31/saved33 COMPLETE exacttargetdownloaded with ignored resumefile. Frozen/token

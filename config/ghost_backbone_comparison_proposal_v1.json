@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "Approved candidatev3/saved38 running efficient-attention feasibility probe after verified v2 GPU0 forward OOM",
+  "status": "Candidatev3/saved38 verified memory/finite-logit success; exact-control ten-candidate auditv1 frozen, not submitted",
   "reason": "Current9B factual self-audit false acceptance/rejection and thinking-output budget failures; not a claim that every model configuration fails",
   "candidate": {
     "model_id": "Qwen/Qwen3.5-27B",
@@ -35,20 +35,19 @@
     "frozen_local_version": "ghost_candidate_probe_v1",
     "saved_version": 36,
     "last_result": {
-      "local_version": "ghost_candidate_probe_v2",
-      "saved_version": 37,
-      "status": "blocked",
-      "phase": "single_unscored_memory_probe",
-      "error_type": "OutOfMemoryError",
-      "layer_split": [
-        34,
-        30
+      "local_version": "ghost_candidate_probe_v3",
+      "saved_version": 38,
+      "status": "memory_probe_passed",
+      "memory_success": true,
+      "finite_logits": true,
+      "result_sha256": "4be76c4ce77e63fad7eda2e029e86200120c6f8acf8617b54f4ddd3aeb35dc1d",
+      "probe_input_tokens": 5000,
+      "probe_output_tokens": 16,
+      "peak_allocated_gib": [
+        10.594851970672607,
+        9.774027824401855
       ],
-      "loaded_allocated_bytes": [
-        9231722496,
-        8437393408
-      ],
-      "memory_success": false
+      "quality_evaluated": false
     },
     "next_prepared_version": "ghost_candidate_probe_v3",
     "next_placement_policy": "fixed_34_30",
@@ -67,7 +66,9 @@
     "output_cap_tokens": 1024,
     "thinking": false,
     "generation": "Greedy baseline initially; runtime/size changes mean whole-system comparison, not a single-variable capacity experiment",
-    "activation": "No automatic active-pointer or source-reader promotion"
+    "activation": "No automatic active-pointer or source-reader promotion",
+    "frozen_local_version": "ghost_candidate_audit_v1",
+    "status": "Prepared exact-control comparison; not submitted"
   },
   "privacy": "Same existing private notebook; reviewed public passages and candidate test data; source/output artifacts ignored locally",
   "paid_compute": false,
@@ -101,5 +102,5 @@
     "prior_review": "Initial automatic approval review rejected new27B submission as outside pinned9B permission. No workload was submitted. Direct human approval now resolves that scope requirement."
   },
   "weights_downloaded_locally": false,
-  "remote_weight_load_status": "V2 weights loaded bothGPUs but forwardOOM onGPU0; no successful probe or source-quality results"
+  "remote_weight_load_status": "Successful 5000-input/16-output probe on both GPUs with efficient attention; no source-quality results yet"
 }

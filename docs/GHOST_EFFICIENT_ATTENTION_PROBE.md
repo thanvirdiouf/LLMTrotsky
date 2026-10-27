@@ -71,3 +71,14 @@ Candidatev3 was submitted as private saved38 after commit `94bf667` was pushed.
 The fetched saved38 cell types and source text match the frozen notebook after
 normalizing Kaggle's string/list serialization. Status at confirmation: RUNNING.
 This records submission only; GPU checks and memory success remain pending.
+
+Saved38 completed and passed exact bundle and local token verification. The
+5,000-input/16-output probe produced finite logits, with all256 full-attention
+calls covered by the efficient backend. All six synthetic CUDA checks passed.
+Peak allocated memory was10.59GiB on GPU0 and9.77GiB on GPU1; total workload
+runtime546.10seconds, including download and loading. The result hash is
+`4be76c4ce77e63fad7eda2e029e86200120c6f8acf8617b54f4ddd3aeb35dc1d`.
+
+This demonstrates feasibility for this workload and justifies the already
+approved bounded factual-auditor comparison. It does not establish longer
+output fit or source quality. No adapters, training or active model changes.

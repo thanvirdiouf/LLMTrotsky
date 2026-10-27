@@ -1,3 +1,54 @@
+# Current continuation — 27 October 2026
+
+**Candidate `ghost_candidate_probe_v3` / private saved38 is COMPLETE and
+verified PASSED. Do not resubmit.** Exact downloaded bundle/protocol match;
+local candidate tokenizer reconstructs 5,000 input and16 output tokens.
+One unscored generation, finite logits, all parameters frozen on GPU0/1.
+Peak allocated memory: GPU0 10.5948519707GiB, GPU1 9.7740278244GiB.
+Six CUDA equivalence checks passed; all256 full-attention calls used the
+specified efficient backend. Runtime546.10s including download/load.
+Result SHA256: `4be76c4ce77e63fad7eda2e029e86200120c6f8acf8617b54f4ddd3aeb35dc1d`.
+This establishes this finite workload's memory/numerical health, not source
+quality, longer-generation fit or full-kernel equivalence for every input.
+
+The user clarified that asking why27B was being tested was only a request
+for explanation because they forgot; it was NOT a scope cancellation.
+Explicit approval for the probe and bounded27B tests therefore remains valid.
+Unsloth was discussed as a possible separate runtime comparison, not adopted.
+
+Next justified experiment is frozen as `ghost_candidate_audit_v1`, not yet
+submitted. Ten exact source/question/candidate messages from archived
+`ghost_smoke_v30` / saved32, including the same frozen expected decisions
+kept locally. Candidate token IDs match all ten9B control inputs exactly
+(1,893–1,913 tokens). Same complete greedy generation config,1,024-output
+cap and thinking disabled. No new questions or quality claim. Separate27B
+loader uses the exact successfulv3 backend/placement helpers. One5,000/16
+probe then10 evaluation calls, installation600s/runtime2700s caps, no rerun.
+
+CPU preflight replays the exact archived parser against the old9B outputs
+and reproduces all ten outcomes:4 correct approvals,1 correct rejection,
+1 false approval,1 false rejection,3 blocked;0/5 complete pairs correct.
+Five new tests and116 focused tests pass. Full389 tests retain only the
+same two historical evaluation/README.md snapshot errors; locks unchanged.
+The actual new27B outputs remain unrun; this preflight is NOT inference or
+quality validation. Details: `docs/GHOST_CANDIDATE_AUDIT_COMPARISON.md`.
+Next finish checks, commit/push, submit the frozen audit once under existing
+human-approved bounded inference scope, and record its actual saved version.
+
+After submission: check that saved version; download exact
+`ghost_candidate_audit_bundle/*` and `ghost_candidate_audit_results/*` into
+`evaluation/runs/ghost_candidate_audit_v1/download/`. Run:
+`.venv-tokenizer/bin/python scripts/verify_ghost_candidate_audit.py --version
+ghost_candidate_audit_v1 --tokenizer evaluation/ghost_candidate_audit_v1/tokenizer_assets`.
+This is a separate verifier, NOT the memory-probe or9B smoke verifier.
+It reconstructs tokens, replays archived parser/coverage behavior, then scores
+fixed expectations. Independently inspect final source judgments, roles,
+certainty and false claims as unblinded implementation review. Do not equate
+model approval or developer-authored expectations with independent validation.
+Fresh transfer remains gated; activev3/9B untouched, no training/adapters.
+
+Earlier notes follow (pending-saved38 statements superseded):
+
 # Latest submitted run — 27 October 2026
 
 **Candidate `ghost_candidate_probe_v3` is running as private Kaggle saved

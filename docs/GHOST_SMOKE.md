@@ -222,3 +222,6 @@ V29 submitted as private saved31; results pending.
 V29/saved31 verified18calls with two displayed mapped answers containing
 unsupported details. V30 stages ten neutral factual-auditor candidates, at most
 ten evaluation calls plus probe1; see GHOST_NEUTRAL_SOURCE_AUDIT.md.
+
+V30 submitted as private saved32: ten neutral-source audit candidates, results
+pending.

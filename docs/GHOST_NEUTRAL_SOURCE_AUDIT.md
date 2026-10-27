@@ -59,3 +59,6 @@ snapshot errors, with frozen locks unchanged. CPU preflight exercises ten
 requests, maximum1,913 input tokens below5,120, with expected metadata withheld
 and trusted memory empty. These synthetic approvals are contract fixtures, not
 semantic audit results.
+
+V30 was submitted as private Kaggle saved32 after fe4b739 was committed and
+pushed. Results are pending; the neutral auditor remains a diagnostic only.

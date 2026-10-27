@@ -1,3 +1,32 @@
+# Latest submitted run — 27 October 2026
+
+Local `ghost_smoke_v30` was submitted successfully as private Kaggle saved
+version **32**, after commit `fe4b739` was pushed. Do not resubmit it. The
+automation reads this current version from the handoff; no prompt update needed.
+
+The next check is exact saved32 download, frozen replay and token verification,
+then `summarize_ghost_calibration.py --version ghost_smoke_v30`. Inspect the
+reasons as well as classifications; missing/malformed judgments are not correct
+semantic rejections. This run has ten neutral factual-audit candidates and at
+most ten calls plus one memory probe. Candidates are test data, never trusted
+chat replies. No standalone auditor is enabled in either reader yet.
+
+V29/saved31 verified18calls. Three maps passed structure; two answers displayed,
+both with false details approved by the checker. Five reader controls unchanged.
+No fresh transfer or promotion. Current tests:88focused pass, full361 same two
+historical README snapshot errors. Synthetic calibration preflight:10requests,
+max1913tokens, expected labels withheld, verified memory empty. Details in
+`docs/GHOST_NEUTRAL_SOURCE_AUDIT.md` and local run review artifacts.
+
+If calibration is useful, test the neutral auditor in an opt-in reader trial
+before fresh transfer. If false acceptance persists, do not trust self-audit or
+train from its approvals; document limits and choose inspectable source
+presentation or seek separately authorized stronger evaluation. Activev3,
+experimental adapters, paused training, free private compute and frozen
+reference date26October2026 remain unchanged.
+
+Earlier notes (pending-submission statements below are superseded):
+
 # Current audit diagnostic — 27 October 2026
 
 Heartbeat statusreview timedout; permitted once retry succeeded. V29/saved31

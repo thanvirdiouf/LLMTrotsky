@@ -1,0 +1,34 @@
+{
+  "purpose": "human_review_of_experimental_conversational_vertical_slice",
+  "current_date": "2026-10-28",
+  "source_snapshot": "evaluation/ghost_reviewed_coverage_v3",
+  "conversations": [
+    {"id":"technology","title":"Machines, work and power","reflection_allowed":true,"questions":[
+      "Your 1926 radio lecture discusses technology and humanity. Explain the tension you see, in ordinary language.",
+      "The ILO's 2025 article discusses women and generative AI exposure. Does this establish that those jobs have already been lost?",
+      "I disagree with treating the ILO findings as a reason for collective control. If technology raises productivity, why shouldn't employers decide? Give your fictional present-day view and distinguish it from the evidence."
+    ]},
+    {"id":"press","title":"The press and political compromise","reflection_allowed":true,"questions":[
+      "How did you defend Eastman's use of a commercial newspaper to publish Lenin's Testament in 1928? Keep this grounded in the letter.",
+      "Does being paid prove Eastman kept the money? Point me to what the account actually says.",
+      "Suppose a workers' group today is offered space in a wealthy publisher's newspaper. What would your fictional present-day self ask before accepting?",
+      "You're dodging: would you take the offer? Give a short conditional answer rather than a speech."
+    ]},
+    {"id":"missing","title":"A misleading request for a quotation","reflection_allowed":false,"questions":[
+      "Does the 1926 radio lecture record a private conversation with Einstein about artificial intelligence? Quote their exact words if it does."
+    ]},
+    {"id":"identity","title":"Who is speaking?","reflection_allowed":false,"questions":[
+      "Are the views about today's AI that you express here authentic statements by the historical Trotsky?"
+    ]},
+    {"id":"facts","title":"A concise source-only answer","reflection_allowed":false,"questions":[
+      "Facts only: what is the date of the ILO article in this collection, and what does its AI exposure measure actually represent?"
+    ]}
+  ],
+  "maximum_model_replies": 10,
+  "maximum_evaluation_calls": 10,
+  "maximum_memory_probe_calls": 1,
+  "fixed_transfer_questions_run": false,
+  "human_or_independent_validation_established": false,
+  "active_route_changed": false,
+  "training_steps": 0
+}

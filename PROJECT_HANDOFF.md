@@ -1,3 +1,58 @@
+# User-authorized review prototype — 28 October 2026
+
+User asked for request-to-retrieval integration and experimental chat interface,
+then explicitly said: Okay, do it. I will review. This authorizes a NEW end-to-end
+human review workflow; the familiar-selector prompt stop rule remains intact.
+Active9B/v3, adapters, training, priorarchives and fixedtransferquestions unchanged.
+
+Prepared final sample localversion ghost_review_chat_v3: five NEWconversations,
+tenmodelreplies total (3technology/ILO/disagreement,4Eastman/payment/modernpress
+hypothetical/shortanswer, and3standalone missingquote/identity/sourceonly cases).
+Real BM25retrieval, nooracle packetIDs or expectedanswers in model inputs. Approved
+pinned27Bcandidate/twofreeT4/privateexistingnotebook,10calls/10replies+5000/16probe,
+1024output/600ssetup/2700sworkload. No model self-audit or semanticapprovalgate.
+Private actualsource53recordsnapshot allfullpackets+attributedsummaries; separate
+sourcebasedreply and fictionalpresentdayreflection. Earlier unsubmitted
+ ghost_review_chat_v1/v2 preparations preserved; never submitted/rerun. No new
+sample job submitted yet at this checkpoint; latestsubmitted46 COMPLETE.
+
+Core scripts/review_chat.py integrates explicitask/sourcefilter/detail/history
+boundary withglobalBM25andbibliographicindex. Restores original packets after
+indexing; sourcefilter beforetop2, noassistanttextretrieval. Oneinitialsystem
+message requiredbyQwentemplate, sourcedata explicitlydelimited there, actual
+currentuserquestion finalrolemessage. Wholeolderpairs/lowerpacket canbeomitted
+withtrace; latestpair/currentquestion/sourceblocks nevercropped. Scope/data is
+not semantictruth. Full10dynamicturn CPUpreflight realtokenizer passed, synthetic
+outputs/tempfixtures only, no GPU/qualityevidence; hashes/replayrejectchangedreply.
+
+Builder scripts/build_review_chat.py freezesjob/privatepayload/tokenassets.
+Runtime scripts/candidate_review_chat.py usesunchanged sharedcandidate loader/
+attention/generation (actual10calllimit); dynamicdependentturns, no autoretry,
+no trustedmemorypromotion. Dedicated verifier scripts/verify_review_chat.py:
+.venv-tokenizer/bin/python scripts/verify_review_chat.py --version
+ghost_review_chat_v3 --tokenizer evaluation/ghost_review_chat_v3/tokenizer_assets.
+Aftercompletion downloadeexactjob ghost_review_chat_bundle/* and
+ ghost_review_chat_results/* to evaluation/runs/ghost_review_chat_v3/download/.
+Read metadatafirst, intermediate reasoningprivate, actualhuman/source review
+required, quality_validatedFalse. This isdevelopmentreview, NOT independentgold.
+
+Workbench scripts/review_chat_server.py: localhostonly static UI, verifiedsample
+import, real CPUsource lookup, localfeedbackappend (ignored), optionaluserconfigured
+live endpoint (defaultNOTconfigured; no paidcomputeprovisioned). Source lookup
+isNOT a modelreply; UI mustlabelclearly. ActualKagglebatchsamples pending. Live
+adapter modelidentityoperatorasserted, notremoteattested; APIkeyserveronly.
+Noendpoint shouldbecontacted withoutconfiguredoperatorchoice. Frontend still
+beingbuilt at thischeckpoint. Details docs/REVIEW_WORKBENCH.md. FinishUI and
+HTTP/browserchecks, loadverifiedactualsamples, expose reviewlink andfeedbackto
+user. Userwillreview. Do not deliver synthetic modelanswers or claimlivebackend.
+
+Next commit/push preparedcore+design/verifier, submit newprivatev3ONCE under
+existingbounded27Bpermission, recordactualsaved/sourceidentity, buildUI while
+runexecutes, thenverify/reviewactualoutputs. No selectorpromptretries/fixedfresh
+benchmarkrun, noactivation/training/paidcompute/localweights/publicupload/subagents.
+
+Earlier offline milestone follows:
+
 # Offline architecture/precision milestone — 28 October 2026
 
 Saved46 COMPLETE/verified; NO Kaggle notebook running or new inference prepared.

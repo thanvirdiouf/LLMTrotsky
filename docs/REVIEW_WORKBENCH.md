@@ -145,3 +145,9 @@ format failure findings remain documented; no quality claim follows submission.
 The server continues exposing verified saved47 material until the new run is
 verified and selected. A stale feedback form is rejected instead of silently
 being attached to a different version.
+
+The optional live adapter is also covered by a fully mocked, no-network test:
+current questions and JSON assistant history are preserved, only the configured
+model/destination is used, and API-key material never appears in returned data.
+Current focused verification totals172tests (158ghost,6boundary,8review). This is
+software verification, not an actual live-endpoint or source-quality validation.

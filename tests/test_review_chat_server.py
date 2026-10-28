@@ -1,4 +1,5 @@
-import json,sys,tempfile,unittest
+import json,sys,tempfile,unittest,types
+from unittest.mock import patch
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT/'scripts'))
 from review_chat_server import Workbench
@@ -44,5 +45,27 @@ class WorkbenchTests(unittest.TestCase):
             with self.assertRaises(ValueError):w.feedback({**body,'reply_fingerprint':'stale_reply'})
             (output/'answers.jsonl').write_text('changed')
             with self.assertRaises(ValueError):w.review_rows()
+
+    def test_optional_live_adapter_uses_structured_history_and_never_returns_api_key(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            w=self.setup_workbench(Path(tmp));w.base_url='https://example.invalid/v1'
+            class Tokenizer:
+                def apply_chat_template(self,*a,**k):return [1,2,3]
+            class Session:
+                def __enter__(self):return self
+                def __exit__(self,*a):pass
+            w.tokenizer=Tokenizer();calls=[]
+            def fake_chat(session,url,payload,key):
+                calls.append((url,payload,key))
+                return '{"reply":"Synthetic adapter-test reply.","fictional_reflection":""}','stop',{'total_tokens':3}
+            with patch.dict(sys.modules,{'requests':types.SimpleNamespace(Session=Session),
+                'remote_model':types.SimpleNamespace(call_chat=fake_chat)}),patch.dict('os.environ',{'TROTSKY_MODEL_API_KEY':'TEST_ONLY_KEY'}):
+                first=w.ask('session',{'question':'solar wage control stellar union'},live=True)
+                second=w.ask('session',{'question':'Explain that briefly.'},live=True)
+            self.assertEqual(len(calls),2);self.assertEqual(calls[0][0],'https://example.invalid/v1')
+            self.assertEqual(calls[0][1]['max_tokens'],1024);self.assertFalse(calls[0][1]['chat_template_kwargs']['enable_thinking'])
+            self.assertEqual(json.loads(calls[1][1]['messages'][-2]['content'])['reply'],'Synthetic adapter-test reply.')
+            self.assertNotIn('TEST_ONLY_KEY',json.dumps(first)+json.dumps(second))
+            self.assertEqual(second['reply']['memory_updates'],[])
 
 if __name__=='__main__':unittest.main()

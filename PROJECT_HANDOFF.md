@@ -1,3 +1,45 @@
+# Focused target diagnostic prepared — 28 October 2026
+
+Latest submitted saved44 COMPLETE/verified; no notebook running. New
+ ghost_reviewed_target_v1 is frozen/tested, NOT YET SUBMITTED at this checkpoint.
+It uses three scope/background spans and two factual request spans as focused
+post-hoc diagnostic controls, NOT five complete original-question answers.
+Blueprint config/ghost_reviewed_target_design_v1.json; details
+ docs/GHOST_REVIEWED_TARGET_DIAGNOSTIC.md. Spans are exact substrings, full original
+questions/source packets/all summaries unchanged. Generic instruction selects
+IDs only for target span. Runtime/parser/renderer/loader/attention/generation/
+probe byte-identical to saved43. No oracle IDs/expected labels/prior outputs in
+model messages. Local expected empty/required-record checks frozen separately;
+only expectations SHA uploaded in protocol. Membership is not semantic quality.
+
+Exactly5calls/five diagnostic displays plus5000/16probe, inputs
+2669/3774/3763/2529/1497,1024output/600s install/2700s workload caps, sameprivate
+pinned27B/free twoT4s. No training/adapters/paid compute/local weights oractive
+9B/v3 change. Four new tests/all152 focused ghost tests pass. CPU verifier
+preflight uses synthetic arbitrary IDs/real tokenizer/temp archived-metadata
+fixtures only, no GPU/quality evidence; altered display and local expectation
+bytes rejected. Design review/expectations/preflight under ignored
+ evaluation/runs/ghost_reviewed_target_v1/; curation and prior locks unchanged.
+
+Next commit/push preparation, check latest44 remains idle, submit NEW targetv1
+once under existing human bounded27B approval, record actualsaved version/source
+match. Do not resubmit44. On completion download exact job's
+ ghost_reviewed_target_bundle/* and ghost_reviewed_target_results/* to
+ evaluation/runs/ghost_reviewed_target_v1/download/, then dedicated:
+.venv-tokenizer/bin/python scripts/verify_reviewed_target.py --version
+ghost_reviewed_target_v1 --tokenizer
+evaluation/ghost_reviewed_target_inputs_v1/tokenizer_assets.
+Inspect metadata before final ID JSON, keep reasoning private; compare limited
+local checks separately from actual source relevance, omitted advice/context,
+unwanted records and preservedcertainty. Scope-only empty is not refusal or
+missing corpus evidence. Review unblinded implementing-agent, nothuman/independent.
+Do not change frozen expectations after outputs. No automatic activation/transfer.
+If factual detail still omitted when isolated, diagnose selection/representation
+rather than another broad writer retry; otherwise bounded composition may be
+justified. Eastman source-form precision remains separate in eithercase.
+
+Earlier saved44 completion follows:
+
 # Saved44 complete — 28 October 2026
 
 Latest ghost_reviewed_coverage_v1/private saved44 COMPLETE, exact downloaded and

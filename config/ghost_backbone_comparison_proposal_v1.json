@@ -257,5 +257,24 @@
       5
     ],
     "fresh_transfer_justified": false
+  },
+  "phase_i": {
+    "purpose": "Literal target selectivity diagnostic: three scope/background controls and two factual probes",
+    "frozen_local_version": "ghost_reviewed_target_v1",
+    "status": "Frozen and tested; not submitted",
+    "design": "config/ghost_reviewed_target_design_v1.json",
+    "shared_runtime_parent_saved_version": 43,
+    "motivating_saved_version": 44,
+    "evaluation_calls_maximum": 5,
+    "maximum_displayed_answers": 5,
+    "separate_memory_probe_calls_maximum": 1,
+    "answers_are_full_original_question_answers": false,
+    "source_representation_changed": false,
+    "runtime_changed": false,
+    "expected_answers_or_oracle_ids_in_model_messages": false,
+    "active_model_changed": false,
+    "fresh_transfer_run": false,
+    "focused_tests": 152,
+    "verification_script": "scripts/verify_reviewed_target.py"
   }
 }

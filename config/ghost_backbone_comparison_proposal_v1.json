@@ -296,7 +296,7 @@
   "phase_j": {
     "purpose": "One context-label counterfactual against saved45",
     "frozen_local_version": "ghost_reviewed_target_v2",
-    "status": "Frozen and tested; not submitted",
+    "status": "Running privately; single counterfactual result pending",
     "design": "config/ghost_reviewed_target_context_v1.json",
     "parent_saved_version": 45,
     "only_model_input_change": "original-question key and its single system reference renamed as context",
@@ -309,6 +309,8 @@
     "active_model_changed": false,
     "fresh_transfer_run": false,
     "focused_tests": 155,
-    "verification_script": "scripts/verify_reviewed_target_context.py"
+    "verification_script": "scripts/verify_reviewed_target_context.py",
+    "saved_version": 46,
+    "normalized_frozen_cells_match": true
   }
 }

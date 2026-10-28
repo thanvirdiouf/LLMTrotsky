@@ -55,3 +55,11 @@ values/order/context without expectation leakage, rejection of ambiguous or
 changed targets, and no silent source truncation. The CPU verifier preflight uses
 synthetic IDs and a real tokenizer with temporary archived-metadata fixtures;
 it makes no model calls and establishes neither GPU execution nor model quality.
+
+## Submission
+
+The one planned counterfactual was submitted as private Kaggle saved46 after
+commit `a05b9c1` was pushed. Exact fetched normalized notebook cells match the
+frozen local source. All155 focused ghost tests and the CPU preflight pass;
+actual model results are pending. No source, expectation, runtime, active-model
+or training change accompanied submission.

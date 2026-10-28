@@ -1,3 +1,52 @@
+# Latest submitted run — 28 October 2026
+
+New ghost_reviewed_target_v2 submitted ONCE as private Kaggle saved46 after
+pusheda05b9c1. Confirmed RUNNING. Exact saved46 normalized notebook cells match frozen source;
+receipt and fetchedsource in ignored evaluation/runs/ghost_reviewed_target_v2/.
+Never resubmit46 or completed43/44/45. No new quality result yet. Earlier
+prepared checkpoint below is superseded by this submission.
+
+This is ONE context-label counterfactual against saved45. Only JSON key
+current_user_request and its single system reference become
+original_question_context. All values/questions/target spans/source packets/
+menus/schema/runtime/probe/budgets unchanged; local expectation bytes identical
+to saved45. Five target-span diagnostic outputs are NOT five complete original
+question answers. Three scope/background controls expectempty, two factual
+probes check limited record membership. No expectedlabels/requiredIDs/oldoutputs
+in model messages. Membership is not semantic quality. Blumkin broader-context
+rubric versus direct-conversation advice caveat remains; do not weaken labels.
+
+On COMPLETE download exact46 ghost_reviewed_target_bundle/* and
+ ghost_reviewed_target_results/* to evaluation/runs/ghost_reviewed_target_v2/download/.
+Use NEW dedicated context verifier (not oldtarget verifier):
+.venv-tokenizer/bin/python scripts/verify_reviewed_target_context.py --version
+ghost_reviewed_target_v2 --tokenizer
+evaluation/ghost_reviewed_target_inputs_v2/tokenizer_assets.
+It checks exact rename/unchanged parent controls/local expectation bytes, frozen
+scope/tokens/logits/GPU/backend and isolated parser/display replay. Inspect
+metadata before finalJSON, keep reasoningprivate. Review actualtarget relevance,
+source support/roles/dates/certainty and excess cards separately from localchecks.
+New review in run SOURCE_REVIEW.json, not frozen curation/input dirs. Review
+unblinded implementing-agent development, nothuman/independent validation.
+
+STOP RULE: if source-scope controls still fail, no further selector-prompt
+retries on these familiar cases. Review routing architecture and task/expectation
+scope OFFLINE. Do not infer broad readiness if local checks pass either. No
+automatic composition/activation/freshtransfer/training. Eastman source-form
+precision is separate, requires new reviewed opt-in version if later justified.
+
+Sameapproved pinned27B/private twofreeT4s,5evalcalls/five diagnosticdisplays plus
+5000/16probe;2669/3774/3763/2529/1497inputtokens,1024output/600sinstall/2700sworkload.
+Three new tests/all155 focused ghost tests and CPU synthetic-ID/real-tokenizer/
+temp archived-metadata preflight pass, no GPU/quality proof. No paidcompute/
+training/adapters/localweights/publicupload/active9B-v3replacement. Read
+ docs/GHOST_REVIEWED_TARGET_CONTEXT.md and saved45 review caveats in
+ docs/GHOST_REVIEWED_TARGET_DIAGNOSTIC.md. Preserve all archives/old9B helpers/
+source/outputprivacy/originalexpectations. Keep existing fixedfresh tasks unrun
+until actual usable source-faithful behavior warrants them.
+
+Earlier preparation and saved45 completion follow:
+
 # Context-label counterfactual prepared — 28 October 2026
 
 Saved45/ghost_reviewed_target_v1 COMPLETE, exact downloaded/verified; NO Kaggle

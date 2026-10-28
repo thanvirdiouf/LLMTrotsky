@@ -344,7 +344,7 @@
     "purpose": "User-authorized end-to-end conversation review workbench",
     "frozen_local_version": "ghost_review_chat_v3",
     "saved_version": 47,
-    "status": "Private sample run running; localhost source lookup/interface tested",
+    "status": "Saved47 verified; five valid first replies, two plain-prose follow-ups, three dependent turns skipped",
     "design": "config/ghost_review_workbench_v1.json",
     "evaluation_calls_maximum": 10,
     "maximum_displayed_answers": 10,
@@ -357,6 +357,13 @@
     "local_url": "http://127.0.0.1:8765",
     "live_model_endpoint_configured": false,
     "focused_tests": 170,
-    "verification_script": "scripts/verify_review_chat.py"
+    "verification_script": "scripts/verify_review_chat.py",
+    "result_sha256": "b461c64287d0c632ac073412e718cc92f38f48be08dc4105c5e0b5410af5e4a8",
+    "actual_model_calls": 7,
+    "parsed_replies": 5,
+    "format_blocked_positions": 5,
+    "next_prepared_version": "ghost_review_chat_v4",
+    "continuation_new_calls_maximum": 5,
+    "continuation_archived_seed_replies": 5
   }
 }

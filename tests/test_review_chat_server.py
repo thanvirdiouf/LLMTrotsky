@@ -33,8 +33,15 @@ class WorkbenchTests(unittest.TestCase):
             raw=(json.dumps(row)+'\n').encode();(output/'answers.jsonl').write_bytes(raw)
             (w.review_run/'verification.json').write_bytes(enc({'status':'verified','frozen_pipeline_replayed':True,'answers_sha256':sha(raw)}))
             self.assertNotIn('DO_NOT_EXPOSE',json.dumps(w.review_rows()))
-            result=w.feedback({'case_id':'sample','turn':1,'support':'needs_checking','voice':'mixed','usefulness':'partial','notes':'My review'})
+            visible=w.review_rows()[0]
+            body={'case_id':'sample','turn':1,'support':'needs_checking','voice':'mixed','usefulness':'partial','notes':'My review',
+                **{k:visible[k] for k in ('review_run','answers_sha256','reply_fingerprint')}}
+            result=w.feedback(body)
             self.assertTrue(result['saved']);self.assertTrue((root/'feedback.jsonl').is_file())
+            feedback=json.loads((root/'feedback.jsonl').read_text())
+            self.assertEqual(feedback['answers_sha256'],sha(raw));self.assertEqual(feedback['review_run'],'run')
+            self.assertEqual(feedback['reply_fingerprint'],fingerprint(row['reply']));self.assertFalse(feedback['independent_validation'])
+            with self.assertRaises(ValueError):w.feedback({**body,'reply_fingerprint':'stale_reply'})
             (output/'answers.jsonl').write_text('changed')
             with self.assertRaises(ValueError):w.review_rows()
 

@@ -114,3 +114,26 @@ The final frozen sample was submitted once as private Kaggle saved47 after
 commit `0042729`; fetched normalized source matches. At submission the run is
 pending, so no model-quality result is claimed. The interface reads actual
 verified samples dynamically when verification is available.
+
+## First sample run and technical continuation
+
+Saved47 completed and passed frozen token/runtime/dependent replay verification.
+It made7calls plus the probe, with5parsed first replies,2plain-prose follow-ups,
+and3dependent turns not generated. The model history had converted prior JSON
+outputs to prose. The technical correction preserves the JSON field boundary in
+model history while the browser still renders prose. No source wording, question,
+prompt, model, decoding or budget increase is introduced.
+
+A new local version `ghost_review_chat_v4` reuses the five structurally valid
+first replies from exact saved47, bound by original call/result hashes and exact
+initial requests. It permits only5new model calls for failed/missing follow-ups,
+plus the usual probe. It never reruns/resumes saved47 or regenerates the five
+preserved replies. The verifier replays both archived seeds and new calls, and
+reports their origins separately. Facts in the archived replies remain
+unvalidated; structural validity is not semantic support. Existing source review
+notes flag overclaims for human inspection, and no answers are silently edited.
+
+Feedback binds each human submission to the exact run, answer journal hash and
+reply fingerprint, so reviews remain attributable when a later technical run
+preserves a reply. The local browser submitter is not authenticated as an
+independent expert; ratings do not automatically become validated training data.

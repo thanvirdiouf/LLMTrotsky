@@ -68,7 +68,7 @@ def verify(version='ghost_review_chat_v2',root=ROOT,tokenizer=None,tokenizer_pat
         if sha((root/n).read_bytes())!=digest:raise ValueError('Protected archive changed')
     output=d/'ghost_review_chat_results';r=json.loads((output/'result.json').read_text())
     if any(r.get(k)!=p[k] for k in ('model','purpose','training_steps','adapters_loaded','active_model_changed','enable_thinking')) or r.get('quality_validated') is not False or r['protocol_sha256']!=sha(f['protocol.json']):raise ValueError('Review execution scope differs')
-    if type(r['evaluation_calls']) is not int or not 0<=r['evaluation_calls']<=10 or type(r['memory_probe_calls']) is not int or not 0<=r['memory_probe_calls']<=1:raise ValueError('Review call budgets differ')
+    if type(r['evaluation_calls']) is not int or not 0<=r['evaluation_calls']<=p['evaluation_calls'] or type(r['memory_probe_calls']) is not int or not 0<=r['memory_probe_calls']<=1:raise ValueError('Review call budgets differ')
     report={'version':version,'status':'verified_artifacts','run_status':r['status'],'result_sha256':sha((output/'result.json').read_bytes()),'evaluation_calls':r['evaluation_calls'],'memory_probe_calls':r['memory_probe_calls'],'quality_validated':False,'active_model_changed':False}
     if r['status']=='blocked':return {**report,'error_type':r.get('error_type'),'error':r.get('error'),'phase':r.get('phase')}
     if r['status']!='complete' or r['memory_probe_calls']!=1 or r['packages']!=p['packages'] or r['generation']!=p['generation'] or r.get('model_audit_performed') is not False:raise ValueError('Review incomplete or different settings')
@@ -82,6 +82,17 @@ def verify(version='ghost_review_chat_v2',root=ROOT,tokenizer=None,tokenizer_pat
         if sha(raw[n])!=r[key]:raise ValueError('Conversation journal hash differs')
     calls=[json.loads(l) for l in raw['model_calls.jsonl'].decode().splitlines()];answers=[json.loads(l) for l in raw['answers.jsonl'].decode().splitlines()]
     jobs=json.loads(f['audit_inputs.json']);expected=[(j['case_id'],i+1) for j in jobs for i in range(len(j['questions']))]
+    if p.get('seeded_reply_count'):
+        control=p['seed_control'];parent=root/'evaluation/runs'/control['local_version'];parent_output=parent/'download/ghost_review_chat_results'
+        prior=json.loads((parent/'verification.json').read_text());prior_calls=(parent_output/'model_calls.jsonl').read_bytes()
+        if (control['saved_version']!=47 or prior['status']!='verified' or prior['result_sha256']!=control['result_sha256']
+                or sha((parent_output/'result.json').read_bytes())!=control['result_sha256']
+                or sha(prior_calls)!=control['model_calls_sha256'] or prior['model_calls_sha256']!=control['model_calls_sha256']):raise ValueError('Archived seed provenance differs')
+        archived=[json.loads(line) for line in prior_calls.decode().splitlines()]
+        if p['seeded_reply_count']!=5 or len([j for j in jobs if 'seed_reply' in j])!=5:raise ValueError('Expected five archived first replies')
+        for job in jobs:
+            matched=[c for c in archived if c['case_id']==job['case_id'] and c['turn']==1]
+            if len(matched)!=1 or job['seed_reply']!=matched[0] or job['seed_reply']['messages']!=job['messages']:raise ValueError('Archived reply or prompt changed')
     if len(calls)!=r['evaluation_calls'] or len(answers)!=10 or r['completed_evaluation_calls']!=len(calls) or r['displayed_answers']!=10 or [(a['case_id'],a['turn']) for a in answers]!=expected:raise ValueError('Conversation coverage differs')
     probe=json.loads(raw['memory_probe.json']);verify_generated(json.loads(f['memory_probe.json']),probe,16,p['generation'],tokenizer)
     for call in calls:
@@ -97,7 +108,9 @@ def verify(version='ghost_review_chat_v2',root=ROOT,tokenizer=None,tokenizer_pat
     if any(a['quality_validated'] is not False or a['model_audit_performed'] is not False or a['memory_updates']!=[] for a in answers):raise ValueError('Unvalidated quality or memory promotion')
     return {**report,'status':'verified','tokenizer_reconstructed_locally':True,'frozen_pipeline_replayed':True,
         'answers_sha256':sha(raw['answers.jsonl']),'model_calls_sha256':sha(raw['model_calls.jsonl']),
-        'answer_statuses':dict(Counter(a['status'] for a in answers)),'truncated_generations':sum(c['output']['finish_reason']=='length' for c in calls),
+        'answer_statuses':dict(Counter(a['status'] for a in answers)),'generation_origins':dict(Counter(a.get('generation_origin','original_run') for a in answers)),
+        'reused_model_replies':p.get('seeded_reply_count',0),'new_model_calls':len(calls),
+        'truncated_generations':sum(c['output']['finish_reason']=='length' for c in calls),
         'peak_gib':{k:v/GIB for k,v in peaks.items()},'human_review_status':'unreviewed'}
 
 if __name__=='__main__':

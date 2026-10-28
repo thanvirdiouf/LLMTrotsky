@@ -1,3 +1,47 @@
+# Saved47 verified; five-call technical continuation prepared — 28 October 2026
+
+Reviewapp localhost8765 running (restartedexecsession43013; PIDmetadata now
+ evaluation/review_workbench/server.json). UI showsactualsaved47samples after
+verification:5parsed firstreplies,2plainprosefollowups blocked,3dependent turns
+notgenerated. Neverclaim10successfulreplies. No fakehumanfeedback written.
+Saved47COMPLETE/exactverified,7calls+probe908.86s; no thinking/truncations.
+ResultSHAb461c64287d0c632ac073412e718cc92f38f48be08dc4105c5e0b5410af5e4a8.
+Source/developmentreview in run SOURCE_REVIEW.json flags factualoverclaims;
+this isunblinded coding-agent review, NOT human/independent validation.
+
+Technicalbug: append_turn serialized priorassistantJSON asplainprose. New
+history_text keeps the exact reply/reflection VALUE strings in canonicalJSON;
+UIstillrendersprose. No prompt/model/question/source change orbudgetincrease.
+New ghost_review_chat_v4 prepared (NOT YETSUBMITTED atcheckpoint) reuses5valid
+firstreplies fromsaved47 by exactcall/request/result hash. Only5FAILED/MISSING
+followups maybegenerated plus5000/16probe; ten displayedpositions total, origins
+archivedsaved47/newcall separatelyrecorded. Commonloader/attention/decoding
+unchanged, actualmaxnewcalls5. No rerunofsaved47, no semanticqualityiteration.
+The archivedanswers maycontain factualerrors; preservingthem is forhumanreview,
+not sourceapproval. Do not silentlycorrectthem or treatthem as evidence.
+
+CPUpreflight v4 uses5real archivedseeds and5syntheticnewoutputs/tempfixtures,
+real tokenizer, noGPU/newmodelcalls, exactdependent replay/tamperrejection.
+Newunit testchecks5seedreplies/5newcalls andJSONhistory. Sameprivate notebook,
+pinned27B/free twoT4s,600ssetup/2700sworkload/1024out caps, no paid/training/
+adapters/localweights/publicupload/active9B-v3replacement. Familiarselectorstop
+ruleandfixedfreshbenchmarkunrun remain. Userexplicitlyrequestedreviewprototype.
+
+Next commit/pushtechnicalfix+sourcefindings, submitv4ONCEunderexistingapproval,
+recordactualsavedversion/source. Then whilejobruns finishUIQA/readysaved47
+firstreplies forreview. Oncompletion exact newjoboutputs ghost_review_chat_bundle/*
+andghost_review_chat_results/* to evaluation/runs/ghost_review_chat_v4/download/:
+.venv-tokenizer/bin/python scripts/verify_review_chat.py --version
+ghost_review_chat_v4 --tokenizer evaluation/ghost_review_chat_v4/tokenizer_assets.
+Verifierbindsarchivedseedprovenance/actualnewcalls5/token/logit/backend/replay.
+Afterverifiedfinaldataset restartONLYownserver with --review-run v4 (orchange
+itsdefault), preservinglocalfeedback. Feedbacknowbindsrun/answersSHA/replyFP,
+notunqualifiedhumanvalidation. UIshows1stsource-onlymodecorrectly; screenshot
+actualmodelconversationsandmarkbrowserdeliverable foruser; donotsubmitfakehuman
+reviews. Liveendpoint NOTconfigured, source lookup ZEROmodelcalls. Userwillreview.
+
+Earlier UI/runcheckpoint follows:
+
 # Local review workbench running; private saved47 submitted — 28 October 2026
 
 User explicitly authorized prototype and willreview. New ghost_review_chat_v3

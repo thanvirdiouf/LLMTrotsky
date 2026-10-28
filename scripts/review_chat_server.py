@@ -7,7 +7,7 @@ from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
 from http.cookies import SimpleCookie,CookieError
 from pathlib import Path
 from urllib.parse import urlsplit
-from grounded_chat import ROOT,MODEL
+from grounded_chat import ROOT,MODEL,fingerprint
 from grounded_request_boundary import ConversationState,apply_event
 from review_chat import load_snapshot,prepare_turn,parse_reply,append_turn
 
@@ -40,7 +40,9 @@ class Workbench:
             rows.append({k:r[k] for k in ('case_id','title','turn','question','status','reply','validation_error','model','human_review_status')}
                 |{'source_packets':r['request']['source_packets'],'retrieval':r['request']['retrieval'],
                   'omitted_history_pairs':r['request']['omitted_history_pairs'],
-                  'token_budget_omitted_packets':r['request']['token_budget_omitted_packets']})
+                  'token_budget_omitted_packets':r['request']['token_budget_omitted_packets'],
+                  'review_run':self.review_run.name,'answers_sha256':report['answers_sha256'],
+                  'reply_fingerprint':fingerprint(r['reply'])})
         return rows
     def session(self,identity):
         with self.lock:
@@ -75,12 +77,20 @@ class Workbench:
                 'token_budget_omitted_packets':request['token_budget_omitted_packets'],'usage':usage}
         finally:session['busy'].release()
     def feedback(self,body):
-        if set(body)!={'case_id','turn','support','voice','usefulness','notes'} or type(body['turn']) is not int or not isinstance(body['notes'],str) or len(body['notes'])>4000:
+        if set(body)!={'case_id','turn','support','voice','usefulness','notes','review_run','answers_sha256','reply_fingerprint'} or type(body['turn']) is not int or not isinstance(body['notes'],str) or len(body['notes'])>4000:
             raise ValueError('Invalid review form')
         if body['support'] not in ('supported','needs_checking','unsupported') or body['voice'] not in ('convincing','mixed','unconvincing') or body['usefulness'] not in ('helpful','partial','missed_question'):
             raise ValueError('Choose review ratings')
-        if not any(r['case_id']==body['case_id'] and r['turn']==body['turn'] for r in self.review_rows()):raise ValueError('Unknown reviewed sample')
-        record={**body,'created_at':datetime.now(ZoneInfo('Asia/Kolkata')).isoformat(),'reviewer':'user','review_status':'human_submitted'}
+        row=next((r for r in self.review_rows() if r['case_id']==body['case_id'] and r['turn']==body['turn']),None)
+        if row is None:raise ValueError('Unknown reviewed sample')
+        verification=json.loads((self.review_run/'verification.json').read_text())
+        if (body['review_run']!=self.review_run.name or body['answers_sha256']!=verification['answers_sha256']
+                or body['reply_fingerprint']!=fingerprint(row['reply'])):
+            raise ValueError('The sample version changed. Refresh before saving this review.')
+        record={**body,'created_at':datetime.now(ZoneInfo('Asia/Kolkata')).isoformat(),'reviewer':'user','review_status':'human_submitted',
+            'review_run':self.review_run.name,'answers_sha256':verification['answers_sha256'],
+            'result_sha256':verification.get('result_sha256'),'reply_fingerprint':fingerprint(row['reply']),
+            'model':row['model'],'reviewer_identity':'local_browser_submission_not_authenticated','independent_validation':False}
         self.feedback_path.parent.mkdir(parents=True,exist_ok=True)
         with self.lock,(self.feedback_path).open('a') as stream:stream.write(json.dumps(record,ensure_ascii=False)+'\n')
         return {'saved':True,'storage':'local_project_only'}
@@ -155,9 +165,13 @@ def main():
         tokenizer=AutoTokenizer.from_pretrained(args.tokenizer,local_files_only=True,trust_remote_code=False)
     workbench=Workbench(args.snapshot,args.review_run,args.feedback,base_url=args.base_url,model=args.model,tokenizer=tokenizer)
     server=ThreadingHTTPServer(('127.0.0.1',args.port),handler_for(workbench))
+    pid_path=args.feedback.parent/'server.json';pid_path.parent.mkdir(parents=True,exist_ok=True)
+    pid_path.write_text(json.dumps({'pid':os.getpid(),'port':server.server_port,'host':'127.0.0.1','live_endpoint_configured':bool(args.base_url)}))
     print('Review workbench: http://127.0.0.1:'+str(server.server_port),flush=True)
     try:server.serve_forever()
     except KeyboardInterrupt:pass
-    finally:server.server_close()
+    finally:
+        server.server_close()
+        if pid_path.exists() and json.loads(pid_path.read_text()).get('pid')==os.getpid():pid_path.unlink()
 
 if __name__=='__main__':main()

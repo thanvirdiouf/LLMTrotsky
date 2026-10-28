@@ -108,7 +108,9 @@ def parse_reply(output, request):
 
 
 def history_text(reply):
-    return reply['reply']+('\n\nFictional present-day reflection: '+reply['fictional_reflection'] if reply['fictional_reflection'] else '')
+    # Preserve the assistant's output schema and source/reflection distinction
+    # in model history. The browser alone renders these fields as prose.
+    return json.dumps({k: reply[k] for k in ('reply', 'fictional_reflection')}, ensure_ascii=False, separators=(',', ':'))
 
 
 def append_turn(state, question, reply):

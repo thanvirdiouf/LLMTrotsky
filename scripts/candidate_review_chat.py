@@ -12,7 +12,10 @@ def validate_protocol(p):
     if (p.get('purpose') != 'candidate_conversation_review' or p.get('conversation_count') != 5
             or p.get('maximum_displayed_answers') != 10 or p.get('model_audit_performed') is not False):
         raise ValueError('Human conversation review scope differs')
-    validate_common({**p, 'purpose': 'candidate_neutral_audit'})
+    expected_calls = 5 if p.get('seeded_reply_count') == 5 else 10
+    if p.get('evaluation_calls') != expected_calls:
+        raise ValueError('Unexpected new conversation call limit')
+    validate_common({**p, 'purpose': 'candidate_neutral_audit', 'evaluation_calls': 10})
 
 
 def evaluate(jobs, generate, output, profile, collection, ledger, tokenizer, today):
@@ -28,8 +31,13 @@ def evaluate(jobs, generate, output, profile, collection, ledger, tokenizer, tod
                 if turn == 0 and (request['messages'] != job['messages'] or request['input_token_ids'] != job['input_token_ids']):
                     raise ValueError('First conversation request differs from frozen inputs')
                 error = None; reply = None
+                seed = job.get('seed_reply') if turn == 0 else None
                 if failed:
                     error = 'Prior reply could not be parsed; dependent turn was not generated.'
+                elif seed is not None:
+                    if seed['messages'] != request['messages'] or seed['output']['input_token_ids'] != request['input_token_ids']:
+                        raise ValueError('Archived initial reply request differs')
+                    reply = parse_reply(seed['output'], request)
                 else:
                     out = generate(request['messages'])
                     call = {'case_id': job['case_id'], 'turn': turn+1, 'stage': 'conversation',
@@ -42,6 +50,7 @@ def evaluate(jobs, generate, output, profile, collection, ledger, tokenizer, tod
                        'reply': reply, 'validation_error': error, 'request': request,
                        'model': CANDIDATE, 'quality_validated': False, 'human_review_status': 'unreviewed',
                        'model_audit_performed': False, 'active_model_changed': False,
+                       'generation_origin': 'archived_saved47' if seed else 'new_model_call' if not error else 'blocked',
                        'training_steps': 0, 'adapters_loaded': [], 'memory_updates': []}
                 rows.append(row); answers.write(json.dumps(row, ensure_ascii=False)+'\n'); answers.flush()
                 if reply: state = append_turn(state, question, reply)

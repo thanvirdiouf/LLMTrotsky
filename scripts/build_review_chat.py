@@ -25,6 +25,27 @@ def build(version='ghost_review_chat_v1',root=ROOT,tokenizer=None):
             reflection_allowed=conversation['reflection_allowed'],today=design['current_date'])
         jobs.append({'case_id':conversation['id'],'title':conversation['title'],'questions':conversation['questions'],
             'reflection_allowed':conversation['reflection_allowed'],'messages':first['messages'],'input_token_ids':first['input_token_ids']})
+    seed_control = None
+    if version == 'ghost_review_chat_v4':
+        parent = root/'evaluation/runs/ghost_review_chat_v3'
+        verified = json.loads((parent/'verification.json').read_text())
+        output = parent/'download/ghost_review_chat_results'
+        if verified['status'] != 'verified' or sha((output/'result.json').read_bytes()) != verified['result_sha256']:
+            raise ValueError('Verified original review run required')
+        raw_calls = (output/'model_calls.jsonl').read_bytes()
+        if sha(raw_calls) != verified['model_calls_sha256']:
+            raise ValueError('Archived review calls changed')
+        calls = [json.loads(line) for line in raw_calls.decode().splitlines()]
+        for job in jobs:
+            candidates = [c for c in calls if c['case_id']==job['case_id'] and c['turn']==1]
+            if len(candidates)!=1 or candidates[0]['messages']!=job['messages']:
+                raise ValueError('Archived initial conversation differs')
+            from review_chat import parse_reply
+            parse_reply(candidates[0]['output'], {'reflection_allowed':job['reflection_allowed'],
+                'retrieval':{'matches':[{'packet':p} for p in collection['packets']]}})
+            job['seed_reply'] = candidates[0]
+        seed_control = {'local_version':'ghost_review_chat_v3','saved_version':47,
+            'result_sha256':verified['result_sha256'],'model_calls_sha256':verified['model_calls_sha256']}
     p={k:old[k] for k in ('model','packages','generation','gpu_ids','placement_policy','attention_policy','tokenizer_files','chat_template_sha256',
         'per_gpu_weight_budget_bytes','weight_file_bytes','preserved_files','runtime_timeout_seconds','installation_timeout_seconds')}
     p.update(purpose='candidate_conversation_review',conversation_count=5,maximum_displayed_answers=10,evaluation_calls=10,memory_probe_calls=1,
@@ -33,6 +54,8 @@ def build(version='ghost_review_chat_v1',root=ROOT,tokenizer=None):
         design_sha256=sha(design_raw),source_manifest_sha256=sha((source/'build_manifest.json').read_bytes()),
         source_review_sha256=sha((source/'SOURCE_REVIEW.json').read_bytes()),
         quality_policy='Experimental generated conversations; citation checks are mechanical, all factual support and voice require human/source review. No activation or trusted-memory promotion.')
+    if seed_control:
+        p.update(evaluation_calls=5,seeded_reply_count=5,seed_control=seed_control)
     names=('candidate_audit.py','candidate_base_probe.py','candidate_efficient_attention.py','candidate_review_chat.py',
         'review_chat.py','grounded_chat.py','grounded_chat_v2.py','grounded_request_boundary.py')
     payload={n:(root/'scripts'/n).read_bytes() for n in names}

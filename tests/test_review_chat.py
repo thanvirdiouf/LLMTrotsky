@@ -52,7 +52,8 @@ class ReviewChatTests(unittest.TestCase):
         reply=parse_reply(out,r);self.assertFalse(reply['quality_validated']);self.assertFalse(reply['model_audit_performed'])
         self.assertEqual(reply['memory_updates'],[])
         new=append_turn(ConversationState(('h',)),r['question'],reply)
-        self.assertEqual(len(new.prior_turns),2);self.assertIn('Fictional present-day reflection',new.prior_turns[-1].text)
+        self.assertEqual(len(new.prior_turns),2)
+        self.assertEqual(json.loads(new.prior_turns[-1].text),{'reply':'Source report [h].','fictional_reflection':'An imagined opinion.'})
         for bad in [dict(out,finish_reason='length'),dict(out,response='<think>private</think>'+out['response']),
             dict(out,response='{"reply":"x","fictional_reflection":"","extra":"claim"}')]:
             with self.assertRaises(EvidenceError):parse_reply(bad,r)
@@ -76,5 +77,26 @@ class ReviewChatTests(unittest.TestCase):
             rows=[json.loads(x) for x in (Path(temp)/'answers.jsonl').read_text().splitlines()]
             self.assertTrue(all(r['status']=='ready_for_human_review' and not r['quality_validated'] for r in rows))
             self.assertTrue(all(not r['model_audit_performed'] and not r['memory_updates'] for r in rows))
+
+    def test_five_first_replies_reused_and_only_five_followups_generated(self):
+        p,c,l=self.fixture();design=json.loads((ROOT/'config/ghost_review_workbench_v1.json').read_text());jobs=[]
+        for d in design['conversations']:
+            state=ConversationState(tuple(x['id'] for x in c['packets']))
+            first=prepare_turn(p,c,l,state,d['questions'][0],tokenizer=Tokenizer(),reflection_allowed=d['reflection_allowed'])
+            job={'case_id':d['id'],'title':d['title'],'questions':d['questions'],'reflection_allowed':d['reflection_allowed'],
+                'messages':first['messages'],'input_token_ids':first['input_token_ids']}
+            job['seed_reply']={'messages':job['messages'],'output':{'response':'{"reply":"Preserved original reply.","fictional_reflection":""}',
+                'finish_reason':'stop','input_token_ids':job['input_token_ids']}}
+            jobs.append(job)
+        calls=[]
+        def generate(messages):
+            calls.append(messages);return {'response':'{"reply":"New follow-up.","fictional_reflection":""}','finish_reason':'stop'}
+        with tempfile.TemporaryDirectory() as temp:
+            evaluate(jobs,generate,Path(temp),p,c,l,Tokenizer(),'2026-10-28')
+            rows=[json.loads(x) for x in (Path(temp)/'answers.jsonl').read_text().splitlines()]
+            self.assertEqual(len(calls),5)
+            self.assertEqual(sum(r['generation_origin']=='archived_saved47' for r in rows),5)
+            self.assertEqual(sum(r['generation_origin']=='new_model_call' for r in rows),5)
+            self.assertEqual(json.loads(calls[0][-2]['content'])['reply'],'Preserved original reply.')
 
 if __name__=='__main__':unittest.main()

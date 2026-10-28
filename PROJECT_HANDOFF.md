@@ -1,3 +1,39 @@
+# Saved44 complete — 28 October 2026
+
+Latest ghost_reviewed_coverage_v1/private saved44 COMPLETE, exact downloaded and
+verified. NO Kaggle notebook running; never resubmit43/44. Five evalcalls plus
+5000/16probe,5valid outputs, no truncation/thinking markers;658.28seconds,
+peaks10.59/9.77GiB. Selected9/3/5/7/5records (29total), versus4/4/4/5/5
+(22total) saved43. ResultSHA:
+282ff2d396202a31e7c6f0d189d39abaa9e626471a567062c01a47a294c2e400.
+Dedicated frozen parent/source/runtime/token/logit/backend and exact selection/
+display replay passed. Technical validity is NOT source/selection quality.
+
+Unblinded implementing-agent review in ignored run SOURCE_REVIEW.json:
+hearing March1897 detail recovered, but final scope-only part selects all9
+available records, adding irrelevant occupation/sequence/etc. Eastman drops
+previously selected initiative/risk versus internal tactics; immutable-form
+season/actor/group detail still compressed. Blumkin reform record STILL omitted;
+future prediction card added without turning it into a later outcome. Report/
+hypothesis distinctions retained with2redundant cards. ILO same5IDs (order
+changed), irrelevant global-quarter context still present. No unnecessary
+refusal. No new model-written factual prose, but curation itself is not
+independently validated. Literal arrays do not prove coverage; more cards did
+not yield consistent improvement. Fresh transfer/activation/training stay gated.
+
+Next justified diagnostic: explicitly target a literal request span in the
+unchanged full original question/source/menu context. Use three pure source-
+scope/background spans as empty-selection controls and two factual request
+spans to test selectivity and persistent advice/context omissions. No oracle
+IDs or expectations in model messages; local post-hoc development expectations
+must freeze before inference. This is a focused familiar-case diagnostic,
+not fresh/independent quality evidence or a broad writer-prompt patch. Keep
+source representation unchanged so selection is measured separately; a later
+new reviewed opt-in extension would be needed for Eastman missing precision.
+No new diagnostic submission yet at this checkpoint.
+
+Earlier saved44 submission checkpoint follows (running state superseded):
+
 # Latest submitted run — 28 October 2026
 
 New ghost_reviewed_coverage_v1 submitted ONCE to existing private notebook as

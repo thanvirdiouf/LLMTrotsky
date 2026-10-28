@@ -97,3 +97,28 @@ commit `8a2cd8d` was pushed. Exact fetched saved44 normalized notebook cells mat
 the frozen source. Receipts/source remain ignored under the run directory. No
 actual model-quality result is claimed at submission; active9B/v3 and all fresh
 transfer/training gates remain unchanged.
+
+## Saved44 result
+
+Exact saved44 completed and passed the dedicated frozen/token/runtime/replay
+verifier. Five calls plus the probe took658.28seconds; all five outputs stopped
+normally, with9/3/5/7/5selected records and no truncations or thinking markers.
+The result hash is
+`282ff2d396202a31e7c6f0d189d39abaa9e626471a567062c01a47a294c2e400`.
+
+The initial unblinded implementing-agent source review finds mixed task quality.
+The hearing response recovers the corrected March date, but selects all nine
+available summaries under a source-scope constraint, adding irrelevant material.
+Eastman loses the previously selected initiative/tactics context, while its
+immutable-form precision gap persists. Blumkin still omits the reform position;
+its added prospective card retains prediction status. Report/hypothesis limits
+and ILO distinctions survive, with redundancy and unrequested context remaining.
+The total rises from22 to29records, without consistent improvement in completeness
+or presentation. No unnecessary refusals occurred. Curation interpretations and
+negative source assessments are not independently established by record status.
+
+The next justified step is a focused target-span selectivity diagnostic: pure
+scope/background spans versus factual request spans, with full original context
+and source menus unchanged. It must preserve local expectations outside model
+messages, and cannot become a factual self-audit or justify activation. Fresh
+transfer remains gated. No broad writer retry or training is justified.

@@ -232,7 +232,7 @@
   "phase_h": {
     "purpose": "Original-question literal-part ID selection comparison",
     "frozen_local_version": "ghost_reviewed_coverage_v1",
-    "status": "Running privately; quality result pending",
+    "status": "Complete and verified; mixed selection result, no consistent task improvement",
     "design": "config/ghost_reviewed_coverage_design_v1.json",
     "parent_saved_version": 43,
     "evaluation_calls_maximum": 5,
@@ -247,6 +247,15 @@
     "focused_tests": 148,
     "verification_script": "scripts/verify_reviewed_coverage.py",
     "saved_version": 44,
-    "normalized_frozen_cells_match": true
+    "normalized_frozen_cells_match": true,
+    "result_sha256": "282ff2d396202a31e7c6f0d189d39abaa9e626471a567062c01a47a294c2e400",
+    "selected_record_counts": [
+      9,
+      3,
+      5,
+      7,
+      5
+    ],
+    "fresh_transfer_justified": false
   }
 }

@@ -1,3 +1,29 @@
+# Positive overall user feedback received — 28 October 2026
+
+User said in directchat: I think these answers are okay. Record as positive
+overall feedback on saved48/v4, NOT per-reply source/voice ratings or detailed
+factual validation. Exact statement/run binding ignored at
+evaluation/runs/ghost_review_chat_v4/USER_FEEDBACK.json. No fakeUI ratings.
+Known source/retrieval failures stay documented; answers unchanged.
+
+Offline query diagnosis: last press question has8contentterms, no match in old
+anaphora regex; previous user questions are therefore NOT included by shared
+frozen Retriever. Current incidental speech/rather terms retrieve hearing/
+Bessedovsky, dropping Eastman. This establishes query-construction mechanism,
+not full source-quality cause or proof of a fix. No runtime/code/prompt/model
+change or new GPU call in this feedback turn. docs/REVIEW_WORKBENCH.md updated.
+
+NEXT offline: prepare NEW opt-in conversation retrieval policy with continuation
+and topic-change controls, preserve actual currentquestion/fullpackets/user-only
+context. Do not merely add offer toregex or route familiar expectedanswers. Test
+retention AND release with bounded token behavior; diagnose before newly frozen
+small inference comparison. No familiarselector-prompt retries, no training/
+activation. Existing free/private pinned27B inference authorization unchanged.
+Liveendpoint stillunconnected. Keep localhost reviewapp available and preserve
+all original outputs/reviewnotes/oldhelpers/active9B-v3. No subagents.
+
+Earlier review handoff (waiting-for-feedback statements superseded above):
+
 # Ten-reply review prototype ready; awaiting user review — 28 October 2026
 
 User requested the prototype and said I will review. The local workbench is

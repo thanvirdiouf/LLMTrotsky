@@ -183,3 +183,31 @@ prompt retries, training or activation are scheduled before that review. Live
 inference remains unconnected; arbitrary questions currently use source lookup
 only. A future live endpoint requires an explicit operator configuration. The
 active9B/v3 configuration and both experimental adapters remain unchanged.
+
+## User response and next retrieval diagnostic
+
+On28October2026 the user said in this chat: “I think these answers are okay.”
+This is positive overall feedback on the displayed set. It is not a completed
+per-reply source audit, specific voice rating or approval of every factual claim.
+The exact statement and run binding are preserved locally in the ignored run
+USER_FEEDBACK.json; no interface ratings were submitted on the user's behalf.
+
+Offline inspection identifies a concrete mechanism behind the final press
+follow-up's retrieval drift. The shared frozen retriever adds previous human
+questions only when the current query has fewer than five content terms or
+matches its limited anaphora expression. “You're dodging: would you take the
+offer? Give a short conditional answer rather than a speech.” has eight content
+terms and misses that expression. Consequently, none of the earlier Eastman,
+payment or newspaper terms enter retrieval; incidental speech/rather matches
+pick hearing/Bessedovsky. This explains the query construction, not the model's
+unsupported assertions. Frozen helpers and archived answers remain unchanged.
+
+The next justified engineering experiment is an opt-in conversation retrieval
+policy that can retain user topic context for an implicit follow-up and release
+it on a new topic. Test it offline against both continuation and topic-change
+controls, with full source packets, original current question and user-only
+context. Do not fix only the word offer, copy an answer key into routing, retain
+assistant claims as evidence, or silently replace the existing results. A
+retrieval gain would justify a small newly frozen conversation comparison under
+the existing private/free inference limits; it would not itself validate the
+answers. Training, adapters and automatic model activation remain paused.

@@ -86,3 +86,36 @@ The frozen diagnostic was submitted once as private Kaggle saved45 after commit
 All152 focused ghost tests and the final CPU verifier preflight passed; actual
 GPU selection quality is pending. The source curation, active9B/v3, paused
 training and fresh-transfer gate remain unchanged.
+
+## Saved45 result
+
+Saved45 completed with five calls plus the probe in657.56seconds. All outputs
+stopped normally; no thinking markers or truncations occurred. Exact frozen
+source/runtime/expectation/token/logit/backend and parser/display replay passed.
+Result SHA256:
+`e51f7e657fb6608e1f0dc21ab4d8a14c8d24eacd296fef107eef86aca26ff101`.
+
+The limited local checks passed2/5: the Eastman factual membership probe and the
+hypothetical-setting control. Hearing and ILO scope-only targets instead selected
+three factual records each, addressing the original full questions. This is a
+target-selection failure despite source-supported wording. Composition is not
+justified. The Eastman response recovered initiative/tactics; its separate
+immutable-summary precision limits remain.
+
+Blumkin selected the rejected allegation and direct-conversation duty advice but
+missed the broader reform-context record required by the unchanged development
+rubric. Source blocks5-6 describe the conversation; block7 separately describes
+an informative letter carried through Blumkin to friends. The frozen rubric
+failure must not be presented as proof that the selected direct advice is false,
+or that the letter's reform passage was spoken directly to Blumkin. This task/
+expectation-scope caveat is recorded in the unblinded run review; expectations
+remain unchanged. Neither membership scoring nor this coding-agent review is
+independent validation.
+
+The next bounded diagnostic tests a concrete input-label hypothesis: the full
+original question is named `current_user_request` inside the data despite the
+target-only task. Renaming that key and its single system reference to
+`original_question_context`, with every value/control/expectation unchanged,
+tests this ambiguity. It is not yet a proven cause. Only one new run is planned;
+if scope failures persist, stop selector-prompt retries on these familiar cases
+and review routing architecture and task expectations offline.

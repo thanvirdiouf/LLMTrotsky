@@ -1,3 +1,56 @@
+# Context-label counterfactual prepared — 28 October 2026
+
+Saved45/ghost_reviewed_target_v1 COMPLETE, exact downloaded/verified; NO Kaggle
+notebook running. ResultSHA e51f7e657fb6608e1f0dc21ab4d8a14c8d24eacd296fef107eef86aca26ff101.
+5calls+probe657.56s, counts3/4/2/0/3, no thinking/truncations. Only2/5fixed
+local checks pass: Eastman factual probe and hypothetical-setting control.
+Hearing/ILO source-scope targets each select3global-question factual cards.
+Eastman initiative recovered; Blumkin reform broader-context membership misses.
+
+Important unblinded source-review caveat: Blumkin selected allegation/duty advice
+is source-supported by direct-conversation blocks5-6. Block7 describes a letter
+carried through him to friends, separately providing broader reform context.
+The unchanged rubric expects that context; failure is not itself proof the
+selected direct advice is false or the letter was spoken to Blumkin. Keep
+expectations unchanged and report scope caveat separately; no training to chase
+a potentially broader coder rubric. Review in run SOURCE_REVIEW.json, nothuman/
+independent validation. Composition and fresh transfer NOT justified.
+
+Concrete next hypothesis: nested full question is labelled current_user_request
+despite target-only instruction. New ghost_reviewed_target_v2 frozen/tested,
+NOT SUBMITTED at this checkpoint. Only one JSON key and its single system
+reference change to original_question_context; everyvalue, target, question,
+source/menu, outputschema, runtime/probe/budget unchanged. Local expectations
+byte-identical to saved45. Inputs2669/3774/3763/2529/1497 tokens. Blueprint
+config/ghost_reviewed_target_context_v1.json; doc
+ docs/GHOST_REVIEWED_TARGET_CONTEXT.md. This is one hypothesis test, not an
+established explanation or broad writer tweak. If scope failures persist,
+STOP selector-prompt retries on these familiar cases; review architecture and
+expectation scope OFFLINE. No automatic activation/training/fresh transfer.
+
+Three new tests/all155 focused ghost tests pass; CPU synthetic-ID/real-tokenizer/
+temporary archived-metadata preflight passes, rejects altered display/expectation
+bytes, no new GPU/quality evidence. Review/preflight/expectations in ignored
+ evaluation/runs/ghost_reviewed_target_v2/; prior input/curation reviews untouched.
+Next commit/push preparation, check latest45 idle, submit newtargetv2 ONCE under
+existing direct bounded27B permission, record actualsaved/sourceidentity and
+update heartbeat. Sameprivate notebook/free twoT4 pinned27B, exactly5calls/five
+TARGET diagnosticdisplays +5000/16probe;1024output,600s install/2700s workload.
+No paidcompute/training/adapters/localweights/publicupload/active9B-v3replacement.
+
+After completion download exactsaved ghost_reviewed_target_bundle/* and
+ ghost_reviewed_target_results/* to evaluation/runs/ghost_reviewed_target_v2/download/.
+Use NEW dedicated context verifier, not oldtarget verifier:
+.venv-tokenizer/bin/python scripts/verify_reviewed_target_context.py --version
+ghost_reviewed_target_v2 --tokenizer
+evaluation/ghost_reviewed_target_inputs_v2/tokenizer_assets.
+Inspect metadata first, keep intermediate reasoning private. Review target-only
+relevance/source support/uncertainty separately from frozen membership checks;
+valid scope-only empty is not full-question refusal or corpus absence. No
+changing localexpectations after outputs. Source-form precision remains separate.
+
+Earlier saved45 submission checkpoint follows (running state superseded):
+
 # Latest submitted run — 28 October 2026
 
 New ghost_reviewed_target_v1 submitted ONCE as private Kaggle saved45 after

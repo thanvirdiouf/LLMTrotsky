@@ -261,7 +261,7 @@
   "phase_i": {
     "purpose": "Literal target selectivity diagnostic: three scope/background controls and two factual probes",
     "frozen_local_version": "ghost_reviewed_target_v1",
-    "status": "Running privately; target diagnostic result pending",
+    "status": "Complete and verified; two of five local checks passed, composition not justified",
     "design": "config/ghost_reviewed_target_design_v1.json",
     "shared_runtime_parent_saved_version": 43,
     "motivating_saved_version": 44,
@@ -277,6 +277,38 @@
     "focused_tests": 152,
     "verification_script": "scripts/verify_reviewed_target.py",
     "saved_version": 45,
-    "normalized_frozen_cells_match": true
+    "normalized_frozen_cells_match": true,
+    "result_sha256": "e51f7e657fb6608e1f0dc21ab4d8a14c8d24eacd296fef107eef86aca26ff101",
+    "local_diagnostic_checks_passed": 2,
+    "local_diagnostic_checks_total": 5,
+    "scope_controls_empty": 1,
+    "scope_controls_total": 3,
+    "selected_record_counts": [
+      3,
+      4,
+      2,
+      0,
+      3
+    ],
+    "composition_justified": false,
+    "fresh_transfer_justified": false
+  },
+  "phase_j": {
+    "purpose": "One context-label counterfactual against saved45",
+    "frozen_local_version": "ghost_reviewed_target_v2",
+    "status": "Frozen and tested; not submitted",
+    "design": "config/ghost_reviewed_target_context_v1.json",
+    "parent_saved_version": 45,
+    "only_model_input_change": "original-question key and its single system reference renamed as context",
+    "expectations_byte_identical_to_parent": true,
+    "evaluation_calls_maximum": 5,
+    "maximum_displayed_answers": 5,
+    "separate_memory_probe_calls_maximum": 1,
+    "maximum_runs_for_intervention": 1,
+    "stop_if_scope_failures_persist": true,
+    "active_model_changed": false,
+    "fresh_transfer_run": false,
+    "focused_tests": 155,
+    "verification_script": "scripts/verify_reviewed_target_context.py"
   }
 }

@@ -1,0 +1,13 @@
+{
+  "purpose": "literal_target_context_label_diagnostic",
+  "parent_inputs": "evaluation/ghost_reviewed_target_inputs_v1",
+  "parent_saved_version": 45,
+  "old_context_key": "current_user_request",
+  "new_context_key": "original_question_context",
+  "intervention": "Rename the original-question data key and its single system-prompt reference. Preserve every data value, target span, original question, source/menu, expectation, output schema and runtime setting.",
+  "causal_hypothesis_established": false,
+  "maximum_new_runs_for_this_intervention": 1,
+  "if_scope_controls_still_fail": "Do not continue selector-prompt retries on these familiar cases; document the routing limitation and review architecture and task expectations offline.",
+  "fresh_transfer_run": false,
+  "active_route_changed": false
+}

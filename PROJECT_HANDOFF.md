@@ -1,3 +1,80 @@
+# Offline architecture/precision milestone — 28 October 2026
+
+Saved46 COMPLETE/verified; NO Kaggle notebook running or new inference prepared.
+STOP RULE remains active: NO selector-prompt retries on familiar cases; no
+composition/activation/freshtransfer/training from local3/5membership results.
+
+Completed offline work:
+* docs/GHOST_OFFLINE_ARCHITECTURE_REVIEW.md separates representation gaps,
+  expectation-scope ambiguity, target/control interpretation, selection,
+  unmeasured retrieval and unvalidated presentation/conversation.
+* scripts/grounded_request_boundary.py is an UNINTEGRATED typed application-event
+  contract. Explicit ask has its own currentquestion; opaque priorcontext never
+  supplies it. Structured source-scope/detail controls returnNOquestionrequest.
+  Unknownfields/unconfiguredsources/duplicates/system-rolepriorcontext fail.
+  Source scope is a bounded collection subset, not already chosen answerpackets.
+  It doesNOT classify free-form language/authenticatecallers/buildprompts/call
+  models orrecordtrustedmemory. An explicitask saying useonlyexcerpt staysask;
+  nokeywordrouting. Existingactivev3/runtime untouched.
+* New opt-in evaluation/ghost_reviewed_coverage_v3/ has53claims. Original51claim
+  objects andexactprofile/collectionbytes preserved. Two source-paraphrase
+  additions: Eastmanautumn1925/PoliticalBureau/groupdecision/ultimatum in1928
+  authoraccount; Blumkinletter carrier/Moscowrecipients/reformposition distinct
+  fromdirectconversation. Exactanchors/roles/dates retained. Unused byruntime
+  orinference; not a selectionfix orhuman/independent truthvalidation.
+  NewledgerFP1ac4132bb0aff970c4a7f859106fffe7fb3308ce5635627ad8a3e10fe221e6e4.
+  Planconfig/ghost_reviewed_precision_plan_v1.json; builder
+  scripts/extend_reviewed_source_ledger.py pinsparent51files/manifest/supplement
+  hashes, preservesoldclaims/sourcebytes, usesexistingguards. Newsource review
+  in evaluation/ghost_reviewed_coverage_v3/SOURCE_REVIEW.json, earlierreviews
+  andlocks unchanged. No originalquestions/expectations rewritten.
+
+Validation:158focused ghost tests+6boundarytests pass (3new precisiontests and
+6newboundarytests). Logs/offlineidentitychecks in
+ evaluation/runs/ghost_offline_boundary_v1/. Zeromodelcalls. Protectedactive9B/v3,
+old9Bhelpers/allarchives/privacy andpausedtraining preserved.
+
+Next justified work remains OFFLINE: exercise request-boundary-to-retrieval
+contract on syntheticfixtures, explicitly separate configuredsourcescope from
+retrievedpackets and quoted/evidence/priorcontext fromactualquestion. Reuse
+existingretrieval logic whenappropriate. Noactualmodel/prompt/broadwriterretry,
+newKagglejob, fixedfreshquestionrun orautomaticactivation. Beforefutureinference,
+review a concrete newarchitecture design and measuredCPUlimitations, not more
+familiarselectorprompt variation. Natural-languageintenthandling/retrievalquality/
+answercompleteness/sourceinterpretation/voice remainunvalidated bythese tests.
+Source reviewisunblinded implementingagent, NOT independent/humanvalidation.
+
+Earlier saved46 completion and stopdecision follow:
+
+# Saved46 complete — selector-prompt stop rule triggered, 28 October 2026
+
+Latest ghost_reviewed_target_v2/private saved46 COMPLETE, exact downloaded/
+verified. NO Kaggle notebook running, no new submission prepared. Never resubmit
+43/44/45/46. ResultSHA c5a13ff0d0f35dba62394db04f1bfe20d83cc6a2421d4e697850a639a229a6b1.
+5calls+probe633.23s, no truncation/thinking. Fixed local checks3/5 versus2/5:
+ILO source-scope control now empty; otherfour selections unchanged. Hearing
+scope-only target still picks3original-question factual records. Eastman probe
+passes; Blumkin broader-context membership misses, with source-scope caveat
+(direct conversation vs letter through him) preserved. Scope empties2/3.
+
+STOP RULE TRIGGERED: NO MORE selector-prompt retries on these familiar cases.
+No automatic composition/activation/freshtransfer/training. Context-key change
+helpedonecontrol, not a general routing fix. Actual source statements remain
+immutable and supported as development curation, not independent truth proof.
+New run SOURCE_REVIEW.json and docs/GHOST_REVIEWED_TARGET_CONTEXT.md record the
+unblinded implementing-agent source review; NOT human/independent validation.
+
+Next work OFFLINE: audit application-owned task/control boundaries and source/
+expectation scope; separately fill known source-form precision in a NEW opt-in
+ledger preserving all original51records, source packets/questions/expectations/
+locks, old9Bhelpers and activev3. Eastman autumn1925/PoliticalBureau/groupdecision
+needs explicit source representation. Blumkin direct-conversation advice must
+remain distinct from informative letter carried through him to Moscowfriends;
+review frozen rubric's broader-context demand without silently weakening labels.
+No local modelweights, source uploads, new GPUcall or activatedroute needed.
+
+Earlier saved46 submitted checkpoint follows (running state superseded):
+
 # Latest submitted run — 28 October 2026
 
 New ghost_reviewed_target_v2 submitted ONCE as private Kaggle saved46 after

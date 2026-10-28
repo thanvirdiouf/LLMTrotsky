@@ -296,7 +296,7 @@
   "phase_j": {
     "purpose": "One context-label counterfactual against saved45",
     "frozen_local_version": "ghost_reviewed_target_v2",
-    "status": "Running privately; single counterfactual result pending",
+    "status": "Complete and verified; hearing scope error persists, stop rule triggered",
     "design": "config/ghost_reviewed_target_context_v1.json",
     "parent_saved_version": 45,
     "only_model_input_change": "original-question key and its single system reference renamed as context",
@@ -311,6 +311,33 @@
     "focused_tests": 155,
     "verification_script": "scripts/verify_reviewed_target_context.py",
     "saved_version": 46,
-    "normalized_frozen_cells_match": true
+    "normalized_frozen_cells_match": true,
+    "result_sha256": "c5a13ff0d0f35dba62394db04f1bfe20d83cc6a2421d4e697850a639a229a6b1",
+    "local_diagnostic_checks_passed": 3,
+    "local_diagnostic_checks_total": 5,
+    "scope_controls_empty": 2,
+    "scope_controls_total": 3,
+    "stop_rule_triggered": true,
+    "further_familiar_selector_prompt_retries": false,
+    "composition_justified": false,
+    "fresh_transfer_justified": false
+  },
+  "phase_k": {
+    "purpose": "Offline architecture boundary and source precision review after selector stop rule",
+    "status": "Implemented and tested offline; not integrated or model-validated",
+    "model_calls": 0,
+    "new_kaggle_job_prepared": false,
+    "request_boundary": "scripts/grounded_request_boundary.py",
+    "precision_plan": "config/ghost_reviewed_precision_plan_v1.json",
+    "precision_snapshot": "evaluation/ghost_reviewed_coverage_v3",
+    "original_claims_preserved": 51,
+    "total_claims": 53,
+    "ledger_fingerprint": "1ac4132bb0aff970c4a7f859106fffe7fb3308ce5635627ad8a3e10fe221e6e4",
+    "active_model_changed": false,
+    "fresh_transfer_run": false,
+    "source_quality_independently_validated": false,
+    "focused_ghost_tests": 158,
+    "boundary_tests": 6,
+    "next_gate": "Offline request-to-retrieval harness on synthetic fixtures; no familiar-selector prompt retries"
   }
 }

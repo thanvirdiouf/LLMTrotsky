@@ -1,0 +1,14 @@
+{
+  "added_claim_count": 2,
+  "parent_directory": "evaluation/ghost_reviewed_coverage_v2",
+  "parent_file_sha256": {
+    "build_manifest.json": "c85b313eb5a0cf7d4aa38360534b97176c470c0e4d4134a0629ef12d6de2c3fe",
+    "collection.json": "2ebd71d503eef30ef200f050d77dd2730dcd75e8a88eeedbd35a449f5d005e70",
+    "ledger.json": "dcbb2da889dd60216f664c8c768231de066673ac7a21de867bedce86339b8742",
+    "profile.json": "47d16df9da09c856605a1a52871bd8083f51f0733d87c90b5a32248c39f50e2f"
+  },
+  "schema_version": 1,
+  "status": "Offline opt-in source precision only; original51claims preserved; no selector retry, runtime activation or training",
+  "supplements_file": "evaluation/ghost_reviewed_coverage_v3/proposition_supplements.json",
+  "supplements_sha256": "45969b8b5d2100fb81c8aea0b26fd39ac43f78de2e028c70b6cc4e3759a2813a"
+}

@@ -63,3 +63,24 @@ commit `a05b9c1` was pushed. Exact fetched normalized notebook cells match the
 frozen local source. All155 focused ghost tests and the CPU preflight pass;
 actual model results are pending. No source, expectation, runtime, active-model
 or training change accompanied submission.
+
+## Saved46 result and stop decision
+
+Exact saved46 completed and passed the dedicated frozen/token/logit/backend and
+parser/display replay verifier. Five calls plus the probe took633.23seconds,
+with no truncations or thinking markers. Result SHA256:
+`c5a13ff0d0f35dba62394db04f1bfe20d83cc6a2421d4e697850a639a229a6b1`.
+The local checks improve from2/5 to3/5: ILO scope-only selection becomes empty;
+all four other ID selections are unchanged. The hearing scope-only target still
+selects three records addressing the original full question. Eastman membership
+passes; the unchanged broader-context Blumkin membership check still fails, with
+the direct-conversation versus letter-context caveat retained.
+
+The rename affected one familiar control but did not solve target routing.
+The predeclared stop rule is triggered: no further selector-prompt retries on
+these cases. No composition, fresh transfer, activation or training is justified
+by this result. No Kaggle job is running or being resubmitted. Next work is
+an offline architecture/task-expectation scope audit, plus separately reviewed
+source-form precision without modifying the original51records. All source/
+selection review is unblinded implementing-agent review, not independent or
+human validation. Empty target-only controls are not full-question refusals.

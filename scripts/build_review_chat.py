@@ -7,7 +7,7 @@ from review_chat import load_snapshot,prepare_turn
 from grounded_request_boundary import ConversationState
 
 
-def build(version='ghost_review_chat_v1',root=ROOT,tokenizer=None):
+def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
     if not re.fullmatch(r'ghost_review_chat_v[1-9][0-9]*',version):raise ValueError('Invalid review version')
     design_raw=(root/'config/ghost_review_workbench_v1.json').read_bytes();design=json.loads(design_raw)
     if len(design['conversations'])!=5 or sum(len(c['questions']) for c in design['conversations'])!=10:raise ValueError('Conversation scope differs')
@@ -90,4 +90,4 @@ def build(version='ghost_review_chat_v1',root=ROOT,tokenizer=None):
     return {'stage':str(stage),'initial_input_tokens':[len(j['input_token_ids']) for j in jobs]}
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--version',default='ghost_review_chat_v1');print(json.dumps(build(p.parse_args().version),indent=2))
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--version',default='ghost_review_chat_v4');print(json.dumps(build(p.parse_args().version),indent=2))

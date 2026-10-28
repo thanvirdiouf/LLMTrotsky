@@ -137,3 +137,11 @@ Feedback binds each human submission to the exact run, answer journal hash and
 reply fingerprint, so reviews remain attributable when a later technical run
 preserves a reply. The local browser submitter is not authenticated as an
 independent expert; ratings do not automatically become validated training data.
+
+The technical continuation was submitted once as private Kaggle saved48 after
+commit `fcb6039`; exact normalized saved source matches. Newcall cap5 plus probe,
+with5archived initial replies reused. All171 focused tests pass. Source and
+format failure findings remain documented; no quality claim follows submission.
+The server continues exposing verified saved47 material until the new run is
+verified and selected. A stale feedback form is rejected instead of silently
+being attached to a different version.

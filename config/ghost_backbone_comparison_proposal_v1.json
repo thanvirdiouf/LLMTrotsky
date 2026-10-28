@@ -356,7 +356,7 @@
     "human_review_status": "awaiting actual model samples and user review",
     "local_url": "http://127.0.0.1:8765",
     "live_model_endpoint_configured": false,
-    "focused_tests": 170,
+    "focused_tests": 171,
     "verification_script": "scripts/verify_review_chat.py",
     "result_sha256": "b461c64287d0c632ac073412e718cc92f38f48be08dc4105c5e0b5410af5e4a8",
     "actual_model_calls": 7,
@@ -364,6 +364,10 @@
     "format_blocked_positions": 5,
     "next_prepared_version": "ghost_review_chat_v4",
     "continuation_new_calls_maximum": 5,
-    "continuation_archived_seed_replies": 5
+    "continuation_archived_seed_replies": 5,
+    "latest_submitted_version": "ghost_review_chat_v4",
+    "latest_saved_version": 48,
+    "latest_status": "Running technical continuation: five archived first replies, at most five new follow-ups",
+    "local_review_available": true
   }
 }

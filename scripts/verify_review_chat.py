@@ -56,7 +56,7 @@ if index!=len(calls):raise ValueError('Unexpected conversation call tail')
         return {n:(directory/'replayed'/n).read_bytes() for n in ('answers.jsonl','model_calls.jsonl')}
 
 
-def verify(version='ghost_review_chat_v2',root=ROOT,tokenizer=None,tokenizer_path=None):
+def verify(version='ghost_review_chat_v4',root=ROOT,tokenizer=None,tokenizer_path=None):
     f=payloads(version,root);p=json.loads(f['protocol.json']);run=root/'evaluation/runs'/version;d=run/'download'
     for n,raw in f.items():
         if (d/'ghost_review_chat_bundle'/n).read_bytes()!=raw:raise ValueError('Downloaded conversation payload differs: '+n)
@@ -114,7 +114,7 @@ def verify(version='ghost_review_chat_v2',root=ROOT,tokenizer=None,tokenizer_pat
         'peak_gib':{k:v/GIB for k,v in peaks.items()},'human_review_status':'unreviewed'}
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--version',default='ghost_review_chat_v2');parser.add_argument('--tokenizer',required=True,type=Path);args=parser.parse_args()
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--version',default='ghost_review_chat_v4');parser.add_argument('--tokenizer',required=True,type=Path);args=parser.parse_args()
     from transformers import AutoTokenizer
     report=verify(args.version,tokenizer=AutoTokenizer.from_pretrained(args.tokenizer,local_files_only=True,trust_remote_code=False),tokenizer_path=args.tokenizer)
     (ROOT/'evaluation/runs'/args.version).mkdir(parents=True,exist_ok=True)

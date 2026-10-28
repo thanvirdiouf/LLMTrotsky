@@ -1,3 +1,59 @@
+# Review prototype available; saved48 continuation running — 28 October 2026
+
+User said Okay, do it. I willreview. Localworkbenchavailable NOW:
+http://127.0.0.1:8765 ; ownserverPID206908, execsession28769, no liveendpoint.
+IABbrowser2/tab1 markedDELIVERABLE, actualmodelreply/sourceinspector/reviewform
+OPEN tested; NO fakehumanreview submitted. Screenshots ignored at
+ evaluation/runs/ghost_review_chat_v3/workbench-review.jpg and source-lookup.jpg.
+UI currentlyserves verifiedsaved47 / localghost_review_chat_v3:5real parsed
+firstreplies plus visibleformatblocked/skippedpositions. Do notclaimall10ready.
+Feedbackfile evaluation/review_workbench/feedback.jsonl localonly, appendonly,
+explicitclientrun+answersSHA+replyFP binding; staleversion rejects. Notes doNOT
+becomeverifiedfacts/trainingdata. Source lookupreal/local/ZEROmodelcalls;
+custom livechat unavailableuntiloperatorconfigures endpoint. Active9B/v3 unchanged.
+
+NEW ghost_review_chat_v4 submittedONCE asprivate Kaggle saved48 afterpushed
+fcb6039. Exactfetchednormalizedsaved48cells matchfrozen source. ConfirmedRUNNING.
+Receipt/source ignored evaluation/runs/ghost_review_chat_v4/. Neverresubmit48/47.
+Technicalcontinuation ONLY: preserveassistantJSON formatinhistory, reuse5
+hash-bound initialanswersfromsaved47, generateonly5failed/missingfollowups.
+No questions/source/prompt/model/decodingchange, no budgetincrease. Original5
+answers containknownoverclaims; theyremainUNCHANGED forhumanreview, notapproved.
+Newactualmaxcalls5+5000/16probe, total10displayedpositions withoriginfields;
+private pinned27B/twofreeT4s,1024output/600ssetup/2700sworkload/no train/adapters/
+paid/localweights/publicupload/activechange. Familiarselectorstoprule remains.
+
+OnCOMPLETE download exact48 ghost_review_chat_bundle/* and
+ ghost_review_chat_results/* to evaluation/runs/ghost_review_chat_v4/download/.
+Inspectmetadatafirst; keep reasoningprivate. Dedicated:
+.venv-tokenizer/bin/python scripts/verify_review_chat.py --version
+ghost_review_chat_v4 --tokenizer evaluation/ghost_review_chat_v4/tokenizer_assets.
+Verifierbinds5seedoutputs to exactsaved47requests/calls/result and measuresONLY
+newGPUcalls, finite/logits/backend/tokens, isolateddependent retrieval/history/
+parser replay. CPUpreflightpassed real5archivedseeds+5syntheticnewoutputs/temp
+fixtures, notnewGPU/qualityevidence. 171focusedtests total (158ghost+6boundary+
+7review); newtestproves5seedreuse+5newcalls/JSONhistory. Earlier prepared
+reviewv1/v2 never submitted; saved47v3 preservedunchanged.
+
+After48verified, source/developmentreview actualnewreplies withoutclaiminghuman
+validation. Switch/restart ONLYown localhostserver to --review-run
+ evaluation/runs/ghost_review_chat_v4 (andupdateitsdefault), preservingfeedback.
+RecordnewPID/session from ignoredserver.json. Reloadtab (doNOTsubmitfakehuman
+feedback), inspectconversation/source/form, saveactualscreenshot/markdeliverable,
+showuserURL+reviewinstructions+livebackendlimit. Ifrunfails diagnose, noblind
+regeneration; no furtherqualityprompt iteration beforeuserreview. Unstructured
+saved47followuptext isNOT silentlysplit intosourcevsfiction; rawjournals/private
+reasoning/prompts neverexposedbyUI. Originalfixedfreshquestionsstillunrun.
+
+Userreviewpending: monitor actualfeedbackquietly aftersamplesavailable. No extra
+modelruns/training/activation fromselfreview ormereunitpasses. Known source
+findings: missingquote answeroverclaims absenceintheentirehistoricalrecord;
+pressreflectionadds laterhistory beyond1928packet; check attributionof motives.
+These areunblinded coding-agent observations, NOT independent/humanvalidation.
+Alloriginalsources/expectations/adapters/old9Bhelpers/archives/privacy protected.
+
+Earlier technicalcheckpoint follows:
+
 # Saved47 verified; five-call technical continuation prepared — 28 October 2026
 
 Reviewapp localhost8765 running (restartedexecsession43013; PIDmetadata now

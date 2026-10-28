@@ -1,3 +1,38 @@
+# Latest submitted run — 28 October 2026
+
+New ghost_reviewed_coverage_v1 submitted ONCE to existing private notebook as
+saved44 after pushed commit8a2cd8d. Confirmed RUNNING. Exact saved44 normalized notebook cells
+match the frozen local notebook. Receipt and fetched source in ignored
+ evaluation/runs/ghost_reviewed_coverage_v1/submission.json and saved.ipynb.
+Do not resubmit44 or43. No model-quality result yet. The earlier preparation
+checkpoint below is superseded by this submission.
+
+On COMPLETE download exact44 ghost_reviewed_coverage_bundle/* and
+ ghost_reviewed_coverage_results/* into
+ evaluation/runs/ghost_reviewed_coverage_v1/download/. Dedicated verifier:
+.venv-tokenizer/bin/python scripts/verify_reviewed_coverage.py --version
+ghost_reviewed_coverage_v1 --tokenizer
+evaluation/ghost_reviewed_coverage_inputs_v1/tokenizer_assets.
+Keep intermediate reasoning private: inspect metadata before final JSON.
+Verifier enforces parent sources/shared runtime byte identity, frozen input/
+question/parts/schema/tokens/budgets/logits/GPU/backend and exact parser/display
+replay. Per-part arrays are NOT semantic coverage or factual approval. Review
+original tasks and actual source wording separately for completeness, relevance,
+certainty, roles/dates, unsupported curated assertions, refusals and usability.
+Write new SOURCE_REVIEW.json in this run; preserve frozen input/curation reviews.
+Unblinded implementing-agent review is not human/independent validation.
+
+Five evalcalls/five research replies plus5000/16memory probe; same pinned27B,
+freeprivate twoT4s,1024output/600sinstall/2700sworkload caps. No factual rewriting,
+self-audit gate/training/adapters/paid compute/active9B/v3 change. Literal parts
+3/4/5/5/2, inputs2816/3865/3887/2656/1623. Six new tests/all148 focused ghost
+tests pass. CPU preflight rerun after final verifier changes passes with synthetic
+IDs/real tokenizer/temp archived-metadata fixtures only; not GPU/quality evidence.
+Next decisions depend on actual saved44 selection quality. Eastman immutable-form
+precision is separate; fresh transfer remains gated, no automatic activation.
+
+Earlier preparation checkpoint follows:
+
 # Question-part selector prepared — 28 October 2026
 
 New local ghost_reviewed_coverage_v1 is frozen/tested, NOT YET SUBMITTED at this

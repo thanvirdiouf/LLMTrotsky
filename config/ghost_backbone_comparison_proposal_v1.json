@@ -232,7 +232,7 @@
   "phase_h": {
     "purpose": "Original-question literal-part ID selection comparison",
     "frozen_local_version": "ghost_reviewed_coverage_v1",
-    "status": "Frozen and tested; not submitted",
+    "status": "Running privately; quality result pending",
     "design": "config/ghost_reviewed_coverage_design_v1.json",
     "parent_saved_version": 43,
     "evaluation_calls_maximum": 5,
@@ -245,6 +245,8 @@
     "fresh_transfer_run": false,
     "active_model_changed": false,
     "focused_tests": 148,
-    "verification_script": "scripts/verify_reviewed_coverage.py"
+    "verification_script": "scripts/verify_reviewed_coverage.py",
+    "saved_version": 44,
+    "normalized_frozen_cells_match": true
   }
 }

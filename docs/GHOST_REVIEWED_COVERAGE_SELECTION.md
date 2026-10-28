@@ -89,3 +89,11 @@ extension before considering the fixed fresh questions. If they persist, documen
 the selection limitation and choose a targeted diagnostic rather than another
 broad writer prompt, self-audit activation or training. No automatic promotion
 follows a successful run or complete-looking arrays.
+
+## Submission
+
+The frozen trial was submitted once as private Kaggle saved44 after preparation
+commit `8a2cd8d` was pushed. Exact fetched saved44 normalized notebook cells match
+the frozen source. Receipts/source remain ignored under the run directory. No
+actual model-quality result is claimed at submission; active9B/v3 and all fresh
+transfer/training gates remain unchanged.

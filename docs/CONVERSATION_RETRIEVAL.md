@@ -91,3 +91,10 @@ isolated dependent retrieval/history/parser replay. Then separately review
 source support, missing information, roles, certainty, relevance, completeness
 and voice against the frozen local rubric. A format pass is not source approval.
 No rerun, larger budget, self-audit gate or automatic activation follows failure.
+
+## Submission
+
+The preparedv5 was submitted once after commit6cb6d6b as private saved49.
+The fetched exact saved49 notebook's normalized cells match the frozen source;
+initial status RUNNING. Never resubmit it. No semantic result is claimed yet.
+The local source rubric and lock remain outside the uploaded payload.

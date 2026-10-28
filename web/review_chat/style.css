@@ -268,6 +268,28 @@ font-size:11px
 .actions button:hover{
 background:#e9e9df
 }
+.prose .citation{
+  display:inline-block;
+  vertical-align:super;
+  font:600 .65em/1.1 system-ui,sans-serif;
+  min-width:1.35em;
+  padding:.12em .3em;
+  margin:0 .08em;
+  border:1px solid #b5b9ad;
+  border-radius:.25em;
+  color:#40553d;
+  background:#edf0e8;
+  cursor:pointer;
+}
+.prose .citation:hover{
+  background:#dce5d5;
+}
+.citation-unavailable{
+  font:.68em/1.2 system-ui,sans-serif;
+  color:#8c4335;
+  border-bottom:1px dotted currentColor;
+  margin:0 .2em;
+}
 .diagnostic{
 font-size:11px;
 color:#856349;

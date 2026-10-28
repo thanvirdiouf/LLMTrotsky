@@ -211,3 +211,21 @@ assistant claims as evidence, or silently replace the existing results. A
 retrieval gain would justify a small newly frozen conversation comparison under
 the existing private/free inference limits; it would not itself validate the
 answers. Training, adapters and automatic model activation remain paused.
+
+## Compact citation presentation
+
+The interface now renders known stable packet tokens as small numbered source
+buttons instead of raw bracketed IDs. Each opens its matching current source
+with dates and full bounded context. Unknown IDs remain visibly marked source
+unavailable and have no invented link. Missing citations and absent packets
+have distinct warnings. Source/model strings still use text nodes, not HTML.
+This presentation preserves all archived output bytes and review fingerprints.
+Browser checks on the realv4 samples verified ILO and Eastman targets and the
+absent Eastman warning on the final press follow-up. No feedback was submitted
+during QA. A screenshot is saved in the ignoredv5run directory.
+
+The user has delegated further review and project decisions on29October2026.
+Subsequent source reviews are implementing-agent development reviews; the user
+need not perform another review round. The separate context-retrieval test is
+private saved49; see CONVERSATION_RETRIEVAL.md. Current displayed samples remain
+verifiedv4 until an evidence-based decision replaces them.

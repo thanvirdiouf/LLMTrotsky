@@ -7,6 +7,13 @@ function status(text,error=false){$('status').textContent=text;$('status').class
 function dateText(s){return new Date(s+'T12:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});}
 function empty(title,text){const box=el('div','empty-state');box.append(el('div','kicker','A WORK IN PROGRESS'),el('h2',null,title),el('p',null,text));return box;}
 function activeNav(button){document.querySelectorAll('.nav-button').forEach(b=>b.classList.remove('active'));button?.classList.add('active');}
+function citedProse(text,row){const prose=el('div','prose');const packets=row.source_packets||[];let cursor=0;
+ for(const match of text.matchAll(/\[([a-z][a-z0-9_-]*)\]/g)){prose.append(document.createTextNode(text.slice(cursor,match.index)));const index=packets.findIndex(p=>p.id===match[1]);
+ if(index>=0){const p=packets[index],button=el('button','citation',String(index+1));button.type='button';button.title=p.title;button.setAttribute('aria-label',`Read source ${index+1}: ${p.title}`);button.addEventListener('click',()=>showSources([p],row.retrieval,true));prose.append(button);}
+ else{const unavailable=el('span','citation-unavailable','source unavailable');unavailable.title=`The cited packet ${match[1]} was not retrieved for this reply.`;prose.append(unavailable);}
+ cursor=match.index+match[0].length;}
+ prose.append(document.createTextNode(text.slice(cursor)));return prose;
+}
 function showSources(packets,trace={},openRequested=false){const panel=$('evidence');panel.replaceChildren(el('div','section-label','READ ALONGSIDE THE ANSWER'),el('h2',null,'The sources'));
  if(!packets?.length)panel.append(el('p','muted','No candidate passages were retrieved for this turn. Absence from this collection does not prove that an event never happened.'));
  for(const p of packets||[]){const card=el('article','source');card.append(el('div','source-id',p.id.replaceAll('_',' ')));const h=el('h3');const a=el('a',null,p.title);a.href=p.url;a.target='_blank';a.rel='noopener noreferrer';h.append(a);card.append(h,el('div','source-meta',p.author));const d=p.composition_date_interval;card.append(el('div','source-meta',dateText(d.earliest)+(d.latest!==d.earliest?' – '+dateText(d.latest):'')));
@@ -24,8 +31,9 @@ function feedbackForm(row){const form=el('form','feedback');form.append(el('h3',
  form.addEventListener('submit',async event=>{event.preventDefault();submit.disabled=true;try{await api('/api/feedback',{case_id:row.case_id,turn:row.turn,support:selectors.support.value,voice:selectors.voice.value,usefulness:selectors.usefulness.value,notes:notes.value,review_run:row.review_run,answers_sha256:row.answers_sha256,reply_fingerprint:row.reply_fingerprint});message.textContent='Review saved locally. Thank you.';}catch(e){message.textContent=e.message;}finally{submit.disabled=false;}});return form;
 }
 function turnView(row,reviewable=true){const box=el('article','turn');box.append(el('div','question-bubble',row.question));const speaker=el('div','speaker');speaker.append(el('span','tiny-mark','T'),el('span',null,'FICTIONAL PRESENT-DAY PORTRAYAL'));box.append(speaker);
- if(row.reply){box.append(el('div','prose',row.reply.reply));if(row.reply.fictional_reflection){const reflection=el('div','reflection');reflection.append(el('div','reflection-label','✦ IMAGINED PRESENT-DAY VIEW'),el('div','prose',row.reply.fictional_reflection));box.append(reflection);}
- const diag=row.reply.diagnostics;if(diag?.unknown_citation_ids?.length||diag?.no_citations_with_evidence)box.append(el('p','diagnostic','Citation formatting needs checking; inspect the passages before accepting the claims.'));
+ if(row.reply){box.append(citedProse(row.reply.reply,row));if(row.reply.fictional_reflection){const reflection=el('div','reflection');reflection.append(el('div','reflection-label','✦ IMAGINED PRESENT-DAY VIEW'),citedProse(row.reply.fictional_reflection,row));box.append(reflection);}
+ const diag=row.reply.diagnostics;if(diag?.unknown_citation_ids?.length)box.append(el('p','diagnostic','A cited source was not retrieved for this reply. Conversation context is not evidence.'));
+ else if(diag?.no_citations_with_evidence)box.append(el('p','diagnostic','No source citations were supplied. Inspect the passages before accepting factual claims.'));
  }else box.append(el('p','lookup-label','This model reply could not be displayed in the required format. '+(row.validation_error||'')));
  const actions=el('div','actions');const sources=el('button',null,'Inspect sources ('+(row.source_packets?.length||0)+')');sources.type='button';sources.addEventListener('click',()=>showSources(row.source_packets,row.retrieval,true));actions.append(sources);
  if(reviewable){const review=el('button',null,'Review this reply');review.type='button';let form=null;review.addEventListener('click',()=>{if(!form){form=feedbackForm(row);box.append(form);}else form.hidden=!form.hidden;});actions.append(review);}box.append(actions);

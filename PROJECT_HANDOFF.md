@@ -1,3 +1,47 @@
+# Context conversation test running as private saved49 — 29 October 2026
+
+User delegated further review/judgment; no repeated human-review gate required.
+Review remains unblinded implementing-agent development review, not independent
+or human validation. Keep earlier no training/adapters/paid/public/localweights/
+active9Breplacement limits and no subagents.
+
+Latest ghost_review_chat_v5 submittedONCE after6cb6d6b as private Kaggle saved49.
+ConfirmedRUNNING; exact fetched normalizedsaved49cells matchfrozen source.
+Receipt/source ignored in evaluation/runs/ghost_review_chat_v5/. Never resubmit49
+or completed48/47. Sameprivate notebook/twofreeT4s/pinned27B;10newcalls/10replies
++5000input16outputprobe,1024out/5120in/600ssetup/2700sworkload caps.
+
+New opt-in human_context_decay_v1 and fivefresh two-turn development
+conversations are frozen. Currentquery+last4humanquestions decayed, generic
+explicitreset clearsoldcontext. No assistant queryfacts/oracle IDs; persona/
+source53snapshot/commonloader/backend/decoding unchanged. Local preoutput rubric
+and lock evaluation/ghost_review_chat_v5/{development_rubric,local_review_lock}.json
+NOTuploaded. Fixedfreshtransferquestions remainunrun.176focusedtests+CPU
+syntheticreply/realtokenizer/exactisolatedreplay/tamperrejection preflight passed.
+Offline10checks8old->10new; actualoldpressfailure Eastmanrecoveredfirst.
+Implicitnewsubjectstillleaves oldtopicsecondary: knownnoise, not perfectrouting.
+
+OnCOMPLETE download EXACTsaved49 ghost_review_chat_bundle/* and
+ghost_review_chat_results/* to evaluation/runs/ghost_review_chat_v5/download/.
+Inspectmetadatafirst forformat/thinking; intermediate reasoning private. Run
+.venv-tokenizer/bin/python scripts/verify_review_chat.py --version ghost_review_chat_v5 --tokenizer evaluation/ghost_review_chat_v5/tokenizer_assets
+Then reviewfinalsource support/roles/certainty/completeness/refusals/voice/noise
+against frozenlocalrubric, not merecitation/JSONvalidity. Diagnosefailure, no blind
+retry/budgetincrease. Choose nextstep from measuredresults under existinglimits;
+no selfaudittruthgate, automaticactivation or training.
+
+UI nowrenders bracketed rawcitationIDs as compact numbered buttons openingonly
+matchingcurrentpacket. Unknowncitations visibly sourceunavailable; distinct
+missingcitationwarning. Rawoutputs/fingerprints/notesunchanged; textnodes only.
+Actualbrowserclicks verified ILO/Eastman targets andabsentEastman warning.
+Screenshot evaluation/runs/ghost_review_chat_v5/compact-citations.jpg.
+IABbrowser2/tab2 markedDELIVERABLE (oldtab1removed); localhost8765 stillserves
+verifiedv4samples, LIVE ENDPOINT NOTCONNECTED, source lookupzero modelcalls.
+Read server.json in appropriate namespace beforemanagingownserver. No fakeUI
+feedback. Docs CONVERSATION_RETRIEVAL.md and REVIEW_WORKBENCH.md.
+
+Earlier checkpoints follow (prepared/waiting states superseded above):
+
 # Delegated review; context-retrieval experiment prepared — 29 October 2026
 
 User: Go ahead. I don't need to review anymore. I trust your judgement.

@@ -92,7 +92,8 @@ def handler_for(workbench):
         def origin_ok(self):
             hosts={f'127.0.0.1:{self.server.server_port}',f'localhost:{self.server.server_port}'}
             origin=self.headers.get('Origin')
-            return self.headers.get('Host') in hosts and (not origin or origin in {'http://'+h for h in hosts}) and self.headers.get('Sec-Fetch-Site')!='cross-site'
+            return (self.headers.get('Host') in hosts and (not origin or origin in {'http://'+h for h in hosts})
+                and (self.command=='GET' or self.headers.get('Sec-Fetch-Site')!='cross-site'))
         def send(self,status,data,content_type='application/json; charset=utf-8'):
             raw=json.dumps(data,ensure_ascii=False).encode() if not isinstance(data,bytes) else data
             self.send_response(status);self.send_header('Content-Type',content_type);self.send_header('Content-Length',str(len(raw)))

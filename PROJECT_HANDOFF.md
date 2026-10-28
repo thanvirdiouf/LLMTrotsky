@@ -1,3 +1,59 @@
+# Local review workbench running; private saved47 submitted — 28 October 2026
+
+User explicitly authorized prototype and willreview. New ghost_review_chat_v3
+submitted ONCE asprivate Kaggle saved47 afterpushed0042729; exactfetched saved47
+normalizedcells matchfrozen source. ConfirmedRUNNING. Neverresubmit47 or older
+jobs. Receipt/source ignored evaluation/runs/ghost_review_chat_v3/. Earlier
+unsubmitted reviewv1/v2 were CPUpreparationsonly; no GPUjobs.
+
+Local reviewserver RUNNING at http://127.0.0.1:8765 (execsession74378), bound
+loopbackonly. Cua IABtab1/browser2 openedandtestedactualsource query, source
+scopefilter, dated/fullsourcepacketdrawer andclearmodel-vs-source-labels. Frontend
+web/review_chat/ iscomplete. Source/modaltext usesDOMtextContent, notHTMLmodel
+rendering. Sameorigin/Host/staticpath/disabledlive API smokecheck passed. No
+modelendpoint configured orcalled; source lookup makesZEROmodelcalls. Optional
+liveadapter needs explicitoperatorURL/model/matchingpublictokenizer; endpoint
+identity operatorassertednotremotelyattested. Active9B/v3 remainsunchanged.
+
+UI currentlyawaits real model samples. Onceexact47COMPLETE download
+ ghost_review_chat_bundle/* and ghost_review_chat_results/* to
+ evaluation/runs/ghost_review_chat_v3/download/. InspectmetadatabeforefinalJSON,
+keep reasoningprivate, then dedicated:
+.venv-tokenizer/bin/python scripts/verify_review_chat.py --version
+ghost_review_chat_v3 --tokenizer evaluation/ghost_review_chat_v3/tokenizer_assets.
+Verifierdoesfrozen source/manifest/privacy scope, realtokens/logits/backend and
+exactdependent retrieval/history/parserreplay. UIimports ONLYverifiedhashbound
+finalparsedreplies, notrawjournals/reasoning/prompts. Formatfailuresdisplayas
+failures, neverfakeanswers. Reviewqualityunvalidated; candidate27Bexperimental,
+notactive9Breplacement. Humanfeedbackwillbeignoredlocal
+ evaluation/review_workbench/feedback.jsonl, appendonly, neverautoupload/train.
+DoNOT create fakehumanfeedback duringQA; testfixturefeedback istemporaryonly.
+
+Kaggle47hasfive NEWhumanreviewconversations,total10replies:3tech/ILO/disagreement,
+4Eastman/payment/modernpresshypothetical/shortanswer,1missingquote,1identity,
+1sourceonlyILO. RealBM25 retrieval,nooracles/expectedanswers/modelselfaudit.
+53recordopt-in snapshot, originalsourcebodies/provenancepreserved. Fictional
+reflection isseparatefromsourcebasedreply. Noactualsemanticapprovalgate; user
+reviewsupport/relevance/voice. No fixedfreshtransferbenchmarkquestionsrun.
+Exactly10calls/10replies+5000/16probe,1024output/600ssetup/2700sworkload,
+sameapprovedprivate pinned27B/twofreeT4s, no paidcompute/training/adapters/
+localmodelweights/publicupload/activechange. Familiarselectorstoprulepersists.
+
+170focused tests pass (158ghost+6boundary+6review); CPUreal-tokenizer/synthetic
+output10turnreplaypass; tamperedanswerrejectedwithrecomputedhash. NoGPU/quality
+evidencefrompreflight. NewUIbrowserchecksatnormalIABviewport; rawsourceoldfile
+browserblockwasnotbypassed—theuserrequestednewHTTPapplicationisdistinct.
+Source_lookup screenshot underignoredrunfolder; takefinalactualsample screenshot
+foruseronceimported, markreviewtabdeliverable. Documentationdocs/REVIEW_WORKBENCH.md.
+
+Next finishactualsampleverification andsource/developmentreview, testUIreview
+navigation/sourceinspection/formOPEN only(donotsavefakeuserreview), showuser
+localURL+howtoreview+limits(liveinference NOTconnected), commit/pushUI milestones.
+Updateheartbeat tomonitor47completion andthenactualuserfeedback quietly. No
+unreviewed extra inference loops orautomaticpromotion whileuserisreviewing.
+
+Earlier preparationcheckpoint follows:
+
 # User-authorized review prototype — 28 October 2026
 
 User asked for request-to-retrieval integration and experimental chat interface,

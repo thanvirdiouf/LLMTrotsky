@@ -339,5 +339,24 @@
     "focused_ghost_tests": 158,
     "boundary_tests": 6,
     "next_gate": "Offline request-to-retrieval harness on synthetic fixtures; no familiar-selector prompt retries"
+  },
+  "phase_l": {
+    "purpose": "User-authorized end-to-end conversation review workbench",
+    "frozen_local_version": "ghost_review_chat_v3",
+    "saved_version": 47,
+    "status": "Private sample run running; localhost source lookup/interface tested",
+    "design": "config/ghost_review_workbench_v1.json",
+    "evaluation_calls_maximum": 10,
+    "maximum_displayed_answers": 10,
+    "separate_memory_probe_calls_maximum": 1,
+    "actual_retrieval": true,
+    "model_audit_performed": false,
+    "active_model_changed": false,
+    "fresh_transfer_run": false,
+    "human_review_status": "awaiting actual model samples and user review",
+    "local_url": "http://127.0.0.1:8765",
+    "live_model_endpoint_configured": false,
+    "focused_tests": 170,
+    "verification_script": "scripts/verify_review_chat.py"
   }
 }

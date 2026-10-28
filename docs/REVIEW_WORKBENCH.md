@@ -103,3 +103,14 @@ verified sample import and local-only feedback. CPU preflight uses synthetic
 outputs in temporary fixtures and a real tokenizer, never a live model; it tests
 replay and tamper rejection only. Actual generated samples are never replaced
 by the synthetic preflight.
+
+Browser verification at the normal in-app viewport exercised source lookup,
+publication versus observation date, full speaker-labelled context and a native
+source dialog. HTTP smoke tests reject cross-origin POSTs, foreign Host headers,
+arbitrary file paths and an unconfigured live model call. No fake human review
+was saved. All170 focused tests pass (158ghost,6boundary,6new review tests).
+
+The final frozen sample was submitted once as private Kaggle saved47 after
+commit `0042729`; fetched normalized source matches. At submission the run is
+pending, so no model-quality result is claimed. The interface reads actual
+verified samples dynamically when verification is available.

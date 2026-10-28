@@ -1,3 +1,45 @@
+# Question-part selector prepared — 28 October 2026
+
+New local ghost_reviewed_coverage_v1 is frozen/tested, NOT YET SUBMITTED at this
+checkpoint. Never resubmit existing saved43; it is COMPLETE. Design:
+config/ghost_reviewed_coverage_design_v1.json; details:
+docs/GHOST_REVIEWED_COVERAGE_SELECTION.md. Generic punctuation splits original
+five questions into3/4/5/5/2literal parts, preserving every original character
+and decimals. Model outputs one known-ID array per part; deterministic bounded
+union displays original reviewed statements. Parts are not evaluator-authored
+requirements, and array presence is NOT semantic coverage. No factual writing,
+truth self-checker gate, oracle selections/old answer IDs or memory promotion.
+
+Sources/all51summaries, original questions/expectations and shared runtime/
+loader/attention/renderer/generation/probe remain byte-identical to saved43.
+Only instruction, literal-part metadata and selection output schema differ;
+this compares the combined intervention, not isolated segmentation. Token
+inputs2816/3865/3887/2656/1623. Exactly5evalcalls/five replies plus5000/16probe,
+1024output,600s installation/2700s workload caps, same pinned27B/private two
+freeT4s. Existing direct human bounded27B permission applies; no paid compute,
+training/adapters, active9B/v3 replacement or local model weights.
+
+Six new tests/all148 focused ghost tests pass. CPU verifier preflight uses
+arbitrary synthetic IDs/real tokenizer and temporary archived-metadata fixtures;
+no GPU or quality inference. It rejects altered displayed text even if journal
+hashes are recomputed. Preflight and new unblinded design review are under
+ignored evaluation/runs/ghost_reviewed_coverage_v1/. Frozen curation/input
+reviews and all source/output archives remain untouched.
+
+Next commit/push this preparation, check latest notebook idle, submit this new
+version once under existing approval, record actual saved version and fetched
+source identity, then update heartbeat. On completion download exact saved job's
+ghost_reviewed_coverage_bundle/* and ghost_reviewed_coverage_results/* to
+ evaluation/runs/ghost_reviewed_coverage_v1/download/ and run dedicated:
+.venv-tokenizer/bin/python scripts/verify_reviewed_coverage.py --version
+ghost_reviewed_coverage_v1 --tokenizer
+evaluation/ghost_reviewed_coverage_inputs_v1/tokenizer_assets.
+Review actual task coverage/source roles/certainty/relevance/refusals separately
+from formatting; implementing-agent review is unblinded, not human/independent.
+Eastman immutable-form precision remains a separate gap. Fresh transfer unrun.
+
+Earlier milestones follow:
+
 # Offline presentation milestone — 27 October 2026
 
 New opt-in `scripts/preview_reviewed_selection.py` replays actual saved43

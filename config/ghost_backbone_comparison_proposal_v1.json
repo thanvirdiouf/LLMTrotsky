@@ -228,5 +228,23 @@
     "new_focused_tests": 4,
     "reviewed_source_tests_passed": 18,
     "next_gate": "Separate available selection omissions from immutable summary precision before a new frozen task-coverage experiment"
+  },
+  "phase_h": {
+    "purpose": "Original-question literal-part ID selection comparison",
+    "frozen_local_version": "ghost_reviewed_coverage_v1",
+    "status": "Frozen and tested; not submitted",
+    "design": "config/ghost_reviewed_coverage_design_v1.json",
+    "parent_saved_version": 43,
+    "evaluation_calls_maximum": 5,
+    "maximum_displayed_answers": 5,
+    "separate_memory_probe_calls_maximum": 1,
+    "source_representation_changed": false,
+    "part_presence_is_semantic_coverage": false,
+    "model_audit_performed": false,
+    "generated_factual_text_used": false,
+    "fresh_transfer_run": false,
+    "active_model_changed": false,
+    "focused_tests": 148,
+    "verification_script": "scripts/verify_reviewed_coverage.py"
   }
 }

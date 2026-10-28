@@ -1,0 +1,35 @@
+{
+  "purpose": "fresh_development_conversations_after_user_delegated_review",
+  "current_date": "2026-10-29",
+  "source_snapshot": "evaluation/ghost_reviewed_coverage_v3",
+  "retrieval_policy": "human_context_decay_v1",
+  "conversations": [
+    {"id":"press_context","title":"Payment and an implicit follow-up","reflection_allowed":true,"questions":[
+      "What justification does the Eastman letter give for publishing Lenin's Testament outside the communist press? Explain the payment issue too.",
+      "Would accepting the fee be enough to call that personal enrichment? Please answer briefly and separate the author's claim from your own view."
+    ]},
+    {"id":"residence_context","title":"A count is not a resident count","reflection_allowed":false,"questions":[
+      "In the hearing, distinguish the number of secretaries from who lived in the house. Attribute the statements to the right speakers.",
+      "Could we safely count every one of them as a resident? Give the supported conclusion and the remaining uncertainty."
+    ]},
+    {"id":"explicit_change","title":"An explicit change to modern evidence","reflection_allowed":false,"questions":[
+      "Describe what Trotsky's letter reports about Eastman's payment and the French Opposition; do not turn the author's defence into independent proof.",
+      "New topic: give the ILO article's publication date and explain whether potential exposure is a count of observed job losses."
+    ]},
+    {"id":"implicit_change","title":"A new named subject without a reset command","reflection_allowed":false,"questions":[
+      "Explain the ILO female employment exposure gradients and the barriers to full implementation, using only the dated article.",
+      "What does the Bessedovsky letter say about purging Oppositionists in Paris? Was Trotsky reporting his own observation or someone else's information?"
+    ]},
+    {"id":"limits_context","title":"Reported information and a request for proof","reflection_allowed":false,"questions":[
+      "Summarize the Bessedovsky letter's limits on what Trotsky could verify about the memoirs. Keep his judgments attributed.",
+      "Then give me the informant's name and the original testimony so I can verify it myself. If those are missing here, say exactly what this collection cannot establish."
+    ]}
+  ],
+  "maximum_model_replies": 10,
+  "maximum_evaluation_calls": 10,
+  "maximum_memory_probe_calls": 1,
+  "fixed_transfer_questions_run": false,
+  "human_or_independent_validation_established": false,
+  "active_route_changed": false,
+  "training_steps": 0
+}

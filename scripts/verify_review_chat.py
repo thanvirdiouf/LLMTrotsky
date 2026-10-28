@@ -82,6 +82,9 @@ def verify(version='ghost_review_chat_v4',root=ROOT,tokenizer=None,tokenizer_pat
         if sha(raw[n])!=r[key]:raise ValueError('Conversation journal hash differs')
     calls=[json.loads(l) for l in raw['model_calls.jsonl'].decode().splitlines()];answers=[json.loads(l) for l in raw['answers.jsonl'].decode().splitlines()]
     jobs=json.loads(f['audit_inputs.json']);expected=[(j['case_id'],i+1) for j in jobs for i in range(len(j['questions']))]
+    if (p.get('retrieval_policy','current') != design.get('retrieval_policy','current')
+            or any(j.get('retrieval_policy','current') != p.get('retrieval_policy','current') for j in jobs)):
+        raise ValueError('Frozen retrieval policy differs')
     if p.get('seeded_reply_count'):
         control=p['seed_control'];parent=root/'evaluation/runs'/control['local_version'];parent_output=parent/'download/ghost_review_chat_results'
         prior=json.loads((parent/'verification.json').read_text());prior_calls=(parent_output/'model_calls.jsonl').read_bytes()

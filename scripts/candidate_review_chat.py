@@ -15,6 +15,8 @@ def validate_protocol(p):
     expected_calls = 5 if p.get('seeded_reply_count') == 5 else 10
     if p.get('evaluation_calls') != expected_calls:
         raise ValueError('Unexpected new conversation call limit')
+    if p.get('retrieval_policy', 'current') not in ('current', 'human_context_decay_v1'):
+        raise ValueError('Unsupported conversation retrieval policy')
     validate_common({**p, 'purpose': 'candidate_neutral_audit', 'evaluation_calls': 10})
 
 
@@ -27,7 +29,8 @@ def evaluate(jobs, generate, output, profile, collection, ledger, tokenizer, tod
             state = ConversationState(tuple(p['id'] for p in collection['packets'])); failed = False
             for turn, question in enumerate(job['questions']):
                 request = prepare_turn(profile, collection, ledger, state, question, tokenizer=tokenizer,
-                    reflection_allowed=job['reflection_allowed'], today=today)
+                    reflection_allowed=job['reflection_allowed'], today=today,
+                    retrieval_policy=job.get('retrieval_policy', 'current'))
                 if turn == 0 and (request['messages'] != job['messages'] or request['input_token_ids'] != job['input_token_ids']):
                     raise ValueError('First conversation request differs from frozen inputs')
                 error = None; reply = None

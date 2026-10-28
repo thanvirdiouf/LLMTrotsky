@@ -28,7 +28,8 @@ def load_snapshot(directory):
 
 
 def prepare_turn(profile, collection, ledger, state, question, *, tokenizer=None,
-                 reflection_allowed=True, today='2026-10-28', input_limit=5120):
+                 reflection_allowed=True, today='2026-10-28', input_limit=5120,
+                 retrieval_policy='current'):
     if type(reflection_allowed) is not bool:
         raise EvidenceError('Explicit reflection setting required')
     inventory = [p['id'] for p in collection['packets']]
@@ -41,9 +42,17 @@ def prepare_turn(profile, collection, ledger, state, question, *, tokenizer=None
     by_id = {p['id']: p for p in collection['packets']}
     index_collection = {**collection, 'packets': [{**p, 'title': p['title']+' '+p['author']+' '+p['id']}
         for p in collection['packets']]}
-    trace = Retriever(index_collection).retrieve(question, history, top_k=len(inventory), max_chars=1000000)
+    if retrieval_policy == 'current':
+        retriever = Retriever(index_collection)
+    elif retrieval_policy == 'human_context_decay_v1':
+        from conversation_retrieval import ConversationRetriever
+        retriever = ConversationRetriever(index_collection)
+    else:
+        raise EvidenceError('Unknown conversation retrieval policy')
+    trace = retriever.retrieve(question, history, top_k=len(inventory), max_chars=1000000)
     for match in trace['matches']: match['packet'] = by_id[match['packet']['id']]
-    trace['method'] = 'bm25_complete_context_with_bibliography_v1'
+    if retrieval_policy == 'current':
+        trace['method'] = 'bm25_complete_context_with_bibliography_v1'
     allowed = [m for m in trace['matches'] if m['packet']['id'] in request.source_scope]
     chosen = []; used = 0; omitted_packets = []
     for match in allowed[:2]:

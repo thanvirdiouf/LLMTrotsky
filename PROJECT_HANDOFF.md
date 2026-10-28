@@ -1,3 +1,42 @@
+# Delegated review; context-retrieval experiment prepared — 29 October 2026
+
+User: Go ahead. I don't need to review anymore. I trust your judgement.
+Proceed using implementing-agent judgment without repeated human-review gates;
+never label that independent/human validation. Existing free/private inference
+limits and no training/adapters/paid/public/localweights/active9Breplacement hold.
+
+NEW opt-in human_context_decay_v1 retrieval policy: current query +last4human
+questions with0.5**distance weights, explicit generic topicreset clears older
+context. No assistant-generated queryfacts/oracle IDs. Currentworkbench/default
+stilloldpolicy; archives/old9Bhelpers unchanged. Offline frozen10development
+controls8/10old->10/10new; archived press failure recoversEastmanfirst. Implicit
+newsubjects lead but older topicstillsecondary: measurednoise, not solvedintent.
+176focusedtests passed;10synthetic-reply/realtokenizer isolatedverifier preflight
+passed, no newGPU/qualityevidence. Read docs/CONVERSATION_RETRIEVAL.md.
+
+ghost_review_chat_v5 PREPARED, NOT YETSUBMITTED at this checkpoint. Newfixed
+config/ghost_conversation_context_v1.json=5fresh two-turn conversations/10new
+calls+5000input16outputprobe,1024out/5120in/600ssetup/2700sworkload, pinned27B
+private same notebook twofreeT4s. Samepersona/source53snapshot/sharedloader/
+backend/decoding. Questions+retrieval bothnew, not causal answercomparison. Local
+development_rubric.json+local_review_lock.json frozen beforeoutputs, notuploaded.
+Initialtokens4317/4546/4294/1991/4109. Exactfollowups reconstructedafter actual
+previous replies. No repeated familiarselectorprompt trials; fixedfreshtransfer
+questions remainunrun. Candidate review delegated, no needwaituseragain.
+
+Commit/push preparedmilestone, check existingnotebook idle, submitv5ONCEunder
+existingapproval. Recordactual savedversion and fetchedsource identity. Oncomplete
+download EXACTversion ghost_review_chat_bundle/* and ghost_review_chat_results/*
+to evaluation/runs/ghost_review_chat_v5/download/ and run:
+.venv-tokenizer/bin/python scripts/verify_review_chat.py --version ghost_review_chat_v5 --tokenizer evaluation/ghost_review_chat_v5/tokenizer_assets
+Inspectmetadatafirst, keepreasoningprivate. Reviewfinalsource support/completeness
+againstfrozenlocalrubric separatelyfromJSON/token validity; no selfaudittruthgate.
+No automatic activation. Preserve source/outputprivacy, active9B-v3/adapters/
+allarchives. No subagents. Keep existing localhostreviewapp available; check
+HTTP in same elevated namespace asserver before assumingPIDdead.
+
+Earlier checkpoints follow (waiting-for-review instructions superseded):
+
 # Positive overall user feedback received — 28 October 2026
 
 User said in directchat: I think these answers are okay. Record as positive

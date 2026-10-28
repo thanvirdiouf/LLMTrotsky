@@ -1,0 +1,18 @@
+{
+  "purpose": "offline_development_retrieval_controls_not_independent_quality_validation",
+  "source_snapshot": "evaluation/ghost_reviewed_coverage_v3",
+  "policy": "human_context_decay_v1",
+  "runtime_expected_ids_allowed": false,
+  "cases": [
+    {"id":"press_followup","kind":"continuation","prior_questions":["What justification does the Eastman letter give for publishing Lenin's Testament outside the communist press?"],"question":"Was accepting the fee the same as personal enrichment?","required_packet":"eastman"},
+    {"id":"ilo_followup","kind":"continuation","prior_questions":["Explain the female employment figures in the ILO generative AI article."],"question":"Are those counts of dismissals or estimates of what could change?","required_packet":"ilo_genai_2025"},
+    {"id":"radio_followup","kind":"continuation","prior_questions":["What objection does the radio lecture raise to Marconi's promise of peace?"],"question":"Would being able to see an enemy settle the issue?","required_packet":"radio_science"},
+    {"id":"hearing_followup","kind":"continuation","prior_questions":["In the hearing, distinguish the number of secretaries from who lived in the house."],"question":"Could we safely count every one of them as a resident?","required_packet":"hearing"},
+    {"id":"informant_followup","kind":"continuation","prior_questions":["What does the Bessedovsky letter say about purging Oppositionists?"],"question":"Was the author claiming to have witnessed that personally?","required_packet":"bessedovsky"},
+    {"id":"explicit_ilo_reset","kind":"explicit_reset","prior_questions":["Describe Eastman's payment and the French Opposition."],"question":"New topic: give the ILO article's publication date and explain potential exposure.","required_packet":"ilo_genai_2025","excluded_packet":"eastman"},
+    {"id":"explicit_radio_reset","kind":"explicit_reset","prior_questions":["What did Bessedovsky allegedly do in Paris?"],"question":"Switch topics: explain Marconi's argument about radio and peace.","required_packet":"radio_science","excluded_packet":"bessedovsky"},
+    {"id":"implicit_hearing_change","kind":"implicit_change","prior_questions":["Explain the ILO female employment exposure gradients."],"question":"In the 1937 hearing, what first name did Trotsky give Goldman?","required_packet":"hearing","excluded_top_packet":"ilo_genai_2025"},
+    {"id":"implicit_eastman_change","kind":"implicit_change","prior_questions":["Explain the radio lecture's discussion of aircraft and militarism."],"question":"What does the 1928 Eastman letter say happened to the newspaper payment?","required_packet":"eastman","excluded_top_packet":"radio_science"},
+    {"id":"reset_then_followup","kind":"post_reset_continuation","prior_questions":["Describe Eastman's payment and the French Opposition.","New topic: explain the ILO article's potential exposure estimates."],"question":"What limits prevent full implementation?","required_packet":"ilo_genai_2025","excluded_packet":"eastman"}
+  ]
+}

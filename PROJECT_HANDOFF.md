@@ -1,3 +1,42 @@
+# Ten-reply review prototype ready; awaiting user review — 28 October 2026
+
+User requested the prototype and said I will review. The local workbench is
+http://127.0.0.1:8765 ; default now ghost_review_chat_v4/private saved48.
+Read evaluation/review_workbench/server.json for current own serverPID;
+execsession67693. IABbrowser2/tab1 markeddeliverable, completed conversations
+and local review form tested; NO fakehuman feedback submitted. Screenshot:
+evaluation/runs/ghost_review_chat_v4/workbench-review.jpg. Feedback appendonly
+local ignored evaluation/review_workbench/feedback.jsonl, exactrun/hash/replybound.
+
+Saved48 COMPLETE, exact downloaded and dedicated verifier PASSED. Never resubmit.
+10ready replies=5archived saved47 first replies+5new followups, plus one5000/16
+probe, zero truncations,883.36s; peaks10.62/9.80GiB. Verification resultSHA
+06b91479663c2b65a047cd9b62e00e04256000ab3622ab7e87f8b13b0d8430da,
+answersSHA880fb4f4ffdd89f9a408057e90ace3a5fd1d2b9cfe539b5d36bc3503dde0716b.
+Exact tokens/frozen scope/GPU/backend/isolated dependent retrieval-history-parser
+replay verified. JSON history technical continuation resolved output format,
+NOT source quality. Original five answers preserved unchanged with known errors.
+
+Run SOURCE_REVIEW.json records unblinded implementing-agent findings, NOT human
+or independent validation. New followups distinguish ILO potential exposure from
+job losses, but mix policy inference with source evidence. Press hypotheticals
+include unnecessary refusal/overclaims. Last press turn retrieves hearing and
+Bessedovsky instead of Eastman, then cites absent Eastman; prior assistant context
+is not evidence. Original outputs stay visible for honest user review. Noquality
+approval, training or automatic activation. Active9B/v3/adapters unchanged.
+
+NEXT: wait for actual human feedback; do NOT start more model runs or prompt
+iterations before user review. No Kaggle notebook running for this task. Keep
+localhost app/tab available. User can choose conversation -> Inspect sources ->
+Review this reply. Source lookup works locally with zero modelcalls; LIVE MODEL
+ENDPOINT NOT CONNECTED, arbitraryquestions source lookup only. Feedback doesNOT
+automatically upload/train/promote facts. Read docs/REVIEW_WORKBENCH.md.
+Preserve private archives/old9Bhelpers/fixedfreshbenchmarkunrun/selectorstoprule;
+no paidcompute/training/adapters/publicupload/localweights/active replacement.
+No subagents. Continue based on user review, stayquiet if unchanged.
+
+Earlier checkpoint follows (historical running states superseded above):
+
 # Review prototype available; saved48 continuation running — 28 October 2026
 
 User said Okay, do it. I willreview. Localworkbenchavailable NOW:

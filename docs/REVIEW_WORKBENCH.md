@@ -9,7 +9,7 @@ The local interface has three clearly distinguished capabilities:
 
 - **Review conversations:** real, verified Kaggle-generated replies, source
   passages and a local feedback form. Mechanical verification is not factual
-  approval. Until the new run completes, samples are shown as pending.
+  approval. Ten completed replies are now available for review.
 - **Source lookup:** interactive BM25 retrieval over the bounded collection. It
   runs locally without a model and labels its results as candidate passages.
 - **Live chat:** an adapter for an explicitly configured external endpoint. It is
@@ -66,8 +66,8 @@ No self-audit approval or trusted factual memory is used.
 
 ## Bounded sample run
 
-Design: `config/ghost_review_workbench_v1.json`. Final prepared local version:
-`ghost_review_chat_v3`. Earlier unsubmittedv1/v2 preparations are preserved; neither
+Design: `config/ghost_review_workbench_v1.json`. Current completed local version:
+`ghost_review_chat_v4` (private saved48). Earlier unsubmittedv1/v2 preparations are preserved; neither
 was pushed to Kaggle. The design has five conversations and ten replies total:
 technology/ILO/disagreement, Eastman/payment/hypothetical press offer/shorter answer,
 misleading private quotation, fictional identity and concise source-only facts.
@@ -86,8 +86,8 @@ and `ghost_review_chat_results/*` into the run's `download/` directory, then:
 
 ```sh
 .venv-tokenizer/bin/python scripts/verify_review_chat.py \
-  --version ghost_review_chat_v3 \
-  --tokenizer evaluation/ghost_review_chat_v3/tokenizer_assets
+  --version ghost_review_chat_v4 \
+  --tokenizer evaluation/ghost_review_chat_v4/tokenizer_assets
 ```
 
 The dedicated verifier checks frozen scope/source identity, token/logit/backend
@@ -151,3 +151,35 @@ current questions and JSON assistant history are preserved, only the configured
 model/destination is used, and API-key material never appears in returned data.
 Current focused verification totals172tests (158ghost,6boundary,8review). This is
 software verification, not an actual live-endpoint or source-quality validation.
+
+## Completed review handoff
+
+Private saved48 completed and passed the dedicated verifier:5new calls plus
+one memory probe,5hash-bound first replies reused from saved47,10parsed replies
+available, zero truncations. Exact token reconstruction, finite scores, GPU
+backend checks and isolated dependent pipeline replay passed. Peaks were
+10.62/9.80GiB. This establishes reproducibility and format, not factual quality.
+The default server now serves the verifiedv4 set. No Kaggle notebook remains
+running for this review task.
+
+Open <http://127.0.0.1:8765>, choose a conversation, use **Inspect sources**, then
+**Review this reply**. Save your own ratings and specific corrections. Nothing
+was submitted as a human review during implementation checks. Feedback remains
+local, bound to the exact run, answer-journal hash and reply fingerprint.
+
+Unblinded implementing-agent source review of the five new replies is stored in
+the ignored run SOURCE_REVIEW.json. ILO exposure versus actual job losses is
+handled usefully, but the disagreement answer mixes source findings with policy
+inference. Hypothetical press advice includes unnecessary refusals and broad
+unsupported claims. The last press follow-up retrieves hearing/Bessedovsky
+rather than Eastman and cites an absent packet; its source-based assertions
+therefore lean on prior assistant context. Citation diagnostics expose that
+mismatch, but do not repair it. All original outputs remain visible, including
+the earlier known overclaims. No source-quality, independent or human approval
+is claimed.
+
+The next decision waits for actual user feedback. No further model runs, broad
+prompt retries, training or activation are scheduled before that review. Live
+inference remains unconnected; arbitrary questions currently use source lookup
+only. A future live endpoint requires an explicit operator configuration. The
+active9B/v3 configuration and both experimental adapters remain unchanged.

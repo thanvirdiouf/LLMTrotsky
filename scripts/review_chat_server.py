@@ -153,7 +153,7 @@ def handler_for(workbench):
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--port',type=int,default=8765)
     p.add_argument('--snapshot',type=Path,default=ROOT/'evaluation/ghost_reviewed_coverage_v3')
-    p.add_argument('--review-run',type=Path,default=ROOT/'evaluation/runs/ghost_review_chat_v3')
+    p.add_argument('--review-run',type=Path,default=ROOT/'evaluation/runs/ghost_review_chat_v4')
     p.add_argument('--feedback',type=Path,default=ROOT/'evaluation/review_workbench/feedback.jsonl')
     p.add_argument('--base-url');p.add_argument('--model',default=MODEL['model_id'],choices=['Qwen/Qwen3.5-9B','Qwen/Qwen3.5-27B'])
     p.add_argument('--tokenizer',type=Path);args=p.parse_args();tokenizer=None

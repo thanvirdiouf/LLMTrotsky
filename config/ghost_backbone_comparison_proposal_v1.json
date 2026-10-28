@@ -261,7 +261,7 @@
   "phase_i": {
     "purpose": "Literal target selectivity diagnostic: three scope/background controls and two factual probes",
     "frozen_local_version": "ghost_reviewed_target_v1",
-    "status": "Frozen and tested; not submitted",
+    "status": "Running privately; target diagnostic result pending",
     "design": "config/ghost_reviewed_target_design_v1.json",
     "shared_runtime_parent_saved_version": 43,
     "motivating_saved_version": 44,
@@ -275,6 +275,8 @@
     "active_model_changed": false,
     "fresh_transfer_run": false,
     "focused_tests": 152,
-    "verification_script": "scripts/verify_reviewed_target.py"
+    "verification_script": "scripts/verify_reviewed_target.py",
+    "saved_version": 45,
+    "normalized_frozen_cells_match": true
   }
 }

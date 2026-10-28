@@ -78,3 +78,11 @@ activation. If factual omissions persist even when isolated, document a
 selection/representation limitation rather than another broad writer prompt or
 automatic training. In either case, source-form precision remains separate.
 Fixed fresh transfer and sustained conversation remain gated on useful behavior.
+
+## Submission
+
+The frozen diagnostic was submitted once as private Kaggle saved45 after commit
+`17d133f` was pushed. Fetched normalized saved45 cells match the local notebook.
+All152 focused ghost tests and the final CPU verifier preflight passed; actual
+GPU selection quality is pending. The source curation, active9B/v3, paused
+training and fresh-transfer gate remain unchanged.

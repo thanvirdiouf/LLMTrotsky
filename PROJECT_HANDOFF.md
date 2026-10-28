@@ -1,3 +1,50 @@
+# Latest submitted run — 28 October 2026
+
+New ghost_reviewed_target_v1 submitted ONCE as private Kaggle saved45 after
+pushed17d133f. Confirmed RUNNING. Exact saved45 normalized cells match frozen local notebook;
+receipt and fetched source ignored in evaluation/runs/ghost_reviewed_target_v1/.
+Never resubmit45 or completed43/44. No new quality result yet. Earlier prepared
+checkpoint below is superseded by this submission.
+
+Five literal target-span diagnostic selections (3scope/background controls,
+2factual requests), NOT five complete original-question answers. Same original
+questions/full source contexts/all51summaries and byte-identical saved43runtime/
+parser/renderer/loader/attention/generation/probe. Only selection request messages
+differ. Target spans are exact user-question substrings. No expected categories,
+required record lists, old selections or oracle IDs in model messages. Local
+expectations frozen by hash in uploadedprotocol; do not edit after outputs.
+Valid empty for a scope/background span is not a refusal or missing evidence.
+Required-ID membership is a limited diagnostic, not semantic quality proof.
+
+On COMPLETE download exact45 ghost_reviewed_target_bundle/* and
+ ghost_reviewed_target_results/* into
+ evaluation/runs/ghost_reviewed_target_v1/download/. Run dedicated:
+.venv-tokenizer/bin/python scripts/verify_reviewed_target.py --version
+ghost_reviewed_target_v1 --tokenizer
+evaluation/ghost_reviewed_target_inputs_v1/tokenizer_assets.
+This verifies frozen inputs/parent/runtime/local expectation hash, real tokens,
+scope/logits/GPU/backend and isolated exact parser/display replay, then reports
+local checks separately. Inspect metadata before final ID JSON; keep reasoning
+private. Review actual required advice/context, relevance/noise and source
+certainty/roles/dates independently of schema or membership checks. New review
+in run SOURCE_REVIEW.json; frozen input/curation reviews untouched. Review is
+unblinded implementing-agent development, not independent/human validation.
+
+Five calls/five diagnostic displays plus5000/16probe, inputs
+2669/3774/3763/2529/1497,1024output/600s install/2700s workload caps. Sameapproved
+pinned27B/private twofreeT4s, no training/adapters/paidcompute/localweights or
+active9B/v3 replacement. Four new tests/all152 focused ghost tests pass. CPU
+synthetic-ID/real-tokenizer/temp archived-metadata preflight passed after final
+verifier update; rejects altered display and local expectation bytes, not GPU
+orquality evidence. docs/GHOST_REVIEWED_TARGET_DIAGNOSTIC.md.
+Fresh transfer remains gated by actual useful source-faithful behavior. If both
+factual probes recover required details and controls stay selective, bounded
+composition may be justified; if omissions persist isolated, diagnose limits
+rather than broad writer retries/training. Eastman immutable-form precision
+remains a separate source-reviewed extension requirement in either case.
+
+Earlier preparation checkpoint follows:
+
 # Focused target diagnostic prepared — 28 October 2026
 
 Latest submitted saved44 COMPLETE/verified; no notebook running. New

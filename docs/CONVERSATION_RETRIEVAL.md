@@ -98,3 +98,49 @@ The preparedv5 was submitted once after commit6cb6d6b as private saved49.
 The fetched exact saved49 notebook's normalized cells match the frozen source;
 initial status RUNNING. Never resubmit it. No semantic result is claimed yet.
 The local source rubric and lock remain outside the uploaded payload.
+
+## Version 49 results reviewed on 10 November 2026
+
+All ten turns passed frozen request, tokenizer, output, GPU and dependent
+conversation replay. The run made ten answer calls and one memory probe.
+Peak GPU allocation was 10.59 and 9.77 GiB. The pre-run design and rubric hashes
+matched. The implementing agent reviewed each final reply against its actual
+packets and the frozen rubric. Detailed notes and the verifier report are stored
+locally under `evaluation/runs/ghost_review_chat_v5/`.
+
+Every reply received and cited its relevant packet. Eight ranked it first.
+Both the Eastman and hearing follow-ups retained their source. The explicit
+switch removed Eastman and correctly used the ILO article. The old ILO topic
+ranked ahead of Bessedovsky on the implicit switch, and the hearing ranked
+ahead of Bessedovsky on the request for missing testimony. Both answers still
+used Bessedovsky for their central conclusions.
+
+The core distinctions survived, including payment versus personal enrichment,
+total versus resident secretaries, potential exposure versus observed job loss,
+and reported information versus firsthand testimony. Supporting prose
+sometimes exceeded the sources. Examples include turning wide publicity into
+the only possible route, treating adoption barriers as preventing adoption,
+and making the ILO forecast contingent on social dialogue. The final answer
+gave a bounded statement that the informant's name and original testimony were
+absent from the supplied material. It also cited `bessedovsky_report`, an
+internal summary ID included in the request. The application correctly flags
+that ID because its citation targets are source packets.
+
+## Packet citation control
+
+The local `ghost_review_chat_v6` bundle uses the same five conversations,
+retrieval, source packets, summaries, attribution, model and budgets. It omits
+only the internal IDs on the summaries given to the model. Each summary keeps
+its parent packet ID. The archived v5 bundle and the workbench default preserve
+their original behavior.
+
+The exact-history CPU comparison reconstructed all ten v5 requests with this
+setting. Source selection, the system instructions, conversation messages, and
+all other documentary fields were identical. Input savings ranged from 44 to
+111 tokens. A synthetic ten-turn preflight passed the normal replay verifier and
+rejected a tampered answer. These are structural checks. The controlled GPU
+comparison measures whether the model uses the packet citation while retaining
+the bounded answer, and checks all turns for citation and source-quality
+regressions. Generated follow-up histories may diverge when earlier replies
+change. The existing rubric and added citation criterion are locked locally in
+`evaluation/ghost_review_chat_v6/local_comparison_lock.json`.

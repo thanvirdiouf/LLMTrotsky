@@ -9,7 +9,10 @@ from grounded_request_boundary import ConversationState
 
 def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
     if not re.fullmatch(r'ghost_review_chat_v[1-9][0-9]*',version):raise ValueError('Invalid review version')
-    design_path = 'config/ghost_conversation_context_v1.json' if version == 'ghost_review_chat_v5' else 'config/ghost_review_workbench_v1.json'
+    packet_citations_only = version == 'ghost_review_chat_v6'
+    use_context_design = version == 'ghost_review_chat_v5' or packet_citations_only
+    design_path = ('config/ghost_conversation_context_v1.json' if use_context_design
+                   else 'config/ghost_review_workbench_v1.json')
     design_raw=(root/design_path).read_bytes();design=json.loads(design_raw)
     if len(design['conversations'])!=5 or sum(len(c['questions']) for c in design['conversations'])!=10:raise ValueError('Conversation scope differs')
     source=root/design['source_snapshot'];profile,collection,ledger=load_snapshot(source)
@@ -24,11 +27,14 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
         state=ConversationState(tuple(p['id'] for p in collection['packets']))
         first=prepare_turn(profile,collection,ledger,state,conversation['questions'][0],tokenizer=tokenizer,
             reflection_allowed=conversation['reflection_allowed'],today=design['current_date'],
-            retrieval_policy=design.get('retrieval_policy','current'))
+            retrieval_policy=design.get('retrieval_policy','current'),
+            include_summary_ids=not packet_citations_only)
         jobs.append({'case_id':conversation['id'],'title':conversation['title'],'questions':conversation['questions'],
             'reflection_allowed':conversation['reflection_allowed'],'messages':first['messages'],'input_token_ids':first['input_token_ids']})
         if 'retrieval_policy' in design:
             jobs[-1]['retrieval_policy'] = design['retrieval_policy']
+        if packet_citations_only:
+            jobs[-1]['include_summary_ids'] = False
     seed_control = None
     if version == 'ghost_review_chat_v4':
         parent = root/'evaluation/runs/ghost_review_chat_v3'
@@ -60,6 +66,8 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
         quality_policy='Experimental generated conversations; citation checks are mechanical, all factual support and voice require human/source review. No activation or trusted-memory promotion.')
     if seed_control:
         p.update(evaluation_calls=5,seeded_reply_count=5,seed_control=seed_control)
+    if packet_citations_only:
+        p['include_summary_ids'] = False
     if 'retrieval_policy' in design:
         p['retrieval_policy'] = design['retrieval_policy']
         p['human_review_only'] = False

@@ -1,3 +1,26 @@
+# Version 49 verified and source reviewed — 10 November 2026
+
+Private saved49, local ghost_review_chat_v5, completed and verified for all ten
+answers and one memory probe. Frozen rubric/design hashes matched. Read the
+local SOURCE_REVIEW.json and verification.json in evaluation/runs/ghost_review_chat_v5/.
+The implementing agent reviewed all ten turns against supplied passages.
+
+The relevant packet was present and cited in 10/10 turns and ranked first in
+8/10. Follow-ups retained Eastman and hearing. Explicit reset removed Eastman.
+The prior ILO packet led an implicit switch to Bessedovsky. Hearing led the
+missing-testimony turn. Both replies used the relevant Bessedovsky packet.
+Source prose still included overstatements. The final reply also cited the
+prompt's internal summary ID, which the workbench correctly flags.
+
+Prepared ghost_review_chat_v6 as a controlled packet citation experiment.
+Same questions, retrieval, evidence and limits. Only internal summary IDs are
+omitted from the model's evidence. Local exact-history comparison covers all
+ten v5 requests and confirms this isolated change with 44–111 fewer tokens.
+Synthetic dependent replay and answer-tamper rejection passed. The private
+rubric and comparison lock are local. See docs/CONVERSATION_RETRIEVAL.md.
+
+Earlier checkpoint follows. Its version 49 running status is superseded.
+
 # Context conversation test running as private saved49 — 29 October 2026
 
 User delegated further review/judgment; no repeated human-review gate required.

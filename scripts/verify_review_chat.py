@@ -85,6 +85,10 @@ def verify(version='ghost_review_chat_v4',root=ROOT,tokenizer=None,tokenizer_pat
     if (p.get('retrieval_policy','current') != design.get('retrieval_policy','current')
             or any(j.get('retrieval_policy','current') != p.get('retrieval_policy','current') for j in jobs)):
         raise ValueError('Frozen retrieval policy differs')
+    include_summary_ids = p.get('include_summary_ids', True)
+    if (include_summary_ids is not (version != 'ghost_review_chat_v6')
+            or any(j.get('include_summary_ids', True) is not include_summary_ids for j in jobs)):
+        raise ValueError('Frozen reviewed summary ID setting differs')
     if p.get('seeded_reply_count'):
         control=p['seed_control'];parent=root/'evaluation/runs'/control['local_version'];parent_output=parent/'download/ghost_review_chat_results'
         prior=json.loads((parent/'verification.json').read_text());prior_calls=(parent_output/'model_calls.jsonl').read_bytes()

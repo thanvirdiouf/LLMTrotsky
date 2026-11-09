@@ -29,7 +29,7 @@ def load_snapshot(directory):
 
 def prepare_turn(profile, collection, ledger, state, question, *, tokenizer=None,
                  reflection_allowed=True, today='2026-10-28', input_limit=5120,
-                 retrieval_policy='current'):
+                 retrieval_policy='current', include_summary_ids=True):
     if type(reflection_allowed) is not bool:
         raise EvidenceError('Explicit reflection setting required')
     inventory = [p['id'] for p in collection['packets']]
@@ -77,9 +77,12 @@ def prepare_turn(profile, collection, ledger, state, question, *, tokenizer=None
     # The pinned Qwen template permits one initial system message only. Keep
     # documentary JSON explicitly delimited as data inside that message.
     omitted = 0; token_omitted = []
+    summary_fields = ('packet_id', 'statement', 'status', 'attribution', 'domain')
+    if include_summary_ids:
+        summary_fields = ('id', *summary_fields)
     while True:
         pids = {p['id'] for p in packets}
-        cards = [{k: c[k] for k in ('id', 'packet_id', 'statement', 'status', 'attribution', 'domain')}
+        cards = [{k: c[k] for k in summary_fields}
                  for c in ledger['claims'] if c['packet_id'] in pids]
         evidence = {'source_snapshot_reference_date': collection['reference_date'],
                     'retrieval_status': trace['status'], 'source_packets': packets, 'reviewed_summaries': cards}

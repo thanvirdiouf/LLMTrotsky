@@ -17,6 +17,8 @@ def validate_protocol(p):
         raise ValueError('Unexpected new conversation call limit')
     if p.get('retrieval_policy', 'current') not in ('current', 'human_context_decay_v1'):
         raise ValueError('Unsupported conversation retrieval policy')
+    if type(p.get('include_summary_ids', True)) is not bool:
+        raise ValueError('Invalid reviewed summary ID setting')
     validate_common({**p, 'purpose': 'candidate_neutral_audit', 'evaluation_calls': 10})
 
 
@@ -30,7 +32,8 @@ def evaluate(jobs, generate, output, profile, collection, ledger, tokenizer, tod
             for turn, question in enumerate(job['questions']):
                 request = prepare_turn(profile, collection, ledger, state, question, tokenizer=tokenizer,
                     reflection_allowed=job['reflection_allowed'], today=today,
-                    retrieval_policy=job.get('retrieval_policy', 'current'))
+                    retrieval_policy=job.get('retrieval_policy', 'current'),
+                    include_summary_ids=job.get('include_summary_ids', True))
                 if turn == 0 and (request['messages'] != job['messages'] or request['input_token_ids'] != job['input_token_ids']):
                     raise ValueError('First conversation request differs from frozen inputs')
                 error = None; reply = None
@@ -72,6 +75,9 @@ class Experiment:
             local_files_only=True, trust_remote_code=False)
         profile, collection, ledger = [json.loads((self.bundle/n).read_text()) for n in ('profile.json','collection.json','ledger.json')]
         design = json.loads((self.bundle/'review_design.json').read_text())
+        protocol = json.loads((self.bundle/'protocol.json').read_text())
+        if any(job.get('include_summary_ids', True) is not protocol.get('include_summary_ids', True) for job in jobs):
+            raise ValueError('Frozen reviewed summary ID setting differs')
         return evaluate(jobs, generate, output, profile, collection, ledger, tokenizer, design['current_date'])
 
 

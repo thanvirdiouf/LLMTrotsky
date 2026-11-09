@@ -1,23 +1,28 @@
-# Version 49 verified and source reviewed — 10 November 2026
+# Versions 49 and 50 verified and source reviewed — 10 November 2026
 
-Private saved49, local ghost_review_chat_v5, completed and verified for all ten
-answers and one memory probe. Frozen rubric/design hashes matched. Read the
-local SOURCE_REVIEW.json and verification.json in evaluation/runs/ghost_review_chat_v5/.
-The implementing agent reviewed all ten turns against supplied passages.
+Private saved49 and saved50 are complete. Local runs ghost_review_chat_v5 and
+ghost_review_chat_v6 each used ten answer calls and one memory probe. Exact
+saved source, requests, tokenizer, output, GPU scope and dependent replay
+verified. Never resubmit. Source review by the implementing agent is stored
+locally alongside verification.json in each run directory.
 
-The relevant packet was present and cited in 10/10 turns and ranked first in
-8/10. Follow-ups retained Eastman and hearing. Explicit reset removed Eastman.
-The prior ILO packet led an implicit switch to Bessedovsky. Hearing led the
-missing-testimony turn. Both replies used the relevant Bessedovsky packet.
-Source prose still included overstatements. The final reply also cited the
-prompt's internal summary ID, which the workbench correctly flags.
+V5 retained Eastman and hearing on follow-ups. The explicit switch removed
+Eastman. ILO and hearing respectively outranked Bessedovsky on the implicit
+switch and missing-testimony follow-up, though both replies used Bessedovsky.
+The final v5 reply cited an internal summary ID as well as the packet.
 
-Prepared ghost_review_chat_v6 as a controlled packet citation experiment.
-Same questions, retrieval, evidence and limits. Only internal summary IDs are
-omitted from the model's evidence. Local exact-history comparison covers all
-ten v5 requests and confirms this isolated change with 44–111 fewer tokens.
-Synthetic dependent replay and answer-tamper rejection passed. The private
-rubric and comparison lock are local. See docs/CONVERSATION_RETRIEVAL.md.
+V6 changed only the model-facing summary IDs. Packet order remained identical
+on all ten turns. Replies with unresolved citations fell from one to zero,
+and the missing-testimony reply retained the bounded answer. All ten cited
+the relevant packet. Exact-history CPU preflight had shown 44–111 fewer input
+tokens and preserved the rest of the request. Overstatement remains in some
+source prose and present-day reflection. See docs/CONVERSATION_RETRIEVAL.md.
+
+Next use packet-only citations in a separate experiment on the still-unrun
+config/ghost_mapped_transfer_v1.json questions and fixed checks. Prioritize
+attribution, uncertainty, completeness, and bounded refusal. Preserve the
+existing private and free inference limits, frozen artifacts, old workbench
+default and active route. No training or automatic promotion.
 
 Earlier checkpoint follows. Its version 49 running status is superseded.
 

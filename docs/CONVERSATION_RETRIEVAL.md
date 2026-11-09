@@ -144,3 +144,23 @@ the bounded answer, and checks all turns for citation and source-quality
 regressions. Generated follow-up histories may diverge when earlier replies
 change. The existing rubric and added citation criterion are locked locally in
 `evaluation/ghost_review_chat_v6/local_comparison_lock.json`.
+
+Version 50 completed on the same private notebook. Its saved source matched the
+frozen bundle. All ten replies and the probe passed exact replay. The two runs
+selected the same packets in the same order on every turn. Replies with an
+unresolved citation fell from one to zero. The missing-testimony reply cited
+Bessedovsky and preserved the bounded answer. Each reply cited its relevant
+packet. Detailed findings are in the local v6 `SOURCE_REVIEW.json`.
+
+The source review found clearer qualifications in the explicit ILO switch and
+the payment follow-up. It also found persistent overstatement of the Eastman
+publicity rationale and of how Trotsky checked the memoirs. The first press
+reflection adds unsupported contemporary generalizations. The citation
+improvement is narrow and the evidence comes from an unblinded development
+comparison on the same ten turns.
+
+Use packet-only IDs in the next opt-in evaluation with the prewritten transfer
+questions in `config/ghost_mapped_transfer_v1.json`. The saved 49 and 50 results
+make speaker attribution, evidential limits, and source certainty the main
+checks. Keep the prewritten questions and expected checks fixed. The transfer
+set is still unused at this checkpoint.

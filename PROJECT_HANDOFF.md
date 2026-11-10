@@ -30,22 +30,29 @@ reported information versus eyewitness testimony and exposure versus observed
 job loss. The source review found omissions and overstatements even with the
 right passage. See the local `evaluation/runs/ghost_review_chat_v7/SOURCE_REVIEW.md`.
 
-Private Kaggle saved52 (local `ghost_review_chat_v8`) is the matched ordinary
-retrieval run. The frozen prompts rank the expected packet first on all five
-questions and include a second packet in each. The opt-in v9 comparison is
-prepared with the same questions and packets plus guidance on completeness,
-attribution, certainty, and exact hypothetical arithmetic. The prompts were
-compared locally to confirm that only this guidance changed.
+Private saved52 (v8) completed and replayed all five ordinary retrieval replies.
+Every expected packet ranked first alongside a second packet. The radio
+omission persisted. Bessedovsky regressed from overstating verification to
+accepting the false premise that Trotsky knew none of the facts firsthand.
+
+Private saved53 (v9) replayed five calls with the same evidence and added
+guidance. Four replies were blocked for including a fictional reflection
+in source-only mode. The remaining Bessedovsky reply still accepted the
+false premise. The guidance variant failed.
 
 ## Next work
 
-1. Use the completed supplied-passage run as the baseline for the five
-   [fixed transfer questions](config/ghost_mapped_transfer_v1.json). Carry its
-   interpretation errors into the comparison.
-2. Run the same questions with normal retrieval. Compare the actual packets
-   and answers to separate retrieval misses from interpretation errors.
-3. After those checks pass, test sustained disagreement, follow-ups, topic
-   changes, and the distinction between evidence and the fictional voice.
+The local opt-in `evaluation/ghost_reviewed_coverage_v4/` snapshot now includes
+a source-anchored statement about Trotsky’s personal acquaintance with at least
+a dozen facts and his limits on verifying the rest. The radio class-control
+statement already exists. Both statements passed deterministic rendering with
+their source citations when explicitly selected. This fixes a gap in the
+reviewed evidence. Selection and generated answers still require evaluation.
+
+Test whether a structured answer can reliably select and cover those reviewed
+statements, including on fresh questions. Keep the original five transfer
+questions and archived outputs as controls. Then return to sustained dialogue
+and the fictional voice once evidence handling is reliable.
 
 Continue based on measured results. Training is paused and both adapters are
 experimental. Authorized 27B trials use the same private Kaggle notebook, two

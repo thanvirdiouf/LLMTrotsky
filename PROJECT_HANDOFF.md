@@ -23,23 +23,18 @@ development comparison.
 
 ## Transfer evaluation
 
-Private Kaggle saved51 (local `ghost_review_chat_v7`) was submitted once.
-It supplies exactly the specified packet for each of the five fixed questions
-and uses packet-only citations. Scoring checks stay local. The run uses five
-answer calls and one memory probe. Results are pending.
-
-Download saved51's bundle and results under
-`evaluation/runs/ghost_review_chat_v7/download/`. Verify with
-`scripts/verify_review_chat.py --version ghost_review_chat_v7 --tokenizer evaluation/ghost_review_chat_v7/tokenizer_assets`
-in the local tokenizer environment, then score the final replies against the
-fixed transfer design before deciding whether to run ordinary retrieval.
+Private Kaggle saved51 (local `ghost_review_chat_v7`) completed. All five
+replies passed exact replay with no truncations or unresolved citations.
+The supplied passages helped preserve the main distinctions, including
+reported information versus eyewitness testimony and exposure versus observed
+job loss. The source review found omissions and overstatements even with the
+right passage. See the local `evaluation/runs/ghost_review_chat_v7/SOURCE_REVIEW.md`.
 
 ## Next work
 
-1. Use the five untouched questions and scoring checks in
-   [the transfer design](config/ghost_mapped_transfer_v1.json). Start with the
-   supplied passage and the packet-only citation format. Check speaker
-   attribution, uncertainty, completeness, arithmetic, and bounded refusals.
+1. Use the completed supplied-passage run as the baseline for the five
+   [fixed transfer questions](config/ghost_mapped_transfer_v1.json). Carry its
+   interpretation errors into the comparison.
 2. Run the same questions with normal retrieval. Compare the actual packets
    and answers to separate retrieval misses from interpretation errors.
 3. After those checks pass, test sustained disagreement, follow-ups, topic

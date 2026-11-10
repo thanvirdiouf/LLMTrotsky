@@ -41,6 +41,7 @@ kaggle.json
 !/training/kaggle_cli_requirements.txt
 
 # Downloaded model files, checkpoints, and delivery bundles
+/.research-archive/
 *.safetensors
 *.bin
 *.pt

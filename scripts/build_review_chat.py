@@ -1,10 +1,15 @@
 """Freeze an opt-in ten-reply review run; no fixed-transfer benchmark or training."""
 import argparse,ast,base64,json,lzma,re
 from pathlib import Path
-from build_ghost_candidate_probe import ROOT,enc,sha
+from build_ghost_candidate_probe import enc
+from candidate_base_probe import sha
 from candidate_review_chat import validate_protocol
+from grounded_chat import ROOT
 from review_chat import load_snapshot,prepare_turn
 from grounded_request_boundary import ConversationState
+from verify_review_chat import payloads
+
+CONTROL = 'ghost_review_chat_v6'
 
 
 def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
@@ -16,8 +21,9 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
     design_raw=(root/design_path).read_bytes();design=json.loads(design_raw)
     if len(design['conversations'])!=5 or sum(len(c['questions']) for c in design['conversations'])!=10:raise ValueError('Conversation scope differs')
     source=root/design['source_snapshot'];profile,collection,ledger=load_snapshot(source)
-    old=json.loads((root/'evaluation/ghost_candidate_audit_v2/protocol.json').read_text())
-    assets=root/'evaluation/ghost_reviewed_target_inputs_v2/tokenizer_assets'
+    control = payloads(CONTROL, root)
+    old = json.loads(control['protocol.json'])
+    assets = root / 'evaluation' / CONTROL / 'tokenizer_assets'
     if tokenizer is None:
         from transformers import AutoTokenizer
         tokenizer=AutoTokenizer.from_pretrained(assets,local_files_only=True,trust_remote_code=False)
@@ -78,13 +84,11 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
     payload={n:(root/'scripts'/n).read_bytes() for n in names}
     if 'retrieval_policy' in design:
         payload['conversation_retrieval.py'] = (root/'scripts/conversation_retrieval.py').read_bytes()
-    from verify_reviewed_selection import payloads as control_payloads
-    control=control_payloads('ghost_reviewed_selection_v1',root)
     for n in ('candidate_audit.py','candidate_base_probe.py','candidate_efficient_attention.py','grounded_chat.py','grounded_chat_v2.py'):
         if payload[n]!=control[n]:raise ValueError('Shared control changed: '+n)
     payload.update({n:(source/n).read_bytes() for n in ('profile.json','collection.json','ledger.json')})
     payload.update({'audit_inputs.json':enc(jobs),'review_design.json':design_raw,
-        'memory_probe.json':(root/'evaluation/ghost_reviewed_target_inputs_v2/memory_probe.json').read_bytes()})
+        'memory_probe.json':control['memory_probe.json']})
     p['files']={n:sha(raw) for n,raw in payload.items()};validate_protocol(p);payload['protocol.json']=enc(p)
     packed={n:base64.b85encode(lzma.compress(raw)).decode() for n,raw in payload.items()}
     install='import subprocess,sys\nsubprocess.run([sys.executable,"-m","pip","install","-q",'+','.join(repr(k+'=='+v) for k,v in p['packages'].items() if k!='torch')+'],check=True,timeout=600)\n'
@@ -94,7 +98,7 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
     notebook={'nbformat':4,'nbformat_minor':5,'metadata':{'kernelspec':{'name':'python3','language':'python','display_name':'Python 3'}},'cells':[
         {'cell_type':'markdown','id':'scope','metadata':{},'source':[intro]},
         *[{'cell_type':'code','id':name,'metadata':{},'source':text.splitlines(True),'execution_count':None,'outputs':[]} for name,text in [('install',install),('run',run)]]]}
-    metadata=json.loads((root/'training/kaggle_cli/ghost_candidate_audit_v2/kernel-metadata.json').read_text());metadata['code_file']='kaggle_review_chat.ipynb'
+    metadata = json.loads((root / 'training/kaggle_cli' / CONTROL / 'kernel-metadata.json').read_text())
     if metadata['is_private'] is not True or metadata['id_no']!=140792344:raise ValueError('Private target differs')
     stage=root/'training/kaggle_cli'/version;record=root/'evaluation'/version
     raw=enc(notebook);meta_raw=enc(metadata);lock={'notebook_sha256':sha(raw),'metadata_sha256':sha(meta_raw),'payload_sha256':{n:sha(raw) for n,raw in payload.items()}}

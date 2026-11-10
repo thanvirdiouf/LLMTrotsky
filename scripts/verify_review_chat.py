@@ -10,11 +10,47 @@ import re
 import subprocess
 import sys
 import tempfile
-from build_ghost_candidate_probe import ROOT,sha
+from candidate_audit import input_ids
 from candidate_review_chat import validate_protocol
-from candidate_base_probe import CANDIDATE,GIB,device_map_for,resource_gate
-from verify_ghost_candidate_audit import verify_generated
-from grounded_chat import fingerprint
+from candidate_base_probe import GIB,device_map_for,resource_gate,sha
+from grounded_chat import ROOT
+
+RESEARCH_REVISION = '8f99d91cd0e33ba7201bfd6fbe2a87d6c2c54552'
+ARCHIVED_PROTECTED_SCRIPTS = {
+    'scripts/build_kaggle_grounded_chat.py',
+    'scripts/evaluate_grounded_chat.py',
+    'scripts/kaggle_grounded_chat.py',
+    'scripts/review_grounded_chat.py',
+}
+
+
+def protected_bytes(root, name):
+    path = root / name
+    if name not in ARCHIVED_PROTECTED_SCRIPTS or path.exists():
+        return path.read_bytes()
+    return subprocess.check_output(['git', '-C', str(ROOT), 'show', f'{RESEARCH_REVISION}:{name}'])
+
+
+def verify_generated(job, output, cap, generation, tokenizer):
+    ids = output['token_ids']
+    if (not isinstance(ids, list) or not 1 <= len(ids) <= cap
+            or any(type(i) is not int or i < 0 for i in ids)
+            or output['input_token_ids'] != job['input_token_ids']
+            or not 1 <= len(output['input_token_ids']) <= 5120
+            or output['token_count'] != len(ids)
+            or output.get('finite_logits') is not True
+            or output.get('finite_logit_steps') != len(ids)
+            or output.get('efficient_attention_calls') != 16 * len(ids)
+            or output.get('expanded_kv_calls') != 16 * len(ids)):
+        raise ValueError('Output bounds, input identity, finite logits or backend coverage differ')
+    finish = 'stop' if ids[-1] == generation['eos_token_id'] else 'length'
+    if output['finish_reason'] != finish or (finish == 'length' and len(ids) != cap):
+        raise ValueError('Output stop differs')
+    if tokenizer is not None and (
+        input_ids(tokenizer, job['messages']) != output['input_token_ids']
+        or tokenizer.decode(ids, skip_special_tokens=True) != output['response']
+    ):
+        raise ValueError('Tokenizer reconstruction differs')
 
 
 def payloads(version,root=ROOT):
@@ -65,7 +101,8 @@ def verify(version='ghost_review_chat_v4',root=ROOT,tokenizer=None,tokenizer_pat
     for n in ('profile.json','collection.json','ledger.json'):
         if f[n]!=(source/n).read_bytes():raise ValueError('Source snapshot changed')
     for n,digest in p['preserved_files'].items():
-        if sha((root/n).read_bytes())!=digest:raise ValueError('Protected archive changed')
+        if sha(protected_bytes(root, n)) != digest:
+            raise ValueError('Protected archive changed: ' + n)
     output=d/'ghost_review_chat_results';r=json.loads((output/'result.json').read_text())
     if any(r.get(k)!=p[k] for k in ('model','purpose','training_steps','adapters_loaded','active_model_changed','enable_thinking')) or r.get('quality_validated') is not False or r['protocol_sha256']!=sha(f['protocol.json']):raise ValueError('Review execution scope differs')
     if type(r['evaluation_calls']) is not int or not 0<=r['evaluation_calls']<=p['evaluation_calls'] or type(r['memory_probe_calls']) is not int or not 0<=r['memory_probe_calls']<=1:raise ValueError('Review call budgets differ')

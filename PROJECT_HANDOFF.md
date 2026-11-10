@@ -21,6 +21,19 @@ Their verifier reports and turn-by-turn development reviews are in
 `evaluation/runs/`. These are implementing-agent findings from a small
 development comparison.
 
+## Transfer evaluation
+
+Private Kaggle saved51 (local `ghost_review_chat_v7`) was submitted once.
+It supplies exactly the specified packet for each of the five fixed questions
+and uses packet-only citations. Scoring checks stay local. The run uses five
+answer calls and one memory probe. Results are pending.
+
+Download saved51's bundle and results under
+`evaluation/runs/ghost_review_chat_v7/download/`. Verify with
+`scripts/verify_review_chat.py --version ghost_review_chat_v7 --tokenizer evaluation/ghost_review_chat_v7/tokenizer_assets`
+in the local tokenizer environment, then score the final replies against the
+fixed transfer design before deciding whether to run ordinary retrieval.
+
 ## Next work
 
 1. Use the five untouched questions and scoring checks in

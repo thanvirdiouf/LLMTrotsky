@@ -14,12 +14,21 @@ CONTROL = 'ghost_review_chat_v6'
 
 def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
     if not re.fullmatch(r'ghost_review_chat_v[1-9][0-9]*',version):raise ValueError('Invalid review version')
-    packet_citations_only = version == 'ghost_review_chat_v6'
+    transfer = version == 'ghost_review_chat_v7'
+    packet_citations_only = version in ('ghost_review_chat_v6', 'ghost_review_chat_v7')
     use_context_design = version == 'ghost_review_chat_v5' or packet_citations_only
     design_path = ('config/ghost_conversation_context_v1.json' if use_context_design
                    else 'config/ghost_review_workbench_v1.json')
     design_raw=(root/design_path).read_bytes();design=json.loads(design_raw)
-    if len(design['conversations'])!=5 or sum(len(c['questions']) for c in design['conversations'])!=10:raise ValueError('Conversation scope differs')
+    if transfer:
+        cases = json.loads((root/'config/ghost_mapped_transfer_v1.json').read_text())['cases']
+        design['conversations'] = [
+            {'id': c['id'], 'title': c['id'].replace('_', ' '), 'questions': [c['question']],
+             'reflection_allowed': False, 'source_scope': c['source_packet_ids']}
+            for c in cases
+        ]
+        design_raw = enc(design)
+    if len(design['conversations'])!=5 or sum(len(c['questions']) for c in design['conversations'])!=(5 if transfer else 10):raise ValueError('Conversation scope differs')
     source=root/design['source_snapshot'];profile,collection,ledger=load_snapshot(source)
     control = payloads(CONTROL, root)
     old = json.loads(control['protocol.json'])
@@ -30,13 +39,17 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
     if sha(tokenizer.chat_template.encode())!=old['chat_template_sha256']:raise ValueError('Candidate template differs')
     jobs=[]
     for conversation in design['conversations']:
-        state=ConversationState(tuple(p['id'] for p in collection['packets']))
+        state=ConversationState(tuple(conversation.get('source_scope', [p['id'] for p in collection['packets']])))
         first=prepare_turn(profile,collection,ledger,state,conversation['questions'][0],tokenizer=tokenizer,
             reflection_allowed=conversation['reflection_allowed'],today=design['current_date'],
             retrieval_policy=design.get('retrieval_policy','current'),
             include_summary_ids=not packet_citations_only)
         jobs.append({'case_id':conversation['id'],'title':conversation['title'],'questions':conversation['questions'],
             'reflection_allowed':conversation['reflection_allowed'],'messages':first['messages'],'input_token_ids':first['input_token_ids']})
+        if transfer:
+            jobs[-1]['source_scope'] = conversation['source_scope']
+            if [p['id'] for p in first['source_packets']] != conversation['source_scope']:
+                raise ValueError('Supplied passage missing from prompt')
         if 'retrieval_policy' in design:
             jobs[-1]['retrieval_policy'] = design['retrieval_policy']
         if packet_citations_only:
@@ -70,6 +83,8 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
         design_sha256=sha(design_raw),source_manifest_sha256=sha((source/'build_manifest.json').read_bytes()),
         source_review_sha256=sha((source/'SOURCE_REVIEW.json').read_bytes()),
         quality_policy='Experimental generated conversations; citation checks are mechanical, all factual support and voice require human/source review. No activation or trusted-memory promotion.')
+    if transfer:
+        p.update(evaluation_calls=5, maximum_displayed_answers=5, fixed_transfer_questions_run=True)
     if seed_control:
         p.update(evaluation_calls=5,seeded_reply_count=5,seed_control=seed_control)
     if packet_citations_only:
@@ -95,6 +110,8 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
     run='import base64,lzma,sys\nfrom pathlib import Path\npacked='+repr(packed)+'\nbundle=Path("/kaggle/working/ghost_review_chat_bundle")\nbundle.mkdir(exist_ok=True)\nfor name,value in packed.items():\n    (bundle/name).write_bytes(lzma.decompress(base64.b85decode(value)))\nsys.path.insert(0,str(bundle))\nfrom candidate_review_chat import run\nrun(bundle,"/kaggle/working/ghost_review_chat_results")\n'
     for text in (install,run):ast.parse(text)
     intro='Experimental present-day fictional Trotsky conversations for human review. Five conversations, ten replies maximum/ten evaluation calls plus one5000/16probe; pinned27B/twofreeT4s/private existing notebook. No training/adapters/paid compute/active replacement/self-audit. Real retrieval, no oracle source IDs. Setup600s/workload2700s; unvalidated factual support/voice. New end-to-end prototype authorized by user; not another familiar selector-prompt retry.\n'
+    if transfer:
+        intro = 'Five supplied-passage transfer questions, five answer calls and one unscored memory probe. Packet citations only.\n'
     notebook={'nbformat':4,'nbformat_minor':5,'metadata':{'kernelspec':{'name':'python3','language':'python','display_name':'Python 3'}},'cells':[
         {'cell_type':'markdown','id':'scope','metadata':{},'source':[intro]},
         *[{'cell_type':'code','id':name,'metadata':{},'source':text.splitlines(True),'execution_count':None,'outputs':[]} for name,text in [('install',install),('run',run)]]]}

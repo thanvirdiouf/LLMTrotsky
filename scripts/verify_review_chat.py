@@ -123,7 +123,7 @@ def verify(version='ghost_review_chat_v4',root=ROOT,tokenizer=None,tokenizer_pat
             or any(j.get('retrieval_policy','current') != p.get('retrieval_policy','current') for j in jobs)):
         raise ValueError('Frozen retrieval policy differs')
     include_summary_ids = p.get('include_summary_ids', True)
-    if (include_summary_ids is not (version != 'ghost_review_chat_v6')
+    if (include_summary_ids is not (version not in ('ghost_review_chat_v6', 'ghost_review_chat_v7'))
             or any(j.get('include_summary_ids', True) is not include_summary_ids for j in jobs)):
         raise ValueError('Frozen reviewed summary ID setting differs')
     if p.get('seeded_reply_count'):
@@ -137,7 +137,7 @@ def verify(version='ghost_review_chat_v4',root=ROOT,tokenizer=None,tokenizer_pat
         for job in jobs:
             matched=[c for c in archived if c['case_id']==job['case_id'] and c['turn']==1]
             if len(matched)!=1 or job['seed_reply']!=matched[0] or job['seed_reply']['messages']!=job['messages']:raise ValueError('Archived reply or prompt changed')
-    if len(calls)!=r['evaluation_calls'] or len(answers)!=10 or r['completed_evaluation_calls']!=len(calls) or r['displayed_answers']!=10 or [(a['case_id'],a['turn']) for a in answers]!=expected:raise ValueError('Conversation coverage differs')
+    if len(calls)!=r['evaluation_calls'] or len(answers)!=p['maximum_displayed_answers'] or r['completed_evaluation_calls']!=len(calls) or r['displayed_answers']!=p['maximum_displayed_answers'] or [(a['case_id'],a['turn']) for a in answers]!=expected:raise ValueError('Conversation coverage differs')
     probe=json.loads(raw['memory_probe.json']);verify_generated(json.loads(f['memory_probe.json']),probe,16,p['generation'],tokenizer)
     for call in calls:
         if call['stage']!='conversation':raise ValueError('Unexpected model stage')

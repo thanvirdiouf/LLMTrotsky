@@ -9,10 +9,11 @@ from review_chat import prepare_turn, parse_reply, append_turn
 
 
 def validate_protocol(p):
+    transfer = p.get('fixed_transfer_questions_run') is True
     if (p.get('purpose') != 'candidate_conversation_review' or p.get('conversation_count') != 5
-            or p.get('maximum_displayed_answers') != 10 or p.get('model_audit_performed') is not False):
+            or p.get('maximum_displayed_answers') != (5 if transfer else 10) or p.get('model_audit_performed') is not False):
         raise ValueError('Human conversation review scope differs')
-    expected_calls = 5 if p.get('seeded_reply_count') == 5 else 10
+    expected_calls = 5 if transfer or p.get('seeded_reply_count') == 5 else 10
     if p.get('evaluation_calls') != expected_calls:
         raise ValueError('Unexpected new conversation call limit')
     if p.get('retrieval_policy', 'current') not in ('current', 'human_context_decay_v1'):
@@ -23,12 +24,13 @@ def validate_protocol(p):
 
 
 def evaluate(jobs, generate, output, profile, collection, ledger, tokenizer, today):
-    if len(jobs) != 5 or len({j['case_id'] for j in jobs}) != 5 or sum(len(j['questions']) for j in jobs) != 10:
-        raise ValueError('Expected five conversations and ten total turns')
+    supplied = all(len(j['questions']) == 1 and len(j.get('source_scope', [])) == 1 for j in jobs)
+    if len(jobs) != 5 or len({j['case_id'] for j in jobs}) != 5 or sum(len(j['questions']) for j in jobs) != (5 if supplied else 10):
+        raise ValueError('Unexpected conversation or turn count')
     output = Path(output); output.mkdir(parents=True, exist_ok=True); rows = []; calls = []
     with (output/'answers.jsonl').open('x') as answers, (output/'model_calls.jsonl').open('x') as journal:
         for job in jobs:
-            state = ConversationState(tuple(p['id'] for p in collection['packets'])); failed = False
+            state = ConversationState(tuple(job.get('source_scope', [p['id'] for p in collection['packets']]))); failed = False
             for turn, question in enumerate(job['questions']):
                 request = prepare_turn(profile, collection, ledger, state, question, tokenizer=tokenizer,
                     reflection_allowed=job['reflection_allowed'], today=today,

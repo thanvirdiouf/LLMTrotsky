@@ -49,17 +49,17 @@ statement already exists. Both statements passed deterministic rendering with
 their source citations when explicitly selected. This fixes a gap in the
 reviewed evidence. Selection and generated answers still require evaluation.
 
-Private saved54 (v10) tests five fresh, independent questions with one supplied
-packet each. The model selects reviewed statement IDs. The renderer preserves
-their wording and citations. The fixed questions are in
-`config/ghost_reviewed_transfer_v1.json`. Expected IDs and the checksum are local
-under `evaluation/runs/ghost_review_chat_v10/`. Synthetic replay and all 94
-local tests passed. The actual five-call result is pending.
+Private saved54 (v10) tested five fresh questions with one supplied packet
+each. All five calls replayed. Hearing dates selected all three required
+records. The missing-detail control selected none. The other three replies
+returned prose and were blocked. The renderer preserved the accepted record
+wording and citations. All 94 local tests passed.
 
-Verify saved54 with `scripts/verify_review_chat.py` and the v10 tokenizer after
-downloading its bundle and outputs into the run’s `download/` directory.
-Review coverage, relevance, and the missing-evidence control separately.
-Use the result to decide whether to test retrieval and sustained dialogue.
+Questions are in `config/ghost_reviewed_transfer_v1.json`. The local v10 run
+directory holds the frozen checks, verifier report, and source review.
+The next experiment should constrain decoding to valid record-ID selections,
+then measure completeness and relevance separately. This isolates the
+format failure before investing in broader retrieval or conversation tests.
 
 Continue based on measured results. Training is paused and both adapters are
 experimental. Authorized 27B trials use the same private Kaggle notebook, two

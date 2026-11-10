@@ -14,15 +14,26 @@ CONTROL = 'ghost_review_chat_v6'
 
 def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
     if not re.fullmatch(r'ghost_review_chat_v[1-9][0-9]*',version):raise ValueError('Invalid review version')
-    transfer = version in ('ghost_review_chat_v7', 'ghost_review_chat_v8', 'ghost_review_chat_v9')
-    supplied = version == 'ghost_review_chat_v7'
+    selector = version == 'ghost_review_chat_v10'
+    transfer = selector or version in ('ghost_review_chat_v7', 'ghost_review_chat_v8', 'ghost_review_chat_v9')
+    supplied = selector or version == 'ghost_review_chat_v7'
     transfer_guidance = version == 'ghost_review_chat_v9'
     packet_citations_only = version in ('ghost_review_chat_v6', 'ghost_review_chat_v7', 'ghost_review_chat_v8', 'ghost_review_chat_v9')
-    use_context_design = version == 'ghost_review_chat_v5' or packet_citations_only
+    use_context_design = version == 'ghost_review_chat_v5' or packet_citations_only or selector
     design_path = ('config/ghost_conversation_context_v1.json' if use_context_design
                    else 'config/ghost_review_workbench_v1.json')
     design_raw=(root/design_path).read_bytes();design=json.loads(design_raw)
-    if transfer:
+    if selector:
+        cases = json.loads((root/'config/ghost_reviewed_transfer_v1.json').read_text())['cases']
+        design['source_snapshot'] = 'evaluation/ghost_reviewed_coverage_v4'
+        design['conversations'] = [
+            {'id': case['id'], 'title': case['id'].replace('_', ' '),
+             'questions': [case['question']], 'reflection_allowed': False,
+             'source_scope': [case['packet']]}
+            for case in cases
+        ]
+        design_raw = enc(design)
+    elif transfer:
         cases = json.loads((root/'config/ghost_mapped_transfer_v1.json').read_text())['cases']
         design['conversations'] = [
             {'id': c['id'], 'title': c['id'].replace('_', ' '), 'questions': [c['question']],
@@ -48,9 +59,12 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
         first=prepare_turn(profile,collection,ledger,state,conversation['questions'][0],tokenizer=tokenizer,
             reflection_allowed=conversation['reflection_allowed'],today=design['current_date'],
             retrieval_policy=design.get('retrieval_policy','current'),
-            include_summary_ids=not packet_citations_only, transfer_guidance=transfer_guidance)
+            include_summary_ids=not packet_citations_only, transfer_guidance=transfer_guidance,
+            select_records=selector)
         jobs.append({'case_id':conversation['id'],'title':conversation['title'],'questions':conversation['questions'],
             'reflection_allowed':conversation['reflection_allowed'],'messages':first['messages'],'input_token_ids':first['input_token_ids']})
+        if selector:
+            jobs[-1]['select_records'] = True
         if transfer_guidance:
             jobs[-1]['transfer_guidance'] = True
         if supplied:
@@ -103,6 +117,8 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
         p['quality_policy'] = 'User delegated further review to the implementing agent. Source support, completeness and voice require explicit development review; not independent or human validation. No activation or factual memory promotion.'
     names=('candidate_audit.py','candidate_base_probe.py','candidate_efficient_attention.py','candidate_review_chat.py',
         'review_chat.py','grounded_chat.py','grounded_chat_v2.py','grounded_request_boundary.py')
+    if selector:
+        names += ('reviewed_source_display.py',)
     payload={n:(root/'scripts'/n).read_bytes() for n in names}
     if 'retrieval_policy' in design:
         payload['conversation_retrieval.py'] = (root/'scripts/conversation_retrieval.py').read_bytes()
@@ -120,6 +136,8 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
     if transfer:
         arm = 'supplied-passage' if supplied else 'ordinary-retrieval'
         intro = f'Five {arm} transfer questions, five answer calls and one unscored memory probe. Packet citations only.\n'
+    if selector:
+        intro = 'Five independent reviewed-record selection questions with supplied passages. Five model calls and one short probe.\n'
     notebook={'nbformat':4,'nbformat_minor':5,'metadata':{'kernelspec':{'name':'python3','language':'python','display_name':'Python 3'}},'cells':[
         {'cell_type':'markdown','id':'scope','metadata':{},'source':[intro]},
         *[{'cell_type':'code','id':name,'metadata':{},'source':text.splitlines(True),'execution_count':None,'outputs':[]} for name,text in [('install',install),('run',run)]]]}

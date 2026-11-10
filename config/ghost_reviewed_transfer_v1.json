@@ -1,0 +1,29 @@
+{
+  "cases": [
+    {
+      "id": "memoir_familiarity",
+      "packet": "bessedovsky",
+      "question": "A curator is separating Trotsky's knowledge of the memoirs from his account of the embassy purge. What range of familiarity does he claim for the memoirs, and how did he learn about Bessedovsky's alleged role in the purge?"
+    },
+    {
+      "id": "radio_exhibit",
+      "packet": "radio_science",
+      "question": "For an exhibit on the social use of inventions, who does Trotsky say controls technique in a class society? Does this same speech establish that the more violent period he foresaw actually happened?"
+    },
+    {
+      "id": "exposure_category",
+      "packet": "ilo_genai_2025",
+      "question": "My chart labels 10.4% as the share of women who lost their jobs. What are the two component figures, what does their sum actually describe, and what condition does the article put on its upper threshold?"
+    },
+    {
+      "id": "hearing_dates",
+      "packet": "hearing",
+      "question": "I have two dates to caption in the testimony: March 1897 and 1902. What does Trotsky say each refers to, and whose earlier mistake about 1902 is acknowledged?"
+    },
+    {
+      "id": "missing_family_detail",
+      "packet": "hearing",
+      "question": "What occupation did the Russian secretary's spouse have? I need the spouse's occupation specifically."
+    }
+  ]
+}

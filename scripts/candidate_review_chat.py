@@ -23,6 +23,24 @@ def validate_protocol(p):
     validate_common({**p, 'purpose': 'candidate_neutral_audit', 'evaluation_calls': 10})
 
 
+def render_record_reply(output, request, collection, ledger):
+    from reviewed_source_display import records_for_packets, render_selection, select_ids
+
+    if output.get('finish_reason') != 'stop':
+        raise ValueError('Incomplete reviewed summary selection')
+    packets = [p['id'] for p in request['source_packets']]
+    records = records_for_packets(collection, ledger, packets)
+    ids = select_ids(output['response'], records)
+    display = render_selection(ids, records)
+    return {
+        'reply': display['response'],
+        'fictional_reflection': '',
+        'selected_claim_ids': ids,
+        'source_records': display['source_records'],
+        'quality_validated': False,
+    }
+
+
 def evaluate(jobs, generate, output, profile, collection, ledger, tokenizer, today):
     single_turn = all(len(job['questions']) == 1 for job in jobs)
     if len(jobs) != 5 or len({j['case_id'] for j in jobs}) != 5 or sum(len(j['questions']) for j in jobs) != (5 if single_turn else 10):
@@ -36,7 +54,8 @@ def evaluate(jobs, generate, output, profile, collection, ledger, tokenizer, tod
                     reflection_allowed=job['reflection_allowed'], today=today,
                     retrieval_policy=job.get('retrieval_policy', 'current'),
                     include_summary_ids=job.get('include_summary_ids', True),
-                    transfer_guidance=job.get('transfer_guidance', False))
+                    transfer_guidance=job.get('transfer_guidance', False),
+                    select_records=job.get('select_records', False))
                 if turn == 0 and (request['messages'] != job['messages'] or request['input_token_ids'] != job['input_token_ids']):
                     raise ValueError('First conversation request differs from frozen inputs')
                 error = None; reply = None
@@ -52,7 +71,11 @@ def evaluate(jobs, generate, output, profile, collection, ledger, tokenizer, tod
                     call = {'case_id': job['case_id'], 'turn': turn+1, 'stage': 'conversation',
                             'messages': request['messages'], 'output': out, 'output_sha256': fingerprint(out)}
                     calls.append(call); journal.write(json.dumps(call, ensure_ascii=False)+'\n'); journal.flush()
-                    try: reply = parse_reply(out, request)
+                    try:
+                        if job.get('select_records', False):
+                            reply = render_record_reply(out, request, collection, ledger)
+                        else:
+                            reply = parse_reply(out, request)
                     except (ValueError, KeyError, TypeError) as exc: error = str(exc); failed = True
                 row = {'case_id': job['case_id'], 'title': job['title'], 'turn': turn+1, 'question': question,
                        'status': 'ready_for_human_review' if reply else 'format_blocked',

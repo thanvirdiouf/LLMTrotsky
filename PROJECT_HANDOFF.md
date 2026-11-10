@@ -49,10 +49,17 @@ statement already exists. Both statements passed deterministic rendering with
 their source citations when explicitly selected. This fixes a gap in the
 reviewed evidence. Selection and generated answers still require evaluation.
 
-Test whether a structured answer can reliably select and cover those reviewed
-statements, including on fresh questions. Keep the original five transfer
-questions and archived outputs as controls. Then return to sustained dialogue
-and the fictional voice once evidence handling is reliable.
+Private saved54 (v10) tests five fresh, independent questions with one supplied
+packet each. The model selects reviewed statement IDs. The renderer preserves
+their wording and citations. The fixed questions are in
+`config/ghost_reviewed_transfer_v1.json`. Expected IDs and the checksum are local
+under `evaluation/runs/ghost_review_chat_v10/`. Synthetic replay and all 94
+local tests passed. The actual five-call result is pending.
+
+Verify saved54 with `scripts/verify_review_chat.py` and the v10 tokenizer after
+downloading its bundle and outputs into the run’s `download/` directory.
+Review coverage, relevance, and the missing-evidence control separately.
+Use the result to decide whether to test retrieval and sustained dialogue.
 
 Continue based on measured results. Training is paused and both adapters are
 experimental. Authorized 27B trials use the same private Kaggle notebook, two

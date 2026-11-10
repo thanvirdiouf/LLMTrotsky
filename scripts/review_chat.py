@@ -36,9 +36,18 @@ TRANSFER_GUIDANCE = (
 )
 
 
+SELECTION_POLICY = (
+    "Select reviewed summaries that jointly answer the distinct requests in the question. "
+    "Use the source passages to interpret the summaries. A summary must directly support "
+    "an answer, including any relevant limits on the evidence. Omit unrelated summaries. "
+    "If no reviewed summary addresses the question, select none. "
+    'Return only JSON with a claim_ids array, such as {"claim_ids":[]}.'
+)
+
+
 def prepare_turn(profile, collection, ledger, state, question, *, tokenizer=None,
                  reflection_allowed=True, today='2026-10-28', input_limit=5120,
-                 retrieval_policy='current', include_summary_ids=True, transfer_guidance=False):
+                 retrieval_policy='current', include_summary_ids=True, transfer_guidance=False, select_records=False):
     if type(reflection_allowed) is not bool:
         raise EvidenceError('Explicit reflection setting required')
     inventory = [p['id'] for p in collection['packets']]
@@ -77,11 +86,11 @@ def prepare_turn(profile, collection, ledger, state, question, *, tokenizer=None
     persona = profile.get('system_prompt', profile.get('persona_prompt', collection.get('persona_prompt', '')))
     if not persona:
         raise EvidenceError('Fictional persona instruction missing')
-    base_system = persona+'\n\n'+POLICY+'\nCurrent review date: '+today+'. There is no 1940 knowledge cutoff.'
+    base_system = persona+'\n\n'+(SELECTION_POLICY if select_records else POLICY)+'\nCurrent review date: '+today+'. There is no 1940 knowledge cutoff.'
     if transfer_guidance:
         base_system += '\n' + TRANSFER_GUIDANCE
     base_system += '\nRequested depth: '+request.detail+'.'
-    if not reflection_allowed:
+    if not reflection_allowed and not select_records:
         base_system += '\nSource-only mode: fictional_reflection must be an empty string.'
     # One real current user message. Documentary packets remain separate data;
     # no generated target, implicit old question or model intent selector exists.

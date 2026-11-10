@@ -14,8 +14,10 @@ CONTROL = 'ghost_review_chat_v6'
 
 def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
     if not re.fullmatch(r'ghost_review_chat_v[1-9][0-9]*',version):raise ValueError('Invalid review version')
-    transfer = version == 'ghost_review_chat_v7'
-    packet_citations_only = version in ('ghost_review_chat_v6', 'ghost_review_chat_v7')
+    transfer = version in ('ghost_review_chat_v7', 'ghost_review_chat_v8', 'ghost_review_chat_v9')
+    supplied = version == 'ghost_review_chat_v7'
+    transfer_guidance = version == 'ghost_review_chat_v9'
+    packet_citations_only = version in ('ghost_review_chat_v6', 'ghost_review_chat_v7', 'ghost_review_chat_v8', 'ghost_review_chat_v9')
     use_context_design = version == 'ghost_review_chat_v5' or packet_citations_only
     design_path = ('config/ghost_conversation_context_v1.json' if use_context_design
                    else 'config/ghost_review_workbench_v1.json')
@@ -27,6 +29,9 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
              'reflection_allowed': False, 'source_scope': c['source_packet_ids']}
             for c in cases
         ]
+        if not supplied:
+            for conversation in design['conversations']:
+                del conversation['source_scope']
         design_raw = enc(design)
     if len(design['conversations'])!=5 or sum(len(c['questions']) for c in design['conversations'])!=(5 if transfer else 10):raise ValueError('Conversation scope differs')
     source=root/design['source_snapshot'];profile,collection,ledger=load_snapshot(source)
@@ -43,10 +48,12 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
         first=prepare_turn(profile,collection,ledger,state,conversation['questions'][0],tokenizer=tokenizer,
             reflection_allowed=conversation['reflection_allowed'],today=design['current_date'],
             retrieval_policy=design.get('retrieval_policy','current'),
-            include_summary_ids=not packet_citations_only)
+            include_summary_ids=not packet_citations_only, transfer_guidance=transfer_guidance)
         jobs.append({'case_id':conversation['id'],'title':conversation['title'],'questions':conversation['questions'],
             'reflection_allowed':conversation['reflection_allowed'],'messages':first['messages'],'input_token_ids':first['input_token_ids']})
-        if transfer:
+        if transfer_guidance:
+            jobs[-1]['transfer_guidance'] = True
+        if supplied:
             jobs[-1]['source_scope'] = conversation['source_scope']
             if [p['id'] for p in first['source_packets']] != conversation['source_scope']:
                 raise ValueError('Supplied passage missing from prompt')
@@ -111,7 +118,8 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
     for text in (install,run):ast.parse(text)
     intro='Experimental present-day fictional Trotsky conversations for human review. Five conversations, ten replies maximum/ten evaluation calls plus one5000/16probe; pinned27B/twofreeT4s/private existing notebook. No training/adapters/paid compute/active replacement/self-audit. Real retrieval, no oracle source IDs. Setup600s/workload2700s; unvalidated factual support/voice. New end-to-end prototype authorized by user; not another familiar selector-prompt retry.\n'
     if transfer:
-        intro = 'Five supplied-passage transfer questions, five answer calls and one unscored memory probe. Packet citations only.\n'
+        arm = 'supplied-passage' if supplied else 'ordinary-retrieval'
+        intro = f'Five {arm} transfer questions, five answer calls and one unscored memory probe. Packet citations only.\n'
     notebook={'nbformat':4,'nbformat_minor':5,'metadata':{'kernelspec':{'name':'python3','language':'python','display_name':'Python 3'}},'cells':[
         {'cell_type':'markdown','id':'scope','metadata':{},'source':[intro]},
         *[{'cell_type':'code','id':name,'metadata':{},'source':text.splitlines(True),'execution_count':None,'outputs':[]} for name,text in [('install',install),('run',run)]]]}

@@ -27,9 +27,18 @@ def load_snapshot(directory):
     return profile, collection, ledger
 
 
+TRANSFER_GUIDANCE = (
+    "Address each distinct request in the current question. Keep each speaker's "
+    "statement and its scope separate. Personal acquaintance with some facts "
+    "establishes familiarity, not verification of those facts or of the rest of "
+    "an account. Preserve any stated limits on checking the evidence. In a "
+    "hypothetical calculation, keep the exact result and say what it measures."
+)
+
+
 def prepare_turn(profile, collection, ledger, state, question, *, tokenizer=None,
                  reflection_allowed=True, today='2026-10-28', input_limit=5120,
-                 retrieval_policy='current', include_summary_ids=True):
+                 retrieval_policy='current', include_summary_ids=True, transfer_guidance=False):
     if type(reflection_allowed) is not bool:
         raise EvidenceError('Explicit reflection setting required')
     inventory = [p['id'] for p in collection['packets']]
@@ -69,6 +78,8 @@ def prepare_turn(profile, collection, ledger, state, question, *, tokenizer=None
     if not persona:
         raise EvidenceError('Fictional persona instruction missing')
     base_system = persona+'\n\n'+POLICY+'\nCurrent review date: '+today+'. There is no 1940 knowledge cutoff.'
+    if transfer_guidance:
+        base_system += '\n' + TRANSFER_GUIDANCE
     base_system += '\nRequested depth: '+request.detail+'.'
     if not reflection_allowed:
         base_system += '\nSource-only mode: fictional_reflection must be an empty string.'

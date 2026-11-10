@@ -24,8 +24,8 @@ def validate_protocol(p):
 
 
 def evaluate(jobs, generate, output, profile, collection, ledger, tokenizer, today):
-    supplied = all(len(j['questions']) == 1 and len(j.get('source_scope', [])) == 1 for j in jobs)
-    if len(jobs) != 5 or len({j['case_id'] for j in jobs}) != 5 or sum(len(j['questions']) for j in jobs) != (5 if supplied else 10):
+    single_turn = all(len(job['questions']) == 1 for job in jobs)
+    if len(jobs) != 5 or len({j['case_id'] for j in jobs}) != 5 or sum(len(j['questions']) for j in jobs) != (5 if single_turn else 10):
         raise ValueError('Unexpected conversation or turn count')
     output = Path(output); output.mkdir(parents=True, exist_ok=True); rows = []; calls = []
     with (output/'answers.jsonl').open('x') as answers, (output/'model_calls.jsonl').open('x') as journal:
@@ -35,7 +35,8 @@ def evaluate(jobs, generate, output, profile, collection, ledger, tokenizer, tod
                 request = prepare_turn(profile, collection, ledger, state, question, tokenizer=tokenizer,
                     reflection_allowed=job['reflection_allowed'], today=today,
                     retrieval_policy=job.get('retrieval_policy', 'current'),
-                    include_summary_ids=job.get('include_summary_ids', True))
+                    include_summary_ids=job.get('include_summary_ids', True),
+                    transfer_guidance=job.get('transfer_guidance', False))
                 if turn == 0 and (request['messages'] != job['messages'] or request['input_token_ids'] != job['input_token_ids']):
                     raise ValueError('First conversation request differs from frozen inputs')
                 error = None; reply = None

@@ -30,6 +30,13 @@ reported information versus eyewitness testimony and exposure versus observed
 job loss. The source review found omissions and overstatements even with the
 right passage. See the local `evaluation/runs/ghost_review_chat_v7/SOURCE_REVIEW.md`.
 
+Private Kaggle saved52 (local `ghost_review_chat_v8`) is the matched ordinary
+retrieval run. The frozen prompts rank the expected packet first on all five
+questions and include a second packet in each. The opt-in v9 comparison is
+prepared with the same questions and packets plus guidance on completeness,
+attribution, certainty, and exact hypothetical arithmetic. The prompts were
+compared locally to confirm that only this guidance changed.
+
 ## Next work
 
 1. Use the completed supplied-passage run as the baseline for the five

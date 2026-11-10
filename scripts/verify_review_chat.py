@@ -123,7 +123,7 @@ def verify(version='ghost_review_chat_v4',root=ROOT,tokenizer=None,tokenizer_pat
             or any(j.get('retrieval_policy','current') != p.get('retrieval_policy','current') for j in jobs)):
         raise ValueError('Frozen retrieval policy differs')
     include_summary_ids = p.get('include_summary_ids', True)
-    if (include_summary_ids is not (version not in ('ghost_review_chat_v6', 'ghost_review_chat_v7'))
+    if (include_summary_ids is not (version not in ('ghost_review_chat_v6', 'ghost_review_chat_v7', 'ghost_review_chat_v8', 'ghost_review_chat_v9'))
             or any(j.get('include_summary_ids', True) is not include_summary_ids for j in jobs)):
         raise ValueError('Frozen reviewed summary ID setting differs')
     if p.get('seeded_reply_count'):

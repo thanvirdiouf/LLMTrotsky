@@ -7,6 +7,23 @@ from grounded_chat import Retriever, terms
 
 POLICY = 'human_context_decay_v1'
 RESET = re.compile(r'\b(?:new topic|switch topics|switching topics|different topic|unrelated question|start over)\b', re.I)
+REPLY_REFERENCE = re.compile(
+    r'\b(?:you (?:just )?(?:said|called|wrote|claimed|cited)|'
+    r'your (?:earlier |last |previous )?(?:answer|reply|citation)|that (?:citation|passage|source))\b', re.I,
+)
+
+
+def reference_scope(question, prior_citations, available):
+    """Return an opt-in source hint for a direct reference to the last reply."""
+    if not prior_citations or RESET.search(question) or not REPLY_REFERENCE.search(question):
+        return None
+    words = set(terms(question))
+    named = [packet for packet in available if packet.split('_', 1)[0] in words]
+    if len(named) == 1:
+        return named
+    if not named:
+        return [packet for packet in prior_citations if packet in available] or None
+    return None
 
 
 class ConversationRetriever(Retriever):

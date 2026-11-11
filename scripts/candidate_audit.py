@@ -102,7 +102,10 @@ def run(bundle,output,*,experiment=None):
         if p.get('natural_followups'):
             from reviewed_followups import selection_requests as followup_requests
             selection_requests = list(followup_requests(jobs))
-        check_parts = p.get('split_questions') or p.get('natural_followups')
+        reviewed = p.get('reviewed_challenges') is True
+        if reviewed:
+            selection_requests = [(job, job['challenge_request']) for job in jobs]
+        check_parts = p.get('split_questions') or p.get('natural_followups') or reviewed
         for job in [probe, *jobs, *(part for _, part in selection_requests if check_parts)]:
             if input_ids(tokenizer,job['messages'])!=job['input_token_ids']:raise ValueError('Frozen input reconstruction differs')
         set_seed(42);torch.set_num_threads(2);torch.backends.cuda.matmul.allow_tf32=False;torch.backends.cudnn.benchmark=False
@@ -138,11 +141,11 @@ def run(bundle,output,*,experiment=None):
                 with torch.cuda.device(i):torch.cuda.empty_cache()
             tensor=torch.tensor([ids],device=input_device);finite=FiniteScores();before=stats['calls'];before_groups=stats['expanded_kv_calls'];start=time.monotonic()
             processors = [finite]
-            if constrained_jobs and not memory_probe:
+            if constrained_jobs and not memory_probe and (not reviewed or tuple(ids) in constrained_jobs):
                 from constrained_selection import SelectionConstraint
                 processors.append(SelectionConstraint(tokenizer, constrained_jobs[tuple(ids)],
                                                       generation.eos_token_id, len(ids),
-                                                      decisions=p.get('record_decisions', False)))
+                                                      decisions=p.get('record_decisions', False), reply_stance=reviewed))
             with torch.inference_mode():
                 tokens=model.generate(input_ids=tensor,attention_mask=torch.ones_like(tensor),generation_config=generation,logits_processor=processors)[0,len(ids):].tolist()
             for i in (0,1):torch.cuda.synchronize(i)

@@ -15,11 +15,14 @@ def validate_protocol(p):
             or p.get('maximum_displayed_answers') != (5 if transfer else 10) or p.get('model_audit_performed') is not False):
         raise ValueError('Human conversation review scope differs')
     expected_calls = 5 if transfer or p.get('seeded_reply_count') == 5 else 10
+    reviewed = p.get('reviewed_challenges') is True
+    if reviewed and (p.get('scripted_reply_count') != 5 or p.get('constrained_selection') is not True):
+        raise ValueError('Unexpected reviewed challenge scope')
     if 'scripted_reply_count' in p:
         if (p['scripted_reply_count'] != 5 or transfer or p.get('seeded_reply_count')
-                or p.get('constrained_selection') or p.get('include_summary_ids') is not False):
+                or (bool(p.get('constrained_selection')) != reviewed) or p.get('include_summary_ids') is not False):
             raise ValueError('Unexpected scripted challenge scope')
-        expected_calls = 5
+        expected_calls = 6 if reviewed else 5
     if ((p.get('split_questions') is True and transfer) or p.get('natural_followups') is True) and p.get('constrained_selection') is True:
         expected_calls = p['evaluation_calls']
         if type(expected_calls) is not int or not 5 <= expected_calls <= 30:
@@ -61,6 +64,13 @@ def render_record_reply(output, request, collection, ledger, *, decisions=False)
 
 
 def evaluate(jobs, generate, output, profile, collection, ledger, tokenizer, today):
+    if any('challenge_request' in job for job in jobs):
+        from reviewed_challenges import evaluate as evaluate_challenges
+        if (len(jobs) != 5 or sum(job['reflection_allowed'] for job in jobs) != 1
+                or any('challenge_request' not in job or 'scripted_reply' not in job or len(job['questions']) != 2
+                       for job in jobs)):
+            raise ValueError('Expected five reviewed challenges and one fictional reflection')
+        return evaluate_challenges(jobs, generate, output, profile, collection, ledger, tokenizer, today)
     if jobs and all('selection_turns' in job for job in jobs):
         from reviewed_followups import evaluate as evaluate_followups
         if len(jobs) != 5 or any(len(job['questions']) != 2 for job in jobs):
@@ -173,6 +183,8 @@ class Experiment:
             raise ValueError('Frozen reviewed summary ID setting differs')
         if sum('scripted_reply' in job for job in jobs) != protocol.get('scripted_reply_count', 0):
             raise ValueError('Frozen scripted reply count differs')
+        if sum('challenge_request' in job for job in jobs) != (5 if protocol.get('reviewed_challenges') else 0):
+            raise ValueError('Frozen reviewed challenge count differs')
         return evaluate(jobs, generate, output, profile, collection, ledger, tokenizer, design['current_date'])
 
 

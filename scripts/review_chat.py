@@ -56,11 +56,22 @@ RECORD_DECISION_POLICY = (
     "with 1 for include and 0 for exclude."
 )
 
+CHALLENGE_SELECTION_POLICY = (
+    "Select at most two reviewed summary IDs that directly answer the final request. The summaries "
+    "will be displayed verbatim, so choose the most specific evidence and omit redundant or unrelated "
+    "summaries. Keep hypotheses, predictions and limits on verification intact. "
+    "Use the earlier reply only to resolve references. When the user challenges a claim from that reply, "
+    "choose correct if reviewed evidence contradicts the earlier claim, or stand_by if reviewed "
+    "evidence supports it and rebuts the proposed correction. Choose answer in other cases, including "
+    "a new topic or no applicable reviewed evidence. Do not select records about a topic the user has left. "
+    'Return only JSON with stance and claim_ids, for example {"stance":"answer","claim_ids":[]}.'
+)
+
 
 def prepare_turn(profile, collection, ledger, state, question, *, tokenizer=None,
                  reflection_allowed=True, today='2026-10-28', input_limit=5120,
                  retrieval_policy='current', include_summary_ids=True, transfer_guidance=False, select_records=False, record_decisions=False, supply_scope=False, prior_questions=(), source_limit=2,
-                 reconsider_prior_reply=False):
+                 reconsider_prior_reply=False, challenge_selection=False, prior_citations=()):
     if type(reflection_allowed) is not bool:
         raise EvidenceError('Explicit reflection setting required')
     inventory = [p['id'] for p in collection['packets']]
@@ -85,10 +96,18 @@ def prepare_turn(profile, collection, ledger, state, question, *, tokenizer=None
     for match in trace['matches']: match['packet'] = by_id[match['packet']['id']]
     if retrieval_policy == 'current':
         trace['method'] = 'bm25_complete_context_with_bibliography_v1'
+    reference = None
+    if prior_citations:
+        from conversation_retrieval import reference_scope
+        reference = reference_scope(question, prior_citations, request.source_scope)
     if supply_scope:
         allowed = [{'packet': by_id[packet_id], 'score': None, 'matched_terms': []}
                    for packet_id in request.source_scope]
         trace['method'] = 'supplied_source_scope'
+    elif reference:
+        allowed = [{'packet': by_id[packet_id], 'score': None, 'matched_terms': []}
+                   for packet_id in reference]
+        trace['method'] = 'prior_reply_reference_scope'
     else:
         allowed = [m for m in trace['matches'] if m['packet']['id'] in request.source_scope]
     chosen = []; used = 0; omitted_packets = []
@@ -106,6 +125,8 @@ def prepare_turn(profile, collection, ledger, state, question, *, tokenizer=None
     if not persona:
         raise EvidenceError('Fictional persona instruction missing')
     policy = RECORD_DECISION_POLICY if record_decisions else SELECTION_POLICY if select_records else POLICY
+    if challenge_selection:
+        policy = CHALLENGE_SELECTION_POLICY
     base_system = persona+'\n\n'+policy+'\nCurrent review date: '+today+'. There is no 1940 knowledge cutoff.'
     if transfer_guidance:
         base_system += '\n' + TRANSFER_GUIDANCE

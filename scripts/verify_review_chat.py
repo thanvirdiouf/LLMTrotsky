@@ -123,11 +123,15 @@ def verify(version='ghost_review_chat_v4',root=ROOT,tokenizer=None,tokenizer_pat
             or any(j.get('retrieval_policy','current') != p.get('retrieval_policy','current') for j in jobs)):
         raise ValueError('Frozen retrieval policy differs')
     include_summary_ids = p.get('include_summary_ids', True)
-    if (include_summary_ids is not (version not in ('ghost_review_chat_v6', 'ghost_review_chat_v7', 'ghost_review_chat_v8', 'ghost_review_chat_v9', 'ghost_review_chat_v17'))
+    if (include_summary_ids is not (version not in ('ghost_review_chat_v6', 'ghost_review_chat_v7', 'ghost_review_chat_v8', 'ghost_review_chat_v9', 'ghost_review_chat_v17', 'ghost_review_chat_v18'))
             or any(j.get('include_summary_ids', True) is not include_summary_ids for j in jobs)):
         raise ValueError('Frozen reviewed summary ID setting differs')
-    if version == 'ghost_review_chat_v17':
-        challenge_raw = (root/'config/ghost_reply_challenges_v1.json').read_bytes()
+    reviewed = version == 'ghost_review_chat_v18'
+    if bool(p.get('reviewed_challenges')) != reviewed:
+        raise ValueError('Frozen reviewed challenge mode differs')
+    if reviewed or version == 'ghost_review_chat_v17':
+        name = 'ghost_reviewed_reply_challenges_v1.json' if reviewed else 'ghost_reply_challenges_v1.json'
+        challenge_raw = (root/'config'/name).read_bytes()
         challenge = json.loads(challenge_raw)
         if (sha(challenge_raw) != p.get('challenge_sha256')
                 or design['conversations'] != challenge['conversations']
@@ -139,8 +143,10 @@ def verify(version='ghost_review_chat_v4',root=ROOT,tokenizer=None,tokenizer_pat
                     or job['reflection_allowed'] is not case['reflection_allowed']
                     or job['scripted_reply'] != {'reply': case['scripted_reply'], 'fictional_reflection': ''}):
                 raise ValueError('Scripted prior reply or follow-up changed')
-        if [(c['case_id'], c['turn']) for c in calls] != [(job['case_id'], 2) for job in jobs]:
-            raise ValueError('Expected one new follow-up per scripted reply')
+        expected_calls = [(job['case_id'], 2, stage) for job in jobs for stage in
+                          (('conversation', 'reflection') if reviewed and job['reflection_allowed'] else ('conversation',))]
+        if [(c['case_id'], c['turn'], c['stage']) for c in calls] != expected_calls:
+            raise ValueError('Expected one new follow-up per scripted reply and only requested reflections')
     if p.get('seeded_reply_count'):
         control=p['seed_control'];parent=root/'evaluation/runs'/control['local_version'];parent_output=parent/'download/ghost_review_chat_results'
         prior=json.loads((parent/'verification.json').read_text());prior_calls=(parent_output/'model_calls.jsonl').read_bytes()
@@ -155,7 +161,8 @@ def verify(version='ghost_review_chat_v4',root=ROOT,tokenizer=None,tokenizer_pat
     if len(calls)!=r['evaluation_calls'] or len(answers)!=p['maximum_displayed_answers'] or r['completed_evaluation_calls']!=len(calls) or r['displayed_answers']!=p['maximum_displayed_answers'] or [(a['case_id'],a['turn']) for a in answers]!=expected:raise ValueError('Conversation coverage differs')
     probe=json.loads(raw['memory_probe.json']);verify_generated(json.loads(f['memory_probe.json']),probe,16,p['generation'],tokenizer)
     for call in calls:
-        if call['stage']!='conversation':raise ValueError('Unexpected model stage')
+        if call['stage']!='conversation' and not (reviewed and call['stage']=='reflection'):
+            raise ValueError('Unexpected model stage')
         verify_generated({'messages':call['messages'],'input_token_ids':call['output']['input_token_ids']},call['output'],1024,p['generation'],tokenizer)
     if p.get('constrained_selection'):
         from constrained_selection import allowed_sequences
@@ -164,13 +171,17 @@ def verify(version='ghost_review_chat_v4',root=ROOT,tokenizer=None,tokenizer_pat
         if p.get('natural_followups'):
             from reviewed_followups import selection_requests
             constrained_requests = list(selection_requests(jobs))
-        if len(calls) != len(constrained_requests):
+        selection_calls = calls
+        if reviewed:
+            constrained_requests = [(job, job['challenge_request']) for job in jobs]
+            selection_calls = [call for call in calls if call['stage'] == 'conversation']
+        if len(selection_calls) != len(constrained_requests):
             raise ValueError('Missing constrained selection call')
-        for (job, part), call in zip(constrained_requests, calls):
+        for (job, part), call in zip(constrained_requests, selection_calls):
             tokens = tuple(call['output']['token_ids'])
             if call['messages'] != part['messages'] or tokens not in allowed_sequences(
                     tokenizer, part.get('allowed_record_ids', job.get('allowed_record_ids')), p['generation']['eos_token_id'],
-                    decisions=p.get('record_decisions', False)):
+                    decisions=p.get('record_decisions', False), reply_stance=reviewed):
                 raise ValueError('Selection tokens outside the allowed record sets')
     repeated=replay(f,calls,tokenizer_path)
     if any(raw[n]!=data for n,data in repeated.items()):raise ValueError('Dependent conversation/retrieval/parser replay differs')

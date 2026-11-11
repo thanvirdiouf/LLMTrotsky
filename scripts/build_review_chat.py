@@ -17,9 +17,10 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
     record_decisions = version in ('ghost_review_chat_v12', 'ghost_review_chat_v13')
     split_questions = version in ('ghost_review_chat_v14', 'ghost_review_chat_v15')
     followups = version == 'ghost_review_chat_v16'
-    challenge = version == 'ghost_review_chat_v17'
-    constrained = version == 'ghost_review_chat_v11' or record_decisions or split_questions or followups
-    selector = version == 'ghost_review_chat_v10' or constrained
+    reviewed_challenge = version == 'ghost_review_chat_v18'
+    challenge = version == 'ghost_review_chat_v17' or reviewed_challenge
+    constrained = version == 'ghost_review_chat_v11' or record_decisions or split_questions or followups or reviewed_challenge
+    selector = version == 'ghost_review_chat_v10' or (constrained and not reviewed_challenge)
     transfer = (selector and not followups) or version in ('ghost_review_chat_v7', 'ghost_review_chat_v8', 'ghost_review_chat_v9')
     supplied = (selector and not followups) or version == 'ghost_review_chat_v7'
     transfer_guidance = version == 'ghost_review_chat_v9'
@@ -29,11 +30,12 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
                    else 'config/ghost_review_workbench_v1.json')
     design_raw=(root/design_path).read_bytes();design=json.loads(design_raw)
     if challenge:
-        challenge_raw = (root/'config/ghost_reply_challenges_v1.json').read_bytes()
+        name = 'ghost_reviewed_reply_challenges_v1.json' if reviewed_challenge else 'ghost_reply_challenges_v1.json'
+        challenge_raw = (root/'config'/name).read_bytes()
         challenge_design = json.loads(challenge_raw)
         design['source_snapshot'] = 'evaluation/ghost_reviewed_coverage_v4'
         design['conversations'] = challenge_design['conversations']
-        design.update(maximum_model_replies=5, maximum_evaluation_calls=5)
+        design.update(maximum_model_replies=5, maximum_evaluation_calls=6 if reviewed_challenge else 5)
         design_raw = enc(design)
     elif followups:
         design['source_snapshot'] = 'evaluation/ghost_reviewed_coverage_v4'
@@ -98,17 +100,20 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
         if challenge:
             script = {'reply': conversation['scripted_reply'], 'fictional_reflection': ''}
             diagnostics = parse_reply({'response': json.dumps(script), 'finish_reason': 'stop'}, first)['diagnostics']
-            packet, block = challenge_design['checks'][conversation['id']]['anchor']
-            if (diagnostics['cited_packet_ids'] != [packet] or diagnostics['unknown_citation_ids']
-                    or not any(p['id'] == packet and any(b['block_id'] == block for b in p['blocks'])
-                               for p in first['source_packets'])):
+            if len(diagnostics['cited_packet_ids']) != 1 or diagnostics['unknown_citation_ids']:
                 raise ValueError('Scripted citation anchor missing from the first request')
+            if not reviewed_challenge:
+                packet, block = challenge_design['checks'][conversation['id']]['anchor']
+                if (diagnostics['cited_packet_ids'] != [packet]
+                        or not any(p['id'] == packet and any(b['block_id'] == block for b in p['blocks'])
+                                   for p in first['source_packets'])):
+                    raise ValueError('Scripted citation anchor missing from the first request')
             jobs[-1]['scripted_reply'] = script
         if selector:
             jobs[-1]['select_records'] = True
         if record_decisions:
             jobs[-1]['record_decisions'] = True
-        if constrained:
+        if constrained and not reviewed_challenge:
             from reviewed_source_display import records_for_packets
             jobs[-1]['allowed_record_ids'] = list(records_for_packets(
                 collection, ledger, [p['id'] for p in first['source_packets']]))
@@ -133,6 +138,11 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
             jobs[-1]['retrieval_policy'] = design['retrieval_policy']
         if packet_citations_only:
             jobs[-1]['include_summary_ids'] = False
+        if reviewed_challenge:
+            from reviewed_challenges import plan
+            job = jobs[-1]
+            _, _, request, _ = plan(job, profile, collection, ledger, tokenizer, design['current_date'])
+            job['challenge_request'] = request
     seed_control = None
     if version == 'ghost_review_chat_v4':
         parent = root/'evaluation/runs/ghost_review_chat_v3'
@@ -174,7 +184,7 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
         from reviewed_followups import selection_requests
         p['natural_followups'] = True
         p['evaluation_calls'] = sum(1 for _ in selection_requests(jobs))
-    if constrained and not record_decisions and not split_questions and not followups:
+    if constrained and not record_decisions and not split_questions and not followups and not reviewed_challenge:
         baseline_jobs = json.loads(control['audit_inputs.json'])
         stripped_jobs = [{key: value for key, value in job.items()
                           if key != 'allowed_record_ids'} for job in jobs]
@@ -184,6 +194,8 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
         p.update(evaluation_calls=5,seeded_reply_count=5,seed_control=seed_control)
     if challenge:
         p.update(evaluation_calls=5, scripted_reply_count=5, challenge_sha256=sha(challenge_raw))
+    if reviewed_challenge:
+        p.update(evaluation_calls=6, reviewed_challenges=True)
     if packet_citations_only:
         p['include_summary_ids'] = False
     if 'retrieval_policy' in design:
@@ -193,12 +205,14 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
         p['quality_policy'] = 'User delegated further review to the implementing agent. Source support, completeness and voice require explicit development review; not independent or human validation. No activation or factual memory promotion.'
     names=('candidate_audit.py','candidate_base_probe.py','candidate_efficient_attention.py','candidate_review_chat.py',
         'review_chat.py','grounded_chat.py','grounded_chat_v2.py','grounded_request_boundary.py')
-    if selector:
+    if selector or reviewed_challenge:
         names += ('reviewed_source_display.py',)
     if constrained:
         names += ('constrained_selection.py',)
     if followups:
         names += ('reviewed_followups.py',)
+    if reviewed_challenge:
+        names += ('reviewed_challenges.py',)
     payload={n:(root/'scripts'/n).read_bytes() for n in names}
     if 'retrieval_policy' in design:
         payload['conversation_retrieval.py'] = (root/'scripts/conversation_retrieval.py').read_bytes()
@@ -220,6 +234,8 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
         intro = f'Five {arm} transfer questions, five answer calls and one unscored memory probe. Packet citations only.\n'
     if followups:
         intro = 'Ten turns of reviewed evidence selection. The app splits the questions and retrieves one packet per part.\n'
+    elif reviewed_challenge:
+        intro = 'Five scripted prior replies and five follow-ups built from reviewed evidence. Five constrained selections, one separate fictional reflection and one short probe.\n'
     elif challenge:
         intro = 'Five scripted prior replies and five new dependent answers, plus one short memory probe. Each follow-up reopens the packet cited in its prior reply.\n'
     elif selector:

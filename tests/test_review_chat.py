@@ -129,4 +129,37 @@ class ReviewChatTests(unittest.TestCase):
             self.assertEqual([p['id'] for p in row['request']['source_packets']], ['h'])
             self.assertEqual(row['memory_updates'], [])
 
+    def test_reviewed_challenge_reference_yields_to_a_new_topic(self):
+        from conversation_retrieval import reference_scope
+
+        scope = ('rakovsky', 'radio_science', 'ilo_genai_2025')
+        cited = ('rakovsky',)
+        self.assertEqual(reference_scope('You called that verified?', cited, scope), ['rakovsky'])
+        self.assertEqual(reference_scope('You said it was verified. What does the ILO say?', cited, scope),
+                         ['ilo_genai_2025'])
+        self.assertIsNone(reference_scope('New topic. You said something about radio?', cited, scope))
+        self.assertIsNone(reference_scope('Tell me about radio.', cited, scope))
+        self.assertIsNone(reference_scope('You said it was verified. Radio or ILO?', cited, scope))
+
+    def test_reviewed_challenge_displays_only_selected_facts(self):
+        from reviewed_challenges import assemble, parse_reflection
+        from reviewed_source_display import records_for_packets
+
+        profile, collection, ledger = self.fixture()
+        records = records_for_packets(collection, ledger, ['h'])
+        record = next(iter(records.values()))
+        request = prepare_turn(profile, collection, ledger, ConversationState(('h',)), 'solar wage control')
+        output = {'finish_reason': 'stop', 'response': json.dumps({'stance': 'correct', 'claim_ids': [record['id']]})}
+        reply = assemble(output, request, records)
+        self.assertEqual(reply['reply'], f"I need to correct my earlier reply.\n\n{record['statement']} [h]")
+        self.assertFalse(reply['generated_factual_text_used'])
+        self.assertEqual(reply['fictional_reflection'], '')
+        for value in ({'stance': 'correct', 'claim_ids': []},
+                      {'stance': 'answer', 'claim_ids': ['unreviewed']},
+                      {'stance': 'answer', 'claim_ids': [], 'extra': 'Invented claim.'}):
+            with self.assertRaises(ValueError):
+                assemble(dict(output, response=json.dumps(value)), request, records)
+        with self.assertRaises(ValueError):
+            parse_reflection(dict(output, response='{"fictional_reflection":"A claim [h]."}'))
+
 if __name__=='__main__':unittest.main()

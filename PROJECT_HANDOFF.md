@@ -57,27 +57,25 @@ wording and citations. All 94 local tests passed.
 
 Questions are in `config/ghost_reviewed_transfer_v1.json`. The local v10 run
 directory holds the frozen checks, verifier report, and source review.
-Private saved55 (v11) constrained decoding on the exact saved54 prompts.
-All five selections replayed and three met the locked checks, up from two.
-The memoir reply omitted the purge report. The ILO reply omitted the
-full-implementation condition and added a local-estimate record.
+| Evidence selection experiment | Result |
+| --- | --- |
+| Saved54, unconstrained ID output | 2/5 passed. Three returned prose. |
+| Saved55, constrained ID output | 3/5 passed. All outputs valid. Memoir and ILO coverage missed a requested point. |
+| Saved56, include-or-exclude for each record | 2/5 passed. Memoir improved, with regressions elsewhere. |
+| Saved57, separate selections for question parts | 4/5 passed. Omitted Goldman's acknowledgment of his 1902 mistake. Nine calls for five answers. |
+| Saved58, same method on five fresh questions | 4/5 passed. All required records selected, with one unrelated Blumkin letter record. Eight calls for five answers. |
 
-Private saved56 (v12) required an include-or-exclude decision for every
-record. All five selections replayed. Two met the locked checks. It fixed
-the memoir case but introduced omissions or unrelated records in the radio,
-ILO, and hearing cases.
+Both question-part runs passed exact replay and both missing-detail controls.
+The parts were authored in advance in `config/ghost_reviewed_question_parts.json`.
+The experiment uses supplied passages and renders the selected records verbatim.
+Fresh questions are in `config/ghost_reviewed_transfer_v2.json`. Local run
+directories retain the locked rubrics, verification, and per-case scores.
+All 94 local tests passed.
 
-Private saved57 (v14) selected evidence for each authored question part and
-rendered the union. Nine calls replayed and four of five answers met the
-locked checks. The hearing response omitted Goldman's acknowledgment of his
-1902 mistake. The last part still combined that request with the meaning of
-the date. The memoir, radio, ILO, and missing-detail checks passed.
-
-Private saved58 (v15) applies the same method to the five fresh questions in
-`config/ghost_reviewed_transfer_v2.json`. The questions and local rubric were
-locked before reviewing saved55. The authored parts are in
-`config/ghost_reviewed_question_parts.json`. All eight calls and five displays
-passed synthetic replay. The actual fresh result is pending.
+Use separate selections for question parts as the experimental reference.
+Next test how reliably the app identifies those parts and retrieves passages
+during natural follow-ups. The present evidence covers independent questions
+with prewritten parts and supplied passages.
 
 Continue based on measured results. Training is paused and both adapters are
 experimental. Authorized 27B trials use the same private Kaggle notebook, two

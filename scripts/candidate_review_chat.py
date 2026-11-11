@@ -1,5 +1,6 @@
 """Ten real conversational replies for human review; no model self-audit."""
 import json
+from dataclasses import replace
 from pathlib import Path
 from candidate_audit import run as run_candidate, validate_protocol as validate_common
 from candidate_base_probe import CANDIDATE, sha
@@ -14,6 +15,11 @@ def validate_protocol(p):
             or p.get('maximum_displayed_answers') != (5 if transfer else 10) or p.get('model_audit_performed') is not False):
         raise ValueError('Human conversation review scope differs')
     expected_calls = 5 if transfer or p.get('seeded_reply_count') == 5 else 10
+    if 'scripted_reply_count' in p:
+        if (p['scripted_reply_count'] != 5 or transfer or p.get('seeded_reply_count')
+                or p.get('constrained_selection') or p.get('include_summary_ids') is not False):
+            raise ValueError('Unexpected scripted challenge scope')
+        expected_calls = 5
     if ((p.get('split_questions') is True and transfer) or p.get('natural_followups') is True) and p.get('constrained_selection') is True:
         expected_calls = p['evaluation_calls']
         if type(expected_calls) is not int or not 5 <= expected_calls <= 30:
@@ -63,11 +69,15 @@ def evaluate(jobs, generate, output, profile, collection, ledger, tokenizer, tod
     single_turn = all(len(job['questions']) == 1 for job in jobs)
     if len(jobs) != 5 or len({j['case_id'] for j in jobs}) != 5 or sum(len(j['questions']) for j in jobs) != (5 if single_turn else 10):
         raise ValueError('Unexpected conversation or turn count')
+    scripted = any('scripted_reply' in job for job in jobs)
+    if scripted and any('scripted_reply' not in job or 'seed_reply' in job or len(job['questions']) != 2 for job in jobs):
+        raise ValueError('Expected five scripted two-turn challenges')
     output = Path(output); output.mkdir(parents=True, exist_ok=True); rows = []; calls = []
     with (output/'answers.jsonl').open('x') as answers, (output/'model_calls.jsonl').open('x') as journal:
         for job in jobs:
             state = ConversationState(tuple(job.get('source_scope', [p['id'] for p in collection['packets']]))); failed = False
             for turn, question in enumerate(job['questions']):
+                reopen = scripted and turn == 1
                 request = prepare_turn(profile, collection, ledger, state, question, tokenizer=tokenizer,
                     reflection_allowed=job['reflection_allowed'], today=today,
                     retrieval_policy=job.get('retrieval_policy', 'current'),
@@ -75,17 +85,27 @@ def evaluate(jobs, generate, output, profile, collection, ledger, tokenizer, tod
                     transfer_guidance=job.get('transfer_guidance', False),
                     select_records=job.get('select_records', False),
                     record_decisions=job.get('record_decisions', False),
-                    supply_scope='selection_parts' in job)
+                    supply_scope=reopen or 'selection_parts' in job, reconsider_prior_reply=reopen)
+                if reopen and [packet['id'] for packet in request['source_packets']] != list(state.source_scope):
+                    raise ValueError('Reopened source missing from the challenge request')
                 if turn == 0 and (request['messages'] != job['messages'] or request['input_token_ids'] != job['input_token_ids']):
                     raise ValueError('First conversation request differs from frozen inputs')
                 error = None; reply = None
                 seed = job.get('seed_reply') if turn == 0 else None
+                script = job.get('scripted_reply') if turn == 0 else None
                 if failed:
                     error = 'Prior reply could not be parsed; dependent turn was not generated.'
                 elif seed is not None:
                     if seed['messages'] != request['messages'] or seed['output']['input_token_ids'] != request['input_token_ids']:
                         raise ValueError('Archived initial reply request differs')
                     reply = parse_reply(seed['output'], request)
+                elif script is not None:
+                    reply = parse_reply({'response': json.dumps(script), 'finish_reason': 'stop'}, request)
+                    diagnostics = reply['diagnostics']
+                    cited = diagnostics['cited_packet_ids']
+                    if len(cited) != 1 or diagnostics['unknown_citation_ids']:
+                        raise ValueError('Scripted reply must cite one supplied packet')
+                    state = replace(state, source_scope=tuple(cited))
                 elif 'selection_parts' in job:
                     from reviewed_source_display import records_for_packets, select_ids
                     records = records_for_packets(collection, ledger, job['source_scope'])
@@ -128,7 +148,8 @@ def evaluate(jobs, generate, output, profile, collection, ledger, tokenizer, tod
                        'reply': reply, 'validation_error': error, 'request': request,
                        'model': CANDIDATE, 'quality_validated': False, 'human_review_status': 'unreviewed',
                        'model_audit_performed': False, 'active_model_changed': False,
-                       'generation_origin': 'archived_saved47' if seed else 'new_model_call' if not error else 'blocked',
+                       'generation_origin': ('scripted_challenge' if script is not None else
+                                             'archived_saved47' if seed else 'new_model_call' if not error else 'blocked'),
                        'training_steps': 0, 'adapters_loaded': [], 'memory_updates': []}
                 rows.append(row); answers.write(json.dumps(row, ensure_ascii=False)+'\n'); answers.flush()
                 if reply: state = append_turn(state, question, reply)
@@ -150,6 +171,8 @@ class Experiment:
         protocol = json.loads((self.bundle/'protocol.json').read_text())
         if any(job.get('include_summary_ids', True) is not protocol.get('include_summary_ids', True) for job in jobs):
             raise ValueError('Frozen reviewed summary ID setting differs')
+        if sum('scripted_reply' in job for job in jobs) != protocol.get('scripted_reply_count', 0):
+            raise ValueError('Frozen scripted reply count differs')
         return evaluate(jobs, generate, output, profile, collection, ledger, tokenizer, design['current_date'])
 
 

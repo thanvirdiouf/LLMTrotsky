@@ -123,9 +123,24 @@ def verify(version='ghost_review_chat_v4',root=ROOT,tokenizer=None,tokenizer_pat
             or any(j.get('retrieval_policy','current') != p.get('retrieval_policy','current') for j in jobs)):
         raise ValueError('Frozen retrieval policy differs')
     include_summary_ids = p.get('include_summary_ids', True)
-    if (include_summary_ids is not (version not in ('ghost_review_chat_v6', 'ghost_review_chat_v7', 'ghost_review_chat_v8', 'ghost_review_chat_v9'))
+    if (include_summary_ids is not (version not in ('ghost_review_chat_v6', 'ghost_review_chat_v7', 'ghost_review_chat_v8', 'ghost_review_chat_v9', 'ghost_review_chat_v17'))
             or any(j.get('include_summary_ids', True) is not include_summary_ids for j in jobs)):
         raise ValueError('Frozen reviewed summary ID setting differs')
+    if version == 'ghost_review_chat_v17':
+        challenge_raw = (root/'config/ghost_reply_challenges_v1.json').read_bytes()
+        challenge = json.loads(challenge_raw)
+        if (sha(challenge_raw) != p.get('challenge_sha256')
+                or design['conversations'] != challenge['conversations']
+                or p.get('scripted_reply_count') != 5
+                or set(challenge['checks']) != {job['case_id'] for job in jobs}):
+            raise ValueError('Scripted challenge design or rubric differs')
+        for job, case in zip(jobs, design['conversations'], strict=True):
+            if (job['case_id'] != case['id'] or job['questions'] != case['questions']
+                    or job['reflection_allowed'] is not case['reflection_allowed']
+                    or job['scripted_reply'] != {'reply': case['scripted_reply'], 'fictional_reflection': ''}):
+                raise ValueError('Scripted prior reply or follow-up changed')
+        if [(c['case_id'], c['turn']) for c in calls] != [(job['case_id'], 2) for job in jobs]:
+            raise ValueError('Expected one new follow-up per scripted reply')
     if p.get('seeded_reply_count'):
         control=p['seed_control'];parent=root/'evaluation/runs'/control['local_version'];parent_output=parent/'download/ghost_review_chat_results'
         prior=json.loads((parent/'verification.json').read_text());prior_calls=(parent_output/'model_calls.jsonl').read_bytes()

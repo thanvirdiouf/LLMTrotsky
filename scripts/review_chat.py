@@ -59,7 +59,8 @@ RECORD_DECISION_POLICY = (
 
 def prepare_turn(profile, collection, ledger, state, question, *, tokenizer=None,
                  reflection_allowed=True, today='2026-10-28', input_limit=5120,
-                 retrieval_policy='current', include_summary_ids=True, transfer_guidance=False, select_records=False, record_decisions=False, supply_scope=False, prior_questions=(), source_limit=2):
+                 retrieval_policy='current', include_summary_ids=True, transfer_guidance=False, select_records=False, record_decisions=False, supply_scope=False, prior_questions=(), source_limit=2,
+                 reconsider_prior_reply=False):
     if type(reflection_allowed) is not bool:
         raise EvidenceError('Explicit reflection setting required')
     inventory = [p['id'] for p in collection['packets']]
@@ -108,6 +109,12 @@ def prepare_turn(profile, collection, ledger, state, question, *, tokenizer=None
     base_system = persona+'\n\n'+policy+'\nCurrent review date: '+today+'. There is no 1940 knowledge cutoff.'
     if transfer_guidance:
         base_system += '\n' + TRANSFER_GUIDANCE
+    if reconsider_prior_reply:
+        base_system += (
+            '\nFor this follow-up, address what the user is asking about your earlier reply. '
+            'Check the reopened passage before agreeing with a correction or defending the reply. '
+            'Acknowledge any earlier error directly. Explain what the passage supports and where it stops.'
+        )
     base_system += '\nRequested depth: '+request.detail+'.'
     if prior_questions:
         base_system += (

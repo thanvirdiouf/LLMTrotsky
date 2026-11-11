@@ -5,7 +5,7 @@ from build_ghost_candidate_probe import enc
 from candidate_base_probe import sha
 from candidate_review_chat import validate_protocol
 from grounded_chat import ROOT
-from review_chat import load_snapshot,prepare_turn
+from review_chat import load_snapshot,prepare_turn,parse_reply
 from grounded_request_boundary import ConversationState
 from verify_review_chat import payloads
 
@@ -17,17 +17,25 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
     record_decisions = version in ('ghost_review_chat_v12', 'ghost_review_chat_v13')
     split_questions = version in ('ghost_review_chat_v14', 'ghost_review_chat_v15')
     followups = version == 'ghost_review_chat_v16'
+    challenge = version == 'ghost_review_chat_v17'
     constrained = version == 'ghost_review_chat_v11' or record_decisions or split_questions or followups
     selector = version == 'ghost_review_chat_v10' or constrained
     transfer = (selector and not followups) or version in ('ghost_review_chat_v7', 'ghost_review_chat_v8', 'ghost_review_chat_v9')
     supplied = (selector and not followups) or version == 'ghost_review_chat_v7'
     transfer_guidance = version == 'ghost_review_chat_v9'
-    packet_citations_only = version in ('ghost_review_chat_v6', 'ghost_review_chat_v7', 'ghost_review_chat_v8', 'ghost_review_chat_v9')
+    packet_citations_only = challenge or version in ('ghost_review_chat_v6', 'ghost_review_chat_v7', 'ghost_review_chat_v8', 'ghost_review_chat_v9')
     use_context_design = version == 'ghost_review_chat_v5' or packet_citations_only or selector
     design_path = ('config/ghost_conversation_context_v1.json' if use_context_design
                    else 'config/ghost_review_workbench_v1.json')
     design_raw=(root/design_path).read_bytes();design=json.loads(design_raw)
-    if followups:
+    if challenge:
+        challenge_raw = (root/'config/ghost_reply_challenges_v1.json').read_bytes()
+        challenge_design = json.loads(challenge_raw)
+        design['source_snapshot'] = 'evaluation/ghost_reviewed_coverage_v4'
+        design['conversations'] = challenge_design['conversations']
+        design.update(maximum_model_replies=5, maximum_evaluation_calls=5)
+        design_raw = enc(design)
+    elif followups:
         design['source_snapshot'] = 'evaluation/ghost_reviewed_coverage_v4'
         design['conversations'] = json.loads((root/'config/ghost_reviewed_followups_v1.json').read_text())['conversations']
         design_raw = enc(design)
@@ -87,6 +95,15 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
             select_records=selector, record_decisions=record_decisions, supply_scope=split_questions)
         jobs.append({'case_id':conversation['id'],'title':conversation['title'],'questions':conversation['questions'],
             'reflection_allowed':conversation['reflection_allowed'],'messages':first['messages'],'input_token_ids':first['input_token_ids']})
+        if challenge:
+            script = {'reply': conversation['scripted_reply'], 'fictional_reflection': ''}
+            diagnostics = parse_reply({'response': json.dumps(script), 'finish_reason': 'stop'}, first)['diagnostics']
+            packet, block = challenge_design['checks'][conversation['id']]['anchor']
+            if (diagnostics['cited_packet_ids'] != [packet] or diagnostics['unknown_citation_ids']
+                    or not any(p['id'] == packet and any(b['block_id'] == block for b in p['blocks'])
+                               for p in first['source_packets'])):
+                raise ValueError('Scripted citation anchor missing from the first request')
+            jobs[-1]['scripted_reply'] = script
         if selector:
             jobs[-1]['select_records'] = True
         if record_decisions:
@@ -131,7 +148,6 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
             candidates = [c for c in calls if c['case_id']==job['case_id'] and c['turn']==1]
             if len(candidates)!=1 or candidates[0]['messages']!=job['messages']:
                 raise ValueError('Archived initial conversation differs')
-            from review_chat import parse_reply
             parse_reply(candidates[0]['output'], {'reflection_allowed':job['reflection_allowed'],
                 'retrieval':{'matches':[{'packet':p} for p in collection['packets']]}})
             job['seed_reply'] = candidates[0]
@@ -166,6 +182,8 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
             raise ValueError('Constrained selection must use the exact saved54 requests')
     if seed_control:
         p.update(evaluation_calls=5,seeded_reply_count=5,seed_control=seed_control)
+    if challenge:
+        p.update(evaluation_calls=5, scripted_reply_count=5, challenge_sha256=sha(challenge_raw))
     if packet_citations_only:
         p['include_summary_ids'] = False
     if 'retrieval_policy' in design:
@@ -202,6 +220,8 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
         intro = f'Five {arm} transfer questions, five answer calls and one unscored memory probe. Packet citations only.\n'
     if followups:
         intro = 'Ten turns of reviewed evidence selection. The app splits the questions and retrieves one packet per part.\n'
+    elif challenge:
+        intro = 'Five scripted prior replies and five new dependent answers, plus one short memory probe. Each follow-up reopens the packet cited in its prior reply.\n'
     elif selector:
         intro = 'Five independent reviewed-record selection questions with supplied passages. Five model calls and one short probe.\n'
     notebook={'nbformat':4,'nbformat_minor':5,'metadata':{'kernelspec':{'name':'python3','language':'python','display_name':'Python 3'}},'cells':[

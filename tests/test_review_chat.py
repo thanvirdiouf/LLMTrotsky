@@ -99,4 +99,34 @@ class ReviewChatTests(unittest.TestCase):
             self.assertEqual(sum(r['generation_origin']=='new_model_call' for r in rows),5)
             self.assertEqual(json.loads(calls[0][-2]['content'])['reply'],'Preserved original reply.')
 
+    def test_scripted_followup_reopens_only_its_cited_packet(self):
+        profile, collection, ledger = self.fixture()
+        state = ConversationState(('h', 'm'))
+        question = 'Explain solar wage control and the river cloud.'
+        first = prepare_turn(profile, collection, ledger, state, question,
+                             tokenizer=Tokenizer(), include_summary_ids=False)
+        self.assertEqual({packet['id'] for packet in first['source_packets']}, {'h', 'm'})
+        script = {'reply': 'Earlier assertion [h].', 'fictional_reflection': ''}
+        jobs = [
+            {'case_id': str(i), 'title': 'Challenge',
+             'questions': [question, 'Is that what you meant?'],
+             'reflection_allowed': True, 'scripted_reply': script, 'include_summary_ids': False,
+             'messages': first['messages'], 'input_token_ids': first['input_token_ids']}
+            for i in range(5)
+        ]
+
+        def generate(messages):
+            self.assertEqual(messages[-2]['role'], 'assistant')
+            self.assertEqual(json.loads(messages[-2]['content']), script)
+            return {'response': json.dumps(script), 'finish_reason': 'stop'}
+
+        with tempfile.TemporaryDirectory() as temp:
+            result = evaluate(jobs, generate, temp, profile, collection, ledger, Tokenizer(), '2026-10-28')
+            rows = [json.loads(line) for line in (Path(temp)/'answers.jsonl').read_text().splitlines()]
+        self.assertEqual(result['completed_evaluation_calls'], 5)
+        self.assertEqual([row['generation_origin'] for row in rows[::2]], ['scripted_challenge'] * 5)
+        for row in rows[1::2]:
+            self.assertEqual([p['id'] for p in row['request']['source_packets']], ['h'])
+            self.assertEqual(row['memory_updates'], [])
+
 if __name__=='__main__':unittest.main()

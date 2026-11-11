@@ -23,14 +23,23 @@ def validate_protocol(p):
     validate_common({**p, 'purpose': 'candidate_neutral_audit', 'evaluation_calls': 10})
 
 
-def render_record_reply(output, request, collection, ledger):
+def render_record_reply(output, request, collection, ledger, *, decisions=False):
     from reviewed_source_display import records_for_packets, render_selection, select_ids
 
     if output.get('finish_reason') != 'stop':
         raise ValueError('Incomplete reviewed summary selection')
     packets = [p['id'] for p in request['source_packets']]
     records = records_for_packets(collection, ledger, packets)
-    ids = select_ids(output['response'], records)
+    if decisions:
+        from grounded_chat_v2 import parse_object
+        parsed = parse_object(output['response'])
+        bits = parsed.get('include')
+        if (set(parsed) != {'include'} or not isinstance(bits, str)
+                or len(bits) != len(records) or set(bits) - {'0', '1'}):
+            raise ValueError('Expected one include-or-exclude decision per reviewed record')
+        ids = [record_id for record_id, bit in zip(records, bits) if bit == '1']
+    else:
+        ids = select_ids(output['response'], records)
     display = render_selection(ids, records)
     return {
         'reply': display['response'],
@@ -55,7 +64,8 @@ def evaluate(jobs, generate, output, profile, collection, ledger, tokenizer, tod
                     retrieval_policy=job.get('retrieval_policy', 'current'),
                     include_summary_ids=job.get('include_summary_ids', True),
                     transfer_guidance=job.get('transfer_guidance', False),
-                    select_records=job.get('select_records', False))
+                    select_records=job.get('select_records', False),
+                    record_decisions=job.get('record_decisions', False))
                 if turn == 0 and (request['messages'] != job['messages'] or request['input_token_ids'] != job['input_token_ids']):
                     raise ValueError('First conversation request differs from frozen inputs')
                 error = None; reply = None
@@ -73,7 +83,8 @@ def evaluate(jobs, generate, output, profile, collection, ledger, tokenizer, tod
                     calls.append(call); journal.write(json.dumps(call, ensure_ascii=False)+'\n'); journal.flush()
                     try:
                         if job.get('select_records', False):
-                            reply = render_record_reply(out, request, collection, ledger)
+                            reply = render_record_reply(out, request, collection, ledger,
+                                                        decisions=job.get('record_decisions', False))
                         else:
                             reply = parse_reply(out, request)
                     except (ValueError, KeyError, TypeError) as exc: error = str(exc); failed = True

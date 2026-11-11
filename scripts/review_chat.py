@@ -45,9 +45,21 @@ SELECTION_POLICY = (
 )
 
 
+RECORD_DECISION_POLICY = (
+    "Make an include-or-exclude decision for every reviewed summary, in the order shown. "
+    "Include a summary when it directly supports any requested part of the question or "
+    "states an evidence limit the question asks about. Check every requested part, "
+    "including later clauses. Exclude summaries about adjacent topics and claims that "
+    "repeat another selected summary without helping answer the question. Use the "
+    "passage to distinguish a reported statement from a verified event. Return only "
+    'a JSON object such as {"include":"010"}. Use exactly one digit per summary, '
+    "with 1 for include and 0 for exclude."
+)
+
+
 def prepare_turn(profile, collection, ledger, state, question, *, tokenizer=None,
                  reflection_allowed=True, today='2026-10-28', input_limit=5120,
-                 retrieval_policy='current', include_summary_ids=True, transfer_guidance=False, select_records=False):
+                 retrieval_policy='current', include_summary_ids=True, transfer_guidance=False, select_records=False, record_decisions=False):
     if type(reflection_allowed) is not bool:
         raise EvidenceError('Explicit reflection setting required')
     inventory = [p['id'] for p in collection['packets']]
@@ -86,7 +98,8 @@ def prepare_turn(profile, collection, ledger, state, question, *, tokenizer=None
     persona = profile.get('system_prompt', profile.get('persona_prompt', collection.get('persona_prompt', '')))
     if not persona:
         raise EvidenceError('Fictional persona instruction missing')
-    base_system = persona+'\n\n'+(SELECTION_POLICY if select_records else POLICY)+'\nCurrent review date: '+today+'. There is no 1940 knowledge cutoff.'
+    policy = RECORD_DECISION_POLICY if record_decisions else SELECTION_POLICY if select_records else POLICY
+    base_system = persona+'\n\n'+policy+'\nCurrent review date: '+today+'. There is no 1940 knowledge cutoff.'
     if transfer_guidance:
         base_system += '\n' + TRANSFER_GUIDANCE
     base_system += '\nRequested depth: '+request.detail+'.'

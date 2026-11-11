@@ -14,7 +14,8 @@ CONTROL = 'ghost_review_chat_v6'
 
 def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
     if not re.fullmatch(r'ghost_review_chat_v[1-9][0-9]*',version):raise ValueError('Invalid review version')
-    constrained = version == 'ghost_review_chat_v11'
+    record_decisions = version in ('ghost_review_chat_v12', 'ghost_review_chat_v13')
+    constrained = version == 'ghost_review_chat_v11' or record_decisions
     selector = version == 'ghost_review_chat_v10' or constrained
     transfer = selector or version in ('ghost_review_chat_v7', 'ghost_review_chat_v8', 'ghost_review_chat_v9')
     supplied = selector or version == 'ghost_review_chat_v7'
@@ -25,7 +26,8 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
                    else 'config/ghost_review_workbench_v1.json')
     design_raw=(root/design_path).read_bytes();design=json.loads(design_raw)
     if selector:
-        cases = json.loads((root/'config/ghost_reviewed_transfer_v1.json').read_text())['cases']
+        case_file = 'ghost_reviewed_transfer_v2.json' if version == 'ghost_review_chat_v13' else 'ghost_reviewed_transfer_v1.json'
+        cases = json.loads((root/'config'/case_file).read_text())['cases']
         design['source_snapshot'] = 'evaluation/ghost_reviewed_coverage_v4'
         design['conversations'] = [
             {'id': case['id'], 'title': case['id'].replace('_', ' '),
@@ -61,11 +63,13 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
             reflection_allowed=conversation['reflection_allowed'],today=design['current_date'],
             retrieval_policy=design.get('retrieval_policy','current'),
             include_summary_ids=not packet_citations_only, transfer_guidance=transfer_guidance,
-            select_records=selector)
+            select_records=selector, record_decisions=record_decisions)
         jobs.append({'case_id':conversation['id'],'title':conversation['title'],'questions':conversation['questions'],
             'reflection_allowed':conversation['reflection_allowed'],'messages':first['messages'],'input_token_ids':first['input_token_ids']})
         if selector:
             jobs[-1]['select_records'] = True
+        if record_decisions:
+            jobs[-1]['record_decisions'] = True
         if constrained:
             from reviewed_source_display import records_for_packets
             jobs[-1]['allowed_record_ids'] = list(records_for_packets(
@@ -113,6 +117,9 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
         p.update(evaluation_calls=5, maximum_displayed_answers=5, fixed_transfer_questions_run=True)
     if constrained:
         p['constrained_selection'] = True
+    if record_decisions:
+        p['record_decisions'] = True
+    if constrained and not record_decisions:
         baseline_jobs = json.loads(control['audit_inputs.json'])
         stripped_jobs = [{key: value for key, value in job.items()
                           if key != 'allowed_record_ids'} for job in jobs]

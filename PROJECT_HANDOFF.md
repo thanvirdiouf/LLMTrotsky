@@ -57,12 +57,17 @@ wording and citations. All 94 local tests passed.
 
 Questions are in `config/ghost_reviewed_transfer_v1.json`. The local v10 run
 directory holds the frozen checks, verifier report, and source review.
-Private saved55 (v11) reruns the exact five saved54 prompts with constrained
-decoding. Every allowed output is a set of IDs from the supplied records,
-serialized in ledger order. The empty set remains available. The local
-tokenizer preflight covered every allowed sequence and all 94 tests passed.
-The fresh follow-up questions are locked before this run’s results in
-`config/ghost_reviewed_transfer_v2.json`, with scoring checks kept locally.
+Private saved55 (v11) constrained decoding on the exact saved54 prompts.
+All five selections replayed and three met the locked checks, up from two.
+The memoir reply omitted the purge report. The ILO reply omitted the
+full-implementation condition and added a local-estimate record.
+
+Private saved56 (v12) uses the same supplied passages and questions. It
+requires a separate include-or-exclude decision for every reviewed record
+and asks the model to cover all requested parts. Synthetic replay and 94
+local tests passed. The fresh follow-up questions in
+`config/ghost_reviewed_transfer_v2.json` and their local checks were locked
+before reviewing saved55.
 
 Continue based on measured results. Training is paused and both adapters are
 experimental. Authorized 27B trials use the same private Kaggle notebook, two

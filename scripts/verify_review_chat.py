@@ -149,7 +149,8 @@ def verify(version='ghost_review_chat_v4',root=ROOT,tokenizer=None,tokenizer_pat
         for job, call in zip(jobs, calls):
             tokens = tuple(call['output']['token_ids'])
             if call['messages'] != job['messages'] or tokens not in allowed_sequences(
-                    tokenizer, job['allowed_record_ids'], p['generation']['eos_token_id']):
+                    tokenizer, job['allowed_record_ids'], p['generation']['eos_token_id'],
+                    decisions=p.get('record_decisions', False)):
                 raise ValueError('Selection tokens outside the allowed record sets')
     repeated=replay(f,calls,tokenizer_path)
     if any(raw[n]!=data for n,data in repeated.items()):raise ValueError('Dependent conversation/retrieval/parser replay differs')

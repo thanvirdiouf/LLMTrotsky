@@ -135,7 +135,8 @@ def run(bundle,output,*,experiment=None):
             if constrained_jobs and not memory_probe:
                 from constrained_selection import SelectionConstraint
                 processors.append(SelectionConstraint(tokenizer, constrained_jobs[tuple(ids)],
-                                                      generation.eos_token_id, len(ids)))
+                                                      generation.eos_token_id, len(ids),
+                                                      decisions=p.get('record_decisions', False)))
             with torch.inference_mode():
                 tokens=model.generate(input_ids=tensor,attention_mask=torch.ones_like(tensor),generation_config=generation,logits_processor=processors)[0,len(ids):].tolist()
             for i in (0,1):torch.cuda.synchronize(i)

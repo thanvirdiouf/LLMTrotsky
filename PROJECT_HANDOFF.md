@@ -111,13 +111,26 @@ interpretation, on fresh challenges that also test live reference
 resolution and topic switches. Use any recurring failures to guide
 targeted voice or correction training examples.
 
-Private saved61 (v18) was submitted for five fresh follow-up challenges.
-The factual reply uses at most two reviewed statements verbatim, with a
-short correction marker when selected. One separate call handles fictional
-disagreement. The test includes an explicit reset and a named topic switch
-with a reference to the prior reply. The initial replies are scripted.
-All 97 local tests and isolated preflight passed. Pending exact Kaggle
-replay and source review. Do not resubmit.
+Private saved61 (v18) passed exact replay for five fresh follow-ups to
+scripted replies. Six calls, one probe, zero truncations. All 97 local
+tests passed. The retrieval comparison found the expected packet in
+3/5 cases from the current question alone, 4/5 with the prior turn, and
+5/5 with the prior-citation and named-source rules. Both topic switches
+retrieved the new source.
+
+Unblinded development review found all five factual bodies supported,
+including the Rakovsky hypothesis and ILO exposure figures. The separate
+fictional Weisbord take answered the disagreement without adding historical
+claims. Only 2/5 whole replies passed. Three incorrectly prefaced the
+answer with a correction, including the named switch to Blumkin. A
+head-to-head comparison requires the same questions in both runs.
+
+Next compare the earlier factual claim directly with the selected evidence
+before allowing a correction. Use a neutral response on source switches.
+Test matched correct and erroneous prior replies to isolate the remaining
+decision error. The v18 run contains the retrieval comparison, verification,
+and source review. The frozen questions are in
+`config/ghost_reviewed_reply_challenges_v1.json`.
 
 Continue based on measured results. Training is paused and both adapters are
 experimental. Authorized 27B trials use the same private Kaggle notebook, two

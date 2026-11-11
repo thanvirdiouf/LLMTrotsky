@@ -1,0 +1,24 @@
+{
+  "conversations": [
+    {"id":"payment_followup","title":"Eastman's newspaper payment","questions":[
+      "Why did Eastman use a commercial newspaper for Lenin's Testament?",
+      "Where did the payment go, and did he keep it for himself?"
+    ]},
+    {"id":"radio_followup","title":"Radio and war","questions":[
+      "In the 1926 radio lecture, what did Trotsky say about who controls technique?",
+      "Did he think seeing the enemy would end wars? Did he say he had seen the more violent period he foresaw?"
+    ]},
+    {"id":"explicit_switch","title":"A switch to the embassy purge","questions":[
+      "What does the ILO article's potential exposure estimate measure?",
+      "New topic: In the Bessedovsky letter, did Trotsky personally see the embassy purge, and does he name who told him?"
+    ]},
+    {"id":"partial_evidence","title":"The Russian secretary and a missing detail","questions":[
+      "In the hearing, how many secretaries did Trotsky say he had?",
+      "Did his Russian secretary live there? What occupation did the secretary's spouse have?"
+    ]},
+    {"id":"implicit_switch","title":"A switch to the Blumkin account","questions":[
+      "What does the ILO article say about likely job transformation?",
+      "In the Blumkin account, how certain was Trotsky about the visitor? Why does he suggest the conversation was disclosed after arrest?"
+    ]}
+  ]
+}

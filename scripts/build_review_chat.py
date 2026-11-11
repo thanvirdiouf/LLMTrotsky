@@ -16,17 +16,22 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
     if not re.fullmatch(r'ghost_review_chat_v[1-9][0-9]*',version):raise ValueError('Invalid review version')
     record_decisions = version in ('ghost_review_chat_v12', 'ghost_review_chat_v13')
     split_questions = version in ('ghost_review_chat_v14', 'ghost_review_chat_v15')
-    constrained = version == 'ghost_review_chat_v11' or record_decisions or split_questions
+    followups = version == 'ghost_review_chat_v16'
+    constrained = version == 'ghost_review_chat_v11' or record_decisions or split_questions or followups
     selector = version == 'ghost_review_chat_v10' or constrained
-    transfer = selector or version in ('ghost_review_chat_v7', 'ghost_review_chat_v8', 'ghost_review_chat_v9')
-    supplied = selector or version == 'ghost_review_chat_v7'
+    transfer = (selector and not followups) or version in ('ghost_review_chat_v7', 'ghost_review_chat_v8', 'ghost_review_chat_v9')
+    supplied = (selector and not followups) or version == 'ghost_review_chat_v7'
     transfer_guidance = version == 'ghost_review_chat_v9'
     packet_citations_only = version in ('ghost_review_chat_v6', 'ghost_review_chat_v7', 'ghost_review_chat_v8', 'ghost_review_chat_v9')
     use_context_design = version == 'ghost_review_chat_v5' or packet_citations_only or selector
     design_path = ('config/ghost_conversation_context_v1.json' if use_context_design
                    else 'config/ghost_review_workbench_v1.json')
     design_raw=(root/design_path).read_bytes();design=json.loads(design_raw)
-    if selector:
+    if followups:
+        design['source_snapshot'] = 'evaluation/ghost_reviewed_coverage_v4'
+        design['conversations'] = json.loads((root/'config/ghost_reviewed_followups_v1.json').read_text())['conversations']
+        design_raw = enc(design)
+    elif selector:
         case_file = 'ghost_reviewed_transfer_v2.json' if version in ('ghost_review_chat_v13', 'ghost_review_chat_v15') else 'ghost_reviewed_transfer_v1.json'
         cases = json.loads((root/'config'/case_file).read_text())['cases']
         design['source_snapshot'] = 'evaluation/ghost_reviewed_coverage_v4'
@@ -63,6 +68,17 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
     if sha(tokenizer.chat_template.encode())!=old['chat_template_sha256']:raise ValueError('Candidate template differs')
     jobs=[]
     for conversation in design['conversations']:
+        if followups:
+            from reviewed_followups import plan_turn
+            questions = conversation['questions']
+            turns = [plan_turn(profile, collection, ledger, question, questions[:i], tokenizer,
+                               design['current_date']) for i, question in enumerate(questions)]
+            first_part = turns[0][0]
+            jobs.append({'case_id': conversation['id'], 'title': conversation['title'],
+                         'questions': questions, 'selection_turns': turns, 'reflection_allowed': False,
+                         'messages': first_part['messages'], 'input_token_ids': first_part['input_token_ids'],
+                         'retrieval_policy': design['retrieval_policy']})
+            continue
         state=ConversationState(tuple(conversation.get('source_scope', [p['id'] for p in collection['packets']])))
         first=prepare_turn(profile,collection,ledger,state,conversation['questions'][0],tokenizer=tokenizer,
             reflection_allowed=conversation['reflection_allowed'],today=design['current_date'],
@@ -138,7 +154,11 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
     if split_questions:
         p['split_questions'] = True
         p['evaluation_calls'] = sum(len(job['selection_parts']) for job in jobs)
-    if constrained and not record_decisions and not split_questions:
+    if followups:
+        from reviewed_followups import selection_requests
+        p['natural_followups'] = True
+        p['evaluation_calls'] = sum(1 for _ in selection_requests(jobs))
+    if constrained and not record_decisions and not split_questions and not followups:
         baseline_jobs = json.loads(control['audit_inputs.json'])
         stripped_jobs = [{key: value for key, value in job.items()
                           if key != 'allowed_record_ids'} for job in jobs]
@@ -159,6 +179,8 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
         names += ('reviewed_source_display.py',)
     if constrained:
         names += ('constrained_selection.py',)
+    if followups:
+        names += ('reviewed_followups.py',)
     payload={n:(root/'scripts'/n).read_bytes() for n in names}
     if 'retrieval_policy' in design:
         payload['conversation_retrieval.py'] = (root/'scripts/conversation_retrieval.py').read_bytes()
@@ -178,7 +200,9 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
     if transfer:
         arm = 'supplied-passage' if supplied else 'ordinary-retrieval'
         intro = f'Five {arm} transfer questions, five answer calls and one unscored memory probe. Packet citations only.\n'
-    if selector:
+    if followups:
+        intro = 'Ten turns of reviewed evidence selection. The app splits the questions and retrieves one packet per part.\n'
+    elif selector:
         intro = 'Five independent reviewed-record selection questions with supplied passages. Five model calls and one short probe.\n'
     notebook={'nbformat':4,'nbformat_minor':5,'metadata':{'kernelspec':{'name':'python3','language':'python','display_name':'Python 3'}},'cells':[
         {'cell_type':'markdown','id':'scope','metadata':{},'source':[intro]},

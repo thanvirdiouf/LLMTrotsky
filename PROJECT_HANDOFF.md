@@ -72,10 +72,16 @@ Fresh questions are in `config/ghost_reviewed_transfer_v2.json`. Local run
 directories retain the locked rubrics, verification, and per-case scores.
 All 94 local tests passed.
 
-Use separate selections for question parts as the experimental reference.
-Next test how reliably the app identifies those parts and retrieves passages
-during natural follow-ups. The present evidence covers independent questions
-with prewritten parts and supplied passages.
+Private saved59 (v16) evaluates five two-turn conversations. The app splits
+explicit interrogatives, ranks one packet per part, and uses earlier user
+questions to resolve references. The test uses no prior generated answer as
+evidence. Local checks ranked the expected packet first for all fifteen parts
+and replayed ten synthetic displays. An additional four-case diagnostic on
+short follow-ups ranked the intended packet first in four cases with history
+and one without it. Actual saved59 model results are pending.
+
+The conversation design is in `config/ghost_reviewed_followups_v1.json`.
+The local v16 directory holds the frozen checks and retrieval diagnostics.
 
 Continue based on measured results. Training is paused and both adapters are
 experimental. Authorized 27B trials use the same private Kaggle notebook, two

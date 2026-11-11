@@ -59,7 +59,7 @@ RECORD_DECISION_POLICY = (
 
 def prepare_turn(profile, collection, ledger, state, question, *, tokenizer=None,
                  reflection_allowed=True, today='2026-10-28', input_limit=5120,
-                 retrieval_policy='current', include_summary_ids=True, transfer_guidance=False, select_records=False, record_decisions=False, supply_scope=False):
+                 retrieval_policy='current', include_summary_ids=True, transfer_guidance=False, select_records=False, record_decisions=False, supply_scope=False, prior_questions=(), source_limit=2):
     if type(reflection_allowed) is not bool:
         raise EvidenceError('Explicit reflection setting required')
     inventory = [p['id'] for p in collection['packets']]
@@ -79,7 +79,8 @@ def prepare_turn(profile, collection, ledger, state, question, *, tokenizer=None
         retriever = ConversationRetriever(index_collection)
     else:
         raise EvidenceError('Unknown conversation retrieval policy')
-    trace = retriever.retrieve(question, history, top_k=len(inventory), max_chars=1000000)
+    retrieval_history = history + [{'role': 'user', 'content': text} for text in prior_questions]
+    trace = retriever.retrieve(question, retrieval_history, top_k=len(inventory), max_chars=1000000)
     for match in trace['matches']: match['packet'] = by_id[match['packet']['id']]
     if retrieval_policy == 'current':
         trace['method'] = 'bm25_complete_context_with_bibliography_v1'
@@ -90,12 +91,12 @@ def prepare_turn(profile, collection, ledger, state, question, *, tokenizer=None
     else:
         allowed = [m for m in trace['matches'] if m['packet']['id'] in request.source_scope]
     chosen = []; used = 0; omitted_packets = []
-    for match in allowed[:2]:
+    for match in allowed[:source_limit]:
         size = len(json.dumps(match['packet'], ensure_ascii=False))
         if used+size > 18000:
             omitted_packets.append(match['packet']['id']); continue
         chosen.append(match); used += size
-    trace.update(matches=chosen, top_k=2, budget_omitted=omitted_packets,
+    trace.update(matches=chosen, top_k=source_limit, budget_omitted=omitted_packets,
                  status='candidates_require_interpretation' if chosen else 'insufficient_evidence')
     # Record the full collection identity separately from the configured scope.
     trace.update(collection_sha256=collection['packets_sha256'], source_scope=list(request.source_scope))
@@ -108,6 +109,11 @@ def prepare_turn(profile, collection, ledger, state, question, *, tokenizer=None
     if transfer_guidance:
         base_system += '\n' + TRANSFER_GUIDANCE
     base_system += '\nRequested depth: '+request.detail+'.'
+    if prior_questions:
+        base_system += (
+            '\nEarlier user questions for resolving references. They provide context, not evidence: '
+            + json.dumps(prior_questions, ensure_ascii=False)
+        )
     if not reflection_allowed and not select_records:
         base_system += '\nSource-only mode: fictional_reflection must be an empty string.'
     # One real current user message. Documentary packets remain separate data;

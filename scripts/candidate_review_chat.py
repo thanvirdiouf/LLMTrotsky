@@ -14,7 +14,7 @@ def validate_protocol(p):
             or p.get('maximum_displayed_answers') != (5 if transfer else 10) or p.get('model_audit_performed') is not False):
         raise ValueError('Human conversation review scope differs')
     expected_calls = 5 if transfer or p.get('seeded_reply_count') == 5 else 10
-    if p.get('split_questions') is True and transfer and p.get('constrained_selection') is True:
+    if ((p.get('split_questions') is True and transfer) or p.get('natural_followups') is True) and p.get('constrained_selection') is True:
         expected_calls = p['evaluation_calls']
         if type(expected_calls) is not int or not 5 <= expected_calls <= 30:
             raise ValueError('Unexpected question-part call count')
@@ -55,6 +55,11 @@ def render_record_reply(output, request, collection, ledger, *, decisions=False)
 
 
 def evaluate(jobs, generate, output, profile, collection, ledger, tokenizer, today):
+    if jobs and all('selection_turns' in job for job in jobs):
+        from reviewed_followups import evaluate as evaluate_followups
+        if len(jobs) != 5 or any(len(job['questions']) != 2 for job in jobs):
+            raise ValueError('Expected five two-turn conversations')
+        return evaluate_followups(jobs, generate, output, profile, collection, ledger, tokenizer, today)
     single_turn = all(len(job['questions']) == 1 for job in jobs)
     if len(jobs) != 5 or len({j['case_id'] for j in jobs}) != 5 or sum(len(j['questions']) for j in jobs) != (5 if single_turn else 10):
         raise ValueError('Unexpected conversation or turn count')

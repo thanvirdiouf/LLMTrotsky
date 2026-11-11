@@ -62,12 +62,18 @@ All five selections replayed and three met the locked checks, up from two.
 The memoir reply omitted the purge report. The ILO reply omitted the
 full-implementation condition and added a local-estimate record.
 
-Private saved56 (v12) uses the same supplied passages and questions. It
-requires a separate include-or-exclude decision for every reviewed record
-and asks the model to cover all requested parts. Synthetic replay and 94
-local tests passed. The fresh follow-up questions in
-`config/ghost_reviewed_transfer_v2.json` and their local checks were locked
-before reviewing saved55.
+Private saved56 (v12) required an include-or-exclude decision for every
+record. All five selections replayed. Two met the locked checks. It fixed
+the memoir case but introduced omissions or unrelated records in the radio,
+ILO, and hearing cases.
+
+Private saved57 (v14) uses one constrained selection per authored question
+part and renders the union in ledger order. It keeps the same supplied
+passages and original questions for display. The nine calls and five
+displays passed synthetic replay. All 94 local tests passed. The actual run
+is pending. Authored parts are in `config/ghost_reviewed_question_parts.json`.
+The fresh follow-up questions in `config/ghost_reviewed_transfer_v2.json`
+and their local checks were locked before reviewing saved55.
 
 Continue based on measured results. Training is paused and both adapters are
 experimental. Authorized 27B trials use the same private Kaggle notebook, two

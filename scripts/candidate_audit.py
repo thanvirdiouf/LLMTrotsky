@@ -97,7 +97,9 @@ def run(bundle,output,*,experiment=None):
         jobs=json.loads((bundle/'audit_inputs.json').read_text());probe=json.loads((bundle/'memory_probe.json').read_text())
         expected=10 if experiment is None else 5
         if len(jobs)!=expected or len({j['case_id'] for j in jobs})!=expected:raise ValueError('Candidate coverage differs')
-        for job in [probe,*jobs]:
+        selection_requests = [(job, part) for job in jobs
+                              for part in job.get('selection_parts', [job])]
+        for job in [probe, *jobs, *(part for _, part in selection_requests if p.get('split_questions'))]:
             if input_ids(tokenizer,job['messages'])!=job['input_token_ids']:raise ValueError('Frozen input reconstruction differs')
         set_seed(42);torch.set_num_threads(2);torch.backends.cuda.matmul.allow_tf32=False;torch.backends.cudnn.benchmark=False
         config=AutoConfig.from_pretrained(snapshot,local_files_only=True,trust_remote_code=False)
@@ -114,10 +116,10 @@ def run(bundle,output,*,experiment=None):
         if generation.eos_token_id!=tokenizer.convert_tokens_to_ids('<|im_end|>') or generation.pad_token_id!=tokenizer.pad_token_id:raise ValueError('Stop or pad differs')
         result['generation']=generation.to_dict()
         constrained_jobs = {
-            tuple(job['input_token_ids']): job['allowed_record_ids']
-            for job in jobs if 'allowed_record_ids' in job
+            tuple(part['input_token_ids']): job['allowed_record_ids']
+            for job, part in selection_requests if 'allowed_record_ids' in job
         } if p.get('constrained_selection') else {}
-        if p.get('constrained_selection') and len(constrained_jobs) != len(jobs):
+        if p.get('constrained_selection') and len(constrained_jobs) != len(selection_requests):
             raise ValueError('Missing or duplicate constrained selection request')
         class FiniteScores:
             def __init__(self):self.steps=0

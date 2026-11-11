@@ -59,7 +59,7 @@ RECORD_DECISION_POLICY = (
 
 def prepare_turn(profile, collection, ledger, state, question, *, tokenizer=None,
                  reflection_allowed=True, today='2026-10-28', input_limit=5120,
-                 retrieval_policy='current', include_summary_ids=True, transfer_guidance=False, select_records=False, record_decisions=False):
+                 retrieval_policy='current', include_summary_ids=True, transfer_guidance=False, select_records=False, record_decisions=False, supply_scope=False):
     if type(reflection_allowed) is not bool:
         raise EvidenceError('Explicit reflection setting required')
     inventory = [p['id'] for p in collection['packets']]
@@ -83,7 +83,12 @@ def prepare_turn(profile, collection, ledger, state, question, *, tokenizer=None
     for match in trace['matches']: match['packet'] = by_id[match['packet']['id']]
     if retrieval_policy == 'current':
         trace['method'] = 'bm25_complete_context_with_bibliography_v1'
-    allowed = [m for m in trace['matches'] if m['packet']['id'] in request.source_scope]
+    if supply_scope:
+        allowed = [{'packet': by_id[packet_id], 'score': None, 'matched_terms': []}
+                   for packet_id in request.source_scope]
+        trace['method'] = 'supplied_source_scope'
+    else:
+        allowed = [m for m in trace['matches'] if m['packet']['id'] in request.source_scope]
     chosen = []; used = 0; omitted_packets = []
     for match in allowed[:2]:
         size = len(json.dumps(match['packet'], ensure_ascii=False))

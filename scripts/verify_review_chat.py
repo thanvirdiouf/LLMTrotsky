@@ -144,11 +144,13 @@ def verify(version='ghost_review_chat_v4',root=ROOT,tokenizer=None,tokenizer_pat
         verify_generated({'messages':call['messages'],'input_token_ids':call['output']['input_token_ids']},call['output'],1024,p['generation'],tokenizer)
     if p.get('constrained_selection'):
         from constrained_selection import allowed_sequences
-        if len(calls) != len(jobs):
+        constrained_requests = [(job, part) for job in jobs
+                                for part in job.get('selection_parts', [job])]
+        if len(calls) != len(constrained_requests):
             raise ValueError('Missing constrained selection call')
-        for job, call in zip(jobs, calls):
+        for (job, part), call in zip(constrained_requests, calls):
             tokens = tuple(call['output']['token_ids'])
-            if call['messages'] != job['messages'] or tokens not in allowed_sequences(
+            if call['messages'] != part['messages'] or tokens not in allowed_sequences(
                     tokenizer, job['allowed_record_ids'], p['generation']['eos_token_id'],
                     decisions=p.get('record_decisions', False)):
                 raise ValueError('Selection tokens outside the allowed record sets')

@@ -14,6 +14,10 @@ def validate_protocol(p):
             or p.get('maximum_displayed_answers') != (5 if transfer else 10) or p.get('model_audit_performed') is not False):
         raise ValueError('Human conversation review scope differs')
     expected_calls = 5 if transfer or p.get('seeded_reply_count') == 5 else 10
+    if p.get('split_questions') is True and transfer and p.get('constrained_selection') is True:
+        expected_calls = p['evaluation_calls']
+        if type(expected_calls) is not int or not 5 <= expected_calls <= 30:
+            raise ValueError('Unexpected question-part call count')
     if p.get('evaluation_calls') != expected_calls:
         raise ValueError('Unexpected new conversation call limit')
     if p.get('retrieval_policy', 'current') not in ('current', 'human_context_decay_v1'):
@@ -65,7 +69,8 @@ def evaluate(jobs, generate, output, profile, collection, ledger, tokenizer, tod
                     include_summary_ids=job.get('include_summary_ids', True),
                     transfer_guidance=job.get('transfer_guidance', False),
                     select_records=job.get('select_records', False),
-                    record_decisions=job.get('record_decisions', False))
+                    record_decisions=job.get('record_decisions', False),
+                    supply_scope='selection_parts' in job)
                 if turn == 0 and (request['messages'] != job['messages'] or request['input_token_ids'] != job['input_token_ids']):
                     raise ValueError('First conversation request differs from frozen inputs')
                 error = None; reply = None
@@ -76,6 +81,31 @@ def evaluate(jobs, generate, output, profile, collection, ledger, tokenizer, tod
                     if seed['messages'] != request['messages'] or seed['output']['input_token_ids'] != request['input_token_ids']:
                         raise ValueError('Archived initial reply request differs')
                     reply = parse_reply(seed['output'], request)
+                elif 'selection_parts' in job:
+                    from reviewed_source_display import records_for_packets, select_ids
+                    records = records_for_packets(collection, ledger, job['source_scope'])
+                    if list(records) != job['allowed_record_ids']:
+                        raise ValueError('Question part record menu differs')
+                    selected = set()
+                    for part in job['selection_parts']:
+                        out = generate(part['messages'])
+                        call = {'case_id': job['case_id'], 'turn': turn+1, 'stage': 'conversation',
+                                'messages': part['messages'], 'output': out, 'output_sha256': fingerprint(out)}
+                        calls.append(call)
+                        journal.write(json.dumps(call, ensure_ascii=False)+'\n')
+                        journal.flush()
+                        if out.get('finish_reason') != 'stop':
+                            error = 'Incomplete question-part selection'
+                            continue
+                        try:
+                            selected.update(select_ids(out['response'], records))
+                        except (ValueError, KeyError, TypeError) as exc:
+                            error = str(exc)
+                    if not error:
+                        ids = [record_id for record_id in records if record_id in selected]
+                        reply = render_record_reply(
+                            {'response': json.dumps({'claim_ids': ids}), 'finish_reason': 'stop'},
+                            request, collection, ledger)
                 else:
                     out = generate(request['messages'])
                     call = {'case_id': job['case_id'], 'turn': turn+1, 'stage': 'conversation',

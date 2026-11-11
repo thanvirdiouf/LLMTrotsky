@@ -15,7 +15,8 @@ CONTROL = 'ghost_review_chat_v6'
 def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
     if not re.fullmatch(r'ghost_review_chat_v[1-9][0-9]*',version):raise ValueError('Invalid review version')
     record_decisions = version in ('ghost_review_chat_v12', 'ghost_review_chat_v13')
-    constrained = version == 'ghost_review_chat_v11' or record_decisions
+    split_questions = version in ('ghost_review_chat_v14', 'ghost_review_chat_v15')
+    constrained = version == 'ghost_review_chat_v11' or record_decisions or split_questions
     selector = version == 'ghost_review_chat_v10' or constrained
     transfer = selector or version in ('ghost_review_chat_v7', 'ghost_review_chat_v8', 'ghost_review_chat_v9')
     supplied = selector or version == 'ghost_review_chat_v7'
@@ -26,7 +27,7 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
                    else 'config/ghost_review_workbench_v1.json')
     design_raw=(root/design_path).read_bytes();design=json.loads(design_raw)
     if selector:
-        case_file = 'ghost_reviewed_transfer_v2.json' if version == 'ghost_review_chat_v13' else 'ghost_reviewed_transfer_v1.json'
+        case_file = 'ghost_reviewed_transfer_v2.json' if version in ('ghost_review_chat_v13', 'ghost_review_chat_v15') else 'ghost_reviewed_transfer_v1.json'
         cases = json.loads((root/'config'/case_file).read_text())['cases']
         design['source_snapshot'] = 'evaluation/ghost_reviewed_coverage_v4'
         design['conversations'] = [
@@ -35,6 +36,10 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
              'source_scope': [case['packet']]}
             for case in cases
         ]
+        if split_questions:
+            parts = json.loads((root/'config/ghost_reviewed_question_parts.json').read_text())
+            for conversation in design['conversations']:
+                conversation['selection_parts'] = parts.get(conversation['id'], conversation['questions'])
         design_raw = enc(design)
     elif transfer:
         cases = json.loads((root/'config/ghost_mapped_transfer_v1.json').read_text())['cases']
@@ -63,7 +68,7 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
             reflection_allowed=conversation['reflection_allowed'],today=design['current_date'],
             retrieval_policy=design.get('retrieval_policy','current'),
             include_summary_ids=not packet_citations_only, transfer_guidance=transfer_guidance,
-            select_records=selector, record_decisions=record_decisions)
+            select_records=selector, record_decisions=record_decisions, supply_scope=split_questions)
         jobs.append({'case_id':conversation['id'],'title':conversation['title'],'questions':conversation['questions'],
             'reflection_allowed':conversation['reflection_allowed'],'messages':first['messages'],'input_token_ids':first['input_token_ids']})
         if selector:
@@ -80,6 +85,17 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
             jobs[-1]['source_scope'] = conversation['source_scope']
             if [p['id'] for p in first['source_packets']] != conversation['source_scope']:
                 raise ValueError('Supplied passage missing from prompt')
+        if split_questions:
+            part_requests = []
+            for part in conversation['selection_parts']:
+                request = prepare_turn(profile, collection, ledger, state, part, tokenizer=tokenizer,
+                    reflection_allowed=False, today=design['current_date'],
+                    retrieval_policy=design.get('retrieval_policy', 'current'), select_records=True,
+                    supply_scope=True)
+                if [p['id'] for p in request['source_packets']] != conversation['source_scope']:
+                    raise ValueError('A question part lost its supplied packet')
+                part_requests.append({key: request[key] for key in ('messages', 'input_token_ids')})
+            jobs[-1]['selection_parts'] = part_requests
         if 'retrieval_policy' in design:
             jobs[-1]['retrieval_policy'] = design['retrieval_policy']
         if packet_citations_only:
@@ -119,7 +135,10 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
         p['constrained_selection'] = True
     if record_decisions:
         p['record_decisions'] = True
-    if constrained and not record_decisions:
+    if split_questions:
+        p['split_questions'] = True
+        p['evaluation_calls'] = sum(len(job['selection_parts']) for job in jobs)
+    if constrained and not record_decisions and not split_questions:
         baseline_jobs = json.loads(control['audit_inputs.json'])
         stripped_jobs = [{key: value for key, value in job.items()
                           if key != 'allowed_record_ids'} for job in jobs]

@@ -88,8 +88,15 @@ assistant's earlier reply and sustained dialogue remain open.
 
 The design is in `config/ghost_reviewed_followups_v1.json`. The local v16
 directory holds the verified output, locked rubric, and per-part results.
-All 94 local tests passed. Next test longer follow-ups that explicitly refer
-to what the assistant just said, including a correction and a disagreement.
+All 94 local tests passed.
+
+Private saved60 (v17) was submitted for five challenges to scripted prior
+replies. It tests a valid correction, a mistaken correction, disagreement,
+citation explanation, and a missing-detail request. Each follow-up receives
+the earlier assistant message and reopens its cited packet. The locked
+review checks stay outside the notebook. All 95 local tests and isolated
+replay with mock answers and the pinned tokenizer passed. The Kaggle run
+is pending verification and source review. Do not resubmit it.
 
 Continue based on measured results. Training is paused and both adapters are
 experimental. Authorized 27B trials use the same private Kaggle notebook, two

@@ -142,6 +142,15 @@ def verify(version='ghost_review_chat_v4',root=ROOT,tokenizer=None,tokenizer_pat
     for call in calls:
         if call['stage']!='conversation':raise ValueError('Unexpected model stage')
         verify_generated({'messages':call['messages'],'input_token_ids':call['output']['input_token_ids']},call['output'],1024,p['generation'],tokenizer)
+    if p.get('constrained_selection'):
+        from constrained_selection import allowed_sequences
+        if len(calls) != len(jobs):
+            raise ValueError('Missing constrained selection call')
+        for job, call in zip(jobs, calls):
+            tokens = tuple(call['output']['token_ids'])
+            if call['messages'] != job['messages'] or tokens not in allowed_sequences(
+                    tokenizer, job['allowed_record_ids'], p['generation']['eos_token_id']):
+                raise ValueError('Selection tokens outside the allowed record sets')
     repeated=replay(f,calls,tokenizer_path)
     if any(raw[n]!=data for n,data in repeated.items()):raise ValueError('Dependent conversation/retrieval/parser replay differs')
     steps=len(probe['token_ids'])+sum(len(c['output']['token_ids']) for c in calls);stats=r['attention_runtime_stats']

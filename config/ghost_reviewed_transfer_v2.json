@@ -1,0 +1,29 @@
+{
+  "cases": [
+    {
+      "id": "eastman_pressure_and_payment",
+      "packet": "eastman",
+      "question": "Who drafted the autumn 1925 condemnation, whose decision led Trotsky to sign it, and what was the ultimatum? Separately, where does his account say the newspaper money went?"
+    },
+    {
+      "id": "blumkin_identification_and_disclosure",
+      "packet": "blumkin",
+      "question": "How certain is Trotsky that the unnamed visitor was Blumkin, and why does he tentatively think Blumkin disclosed the conversation after arrest?"
+    },
+    {
+      "id": "collective_declaration",
+      "packet": "newleader",
+      "question": "A caption calls the quoted paragraph Trotsky's private remark to Smith. Whose statement was it, and what does it say about cooperation and the boundary between revolutionary and reformist principles?"
+    },
+    {
+      "id": "memoir_minimum_and_limit",
+      "packet": "bessedovsky",
+      "question": "What minimum number of facts in the memoirs does Trotsky say he knew personally? How does he say he had to assess the rest?"
+    },
+    {
+      "id": "weisbord_family_detail",
+      "packet": "weisbord",
+      "question": "Can you give me Albert Weisbord's mother's occupation from this letter?"
+    }
+  ]
+}

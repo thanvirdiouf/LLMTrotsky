@@ -113,6 +113,12 @@ def run(bundle,output,*,experiment=None):
         generation=GenerationConfig.from_dict(p['generation'])
         if generation.eos_token_id!=tokenizer.convert_tokens_to_ids('<|im_end|>') or generation.pad_token_id!=tokenizer.pad_token_id:raise ValueError('Stop or pad differs')
         result['generation']=generation.to_dict()
+        constrained_jobs = {
+            tuple(job['input_token_ids']): job['allowed_record_ids']
+            for job in jobs if 'allowed_record_ids' in job
+        } if p.get('constrained_selection') else {}
+        if p.get('constrained_selection') and len(constrained_jobs) != len(jobs):
+            raise ValueError('Missing or duplicate constrained selection request')
         class FiniteScores:
             def __init__(self):self.steps=0
             def __call__(self,input_ids,scores):
@@ -125,8 +131,13 @@ def run(bundle,output,*,experiment=None):
             for i in (0,1):
                 with torch.cuda.device(i):torch.cuda.empty_cache()
             tensor=torch.tensor([ids],device=input_device);finite=FiniteScores();before=stats['calls'];before_groups=stats['expanded_kv_calls'];start=time.monotonic()
+            processors = [finite]
+            if constrained_jobs and not memory_probe:
+                from constrained_selection import SelectionConstraint
+                processors.append(SelectionConstraint(tokenizer, constrained_jobs[tuple(ids)],
+                                                      generation.eos_token_id, len(ids)))
             with torch.inference_mode():
-                tokens=model.generate(input_ids=tensor,attention_mask=torch.ones_like(tensor),generation_config=generation,logits_processor=[finite])[0,len(ids):].tolist()
+                tokens=model.generate(input_ids=tensor,attention_mask=torch.ones_like(tensor),generation_config=generation,logits_processor=processors)[0,len(ids):].tolist()
             for i in (0,1):torch.cuda.synchronize(i)
             if not tokens or len(tokens)>cap or finite.steps!=len(tokens) or stats['calls']-before!=16*len(tokens) or stats['expanded_kv_calls']-before_groups!=16*len(tokens):raise ValueError('Generation or efficient attention coverage differs')
             return {'input_token_ids':ids,'token_ids':tokens,'token_count':len(tokens),'response':tokenizer.decode(tokens,skip_special_tokens=True),

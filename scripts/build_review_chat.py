@@ -14,7 +14,8 @@ CONTROL = 'ghost_review_chat_v6'
 
 def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
     if not re.fullmatch(r'ghost_review_chat_v[1-9][0-9]*',version):raise ValueError('Invalid review version')
-    selector = version == 'ghost_review_chat_v10'
+    constrained = version == 'ghost_review_chat_v11'
+    selector = version == 'ghost_review_chat_v10' or constrained
     transfer = selector or version in ('ghost_review_chat_v7', 'ghost_review_chat_v8', 'ghost_review_chat_v9')
     supplied = selector or version == 'ghost_review_chat_v7'
     transfer_guidance = version == 'ghost_review_chat_v9'
@@ -46,7 +47,7 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
         design_raw = enc(design)
     if len(design['conversations'])!=5 or sum(len(c['questions']) for c in design['conversations'])!=(5 if transfer else 10):raise ValueError('Conversation scope differs')
     source=root/design['source_snapshot'];profile,collection,ledger=load_snapshot(source)
-    control = payloads(CONTROL, root)
+    control = payloads('ghost_review_chat_v10' if constrained else CONTROL, root)
     old = json.loads(control['protocol.json'])
     assets = root / 'evaluation' / CONTROL / 'tokenizer_assets'
     if tokenizer is None:
@@ -65,6 +66,10 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
             'reflection_allowed':conversation['reflection_allowed'],'messages':first['messages'],'input_token_ids':first['input_token_ids']})
         if selector:
             jobs[-1]['select_records'] = True
+        if constrained:
+            from reviewed_source_display import records_for_packets
+            jobs[-1]['allowed_record_ids'] = list(records_for_packets(
+                collection, ledger, [p['id'] for p in first['source_packets']]))
         if transfer_guidance:
             jobs[-1]['transfer_guidance'] = True
         if supplied:
@@ -106,6 +111,13 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
         quality_policy='Experimental generated conversations; citation checks are mechanical, all factual support and voice require human/source review. No activation or trusted-memory promotion.')
     if transfer:
         p.update(evaluation_calls=5, maximum_displayed_answers=5, fixed_transfer_questions_run=True)
+    if constrained:
+        p['constrained_selection'] = True
+        baseline_jobs = json.loads(control['audit_inputs.json'])
+        stripped_jobs = [{key: value for key, value in job.items()
+                          if key != 'allowed_record_ids'} for job in jobs]
+        if stripped_jobs != baseline_jobs or design_raw != control['review_design.json']:
+            raise ValueError('Constrained selection must use the exact saved54 requests')
     if seed_control:
         p.update(evaluation_calls=5,seeded_reply_count=5,seed_control=seed_control)
     if packet_citations_only:
@@ -119,10 +131,14 @@ def build(version='ghost_review_chat_v4',root=ROOT,tokenizer=None):
         'review_chat.py','grounded_chat.py','grounded_chat_v2.py','grounded_request_boundary.py')
     if selector:
         names += ('reviewed_source_display.py',)
+    if constrained:
+        names += ('constrained_selection.py',)
     payload={n:(root/'scripts'/n).read_bytes() for n in names}
     if 'retrieval_policy' in design:
         payload['conversation_retrieval.py'] = (root/'scripts/conversation_retrieval.py').read_bytes()
-    for n in ('candidate_audit.py','candidate_base_probe.py','candidate_efficient_attention.py','grounded_chat.py','grounded_chat_v2.py'):
+    if not constrained:
+        payload['candidate_audit.py'] = payloads(CONTROL, root)['candidate_audit.py']
+    for n in ('candidate_base_probe.py','candidate_efficient_attention.py','grounded_chat.py','grounded_chat_v2.py'):
         if payload[n]!=control[n]:raise ValueError('Shared control changed: '+n)
     payload.update({n:(source/n).read_bytes() for n in ('profile.json','collection.json','ledger.json')})
     payload.update({'audit_inputs.json':enc(jobs),'review_design.json':design_raw,

@@ -57,9 +57,12 @@ wording and citations. All 94 local tests passed.
 
 Questions are in `config/ghost_reviewed_transfer_v1.json`. The local v10 run
 directory holds the frozen checks, verifier report, and source review.
-The next experiment should constrain decoding to valid record-ID selections,
-then measure completeness and relevance separately. This isolates the
-format failure before investing in broader retrieval or conversation tests.
+Private saved55 (v11) reruns the exact five saved54 prompts with constrained
+decoding. Every allowed output is a set of IDs from the supplied records,
+serialized in ledger order. The empty set remains available. The local
+tokenizer preflight covered every allowed sequence and all 94 tests passed.
+The fresh follow-up questions are locked before this run’s results in
+`config/ghost_reviewed_transfer_v2.json`, with scoring checks kept locally.
 
 Continue based on measured results. Training is paused and both adapters are
 experimental. Authorized 27B trials use the same private Kaggle notebook, two

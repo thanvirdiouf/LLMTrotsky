@@ -111,6 +111,14 @@ interpretation, on fresh challenges that also test live reference
 resolution and topic switches. Use any recurring failures to guide
 targeted voice or correction training examples.
 
+Private saved61 (v18) was submitted for five fresh follow-up challenges.
+The factual reply uses at most two reviewed statements verbatim, with a
+short correction marker when selected. One separate call handles fictional
+disagreement. The test includes an explicit reset and a named topic switch
+with a reference to the prior reply. The initial replies are scripted.
+All 97 local tests and isolated preflight passed. Pending exact Kaggle
+replay and source review. Do not resubmit.
+
 Continue based on measured results. Training is paused and both adapters are
 experimental. Authorized 27B trials use the same private Kaggle notebook, two
 free T4s, and at most ten displayed replies, thirty evaluation calls and one

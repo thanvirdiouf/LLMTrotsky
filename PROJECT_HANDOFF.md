@@ -90,13 +90,26 @@ The design is in `config/ghost_reviewed_followups_v1.json`. The local v16
 directory holds the verified output, locked rubric, and per-part results.
 All 94 local tests passed.
 
-Private saved60 (v17) was submitted for five challenges to scripted prior
-replies. It tests a valid correction, a mistaken correction, disagreement,
-citation explanation, and a missing-detail request. Each follow-up receives
-the earlier assistant message and reopens its cited packet. The locked
-review checks stay outside the notebook. All 95 local tests and isolated
-replay with mock answers and the pinned tokenizer passed. The Kaggle run
-is pending verification and source review. Do not resubmit it.
+Private saved60 (v17) completed and passed exact replay. The five scripted
+prior replies test a valid correction, a mistaken correction, disagreement,
+citation explanation, and a missing detail. Each follow-up received the
+prior assistant message and its cited packet. Five new calls, one probe,
+zero truncations. All 95 local tests passed.
+
+Unblinded development review found 5/5 replies addressed the primary
+question and 1/5 passed strict source fidelity across the whole reply.
+Bessedovsky familiarity became verification, the Eastman reflection
+reversed which press was bypassed, ILO exposure broadened into maximum
+impact, and the Blumkin reply supplied a basis for the inference. The
+hearing correctly distinguished total and resident secretaries.
+
+The rubric is in `config/ghost_reply_challenges_v1.json`. Verified artifacts
+and per-case source notes are in the local v17 run. The controlled source
+reopening isolates answer wording on these cases. Next test brief factual
+replies assembled from reviewed evidence, with separate fictional
+interpretation, on fresh challenges that also test live reference
+resolution and topic switches. Use any recurring failures to guide
+targeted voice or correction training examples.
 
 Continue based on measured results. Training is paused and both adapters are
 experimental. Authorized 27B trials use the same private Kaggle notebook, two

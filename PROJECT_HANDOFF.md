@@ -67,13 +67,17 @@ record. All five selections replayed. Two met the locked checks. It fixed
 the memoir case but introduced omissions or unrelated records in the radio,
 ILO, and hearing cases.
 
-Private saved57 (v14) uses one constrained selection per authored question
-part and renders the union in ledger order. It keeps the same supplied
-passages and original questions for display. The nine calls and five
-displays passed synthetic replay. All 94 local tests passed. The actual run
-is pending. Authored parts are in `config/ghost_reviewed_question_parts.json`.
-The fresh follow-up questions in `config/ghost_reviewed_transfer_v2.json`
-and their local checks were locked before reviewing saved55.
+Private saved57 (v14) selected evidence for each authored question part and
+rendered the union. Nine calls replayed and four of five answers met the
+locked checks. The hearing response omitted Goldman's acknowledgment of his
+1902 mistake. The last part still combined that request with the meaning of
+the date. The memoir, radio, ILO, and missing-detail checks passed.
+
+Private saved58 (v15) applies the same method to the five fresh questions in
+`config/ghost_reviewed_transfer_v2.json`. The questions and local rubric were
+locked before reviewing saved55. The authored parts are in
+`config/ghost_reviewed_question_parts.json`. All eight calls and five displays
+passed synthetic replay. The actual fresh result is pending.
 
 Continue based on measured results. Training is paused and both adapters are
 experimental. Authorized 27B trials use the same private Kaggle notebook, two
